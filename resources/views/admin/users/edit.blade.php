@@ -21,7 +21,7 @@
                                         <li class="breadcrumb-item">
                                             <a href="{{route('users')}}">User</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page"> Create User</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Edit User</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -52,7 +52,7 @@
 
                                 <div class="col-md-6">
                                     <label for="" class="form-label custom-label">Password</label>
-                                    <input type="password" class="form-control custom-input" name="password" placeholder="Password">
+                                    <input type="password" class="form-control custom-input" name="password" placeholder="Password (leave blank to keep current)">
                                     @if($errors->has('password'))
                                         <div class="error_msg">
                                             {{ $errors->first('password') }}
@@ -76,6 +76,24 @@
                                     @if($errors->has('phone_no'))
                                         <div class="error_msg">
                                             {{ $errors->first('phone_no') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="role" class="form-label custom-label">Assign Role</label>
+                                    <select class="form-select custom-input" name="role" id="role">
+                                        @if(isset($roles))
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role }}" {{ (isset($userRole) && $userRole === $role) ? 'selected' : '' }}>
+                                                    {{ ucwords(str_replace('-', ' ', $role)) }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @if($errors->has('role'))
+                                        <div class="error_msg">
+                                            {{ $errors->first('role') }}
                                         </div>
                                     @endif
                                 </div>

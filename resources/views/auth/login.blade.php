@@ -167,7 +167,8 @@
 
         .form-input-clean:focus {
             border-color: var(--brand-primary);
-            box-shadow: 0 0 0 3px var(--brand-glow);
+            box-shadow: none !important;
+            outline: none !important;
         }
 
         .input-box:focus-within .input-box-icon {
@@ -269,6 +270,12 @@
 
         .btn-submit-login:active {
             transform: scale(0.99);
+        }
+
+        .btn-submit-login:focus,
+        .btn-submit-login:focus-visible {
+            box-shadow: none !important;
+            outline: none !important;
         }
 
         .btn-submit-login:disabled {

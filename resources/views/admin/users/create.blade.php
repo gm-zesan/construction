@@ -81,6 +81,24 @@
                                     @endif
                                 </div>
 
+                                <div class="col-md-6">
+                                    <label for="role" class="form-label custom-label">Assign Role</label>
+                                    <select class="form-select custom-input" name="role" id="role">
+                                        @if(isset($roles))
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role }}" {{ $role === 'user' ? 'selected' : '' }}>
+                                                    {{ ucwords(str_replace('-', ' ', $role)) }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @if($errors->has('role'))
+                                        <div class="error_msg">
+                                            {{ $errors->first('role') }}
+                                        </div>
+                                    @endif
+                                </div>
+
                                 
                                 <div class="col-12">
                                     <label for="" class="form-label custom-label">Description</label>

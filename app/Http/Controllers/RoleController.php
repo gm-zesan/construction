@@ -31,13 +31,28 @@ class RoleController extends Controller implements HasMiddleware
         if ($request->ajax()) {
             $auth_user = Auth::user();
             if ($auth_user && $auth_user->hasRole('superadmin')) {
-                $roles = Role::all();
+                $roles = Role::withCount('users')->select('roles.*');
             } else {
-                $roles = Role::where('name', '!=', 'superadmin')->get();
+                $roles = Role::withCount('users')->where('name', '!=', 'superadmin')->select('roles.*');
             }
 
             return DataTables::of($roles)
                 ->addIndexColumn()
+                ->addColumn('display_name', function($row) {
+                    $badgeStyle = match($row->name) {
+                        'superadmin' => 'background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5;',
+                        'admin' => 'background-color: #fff3ee; color: #f95716; border: 1px solid rgba(249, 87, 22, 0.3);',
+                        'project-manager' => 'background-color: #e0f2fe; color: #075985; border: 1px solid #7dd3fc;',
+                        default => 'background-color: #f3e8ff; color: #6b21a8; border: 1px solid #d8b4fe;',
+                    };
+                    return '<div class="d-flex align-items-center gap-2">' .
+                        '<span class="badge" style="' . $badgeStyle . ' font-size: 12px; padding: 4px 10px; border-radius: 4px; font-weight: 600;">' . e(ucwords(str_replace('-', ' ', $row->name))) . '</span>' .
+                        '<span class="text-muted" style="font-size: 11.5px; font-family: monospace;">(' . e($row->name) . ')</span>' .
+                        '</div>';
+                })
+                ->addColumn('users_count', function($row) {
+                    return '<span class="badge bg-light text-dark border px-2 py-1" style="font-size: 11.5px; font-weight: 600;">' . $row->users_count . ' users</span>';
+                })
                 ->addColumn('action-btn', function($row) {
                     $auth_user = Auth::user();
                     return [
@@ -45,9 +60,11 @@ class RoleController extends Controller implements HasMiddleware
                         'name' => $row->name,
                         'role' => $auth_user && $auth_user->roles->first() ? $auth_user->roles->first()->name : null,
                         'is_superadmin' => $row->name === 'superadmin',
+                        'can_delete' => $row->name !== 'superadmin' && ($auth_user && $auth_user->hasRole('superadmin')),
+                        'can_edit' => $row->name !== 'superadmin' || ($auth_user && $auth_user->hasRole('superadmin')),
                     ];
                 })
-                ->rawColumns(['action-btn'])
+                ->rawColumns(['display_name', 'users_count', 'action-btn'])
                 ->make(true);
         }
 

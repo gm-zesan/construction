@@ -1,8 +1,15 @@
+<script>
+    window.SITEURL = "{{ url('/') }}";
+</script>
+
 <!-- Jquery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <!-- Bootstrap 5 bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
 <!-- Select 2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -16,20 +23,6 @@
 
 <!-- DatePicker plugin -->
 <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
-
-<!-- Sidebar active toggle -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let btn = document.querySelector("#btn");
-        let sidebar = document.querySelector(".sidebar");
-
-        if (btn && sidebar) {
-            btn.onclick = function(){
-                sidebar.classList.toggle("active");
-            }
-        }
-    });
-</script>
 
 <!-- Common Scripts -->
 <script>

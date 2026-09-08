@@ -32,7 +32,7 @@
         flex-shrink: 0;
     }
     .kpi-icon.orange { background-color: rgba(249, 87, 22, 0.12); color: #f95716; }
-    .kpi-icon.purple { background-color: #f2eefc; color: #845adf; }
+    .kpi-icon.purple { background-color: #f1f5f9; color: #0f172a; }
     .kpi-icon.blue { background-color: #e8f4fd; color: #1a88cb; }
     .kpi-icon.green { background-color: #e8f8f0; color: #16a34a; }
     .kpi-icon.amber { background-color: #fff8dd; color: #b58105; }
@@ -230,7 +230,7 @@
                     </div>
                 </div>
                 <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
-                    <a href="#messages" class="kpi-link" style="color: #845adf;">View all inquiries <i class="ms-1 ri-arrow-right-line"></i></a>
+                    <a href="#messages" class="kpi-link" style="color: #f95716;">View all inquiries <i class="ms-1 ri-arrow-right-line"></i></a>
                     <span class="badge bg-light text-muted fw-normal" style="font-size: 11px;">Lead Pipeline</span>
                 </div>
             </div>

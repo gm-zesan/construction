@@ -19,8 +19,8 @@
             </li>
 
             <!-- User Profile Dropdown -->
-            <li>
-                <a href="#" class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="dropdown position-relative">
+                <a href="javascript:void(0)" class="dropdown-toggle text-decoration-none" id="profileDropdownBtn" role="button" aria-expanded="false">
                     <div class="d-flex align-items-center"> 
                         <div class="me-sm-2 me-0">
                             @if(Auth::check() && !empty(Auth::user()->image))

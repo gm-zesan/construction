@@ -19,9 +19,9 @@
 <body>
     <div id="main-wrapper">
         @include('admin.includes.sidebar')
-        <div class="content scrollbar" id="fullpage" style="background-color: #f0f1f7;">
+        <div class="content scrollbar d-flex flex-column" id="fullpage" style="background-color: #f0f1f7; min-height: 100vh;">
             @include('admin.includes.header')
-            <div class="content-body">
+            <div class="content-body flex-grow-1">
                 @yield('content')
             </div>
             @include('admin.includes.footer')

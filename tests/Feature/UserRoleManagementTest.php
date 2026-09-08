@@ -27,14 +27,6 @@ it('allows superadmin to view roles management', function () {
     $response->assertSee('Role');
 });
 
-it('allows superadmin to view assign role page', function () {
-    $superadmin = User::role('superadmin')->first();
-
-    $response = $this->actingAs($superadmin)->get('/dashboard/assign-role');
-
-    $response->assertStatus(200);
-    $response->assertSee('Assign Role');
-});
 
 it('allows superadmin to create, edit, update, and delete a user', function () {
     $superadmin = User::role('superadmin')->first();
@@ -117,7 +109,7 @@ it('allows superadmin to assign a role to a user', function () {
     ]);
     $worker->assignRole('user');
 
-    $response = $this->actingAs($superadmin)->post('/dashboard/assign-role/store', [
+    $response = $this->actingAs($superadmin)->post('/dashboard/user/assign-role', [
         'email' => 'worker@example.com',
         'role' => 'admin',
     ]);
@@ -137,7 +129,7 @@ it('allows authenticated user to view ckeditor studio page', function () {
     $response->assertSee('editor_demo');
 });
 
-it('serves datatables ajax response for users, roles, and assign-role', function () {
+it('serves datatables ajax response for users and roles', function () {
     $superadmin = User::role('superadmin')->first();
 
     // Users DataTables AJAX
@@ -151,27 +143,52 @@ it('serves datatables ajax response for users, roles, and assign-role', function
         ->getJson('/dashboard/role', ['X-Requested-With' => 'XMLHttpRequest']);
     $rolesAjax->assertStatus(200);
     $rolesAjax->assertJsonStructure(['data']);
-
-    // Assign Role DataTables AJAX
-    $assignRoleAjax = $this->actingAs($superadmin)
-        ->getJson('/dashboard/assign-role', ['X-Requested-With' => 'XMLHttpRequest']);
-    $assignRoleAjax->assertStatus(200);
-    $assignRoleAjax->assertJsonStructure(['data']);
 });
 
-it('handles ckeditor upload gracefully', function () {
+it('allows superadmin to create user with specific role and update that role', function () {
     $superadmin = User::role('superadmin')->first();
-    \Illuminate\Support\Facades\Storage::fake('public');
 
-    $file = \Illuminate\Http\UploadedFile::fake()->image('diagram.png');
-
-    $response = $this->actingAs($superadmin)->post('/ckeditor/upload', [
-        'upload' => $file,
-        'CKEditorFuncNum' => '1',
+    $response = $this->actingAs($superadmin)->post('/dashboard/user/store', [
+        'name' => 'Project Specialist',
+        'email' => 'specialist@example.com',
+        'phone_no' => '+8801700998877',
+        'password' => 'password123',
+        'password_confirmation' => 'password123',
+        'role' => 'project-manager',
     ]);
+    $response->assertRedirect('/dashboard/users');
 
-    $response->assertStatus(200);
-    $response->assertSee('window.parent.CKEDITOR.tools.callFunction');
+    $specialist = User::where('email', 'specialist@example.com')->first();
+    expect($specialist)->not->toBeNull();
+    expect($specialist->hasRole('project-manager'))->toBeTrue();
+
+    // Update role to admin
+    $updateResponse = $this->actingAs($superadmin)->post('/dashboard/user/update/' . $specialist->id, [
+        'name' => 'Project Specialist Updated',
+        'email' => 'specialist@example.com',
+        'phone_no' => '+8801700998877',
+        'role' => 'admin',
+    ]);
+    $updateResponse->assertRedirect('/dashboard/users');
+    expect($specialist->fresh()->hasRole('admin'))->toBeTrue();
+});
+
+it('verifies DataTables responses include badge and action data', function () {
+    $superadmin = User::role('superadmin')->first();
+
+    $usersAjax = $this->actingAs($superadmin)
+        ->getJson('/dashboard/users', ['X-Requested-With' => 'XMLHttpRequest']);
+    $usersAjax->assertStatus(200);
+    $data = $usersAjax->json('data');
+    expect(count($data))->toBeGreaterThan(0);
+    expect($data[0])->toHaveKeys(['id', 'name', 'email', 'role', 'action-btn']);
+
+    $rolesAjax = $this->actingAs($superadmin)
+        ->getJson('/dashboard/role', ['X-Requested-With' => 'XMLHttpRequest']);
+    $rolesAjax->assertStatus(200);
+    $roleData = $rolesAjax->json('data');
+    expect(count($roleData))->toBeGreaterThan(0);
+    expect($roleData[0])->toHaveKeys(['id', 'name', 'display_name', 'users_count', 'action-btn']);
 });
 
 

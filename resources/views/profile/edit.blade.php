@@ -55,7 +55,8 @@
     }
     .form-control-admin:focus {
         border-color: #f95716;
-        box-shadow: 0 0 0 3px rgba(249, 87, 22, 0.15);
+        box-shadow: none !important;
+        outline: none !important;
     }
     .btn-admin-save {
         background-color: #f95716;
@@ -70,6 +71,12 @@
     .btn-admin-save:hover {
         background-color: #ea4907;
         color: #ffffff;
+    }
+    .btn-admin-save:focus,
+    .btn-admin-save:focus-visible,
+    .btn-admin-save:active {
+        box-shadow: none !important;
+        outline: none !important;
     }
 </style>
 @endpush

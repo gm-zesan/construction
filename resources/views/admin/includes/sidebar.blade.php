@@ -100,15 +100,6 @@
         </li>
         @endcan
 
-        @canany(['assignrole-list', 'assignrole-create', 'role-list', 'role-create', 'role-edit', 'role-delete'])
-        <li class="drop-item">
-            <a href="{{ route('assignrole.index') }}"
-                class="{{ in_array(Route::currentRouteName(), ['assignrole.index']) ? 'active-focus' : '' }}">
-                <i class="ri-user-settings-line"></i>
-                <span class="link_names">Assign Role</span>
-            </a>
-        </li>
-        @endcan
 
         <!-- Site Configuration & Administration -->
         <li class="category-li">

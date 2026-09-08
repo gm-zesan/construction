@@ -1,7 +1,7 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -14,57 +14,85 @@
 
 <!-- Select2 css -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 <style>
-    .select2-selection{
-        height: 26px !important;
+    .select2-container {
+        width: 100% !important;
+    }
+    .select2-container--default .select2-selection--single {
+        height: 40px !important;
+        border-radius: 6px !important;
+        border: 1px solid #cbd5e1 !important;
+        background-color: #ffffff !important;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .select2-container--default.select2-container--open .select2-selection--single,
+    .select2-container--default.select2-container--focus .select2-selection--single,
+    .select2-container--default.select2-container--open .select2-selection--multiple,
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border-color: #f95716 !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        font-size: 13.5px !important;
+        font-weight: 500 !important;
+        color: #0f172a !important;
+        line-height: 38px !important;
+        padding-left: 12px !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 38px !important;
+        right: 8px !important;
+    }
+    .select2-container--default .select2-selection--multiple {
+        min-height: 40px !important;
+        border-radius: 6px !important;
+        border: 1px solid #cbd5e1 !important;
+        padding: 4px 8px !important;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #fff3ee !important;
+        border: 1px solid rgba(249, 87, 22, 0.3) !important;
         border-radius: 4px !important;
-        border: 1px solid #ced4da !important;
-        margin-bottom: 10px;
+        padding: 2px 8px !important;
+        margin-top: 3px !important;
+        margin-right: 6px !important;
     }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice{
-        margin-top: 2px;
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+        font-size: 12.5px !important;
+        color: #f95716 !important;
+        font-weight: 600 !important;
     }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__display{
-        font-size: 12px;
-        color: #1d1b31;
-        font-weight: 500;
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: #f95716 !important;
+        margin-right: 4px !important;
     }
-    .select2-search--dropdown{
-        padding: 0;
+    .select2-dropdown {
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 6px !important;
+        box-shadow: 0 10px 25px -5px rgba(11, 15, 23, 0.1) !important;
+        overflow: hidden !important;
     }
-    .select2-container--open .select2-dropdown--below{
-        border: 1px solid #ced4da !important;
-        border-top: none !important;
-        border-radius: 4px !important;
-        margin-top: -10px;
+    .select2-results__option--selectable {
+        font-size: 13px !important;
+        color: #1e293b !important;
+        font-weight: 500 !important;
+        padding: 8px 12px !important;
     }
-    .select2-container--default .select2-selection--single .select2-selection__rendered{
-        font-size: 12px;
-        line-height: 25px;
-    }
-    .select2-container--default .select2-search--dropdown .select2-search__field{
-        display: none;
-    }
-    .select2-results__options .select2-results__option.select2-results__option--disabled{
-        font-size: 12px;
+    .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+        background-color: #f95716 !important;
+        color: #ffffff !important;
     }
     .select2-results__options::-webkit-scrollbar {
-        width: 3px;
-        background-color: #F5F5F5!important;
-        background-clip: padding-box;
-    }
-    .select2-results__options::-webkit-scrollbar-track {
-        background-color: #F5F5F5!important;
-        background-clip: padding-box;
+        width: 4px;
+        background-color: #f1f5f9 !important;
     }
     .select2-results__options::-webkit-scrollbar-thumb {
-        background-clip: padding-box;
-        background-color: rgb(216 220 241);
-    }
-    .select2-results__option--selectable{
-        font-size: 12px;
-        color: #1d1b31;
-        font-weight: 500;
+        background-color: #cbd5e1;
+        border-radius: 4px;
     }
 </style>
 
@@ -177,6 +205,45 @@
     #toast-container > .toast-error .toast-progress { background-color: #EF4444 !important; }
     #toast-container > .toast-warning .toast-progress { background-color: #f95716 !important; }
     #toast-container > .toast-info .toast-progress { background-color: #3B82F6 !important; }
+
+    /* Universal Focus Reset: remove button & input focus outline and box-shadow */
+    button:focus,
+    button:focus-visible,
+    button:active,
+    input:focus,
+    input:focus-visible,
+    input:active,
+    textarea:focus,
+    textarea:focus-visible,
+    textarea:active,
+    select:focus,
+    select:focus-visible,
+    select:active,
+    .btn:focus,
+    .btn:focus-visible,
+    .btn:active,
+    .form-control:focus,
+    .form-control:focus-visible,
+    .form-control:active,
+    .form-select:focus,
+    .form-select:focus-visible,
+    .form-select:active,
+    .custom-input:focus,
+    .custom-input:focus-visible,
+    .custom-input:active,
+    .submit-button:focus,
+    .submit-button:focus-visible,
+    .leave-button:focus,
+    .leave-button:focus-visible,
+    .add-new:focus,
+    .add-new:focus-visible,
+    .assign-role-btn:focus,
+    .assign-role-btn:focus-visible,
+    .paginate_button:focus,
+    .paginate_button:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+    }
 </style>
 
 <!-- Admin SCSS Styles -->
