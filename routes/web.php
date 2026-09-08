@@ -10,6 +10,11 @@ Route::get('/', function () {
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ClientEnquiryController;
+use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\MediaController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -31,6 +36,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/role/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
     Route::post('/dashboard/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
     Route::get('/dashboard/role/delete/{id}', [RoleController::class, 'destroy'])->name('role.delete');
+
+    // Project Routes
+    Route::post('/dashboard/projects/{id}/toggle-status', [ProjectController::class, 'toggleStatus'])->name('projects.toggle-status');
+    Route::delete('/dashboard/projects/{id}/media/{mediaId}', [ProjectController::class, 'deleteMedia'])->name('projects.media.destroy');
+    Route::resource('dashboard/projects', ProjectController::class)->names('projects');
+
+    // Service Routes
+    Route::post('/dashboard/services/{id}/toggle-status', [ServiceController::class, 'toggleStatus'])->name('services.toggle-status');
+    Route::delete('/dashboard/services/{id}/media/{mediaId}', [ServiceController::class, 'deleteMedia'])->name('services.media.destroy');
+    Route::resource('dashboard/services', ServiceController::class)->names('services');
+
+    // Client Enquiry Routes
+    Route::resource('dashboard/enquiries', ClientEnquiryController::class)->only(['index', 'show', 'update', 'destroy'])->names('enquiries');
+
+    // Activity Log Routes
+    Route::resource('dashboard/activity-logs', ActivityLogController::class)->only(['index', 'show'])->names('activity-logs');
+
+    // Media Library Routes
+    Route::resource('dashboard/media', MediaController::class)->names('media');
 
     // CKEditor Routes
     Route::get('ckeditor', [\App\Http\Controllers\CkeditorController::class, 'index']);

@@ -32,17 +32,19 @@
             <span class="link_names">Projects & Operations</span>
         </li>
         <li>
-            <a href="{{ route('dashboard') }}#projects-table" class="{{ request()->is('*project*') ? 'active-focus' : '' }}">
+            <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'active-focus' : '' }}">
                 <i class="ri-community-line"></i>
                 <span class="link_names">Project Portfolio</span>
             </a>
         </li>
+        @can('service-list')
         <li>
-            <a href="{{ route('dashboard') }}#services-summary">
+            <a href="{{ route('services.index') }}" class="{{ request()->routeIs('services.*') ? 'active-focus' : '' }}">
                 <i class="ri-hammer-line"></i>
                 <span class="link_names">Core Services</span>
             </a>
         </li>
+        @endcan
         <li>
             <a href="{{ route('dashboard') }}#milestones">
                 <i class="ri-time-line"></i>

@@ -66,6 +66,15 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'theme-edit', 'display_name' => 'Theme edit', 'module' => 'theme'],
             ['name' => 'theme-delete', 'display_name' => 'Theme delete', 'module' => 'theme'],
             ['name' => 'theme-active', 'display_name' => 'Theme activate', 'module' => 'theme'],
+
+            // 10. Media Library
+            ['name' => 'media-list', 'display_name' => 'Media list', 'module' => 'media'],
+            ['name' => 'media-create', 'display_name' => 'Media upload', 'module' => 'media'],
+            ['name' => 'media-edit', 'display_name' => 'Media edit', 'module' => 'media'],
+            ['name' => 'media-delete', 'display_name' => 'Media delete', 'module' => 'media'],
+
+            // 11. Activity Logs
+            ['name' => 'activity-list', 'display_name' => 'Activity logs', 'module' => 'activity-log'],
         ];
 
         // Create or update all active module permissions
