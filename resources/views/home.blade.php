@@ -238,7 +238,7 @@
 
                 <!-- Right Column: Large Primary Project Image (Female Engineer on Site) -->
                 <div class="lg:col-span-4 w-full">
-                    <div class="reveal-image-container relative w-full aspect-[9/13] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-slate-900/5 bg-[#f95716] group"
+                    <div class="reveal-image-container relative w-full aspect-[9/13] rounded-xl overflow-hidden shadow-2xl ring-1 ring-slate-900/5 bg-[#f95716] group"
                         data-reveal-delay="260">
                         <!-- Theme Color Curtain Overlay -->
                         <div class="reveal-curtain absolute inset-0 z-10 bg-[#f95716] pointer-events-none"></div>
@@ -561,7 +561,7 @@
 
                 <!-- Project 01: Metropolitan Skyway & Commercial Tower -->
                 <article
-                    class="project-card group bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between"
+                    class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
                     data-category="commercial">
                     <div>
                         <!-- Photo Container with Smooth Hover Zoom -->
@@ -626,7 +626,7 @@
 
                 <!-- Project 02: Apex Industrial Logistics Hub -->
                 <article
-                    class="project-card group bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between"
+                    class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
                     data-category="structural">
                     <div>
                         <!-- Photo Container with Smooth Hover Zoom -->
@@ -691,7 +691,7 @@
 
                 <!-- Project 03: Meridian Waterfront Civic Center -->
                 <article
-                    class="project-card group bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between"
+                    class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
                     data-category="commercial">
                     <div>
                         <!-- Photo Container with Smooth Hover Zoom -->
@@ -756,7 +756,7 @@
 
                 <!-- Project 04: Crestview Multi-Tier Transit Terminal -->
                 <article
-                    class="project-card group bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between"
+                    class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
                     data-category="infrastructure">
                     <div>
                         <!-- Photo Container with Smooth Hover Zoom -->
