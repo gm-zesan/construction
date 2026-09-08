@@ -77,8 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/dashboard/articles/{id}/toggle-featured', [\App\Http\Controllers\ArticleController::class, 'toggleFeatured'])->name('articles.toggle-featured');
     Route::resource('dashboard/articles', \App\Http\Controllers\ArticleController::class)->names('articles');
 
-    // CKEditor Routes
-    Route::get('ckeditor', [\App\Http\Controllers\CkeditorController::class, 'index']);
+    // CKEditor Media Upload Endpoint
     Route::post('ckeditor/upload', [\App\Http\Controllers\CkeditorController::class, 'upload'])->name('ckeditor.upload');
 });
 

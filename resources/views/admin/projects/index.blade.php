@@ -35,7 +35,9 @@
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All Statuses</option>
                                     @foreach($statuses as $status)
-                                        <option value="{{ $status->value }}">{{ $status->label() }}</option>
+                                        <option value="{{ $status->value }}" {{ request('status') === $status->value ? 'selected' : '' }}>
+                                            {{ $status->label() }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -46,7 +48,9 @@
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All Categories</option>
                                     @foreach($categories as $cat)
-                                        <option value="{{ $cat }}">{{ $cat }}</option>
+                                        <option value="{{ $cat }}" {{ request('category') === $cat ? 'selected' : '' }}>
+                                            {{ $cat }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -56,8 +60,8 @@
                                 <select id="filter_featured" class="form-select form-select-sm custom-input"
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All Projects</option>
-                                    <option value="1">Featured Only</option>
-                                    <option value="0">Standard Only</option>
+                                    <option value="1" {{ request('featured') === '1' ? 'selected' : '' }}>Featured Only</option>
+                                    <option value="0" {{ request('featured') === '0' ? 'selected' : '' }}>Standard Only</option>
                                 </select>
                             </div>
                             <div class="col-md-3 col-sm-6 d-flex align-items-end">
@@ -202,6 +206,10 @@
                 $('#filter_status').val('');
                 $('#filter_category').val('');
                 $('#filter_featured').val('');
+                if (window.history.pushState) {
+                    var cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.pushState({path:cleanUrl}, '', cleanUrl);
+                }
                 table.draw();
             });
 

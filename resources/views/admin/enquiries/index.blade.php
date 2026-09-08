@@ -33,7 +33,7 @@
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All Statuses</option>
                                     @foreach($statuses as $status)
-                                        <option value="{{ $status->value }}">
+                                        <option value="{{ $status->value }}" {{ request('status') === $status->value ? 'selected' : '' }}>
                                             {{ $status === \App\Enums\EnquiryStatus::NEW ? 'Unread (New)' : $status->label() }}
                                         </option>
                                     @endforeach
@@ -172,6 +172,10 @@
 
             $('#reset_filters').on('click', function () {
                 $('#filter_status').val('');
+                if (window.history.pushState) {
+                    var cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.pushState({path:cleanUrl}, '', cleanUrl);
+                }
                 table.draw();
             });
 

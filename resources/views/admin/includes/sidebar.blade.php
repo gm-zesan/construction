@@ -148,12 +148,6 @@
             <span class="link_names">Administration</span>
         </li>
         <li>
-            <a href="{{ url('/ckeditor') }}" class="{{ request()->is('ckeditor*') ? 'active-focus' : '' }}">
-                <i class="ri-edit-2-line"></i>
-                <span class="link_names">Rich Text Studio</span>
-            </a>
-        </li>
-        <li>
             <a href="{{ route('profile.edit') }}" class="{{ Route::is('profile.edit') ? 'active-focus' : '' }}">
                 <i class="ri-settings-3-line"></i>
                 <span class="link_names">Profile Settings</span>

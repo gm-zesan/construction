@@ -119,14 +119,12 @@ it('allows superadmin to assign a role to a user', function () {
     expect($worker->fresh()->hasRole('user'))->toBeFalse();
 });
 
-it('allows authenticated user to view ckeditor studio page', function () {
+it('handles ckeditor upload without file gracefully', function () {
     $superadmin = User::role('superadmin')->first();
 
-    $response = $this->actingAs($superadmin)->get('/ckeditor');
+    $response = $this->actingAs($superadmin)->postJson('/ckeditor/upload');
 
-    $response->assertStatus(200);
-    $response->assertSee('CKEditor');
-    $response->assertSee('editor_demo');
+    $response->assertStatus(400);
 });
 
 it('serves datatables ajax response for users and roles', function () {

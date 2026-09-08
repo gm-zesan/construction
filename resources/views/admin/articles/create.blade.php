@@ -374,7 +374,7 @@
 @endsection
 
 @push('custom-script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             // Auto Slug
@@ -389,16 +389,12 @@
             });
 
             // Initialize CKEditor
-            if (document.querySelector('#editor')) {
-                ClassicEditor
-                    .create(document.querySelector('#editor'), {
-                        ckfinder: {
-                            uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}"
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+            if (typeof CKEDITOR !== 'undefined' && document.getElementById('editor')) {
+                CKEDITOR.replace('editor', {
+                    filebrowserUploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+                    filebrowserUploadMethod: 'form',
+                    height: 350
+                });
             }
 
             // Image Dropzone Handling

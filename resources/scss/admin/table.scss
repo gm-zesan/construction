@@ -1,12 +1,15 @@
 // Mixin
-@mixin flex-box($display, $align-items:null, $justify-content:null, $gap:null) {
+@mixin flex-box($display, $align-items: null, $justify-content: null, $gap: null) {
     display: $display;
+
     @if $align-items {
         align-items: $align-items;
     }
+
     @if $justify-content {
         justify-content: $justify-content;
     }
+
     @if $gap {
         gap: $gap;
     }
@@ -208,7 +211,9 @@ div.dataTables_wrapper {
                     border-bottom: none !important;
 
                     thead {
-                        th, td {
+
+                        th,
+                        td {
                             border-bottom: 1px solid #e2e8f0 !important;
                             border-top: none !important;
                         }
@@ -255,7 +260,9 @@ div.dataTables_wrapper {
                         height: 0 !important;
                         border: none !important;
                     }
-                    th, td {
+
+                    th,
+                    td {
                         height: 0 !important;
                         padding-top: 0 !important;
                         padding-bottom: 0 !important;
@@ -359,7 +366,8 @@ table.dataTable {
                     gap: 6px;
                 }
 
-                a, button {
+                a,
+                button {
                     text-decoration: none;
                     height: 30px;
                     width: 30px;
@@ -466,7 +474,7 @@ table.dataTable {
     padding-left: 0;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin: 0;
 
     .form-check-input {
