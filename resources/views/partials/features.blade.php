@@ -22,7 +22,7 @@
                     <div class="section-heading white-content">
                         <!-- Sub Heading / Eyebrow -->
                         <div class="sub-heading flex items-center gap-2.5 mb-3">
-                            <span class="line w-5 h-[2px] bg-[#f95716]"></span>
+                            <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs font-bold uppercase tracking-[0.2em] text-slate-300">
                                 Interior Execution
                             </span>

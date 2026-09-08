@@ -27,7 +27,7 @@
 
                     <!-- Eyebrow -->
                     <div class="inline-flex items-center gap-3 mb-6 animate-fade-in">
-                        <span class="w-6 h-[2px] bg-[#f95716]"></span>
+                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#f95716] uppercase">
                             CONSTRUCTION & DEVELOPMENT
                         </span>
@@ -71,7 +71,7 @@
                     </div>
 
                     <!-- Overlapping Circular Action Badge -->
-                    <div class="flex items-center -space-x-3 sm:-space-x-4 lg:self-end animate-fade-in">
+                    <div id="hero-action-badge" class="flex items-center -space-x-3 sm:-space-x-4 lg:self-end animate-fade-in will-change-transform">
 
                         <!-- Rotating Orange Circular Stamp -->
                         <div
@@ -111,8 +111,8 @@
                     </div>
 
                     <!-- Project Snapshot & Stat Badge -->
-                    <div
-                        class="flex items-center gap-4 p-3 sm:p-3.5 rounded-lg bg-black/40 border border-white/15 backdrop-blur-md shadow-2xl lg:self-end animate-fade-in">
+                    <div id="hero-snapshot-badge"
+                        class="flex items-center gap-4 p-3 sm:p-3.5 rounded-lg bg-black/40 border border-white/15 backdrop-blur-md shadow-2xl lg:self-end animate-fade-in will-change-transform">
 
                         <!-- Construction Thumbnail Photo -->
                         <div
@@ -154,7 +154,7 @@
                     <div>
                         <!-- Eyebrow -->
                         <div class="about-fade-el flex items-center gap-3 mb-5 sm:mb-6">
-                            <span class="w-7 h-[2px] bg-[#f95716]"></span>
+                            <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-slate-950">
                                 ABOUT CONSTRUCTION
                             </span>
@@ -190,8 +190,8 @@
                     </div>
 
                     <!-- Experience Stat Card -->
-                    <div
-                        class="about-fade-el w-fit min-w-[240px] sm:min-w-[270px] p-6 sm:p-7 bg-[#0b0f17] text-white rounded-2xl border border-white/10 shadow-2xl flex items-center gap-5 sm:gap-6">
+                    <div id="about-experience-card"
+                        class="about-fade-el w-fit min-w-[240px] sm:min-w-[270px] p-6 sm:p-7 bg-[#0b0f17] text-white rounded-2xl border border-white/10 shadow-2xl flex items-center gap-5 sm:gap-6 will-change-transform">
                         <div class="flex items-baseline">
                             <span id="experience-stat-number"
                                 class="font-heading text-6xl sm:text-7xl font-extrabold text-white leading-none tracking-tight">12</span>
@@ -264,7 +264,7 @@
                 <div>
                     <!-- Eyebrow -->
                     <div class="flex items-center gap-3 mb-4 sm:mb-5">
-                        <span class="w-7 h-[2px] bg-[#f95716]"></span>
+                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-[#f95716]">
                             CORE CAPABILITIES
                         </span>
@@ -488,7 +488,7 @@
                 <div>
                     <!-- Eyebrow -->
                     <div class="flex items-center gap-3 mb-4 sm:mb-5">
-                        <span class="w-7 h-[2px] bg-[#f95716]"></span>
+                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-slate-950">
                             RECENT PROJECTS
                         </span>
@@ -533,7 +533,7 @@
             </div>
 
             <!-- 4-Project Showcase Grid -->
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10" style="perspective: 1400px;">
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
 
                 <!-- Project 01: Metropolitan Skyway & Commercial Tower -->
                 <article
@@ -824,7 +824,7 @@
                         <div class="section-heading white-content">
                             <!-- Sub Heading / Eyebrow -->
                             <div class="sub-heading flex items-center gap-2.5 mb-3">
-                                <span class="line w-5 h-[2px] bg-[#f95716]"></span>
+                                <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                                 <span class="text-xs font-bold uppercase tracking-[0.2em] text-slate-300">
                                     Interior Execution
                                 </span>
@@ -990,7 +990,7 @@
                     <div>
                         <!-- Sub Heading / Eyebrow -->
                         <div class="sub-heading flex items-center gap-2.5 mb-3 sm:mb-4">
-                            <span class="line w-5 h-[2px] bg-[#f95716]"></span>
+                            <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
                                 Our Approach
                             </span>
@@ -1153,7 +1153,7 @@
                     <div>
                         <!-- Sub Heading / Eyebrow -->
                         <div class="sub-heading flex items-center gap-2.5 mb-3 sm:mb-4">
-                            <span class="line w-5 h-[2px] bg-[#f95716]"></span>
+                            <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
                                 Project Track Record
                             </span>
@@ -1336,7 +1336,7 @@
             <div id="testimonials-header" class="mb-10 sm:mb-14 will-change-transform">
                 <!-- Sub Heading / Eyebrow -->
                 <div class="sub-heading flex items-center gap-2.5 mb-3 sm:mb-4">
-                    <span class="line w-5 h-[2px] bg-[#f95716]"></span>
+                    <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                     <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
                         Client Feedback
                     </span>
@@ -1586,7 +1586,7 @@
                 <div class="max-w-2xl">
                     <!-- Sub Heading / Eyebrow -->
                     <div class="sub-heading flex items-center gap-2.5 mb-3 sm:mb-4">
-                        <span class="line w-5 h-[2px] bg-[#f95716]"></span>
+                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
                             Field Logs &amp; Updates
                         </span>

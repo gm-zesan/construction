@@ -10,7 +10,7 @@
                 <div>
                     <!-- Eyebrow -->
                     <div class="about-fade-el flex items-center gap-3 mb-5 sm:mb-6">
-                        <span class="w-7 h-[2px] bg-[#f95716]"></span>
+                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-slate-950">
                             ABOUT CONSTRUCTION
                         </span>

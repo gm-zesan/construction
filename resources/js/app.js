@@ -220,6 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
             onUpdate: () => {
                 heroStatNumber.textContent = `${Math.round(statObj.val)}k+`;
             },
+            onComplete: () => {
+                gsap.fromTo(heroStatNumber, { scale: 1.12 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
+            },
         });
     }
 
@@ -259,6 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     ease: 'power2.out',
                     onUpdate: () => {
                         expStatNumber.textContent = Math.round(expObj.val);
+                    },
+                    onComplete: () => {
+                        gsap.fromTo(expStatNumber, { scale: 1.12 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
                     },
                 });
             },
@@ -725,6 +731,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             onUpdate: () => {
                                 counter.textContent = Math.floor(obj.val).toString();
                             },
+                            onComplete: () => {
+                                gsap.fromTo(counter, { scale: 1.1 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
+                            },
                         });
                     });
                 },
@@ -947,6 +956,243 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             );
         }
+    }
+
+    // 17. Architectural Blueprint Accent Line Draw (Precision Drafting Animation)
+    const blueprintLines = document.querySelectorAll('.blueprint-line');
+    blueprintLines.forEach((line) => {
+        const triggerEl = line.closest('.sub-heading') || line.closest('.inline-flex') || line.closest('.about-fade-el') || line.closest('.section-heading') || line.parentElement || line;
+        gsap.fromTo(
+            line,
+            { scaleX: 0, transformOrigin: 'left center' },
+            {
+                scaleX: 1,
+                duration: 0.95,
+                ease: 'power3.out',
+                clearProps: 'transform',
+                scrollTrigger: {
+                    trigger: triggerEl,
+                    start: 'top 92%',
+                    once: true,
+                },
+            }
+        );
+    });
+
+    // 18. Multi-layer Architectural Parallax Depth (Engineered 3D Depth of Field Across Core Sections)
+
+    // Hero Floating Badges Multi-Plane Depth
+    const heroActionBadge = document.getElementById('hero-action-badge');
+    if (heroActionBadge) {
+        gsap.to(heroActionBadge, {
+            y: -30,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 0.8,
+            },
+        });
+    }
+
+    const heroSnapshotBadge = document.getElementById('hero-snapshot-badge');
+    if (heroSnapshotBadge) {
+        gsap.to(heroSnapshotBadge, {
+            y: 22,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 0.8,
+            },
+        });
+    }
+
+    // About Section Multi-Layer Plates & Experience Floating Card
+    const aboutSecondaryImg = document.querySelector('#about .lg\\:col-span-3 .reveal-image-container');
+    const aboutPrimaryImg = document.querySelector('#about .lg\\:col-span-4 .reveal-image-container');
+    const aboutExpCard = document.getElementById('about-experience-card');
+
+    if (aboutSecondaryImg && aboutPrimaryImg) {
+        gsap.to(aboutSecondaryImg, {
+            y: -24,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.8,
+            },
+        });
+        gsap.to(aboutPrimaryImg, {
+            y: 20,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.8,
+            },
+        });
+    }
+
+    if (aboutExpCard) {
+        gsap.to(aboutExpCard, {
+            y: -18,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.7,
+            },
+        });
+    }
+
+    // Projects Showcase Architectural Parallax (Inner Photo Drift & Masonry Tier)
+    const projectImgs = document.querySelectorAll('.project-card-img');
+    projectImgs.forEach((img) => {
+        gsap.fromTo(
+            img,
+            { yPercent: -5, scale: 1.07 },
+            {
+                yPercent: 5,
+                scale: 1.07,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: img.closest('.project-card'),
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1.0,
+                },
+            }
+        );
+    });
+
+    if (window.innerWidth >= 768) {
+        const evenProjectCards = document.querySelectorAll('#projects-grid > article:nth-child(even)');
+        evenProjectCards.forEach((card) => {
+            gsap.to(card, {
+                y: 20,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#projects',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1.0,
+                },
+            });
+        });
+    }
+
+    // Features Section Architectural Parallax
+    const featuresFocalImg = document.getElementById('features-focal-img');
+    if (featuresFocalImg) {
+        gsap.fromTo(
+            featuresFocalImg,
+            { yPercent: -5, scale: 1.07 },
+            {
+                yPercent: 5,
+                scale: 1.07,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#features',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.9,
+                },
+            }
+        );
+    }
+
+    // Why Choose Us Landscape Photo Parallax
+    const whyChooseMainImg = document.getElementById('why-choose-main-img');
+    if (whyChooseMainImg) {
+        gsap.fromTo(
+            whyChooseMainImg,
+            { yPercent: -5, scale: 1.07 },
+            {
+                yPercent: 5,
+                scale: 1.07,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#why-choose-us',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.9,
+                },
+            }
+        );
+    }
+
+    // Experience Section Team Photo & Cantilevered Cards Multi-Plane Depth
+    const experienceMainImg = document.getElementById('experience-main-img');
+    if (experienceMainImg) {
+        gsap.fromTo(
+            experienceMainImg,
+            { yPercent: -5, scale: 1.07 },
+            {
+                yPercent: 5,
+                scale: 1.07,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#experience',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.9,
+                },
+            }
+        );
+    }
+
+    const expStatCards = document.querySelectorAll('.experience-stat-card');
+    if (expStatCards.length > 0 && window.innerWidth >= 640) {
+        expStatCards.forEach((card, idx) => {
+            const offset = idx % 2 === 0 ? -12 : 12;
+            gsap.to(card, {
+                y: offset,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#experience',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.9,
+                },
+            });
+        });
+    }
+
+    // 20. Magnetic Precision Pull on Interactive Action Buttons (Desktop only)
+    if (window.matchMedia('(pointer: fine)').matches) {
+        const magneticElements = document.querySelectorAll(
+            '.project-card a, .service-row a, .testimonial-swiper-next, .testimonial-swiper-prev, #scroll-progress-btn'
+        );
+        magneticElements.forEach((el) => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(el, {
+                    x: x * 0.28,
+                    y: y * 0.28,
+                    duration: 0.3,
+                    ease: 'power2.out',
+                    overwrite: 'auto',
+                });
+            });
+
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'elastic.out(1, 0.4)',
+                    overwrite: 'auto',
+                });
+            });
+        });
     }
 
     // Refresh ScrollTrigger after all page assets and fonts finish loading
