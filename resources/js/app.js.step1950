@@ -1,0 +1,1558 @@
+import 'lenis/dist/lenis.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/effect-fade';
+import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Swiper from 'swiper';
+import { Navigation, EffectFade, Autoplay } from 'swiper/modules';
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Global exposure for custom animations across the site
+window.gsap = gsap;
+window.ScrollTrigger = ScrollTrigger;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Initialize Lenis Smooth Scroll with buttery inertia
+    const lenis = new Lenis({
+        autoRaf: true,
+        lerp: 0.08, // Buttery smooth momentum
+        smoothWheel: true,
+        wheelMultiplier: 1.05,
+        touchMultiplier: 1.5,
+    });
+
+    window.lenis = lenis;
+
+    // Synchronize Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    // Smooth scroll for all hash anchor links (#about, #projects, etc.)
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', (e) => {
+            const targetId = anchor.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                const targetElem = document.querySelector(targetId);
+                if (targetElem) {
+                    e.preventDefault();
+                    lenis.scrollTo(targetElem, { offset: -20, duration: 1.3 });
+                }
+            }
+        });
+    });
+
+    // 2. Header scroll state handling
+    const header = document.getElementById('site-header');
+
+    const handleHeaderScroll = (scroll) => {
+        if (!header) return;
+        const currentY = typeof scroll === 'number' ? scroll : window.scrollY;
+        if (currentY > 30) {
+            header.classList.add('bg-[#0b0f17]/95', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+            header.classList.remove('bg-transparent', 'py-6');
+        } else {
+            header.classList.remove('bg-[#0b0f17]/95', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+            header.classList.add('bg-transparent', 'py-6');
+        }
+    };
+
+    lenis.on('scroll', ({ scroll }) => handleHeaderScroll(scroll));
+    handleHeaderScroll(window.scrollY);
+
+    // 3. Mobile drawer navigation
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const mobileBackdrop = document.getElementById('mobile-backdrop');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const burgerBar1 = document.getElementById('burger-bar-1');
+    const burgerBar2 = document.getElementById('burger-bar-2');
+    const burgerBar3 = document.getElementById('burger-bar-3');
+
+    let isMenuOpen = false;
+
+    const openMenu = () => {
+        isMenuOpen = true;
+        if (mobileDrawer) {
+            mobileDrawer.classList.remove('translate-x-full');
+            mobileDrawer.classList.add('translate-x-0');
+        }
+        if (mobileBackdrop) {
+            mobileBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+            mobileBackdrop.classList.add('opacity-100', 'pointer-events-auto');
+        }
+        if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', 'true');
+        }
+        if (burgerBar1 && burgerBar2 && burgerBar3) {
+            burgerBar1.classList.add('rotate-45', 'translate-y-2');
+            burgerBar2.classList.add('opacity-0');
+            burgerBar3.classList.add('-rotate-45', '-translate-y-2');
+        }
+        lenis.stop();
+        document.body.classList.add('overflow-hidden');
+    };
+
+    const closeMenu = () => {
+        isMenuOpen = false;
+        if (mobileDrawer) {
+            mobileDrawer.classList.remove('translate-x-0');
+            mobileDrawer.classList.add('translate-x-full');
+        }
+        if (mobileBackdrop) {
+            mobileBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
+            mobileBackdrop.classList.add('opacity-0', 'pointer-events-none');
+        }
+        if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        }
+        if (burgerBar1 && burgerBar2 && burgerBar3) {
+            burgerBar1.classList.remove('rotate-45', 'translate-y-2');
+            burgerBar2.classList.remove('opacity-0');
+            burgerBar3.classList.remove('-rotate-45', '-translate-y-2');
+        }
+        lenis.start();
+        document.body.classList.remove('overflow-hidden');
+    };
+
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isMenuOpen) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+    }
+
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', closeMenu);
+    }
+
+    if (mobileBackdrop) {
+        mobileBackdrop.addEventListener('click', closeMenu);
+    }
+
+    mobileNavLinks.forEach((link) => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isMenuOpen) {
+            closeMenu();
+        }
+    });
+
+    // 4. Floating scroll percentage indicator & Back-to-Top with Lenis
+    const scrollProgressBtn = document.getElementById('scroll-progress-btn');
+    const scrollPercentageText = document.getElementById('scroll-percentage-text');
+
+    lenis.on('scroll', ({ scroll, limit }) => {
+        if (!scrollProgressBtn || !scrollPercentageText) return;
+        if (limit <= 0) return;
+
+        const currentProgress = Math.min(100, Math.max(0, Math.round((scroll / limit) * 100)));
+        scrollPercentageText.textContent = `${currentProgress}%`;
+
+        if (scroll > 120) {
+            scrollProgressBtn.classList.remove('opacity-0', 'pointer-events-none');
+            scrollProgressBtn.classList.add('opacity-100', 'pointer-events-auto');
+        } else {
+            scrollProgressBtn.classList.remove('opacity-100', 'pointer-events-auto');
+            scrollProgressBtn.classList.add('opacity-0', 'pointer-events-none');
+        }
+    });
+
+    if (scrollProgressBtn) {
+        scrollProgressBtn.addEventListener('click', () => {
+            lenis.scrollTo(0, { duration: 1.4 });
+        });
+    }
+
+    // 5. Hero GSAP Animations (Parallax & Counter)
+    const heroBgImg = document.getElementById('hero-bg-img');
+    if (heroBgImg) {
+        gsap.to(heroBgImg, {
+            yPercent: 16,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,
+            },
+        });
+    }
+
+    const heroContentCol = document.getElementById('hero-content-col');
+    if (heroContentCol) {
+        gsap.to(heroContentCol, {
+            y: -40,
+            opacity: 0.35,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 0.6,
+            },
+        });
+    }
+
+    const heroStatNumber = document.getElementById('hero-stat-number');
+    if (heroStatNumber) {
+        const statObj = { val: 0 };
+        gsap.to(statObj, {
+            val: 24,
+            duration: 1.8,
+            ease: 'power2.out',
+            delay: 0.3,
+            onUpdate: () => {
+                heroStatNumber.textContent = `${Math.round(statObj.val)}k+`;
+            },
+        });
+    }
+
+    // 6. About Section Animations (Content Fade-Up & 12+ Years Counter)
+    const aboutFadeEls = document.querySelectorAll('.about-fade-el');
+    if (aboutFadeEls.length > 0) {
+        gsap.fromTo(
+            aboutFadeEls,
+            { opacity: 0, y: 35 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                stagger: 0.12,
+                ease: 'power2.out',
+                clearProps: 'opacity,transform',
+                scrollTrigger: {
+                    trigger: '#about',
+                    start: 'top 82%',
+                    once: true,
+                },
+            }
+        );
+    }
+
+    const expStatNumber = document.getElementById('experience-stat-number');
+    if (expStatNumber) {
+        const expObj = { val: 0 };
+        ScrollTrigger.create({
+            trigger: expStatNumber,
+            start: 'top 92%',
+            once: true,
+            onEnter: () => {
+                gsap.to(expObj, {
+                    val: 12,
+                    duration: 1.8,
+                    ease: 'power2.out',
+                    onUpdate: () => {
+                        expStatNumber.textContent = Math.round(expObj.val);
+                    },
+                });
+            },
+        });
+    }
+
+    // 7. GSAP Image Reveal & Visible Cover (Right to Left, Bidirectional & Tuned on Every Scroll)
+    const revealContainers = document.querySelectorAll('.reveal-image-container');
+
+    revealContainers.forEach((container, index) => {
+        const curtain = container.querySelector('.reveal-curtain');
+        const image = container.querySelector('.reveal-image');
+        if (!curtain || !image) return;
+
+        const staggerDelay = index === 0 ? 0 : 0.12;
+
+        // Initial setup: curtain covers the image (0%), image slightly zoomed (1.08)
+        gsap.set(curtain, { xPercent: 0 });
+        gsap.set(image, { scale: 1.08 });
+
+        let isRevealed = false;
+
+        const reveal = () => {
+            if (isRevealed) return;
+            isRevealed = true;
+            gsap.to(curtain, {
+                xPercent: -101,
+                duration: 1.3,
+                ease: 'power2.out',
+                delay: staggerDelay,
+                overwrite: 'auto',
+            });
+            gsap.to(image, {
+                scale: 1.0,
+                duration: 1.4,
+                ease: 'power2.out',
+                delay: staggerDelay,
+                overwrite: 'auto',
+            });
+        };
+
+        const cover = () => {
+            if (!isRevealed) return;
+            isRevealed = false;
+            gsap.to(curtain, {
+                xPercent: 0,
+                duration: 1.1,
+                ease: 'power2.inOut',
+                overwrite: 'auto',
+            });
+            gsap.to(image, {
+                scale: 1.08,
+                duration: 1.1,
+                ease: 'power2.inOut',
+                overwrite: 'auto',
+            });
+        };
+
+        // ScrollTrigger with directional progress:
+        // - Scrolling down into view: reveals early as soon as image touches bottom of viewport
+        // - Scrolling up towards Hero: covers a little bit later (at progress <= 0.20) as it approaches the bottom edge
+        // - Scrolling down past About: covers later (at progress >= 0.88) as it nears the top edge
+        ScrollTrigger.create({
+            trigger: container,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const dir = self.direction; // 1 = scrolling down, -1 = scrolling up
+
+                if (dir === 1) {
+                    // Scrolling DOWN
+                    if (p >= 0.03 && p < 0.88) {
+                        reveal();
+                    } else if (p >= 0.88) {
+                        cover();
+                    }
+                } else if (dir === -1) {
+                    // Scrolling UP back to Hero
+                    if (p <= 0.20) {
+                        // Covers a little bit later as image heads towards the bottom
+                        cover();
+                    } else if (p > 0.20 && p < 0.88) {
+                        reveal();
+                    }
+                }
+            },
+        });
+    });
+
+    // 8. Services Section Animations (Parallax & Unorganized-to-Organized Snap Reveal)
+    const servicesSection = document.getElementById('services');
+    const servicesBgImg = document.getElementById('services-bg-img');
+    const servicesHeader = document.getElementById('services-header');
+    const serviceCards = document.querySelectorAll('.service-card');
+
+    if (servicesBgImg && servicesSection) {
+        gsap.to(servicesBgImg, {
+            yPercent: 12,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: servicesSection,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+            },
+        });
+    }
+
+    if (servicesSection && serviceCards.length > 0) {
+        let isRevealed = false;
+
+        // Custom unorganized (scattered, rotated, offset) positions for each card
+        const chaoticTransforms = [
+            { x: -42, y: 75, rotation: -9, scale: 0.88 },
+            { x: -14, y: 95, rotation: 7, scale: 0.90 },
+            { x: 18, y: 85, rotation: -6, scale: 0.89 },
+            { x: 45, y: 105, rotation: 10, scale: 0.87 },
+        ];
+
+        const animateIn = () => {
+            if (isRevealed) return;
+            isRevealed = true;
+
+            if (servicesHeader) {
+                gsap.to(servicesHeader, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            // Animate cards from unorganized/scattered to organized alignment (starts a little bit later)
+            serviceCards.forEach((card, index) => {
+                const delay = 0.18 + index * 0.11;
+                gsap.to(card, {
+                    x: 0,
+                    y: 0,
+                    rotation: 0,
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.95,
+                    delay: delay,
+                    ease: 'back.out(1.15)', // Snaps cleanly into the organized structural grid
+                    overwrite: 'auto',
+                });
+            });
+        };
+
+        const animateOut = () => {
+            if (!isRevealed) return;
+            isRevealed = false;
+
+            if (servicesHeader) {
+                gsap.to(servicesHeader, {
+                    y: 35,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            // Scatter cards back to unorganized state in plain sight with reverse stagger
+            serviceCards.forEach((card, index) => {
+                const transform = chaoticTransforms[index % chaoticTransforms.length];
+                const delay = (3 - index) * 0.04;
+                gsap.to(card, {
+                    x: transform.x,
+                    y: transform.y,
+                    rotation: transform.rotation,
+                    scale: transform.scale,
+                    opacity: 0,
+                    duration: 0.65,
+                    delay: delay,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            });
+        };
+
+        // Set initial chaotic/unorganized positions
+        serviceCards.forEach((card, index) => {
+            const transform = chaoticTransforms[index % chaoticTransforms.length];
+            gsap.set(card, {
+                x: transform.x,
+                y: transform.y,
+                rotation: transform.rotation,
+                scale: transform.scale,
+                opacity: 0,
+                transformOrigin: 'center center',
+            });
+        });
+        if (servicesHeader) gsap.set(servicesHeader, { y: 35, opacity: 0 });
+
+        // Continuous directional ScrollTrigger on every scroll
+        ScrollTrigger.create({
+            trigger: servicesSection,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const dir = self.direction; // 1 = scrolling down, -1 = scrolling up
+
+                if (dir === 1) {
+                    // Scrolling DOWN - snap into organized grid
+                    if (p >= 0.08) {
+                        animateIn();
+                    }
+                } else if (dir === -1) {
+                    // Scrolling UP back to About / Hero - visibly scatter out while in viewport
+                    if (p <= 0.28) {
+                        animateOut();
+                    } else if (p > 0.28) {
+                        animateIn();
+                    }
+                }
+            },
+        });
+    }
+
+    // 9. Projects Section Animations (Subtle Architectural Editorial Scroll)
+    const projectsSection = document.getElementById('projects');
+    const projectsHeader = document.getElementById('projects-header');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    if (projectsSection && projectCards.length > 0) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Subtle Header Entrance
+        if (projectsHeader && !prefersReducedMotion) {
+            gsap.fromTo(
+                projectsHeader,
+                { y: 25, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.9,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: projectsHeader,
+                        start: 'top 88%',
+                        toggleActions: 'play none none none',
+                    },
+                }
+            );
+        }
+
+        // Subtle architectural scroll-based parallax & scale for each project card
+        if (!prefersReducedMotion) {
+            projectCards.forEach((card) => {
+                const img = card.querySelector('.project-card-img');
+                const content = card.querySelector('.p-6, .sm\\:p-8');
+
+                // Image subtle translation & scaling: y: 20px -> -20px, scale: 1 -> 0.96
+                if (img) {
+                    gsap.fromTo(
+                        img,
+                        { y: 20, scale: 1 },
+                        {
+                            y: -20,
+                            scale: 0.96,
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: card,
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: 1,
+                            },
+                        }
+                    );
+                }
+
+                // Content subtle upward glide & soft exit opacity: y: 15px -> -10px, opacity: 1 -> 0.75
+                if (content) {
+                    gsap.fromTo(
+                        content,
+                        { y: 15, opacity: 1 },
+                        {
+                            y: -10,
+                            opacity: 0.75,
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: card,
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: 1,
+                            },
+                        }
+                    );
+                }
+            });
+        }
+    }
+
+    // 10. Projects Interactive Category Filter Tabs with Butter-Smooth FLIP Layout Transitions
+    const filterButtons = document.querySelectorAll('.project-filter-btn');
+    if (filterButtons.length > 0 && projectCards.length > 0) {
+        let isFilterTransitioning = false;
+
+        const handleFilter = (targetFilter) => {
+            if (isFilterTransitioning) return;
+            isFilterTransitioning = true;
+
+            const cards = Array.from(projectCards);
+
+            // 1. FIRST: Record bounding client rects of all currently visible cards
+            const firstPositions = new Map();
+            cards.forEach((card) => {
+                if (card.style.display !== 'none') {
+                    firstPositions.set(card, card.getBoundingClientRect());
+                }
+            });
+
+            // 2. Identify cards to hide, cards to show, and cards staying visible
+            const cardsToHide = [];
+            const cardsToShow = [];
+            const cardsStaying = [];
+
+            cards.forEach((card) => {
+                const category = card.getAttribute('data-category');
+                const matches = targetFilter === 'all' || category === targetFilter;
+                const isCurrentlyVisible = card.style.display !== 'none';
+
+                if (matches) {
+                    if (isCurrentlyVisible) {
+                        cardsStaying.push(card);
+                    } else {
+                        cardsToShow.push(card);
+                    }
+                } else {
+                    if (isCurrentlyVisible) {
+                        cardsToHide.push(card);
+                    }
+                }
+            });
+
+            const onCompleteFilter = () => {
+                isFilterTransitioning = false;
+                ScrollTrigger.refresh();
+            };
+
+            if (cardsToHide.length > 0) {
+                // Smoothly shrink & fade out cards leaving the view
+                gsap.to(cardsToHide, {
+                    opacity: 0,
+                    scale: 0.85,
+                    y: 20,
+                    duration: 0.28,
+                    ease: 'power2.in',
+                    overwrite: 'auto',
+                    onComplete: () => {
+                        cardsToHide.forEach((card) => {
+                            card.style.display = 'none';
+                            gsap.set(card, { opacity: 0, scale: 0.85, y: 20, rotationX: 0 });
+                        });
+
+                        // Display entering cards invisibly to measure new layout
+                        cardsToShow.forEach((card) => {
+                            card.style.display = 'flex';
+                            gsap.set(card, { opacity: 0, scale: 0.85, y: 30, rotationX: 0 });
+                        });
+
+                        // 3. FLIP: Animate staying cards smoothly from their inverted positions
+                        cardsStaying.forEach((card) => {
+                            const firstRect = firstPositions.get(card);
+                            if (firstRect) {
+                                const lastRect = card.getBoundingClientRect();
+                                const deltaX = firstRect.left - lastRect.left;
+                                const deltaY = firstRect.top - lastRect.top;
+
+                                if (deltaX !== 0 || deltaY !== 0) {
+                                    gsap.fromTo(
+                                        card,
+                                        { x: deltaX, y: deltaY, rotationX: 0 },
+                                        { x: 0, y: 0, rotationX: 0, duration: 0.55, ease: 'power3.out', overwrite: 'auto' }
+                                    );
+                                }
+                            }
+                        });
+
+                        // 4. Animate entering cards into view with lively back ease
+                        if (cardsToShow.length > 0) {
+                            gsap.to(cardsToShow, {
+                                opacity: 1,
+                                scale: 1,
+                                y: 0,
+                                rotationX: 0,
+                                duration: 0.6,
+                                stagger: 0.08,
+                                ease: 'back.out(1.15)',
+                                overwrite: 'auto',
+                                onComplete: onCompleteFilter,
+                            });
+                        } else {
+                            setTimeout(onCompleteFilter, 300);
+                        }
+                    },
+                });
+            } else {
+                // No cards to hide; directly reveal entering cards with FLIP for staying cards
+                cardsToShow.forEach((card) => {
+                    card.style.display = 'flex';
+                    gsap.set(card, { opacity: 0, scale: 0.85, y: 30, rotationX: 0 });
+                });
+
+                cardsStaying.forEach((card) => {
+                    const firstRect = firstPositions.get(card);
+                    if (firstRect) {
+                        const lastRect = card.getBoundingClientRect();
+                        const deltaX = firstRect.left - lastRect.left;
+                        const deltaY = firstRect.top - lastRect.top;
+
+                        if (deltaX !== 0 || deltaY !== 0) {
+                            gsap.fromTo(
+                                card,
+                                { x: deltaX, y: deltaY, rotationX: 0 },
+                                { x: 0, y: 0, rotationX: 0, duration: 0.55, ease: 'power3.out', overwrite: 'auto' }
+                            );
+                        }
+                    }
+                });
+
+                gsap.to(cardsToShow, {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    rotationX: 0,
+                    duration: 0.6,
+                    stagger: 0.08,
+                    ease: 'back.out(1.15)',
+                    overwrite: 'auto',
+                    onComplete: onCompleteFilter,
+                });
+            }
+        };
+
+        filterButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                if (btn.classList.contains('active')) return;
+                const filter = btn.getAttribute('data-filter');
+
+                // Update active button appearance
+                filterButtons.forEach((b) => {
+                    b.classList.remove('active', 'bg-[#0b0f17]', 'text-white', 'shadow-md');
+                    b.classList.add('bg-slate-100', 'text-slate-700');
+                });
+                btn.classList.add('active', 'bg-[#0b0f17]', 'text-white', 'shadow-md');
+                btn.classList.remove('bg-slate-100', 'text-slate-700');
+
+                handleFilter(filter);
+            });
+        });
+    }
+
+    // 11. Core Features Section Parallax Layer Reveal
+    const featuresSection = document.getElementById('features');
+    const featuresFocalImg = document.getElementById('features-focal-img');
+    const featuresQuoteCard = document.getElementById('features-quote-card');
+    const featuresLeftCol = document.getElementById('features-left-col');
+    const featuresCenterCol = document.getElementById('features-center-col');
+    const featureCards = document.querySelectorAll('.feature-item-2, .feature-card');
+
+    if (featuresSection) {
+        // Continuous Parallax Scrubbing on Depth Layers
+        if (featuresQuoteCard) {
+            gsap.to(featuresQuoteCard, {
+                y: -25,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: featuresSection,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.7,
+                },
+            });
+        }
+
+        let isFeaturesRevealed = false;
+
+        const animateFeaturesIn = () => {
+            if (isFeaturesRevealed) return;
+            isFeaturesRevealed = true;
+
+            if (featuresLeftCol) {
+                const headerEl = featuresLeftCol.querySelector('div:first-child');
+                if (headerEl) {
+                    gsap.to(headerEl, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.85,
+                        ease: 'power2.out',
+                        overwrite: 'auto',
+                    });
+                }
+            }
+
+            if (featuresQuoteCard) {
+                gsap.to(featuresQuoteCard, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.95,
+                    delay: 0.12,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (featuresCenterCol) {
+                gsap.to(featuresCenterCol, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.0,
+                    delay: 0.08,
+                    ease: 'power2.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (featureCards.length > 0) {
+                gsap.to(featureCards, {
+                    opacity: 1,
+                    x: 0,
+                    y: 0,
+                    duration: 0.85,
+                    stagger: 0.12,
+                    delay: 0.16,
+                    ease: 'power2.out',
+                    overwrite: 'auto',
+                });
+            }
+        };
+
+        const animateFeaturesOut = () => {
+            if (!isFeaturesRevealed) return;
+            isFeaturesRevealed = false;
+
+            if (featuresLeftCol) {
+                const headerEl = featuresLeftCol.querySelector('div:first-child');
+                if (headerEl) {
+                    gsap.to(headerEl, {
+                        y: 35,
+                        opacity: 0,
+                        duration: 0.45,
+                        ease: 'power2.inOut',
+                        overwrite: 'auto',
+                    });
+                }
+            }
+
+            if (featuresQuoteCard) {
+                gsap.to(featuresQuoteCard, {
+                    opacity: 0,
+                    y: 35,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (featuresCenterCol) {
+                gsap.to(featuresCenterCol, {
+                    opacity: 0,
+                    y: 35,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (featureCards.length > 0) {
+                gsap.to(featureCards, {
+                    opacity: 0,
+                    x: 30,
+                    duration: 0.45,
+                    stagger: 0.04,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+        };
+
+        // Initial setup for parallax layer reveal
+        if (featuresLeftCol) {
+            const headerEl = featuresLeftCol.querySelector('div:first-child');
+            if (headerEl) gsap.set(headerEl, { y: 35, opacity: 0 });
+        }
+        if (featuresQuoteCard) gsap.set(featuresQuoteCard, { y: 40, opacity: 0 });
+        if (featuresCenterCol) gsap.set(featuresCenterCol, { y: 35, opacity: 0 });
+        if (featureCards.length > 0) gsap.set(featureCards, { x: 35, opacity: 0 });
+
+        // Continuous directional ScrollTrigger
+        ScrollTrigger.create({
+            trigger: featuresSection,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const dir = self.direction; // 1 = scrolling down, -1 = scrolling up
+
+                if (dir === 1) {
+                    // Scrolling DOWN
+                    if (p >= 0.08) {
+                        animateFeaturesIn();
+                    }
+                } else if (dir === -1) {
+                    // Scrolling UP back to Projects
+                    if (p <= 0.28) {
+                        animateFeaturesOut();
+                    } else if (p > 0.28) {
+                        animateFeaturesIn();
+                    }
+                }
+            },
+        });
+    }
+
+    // 12. Why Choose Us Section Split Horizon & Kinetic Dial Reveal
+    const whyChooseSection = document.getElementById('why-choose-us');
+    const whyChooseLeftCol = document.getElementById('why-choose-left-col');
+    const whyChooseImgBox = document.getElementById('why-choose-img-box');
+    const whyChooseMainImg = document.getElementById('why-choose-main-img');
+    const whyChooseStatCard = document.getElementById('why-choose-stat-card');
+    const whyChooseCounter = document.getElementById('why-choose-counter');
+    const whyChooseItems = document.querySelectorAll('.why-choose-feature-item');
+    const whyChooseBadges = document.querySelectorAll('.why-choose-icon-badge');
+
+    if (whyChooseSection) {
+        let isWhyChooseRevealed = false;
+        let counterAnim = null;
+
+        const startCounter = () => {
+            if (whyChooseCounter) {
+                const target = parseInt(whyChooseCounter.getAttribute('data-target') || '22', 10);
+                const obj = { val: 0 };
+                counterAnim = gsap.to(obj, {
+                    val: target,
+                    duration: 1.6,
+                    ease: 'power2.out',
+                    onUpdate: () => {
+                        whyChooseCounter.textContent = Math.floor(obj.val).toString();
+                    },
+                });
+            }
+        };
+
+        const resetCounter = () => {
+            if (counterAnim) counterAnim.kill();
+            if (whyChooseCounter) whyChooseCounter.textContent = '0';
+        };
+
+        const animateWhyChooseIn = () => {
+            if (isWhyChooseRevealed) return;
+            isWhyChooseRevealed = true;
+
+            // Left Header & Text
+            if (whyChooseLeftCol) {
+                const textWrapper = whyChooseLeftCol.querySelector('div:first-child');
+                if (textWrapper) {
+                    gsap.to(textWrapper, {
+                        x: 0,
+                        opacity: 1,
+                        duration: 0.9,
+                        ease: 'power3.out',
+                        overwrite: 'auto',
+                    });
+                }
+            }
+
+            // Stat Card & Number Counter
+            if (whyChooseStatCard) {
+                gsap.to(whyChooseStatCard, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.85,
+                    delay: 0.15,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+                startCounter();
+            }
+
+            // Feature Items
+            if (whyChooseItems.length > 0) {
+                gsap.to(whyChooseItems, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.85,
+                    stagger: 0.14,
+                    delay: 0.16,
+                    ease: 'power2.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            // Dial Spin on Icon Badges
+            if (whyChooseBadges.length > 0) {
+                gsap.to(whyChooseBadges, {
+                    rotation: 0,
+                    scale: 1,
+                    duration: 0.9,
+                    stagger: 0.14,
+                    delay: 0.18,
+                    ease: 'back.out(1.4)',
+                    overwrite: 'auto',
+                });
+            }
+        };
+
+        const animateWhyChooseOut = () => {
+            if (!isWhyChooseRevealed) return;
+            isWhyChooseRevealed = false;
+
+            if (whyChooseLeftCol) {
+                const textWrapper = whyChooseLeftCol.querySelector('div:first-child');
+                if (textWrapper) {
+                    gsap.to(textWrapper, {
+                        x: -35,
+                        opacity: 0,
+                        duration: 0.45,
+                        ease: 'power2.inOut',
+                        overwrite: 'auto',
+                    });
+                }
+            }
+
+            if (whyChooseStatCard) {
+                gsap.to(whyChooseStatCard, {
+                    y: 25,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+                resetCounter();
+            }
+
+            if (whyChooseItems.length > 0) {
+                gsap.to(whyChooseItems, {
+                    y: 25,
+                    opacity: 0,
+                    duration: 0.4,
+                    stagger: 0.04,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (whyChooseBadges.length > 0) {
+                gsap.to(whyChooseBadges, {
+                    rotation: -60,
+                    scale: 0.85,
+                    duration: 0.4,
+                    stagger: 0.04,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+        };
+
+        // Initial setup for Kinetic Split & Dial Reveal
+        if (whyChooseLeftCol) {
+            const textWrapper = whyChooseLeftCol.querySelector('div:first-child');
+            if (textWrapper) gsap.set(textWrapper, { x: -35, opacity: 0 });
+        }
+        if (whyChooseStatCard) gsap.set(whyChooseStatCard, { y: 25, opacity: 0 });
+        if (whyChooseItems.length > 0) gsap.set(whyChooseItems, { y: 25, opacity: 0 });
+        if (whyChooseBadges.length > 0) gsap.set(whyChooseBadges, { rotation: -60, scale: 0.85 });
+
+        // Continuous directional ScrollTrigger
+        ScrollTrigger.create({
+            trigger: whyChooseSection,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const dir = self.direction; // 1 = scrolling down, -1 = scrolling up
+
+                if (dir === 1) {
+                    // Scrolling DOWN into view
+                    if (p >= 0.08) {
+                        animateWhyChooseIn();
+                    }
+                } else if (dir === -1) {
+                    // Scrolling UP back to Features
+                    if (p <= 0.28) {
+                        animateWhyChooseOut();
+                    } else if (p > 0.28) {
+                        animateWhyChooseIn();
+                    }
+                }
+            },
+        });
+    }
+
+    // 13. Experience & CTA Section Quad-Wave Elevation & Dynamic Counters
+    const expSection = document.getElementById('experience');
+    const expRightCol = document.getElementById('experience-right-col');
+    const expCards = document.querySelectorAll('.experience-stat-card');
+    const expCounters = document.querySelectorAll('.exp-counter');
+
+    if (expSection) {
+        let isExpRevealed = false;
+        let expTweens = [];
+
+        const startExpCounters = () => {
+            expCounters.forEach((counter) => {
+                const target = parseInt(counter.getAttribute('data-target') || '0', 10);
+                const obj = { val: 0 };
+                const tween = gsap.to(obj, {
+                    val: target,
+                    duration: 1.8,
+                    ease: 'power2.out',
+                    onUpdate: () => {
+                        counter.textContent = Math.floor(obj.val).toString();
+                    },
+                });
+                expTweens.push(tween);
+            });
+        };
+
+        const resetExpCounters = () => {
+            expTweens.forEach((t) => t.kill());
+            expTweens = [];
+            expCounters.forEach((c) => (c.textContent = '0'));
+        };
+
+        const animateExpIn = () => {
+            if (isExpRevealed) return;
+            isExpRevealed = true;
+
+            // Right Header & CTAs
+            if (expRightCol) {
+                gsap.to(expRightCol, {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.9,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            // Quad-Wave Metric Cards
+            if (expCards.length > 0) {
+                gsap.to(expCards, {
+                    y: 0,
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.9,
+                    stagger: 0.12,
+                    delay: 0.15,
+                    ease: 'back.out(1.2)',
+                    overwrite: 'auto',
+                });
+                startExpCounters();
+            }
+        };
+
+        const animateExpOut = () => {
+            if (!isExpRevealed) return;
+            isExpRevealed = false;
+
+            if (expRightCol) {
+                gsap.to(expRightCol, {
+                    x: 35,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (expCards.length > 0) {
+                gsap.to(expCards, {
+                    y: 40,
+                    scale: 0.94,
+                    opacity: 0,
+                    duration: 0.4,
+                    stagger: 0.04,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+                resetExpCounters();
+            }
+        };
+
+        // Initial setup
+        if (expRightCol) gsap.set(expRightCol, { x: 35, opacity: 0 });
+        if (expCards.length > 0) gsap.set(expCards, { y: 40, scale: 0.94, opacity: 0 });
+
+        // Continuous directional ScrollTrigger
+        ScrollTrigger.create({
+            trigger: expSection,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const dir = self.direction; // 1 = scrolling down, -1 = scrolling up
+
+                if (dir === 1) {
+                    // Scrolling DOWN into view
+                    if (p >= 0.08) {
+                        animateExpIn();
+                    }
+                } else if (dir === -1) {
+                    // Scrolling UP back to Why Choose Us
+                    if (p <= 0.28) {
+                        animateExpOut();
+                    } else if (p > 0.28) {
+                        animateExpIn();
+                    }
+                }
+            },
+        });
+    }
+
+    // 14. Testimonials Section Swiper JS Carousel & Scroll Reveal
+    const testSection = document.getElementById('testimonials');
+    const testHeader = document.getElementById('testimonials-header');
+    const testSwiperBox = document.getElementById('testimonial-swiper-box');
+    const testMetricsCol = document.getElementById('testimonial-metrics-col');
+    const testCounter = document.getElementById('testimonial-counter');
+
+    if (testSection) {
+        // Initialize Swiper JS Carousel
+        const swiperEl = testSection.querySelector('.testimonial-swiper');
+        let testimonialSwiper = null;
+
+        if (swiperEl) {
+            testimonialSwiper = new Swiper(swiperEl, {
+                modules: [Navigation, EffectFade, Autoplay],
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true,
+                },
+                speed: 600,
+                loop: true,
+                autoplay: {
+                    delay: 6000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                },
+                navigation: {
+                    nextEl: '.testimonial-swiper-next',
+                    prevEl: '.testimonial-swiper-prev',
+                },
+            });
+        }
+
+        let isTestRevealed = false;
+        let testCounterAnim = null;
+
+        const startTestCounter = () => {
+            if (testCounter) {
+                const target = parseInt(testCounter.getAttribute('data-target') || '12', 10);
+                const obj = { val: 0 };
+                testCounterAnim = gsap.to(obj, {
+                    val: target,
+                    duration: 1.6,
+                    ease: 'power2.out',
+                    onUpdate: () => {
+                        testCounter.textContent = Math.floor(obj.val).toString();
+                    },
+                });
+            }
+        };
+
+        const resetTestCounter = () => {
+            if (testCounterAnim) testCounterAnim.kill();
+            if (testCounter) testCounter.textContent = '0';
+        };
+
+        const animateTestIn = () => {
+            if (isTestRevealed) return;
+            isTestRevealed = true;
+
+            if (testHeader) {
+                gsap.to(testHeader, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.85,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (testSwiperBox) {
+                gsap.to(testSwiperBox, {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.9,
+                    delay: 0.1,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (testMetricsCol) {
+                gsap.to(testMetricsCol, {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.9,
+                    delay: 0.15,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+                startTestCounter();
+            }
+        };
+
+        const animateTestOut = () => {
+            if (!isTestRevealed) return;
+            isTestRevealed = false;
+
+            if (testHeader) {
+                gsap.to(testHeader, {
+                    y: -25,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (testSwiperBox) {
+                gsap.to(testSwiperBox, {
+                    x: -35,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (testMetricsCol) {
+                gsap.to(testMetricsCol, {
+                    x: 35,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+                resetTestCounter();
+            }
+        };
+
+        // Initial setup
+        if (testHeader) gsap.set(testHeader, { y: -25, opacity: 0 });
+        if (testSwiperBox) gsap.set(testSwiperBox, { x: -35, opacity: 0 });
+        if (testMetricsCol) gsap.set(testMetricsCol, { x: 35, opacity: 0 });
+
+        // Continuous directional ScrollTrigger
+        ScrollTrigger.create({
+            trigger: testSection,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const dir = self.direction; // 1 = scrolling down, -1 = scrolling up
+
+                if (dir === 1) {
+                    // Scrolling DOWN into view
+                    if (p >= 0.08) {
+                        animateTestIn();
+                    }
+                } else if (dir === -1) {
+                    // Scrolling UP back to Experience
+                    if (p <= 0.28) {
+                        animateTestOut();
+                    } else if (p > 0.28) {
+                        animateTestIn();
+                    }
+                }
+            },
+        });
+    }
+
+    // 15. News & Insights Section Stagger Elevation & Reveal
+    const newsSection = document.getElementById('news');
+    const newsHeaderRow = document.getElementById('news-header-row');
+
+    if (newsSection) {
+        const newsCards = newsSection.querySelectorAll('.news-card');
+        const newsImgs = newsSection.querySelectorAll('.news-card-img');
+
+        let isNewsRevealed = false;
+
+        const animateNewsIn = () => {
+            if (isNewsRevealed) return;
+            isNewsRevealed = true;
+
+            if (newsHeaderRow) {
+                gsap.to(newsHeaderRow, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.85,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (newsCards && newsCards.length > 0) {
+                gsap.to(newsCards, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.9,
+                    stagger: 0.12,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (newsImgs && newsImgs.length > 0) {
+                gsap.to(newsImgs, {
+                    scale: 1.0,
+                    duration: 1.2,
+                    stagger: 0.12,
+                    ease: 'power2.out',
+                    overwrite: 'auto',
+                });
+            }
+        };
+
+        const animateNewsOut = () => {
+            if (!isNewsRevealed) return;
+            isNewsRevealed = false;
+
+            if (newsHeaderRow) {
+                gsap.to(newsHeaderRow, {
+                    y: -25,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (newsCards && newsCards.length > 0) {
+                gsap.to(newsCards, {
+                    y: 45,
+                    opacity: 0,
+                    duration: 0.45,
+                    stagger: 0.05,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (newsImgs && newsImgs.length > 0) {
+                gsap.to(newsImgs, {
+                    scale: 1.10,
+                    duration: 0.5,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+        };
+
+        // Initial setup
+        if (newsHeaderRow) gsap.set(newsHeaderRow, { y: -25, opacity: 0 });
+        if (newsCards && newsCards.length > 0) gsap.set(newsCards, { y: 45, opacity: 0 });
+        if (newsImgs && newsImgs.length > 0) gsap.set(newsImgs, { scale: 1.10 });
+
+        // Continuous directional ScrollTrigger
+        ScrollTrigger.create({
+            trigger: newsSection,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const dir = self.direction; // 1 = scrolling down, -1 = scrolling up
+
+                if (dir === 1) {
+                    // Scrolling DOWN into view
+                    if (p >= 0.08) {
+                        animateNewsIn();
+                    }
+                } else if (dir === -1) {
+                    // Scrolling UP back to Testimonials
+                    if (p <= 0.28) {
+                        animateNewsOut();
+                    } else if (p > 0.28) {
+                        animateNewsIn();
+                    }
+                }
+            },
+        });
+    }
+
+    // 16. Footer Section Parallax & Scroll Reveal
+    const footerEl = document.getElementById('footer');
+    const footerBgImg = document.getElementById('footer-bg-img');
+    const footerCtaRow = document.getElementById('footer-cta-row');
+    const footerLinksGrid = document.getElementById('footer-links-grid');
+
+    if (footerEl) {
+        // Parallax glide on dark twilight construction background
+        if (footerBgImg) {
+            gsap.to(footerBgImg, {
+                yPercent: 12,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: footerEl,
+                    start: 'top bottom',
+                    end: 'bottom bottom',
+                    scrub: 1.2,
+                },
+            });
+        }
+
+        let isFooterRevealed = false;
+
+        const animateFooterIn = () => {
+            if (isFooterRevealed) return;
+            isFooterRevealed = true;
+
+            if (footerCtaRow) {
+                gsap.to(footerCtaRow, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.85,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (footerLinksGrid) {
+                gsap.to(footerLinksGrid, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.9,
+                    delay: 0.1,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            }
+        };
+
+        const animateFooterOut = () => {
+            if (!isFooterRevealed) return;
+            isFooterRevealed = false;
+
+            if (footerCtaRow) {
+                gsap.to(footerCtaRow, {
+                    y: 25,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+
+            if (footerLinksGrid) {
+                gsap.to(footerLinksGrid, {
+                    y: 25,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut',
+                    overwrite: 'auto',
+                });
+            }
+        };
+
+        // Initial setup
+        if (footerCtaRow) gsap.set(footerCtaRow, { y: 25, opacity: 0 });
+        if (footerLinksGrid) gsap.set(footerLinksGrid, { y: 25, opacity: 0 });
+
+        // Continuous directional ScrollTrigger
+        ScrollTrigger.create({
+            trigger: footerEl,
+            start: 'top bottom',
+            end: 'bottom bottom',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const dir = self.direction;
+
+                if (dir === 1) {
+                    if (p >= 0.05) {
+                        animateFooterIn();
+                    }
+                } else if (dir === -1) {
+                    if (p <= 0.03) {
+                        animateFooterOut();
+                    } else if (p > 0.03) {
+                        animateFooterIn();
+                    }
+                }
+            },
+        });
+    }
+
+    // Refresh ScrollTrigger after all page assets and fonts finish loading
+    window.addEventListener('load', () => {
+        ScrollTrigger.refresh();
+    });
+});
+
+

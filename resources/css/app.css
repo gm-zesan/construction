@@ -1,0 +1,107 @@
+@import 'tailwindcss';
+
+@source '../views/**/*.blade.php';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'Barlow Condensed', 'Plus Jakarta Sans', ui-sans-serif, sans-serif;
+    --font-sketch: 'Caveat', cursive;
+    --font-accent: 'Caveat', cursive;
+
+    --color-brand-primary: #f95716;
+    --color-brand-hover: #ea4907;
+    --color-brand-light: #fff3ee;
+
+    --color-dark-900: #080c14;
+    --color-dark-850: #0b0f17;
+    --color-dark-800: #101622;
+}
+
+@layer utilities {
+    .font-sketch,
+    .font-accent,
+    .font-creative {
+        font-family: var(--font-sketch);
+    }
+
+    .font-heading {
+        font-family: var(--font-heading);
+    }
+
+    /* Subtle slow architectural zoom */
+    @keyframes heroSlowZoom {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(1.05);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes spinSlow {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .animate-hero-zoom {
+        animation: heroSlowZoom 24s ease-out infinite alternate;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .animate-spin-slow {
+        animation: spinSlow 16s linear infinite;
+    }
+
+    /* Lenis Smooth Scroll Core Styles */
+    html.lenis, html.lenis body {
+        height: auto;
+    }
+
+    .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+        overflow: hidden;
+    }
+
+    /* GSAP Image Reveal & Unreveal / Cover (Theme Color) */
+    .reveal-image-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .reveal-curtain {
+        will-change: transform;
+        backface-visibility: hidden;
+    }
+
+    .reveal-image {
+        will-change: transform;
+        backface-visibility: hidden;
+    }
+}

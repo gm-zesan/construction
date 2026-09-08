@@ -1,0 +1,115 @@
+.theme-card{
+    background-color: #fff;
+    border-radius: 4px;
+    border: none;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition: all 0.3s ease;
+    &:hover{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+    .theme-image{
+        img{
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+    .theme-details{
+        padding: 8px;
+        h5{
+            font-weight: 600;
+        }
+        h6{
+            font-size: 14px;
+        }
+        p{
+            min-height: 72px;
+            font-size: 14px;
+        }
+        .theme-actions{
+            margin-top: 8px;
+            display: flex;
+            a{
+                text-decoration: none;
+            }
+            .theme-edit-btn{
+                color: #fff;
+                background-color: #23b7e9;
+				border: none;
+				padding: 4px 15px;
+                margin-right: 10px;
+				border-radius: 5px;
+				font-size: 13px;
+				font-weight: 500;
+				transition: all 0.3s ease;
+				&:hover{
+					color: #fff;
+                    background-color: #23b7e9;
+				}
+				&:focus{
+					box-shadow: none;
+					outline: none;
+				}
+            }
+            .theme-delete-btn{
+                background-color: rgb(230,83,60);
+				color: #fff;
+				border: none;
+				padding: 4px 15px;
+                margin-right: 10px;
+				border-radius: 5px;
+				font-size: 13px;
+				font-weight: 500;
+				transition: all 0.3s ease;
+				&:hover{
+					background-color: rgb(230,83,60);
+					color: #fff;
+				}
+				&:focus{
+					box-shadow: none;
+					outline: none;
+				}
+            }
+            .theme-active-btn{
+                background-color: #5351ec;
+				color: #fff;
+				border: none;
+				padding: 4px 15px;
+                margin-right: 10px;
+				border-radius: 5px;
+				font-size: 13px;
+				font-weight: 500;
+				transition: all 0.3s ease;
+				&:hover{
+                    background-color: #2623e9;
+					color: #fff;
+				}
+				&:focus{
+					box-shadow: none;
+					outline: none;
+				}
+            }
+            .theme-deactive-btn{
+                background-color: #e4ecf2;
+                color: #333335;
+                border: none;
+                padding: 4px 15px;
+                margin-right: 10px;
+                border-radius: 5px;
+                font-size: 13px;
+                font-weight: 500;
+                cursor: no-drop;
+                transition: all 0.3s ease;
+                &:hover{
+                    background-color: #e4ecf2;
+                    color: #333335;
+                }
+                &:focus{
+                    box-shadow: none;
+                    outline: none;
+                }
+
+            }
+        }
+    }
+}
