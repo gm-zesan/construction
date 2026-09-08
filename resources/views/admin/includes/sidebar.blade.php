@@ -153,12 +153,6 @@
                 <span class="link_names">Profile Settings</span>
             </a>
         </li>
-        <li>
-            <a href="{{ route('home') }}" target="_blank">
-                <i class="ri-external-link-line"></i>
-                <span class="link_names">View Live Site</span>
-            </a>
-        </li>
     </ul>
 
     <div class="profile_content">

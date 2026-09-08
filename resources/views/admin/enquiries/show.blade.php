@@ -230,7 +230,7 @@
 
             {{-- Right Column: Status, Internal Notes & Actions --}}
             <div class="col-lg-4 col-12">
-                <div class="row g-4">
+                <div class="row g-3">
                     {{-- Status & Internal Notes Form --}}
                     <div class="col-12">
                         <div class="card table-card">

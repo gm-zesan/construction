@@ -26,15 +26,30 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $validated = $request->validated();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $destinationPath = 'upload/user-image/';
+            if (!file_exists(public_path($destinationPath))) {
+                mkdir(public_path($destinationPath), 0755, true);
+            }
+            $imageValue = $destinationPath . date('YmdHis') . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($destinationPath), basename($imageValue));
+
+            if ($user->image && file_exists(public_path($user->image))) {
+                @unlink(public_path($user->image));
+            }
+            $validated['image'] = $imageValue;
         }
 
-        $request->user()->save();
+        // Email cannot be modified via profile edit
+        unset($validated['email']);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->update($validated);
+
+        return Redirect::route('profile.edit')->with('success', 'Profile information updated successfully.');
     }
 
     /**

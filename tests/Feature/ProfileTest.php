@@ -12,14 +12,27 @@ test('profile page is displayed', function () {
     $response->assertOk();
 });
 
-test('profile information can be updated', function () {
-    $user = User::factory()->create();
+test('profile information can be updated including all custom fields without altering email', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    $user = User::factory()->create([
+        'email' => 'original@construction.com',
+    ]);
+
+    $fakeImage = \Illuminate\Http\UploadedFile::fake()->image('avatar.jpg', 300, 300);
 
     $response = $this
         ->actingAs($user)
         ->patch('/profile', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Alexander Vance',
+            'designation' => 'Lead Construction Engineer',
+            'phone_no' => '+8801712345678',
+            'address' => 'Floor 12, Sky Tower, Gulshan-2, Dhaka',
+            'description' => '15+ years managing seismic engineering and commercial superstructures.',
+            'facebook' => 'https://facebook.com/alexander.vance',
+            'linkedin' => 'https://linkedin.com/in/alexander-vance',
+            'whatsapp' => '+8801712345678',
+            'image' => $fakeImage,
+            'email' => 'hacked@example.com', // Should be ignored / locked
         ]);
 
     $response
@@ -28,26 +41,16 @@ test('profile information can be updated', function () {
 
     $user->refresh();
 
-    $this->assertSame('Test User', $user->name);
-    $this->assertSame('test@example.com', $user->email);
-    $this->assertNull($user->email_verified_at);
-});
-
-test('email verification status is unchanged when the email address is unchanged', function () {
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->patch('/profile', [
-            'name' => 'Test User',
-            'email' => $user->email,
-        ]);
-
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
-
-    $this->assertNotNull($user->refresh()->email_verified_at);
+    $this->assertSame('Alexander Vance', $user->name);
+    $this->assertSame('Lead Construction Engineer', $user->designation);
+    $this->assertSame('+8801712345678', $user->phone_no);
+    $this->assertSame('Floor 12, Sky Tower, Gulshan-2, Dhaka', $user->address);
+    $this->assertSame('15+ years managing seismic engineering and commercial superstructures.', $user->description);
+    $this->assertSame('https://facebook.com/alexander.vance', $user->facebook);
+    $this->assertSame('https://linkedin.com/in/alexander-vance', $user->linkedin);
+    $this->assertSame('+8801712345678', $user->whatsapp);
+    $this->assertNotNull($user->image);
+    $this->assertSame('original@construction.com', $user->email); // Email remains intact
 });
 
 test('user can delete their account', function () {

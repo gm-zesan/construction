@@ -165,7 +165,7 @@
 
                 {{-- Right Column: Status, Verification Image, & Actions --}}
                 <div class="col-lg-4 col-12">
-                    <div class="row g-4">
+                    <div class="row g-3">
                         {{-- Save / Publish Actions Card --}}
                         <div class="col-12">
                             <div class="card table-card">

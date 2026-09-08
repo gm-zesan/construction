@@ -470,7 +470,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="row g-4">
+                    <div class="row g-3">
                         {{-- Preview Graphic --}}
                         <div class="col-lg-6 col-12">
                             <div class="media-preview-container p-2" id="previewContainer">

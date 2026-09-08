@@ -115,7 +115,7 @@
 
 
                 <div class="col-md-4 col-12">
-                    <div class="row g-4">
+                    <div class="row g-3">
                         <div class="col-12 order-last order-md-first">
                             <div class="card table-card">
                                 <div class="table-header">

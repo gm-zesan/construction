@@ -234,7 +234,8 @@
                                 <div class="project-meta-box">
                                     <div class="project-meta-label">Meta Description</div>
                                     <div class="project-meta-value text-muted" style="font-weight: 400;">
-                                        {{ $project->meta_description ?: '—' }}</div>
+                                        {{ $project->meta_description ?: '—' }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +245,7 @@
 
             {{-- Sidebar Parameters Column --}}
             <div class="col-lg-4 col-12">
-                <div class="row g-4">
+                <div class="row g-3">
                     {{-- Status & Visibility Parameters --}}
                     <div class="col-12">
                         <div class="card table-card">
@@ -261,7 +262,8 @@
                                     <div class="project-meta-box">
                                         <div class="project-meta-label">Client / Stakeholder</div>
                                         <div class="project-meta-value">
-                                            {{ $project->client_name ?: 'Confidential / Direct' }}</div>
+                                            {{ $project->client_name ?: 'Confidential / Direct' }}
+                                        </div>
                                     </div>
 
                                     <div class="project-meta-box">
@@ -297,7 +299,8 @@
                                     <div class="project-meta-box">
                                         <div class="project-meta-label">Slug Identifier</div>
                                         <div class="project-meta-value font-monospace" style="font-size: 12px;">
-                                            {{ $project->slug }}</div>
+                                            {{ $project->slug }}
+                                        </div>
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center p-2 rounded"

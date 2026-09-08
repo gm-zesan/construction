@@ -6,7 +6,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <!-- Bootstrap 5 bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -33,7 +35,7 @@
 <!-- Select 2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         if ($('.single-select2').length) {
             $('.single-select2').select2();
         }
@@ -47,7 +49,7 @@
 <script>
     $(document).ready(function () {
         $.ajaxSetup({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
         });
     });
 </script>
@@ -59,21 +61,21 @@
         "closeButton": true,
         "debug": false,
         "newestOnTop": true,
-        "progressBar": true,
+        "progressBar": false,
         "positionClass": "toast-top-right",
         "preventDuplicates": false,
         "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "600",
-        "timeOut": "4500",
-        "extendedTimeOut": "1500",
+        "showDuration": "250",
+        "hideDuration": "300",
+        "timeOut": "1500",
+        "extendedTimeOut": "1200",
         "showEasing": "swing",
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
 
-    window.showToast = function(message, isError = false, title = '') {
+    window.showToast = function (message, isError = false, title = '') {
         if (isError) {
             toastr.error(message, title || 'Error');
         } else {
@@ -81,7 +83,7 @@
         }
     };
 
-    window.notify = function(type, message, title = '') {
+    window.notify = function (type, message, title = '') {
         if (type === 'error' || type === 'danger') {
             toastr.error(message, title || 'Error');
         } else if (type === 'warning') {
@@ -94,7 +96,7 @@
     };
 
     // Trigger Laravel Session Flash Messages
-    $(document).ready(function() {
+    $(document).ready(function () {
         @if(Session::has('success'))
             toastr.success("{!! addslashes(Session::get('success')) !!}", "Success");
         @endif

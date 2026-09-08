@@ -383,7 +383,7 @@
         </div>
 
         {{-- Main Dashboard Data Tables Row --}}
-        <div class="row g-4">
+        <div class="row g-3">
             {{-- Left Column: Recent Projects --}}
             <div class="col-xl-7 col-lg-12">
                 <div class="dashboard-section-card h-100">
