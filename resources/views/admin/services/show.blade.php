@@ -85,19 +85,21 @@
                             </nav>
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <a href="{{ route('services.index') }}" class="add-new" style="background-color: #f1f5f9; color: #334155;">
+                            <a href="{{ route('services.index') }}" class="add-new"
+                                style="background-color: #f1f5f9; color: #334155;">
                                 <i class="ri-arrow-left-line me-1"></i> Services List
                             </a>
                             @can('service-edit')
-                            <a href="{{ route('services.edit', $service->id) }}" class="add-new">
-                                <i class="ri-edit-line me-1"></i> Edit Service
-                            </a>
+                                <a href="{{ route('services.edit', $service->id) }}" class="add-new">
+                                    <i class="ri-edit-line me-1"></i> Edit Service
+                                </a>
                             @endcan
                         </div>
                     </div>
                     <div class="card-body custom-form p-4">
                         {{-- Service Hero Banner / Main Image --}}
-                        <div class="position-relative rounded overflow-hidden mb-4 border" style="height: 240px; background: #0b0f17;">
+                        <div class="position-relative rounded overflow-hidden mb-4 border"
+                            style="height: 240px; background: #0b0f17;">
                             <img src="{{ $service->image_url }}" alt="{{ $service->title }}"
                                 onerror="this.onerror=null;this.src='{{ asset('admin/assets/images/default.jpg') }}';"
                                 style="width: 100%; height: 100%; object-fit: cover;">
@@ -109,12 +111,15 @@
                                         <i class="{{ $service->icon ?: 'ri-hammer-line' }}"></i>
                                     </div>
                                     <div>
-                                        <h4 class="text-white fw-bold mb-0" style="font-size: 20px;">{{ $service->title }}</h4>
-                                        <span class="text-white-50" style="font-size: 12px;">URL Slug: {{ $service->slug }}</span>
+                                        <h4 class="text-white fw-bold mb-0" style="font-size: 20px;">{{ $service->title }}
+                                        </h4>
+                                        <span class="text-white-50" style="font-size: 12px;">URL Slug:
+                                            {{ $service->slug }}</span>
                                     </div>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <span class="badge {{ $service->is_published ? 'bg-success' : 'bg-secondary' }}" style="font-size: 11.5px; padding: 5px 10px;">
+                                    <span class="badge {{ $service->is_published ? 'bg-success' : 'bg-secondary' }}"
+                                        style="font-size: 11.5px; padding: 5px 10px;">
                                         {{ $service->is_published ? 'Published' : 'Draft' }}
                                     </span>
                                     @if($service->featured)
@@ -129,10 +134,12 @@
                         {{-- Short Description --}}
                         @if($service->short_description)
                             <div class="mb-4">
-                                <h6 class="fw-bold text-dark mb-2" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
+                                <h6 class="fw-bold text-dark mb-2"
+                                    style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
                                     Service Overview
                                 </h6>
-                                <p class="text-dark mb-0 p-3 rounded" style="background-color: #f8fafc; border: 1px solid #e2e8f0; font-size: 13.5px; line-height: 1.7;">
+                                <p class="text-dark mb-0 p-3 rounded"
+                                    style="background-color: #f8fafc; border: 1px solid #e2e8f0; font-size: 13.5px; line-height: 1.7;">
                                     {{ $service->short_description }}
                                 </p>
                             </div>
@@ -140,7 +147,8 @@
 
                         {{-- Full Description / Scope --}}
                         <div class="mb-4">
-                            <h6 class="fw-bold text-dark mb-2" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
+                            <h6 class="fw-bold text-dark mb-2"
+                                style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
                                 Full Capabilities &amp; Scope of Work
                             </h6>
                             <div class="service-desc-box">
@@ -151,7 +159,8 @@
                         {{-- Service Gallery --}}
                         @if($service->getMedia('gallery')->isNotEmpty())
                             <div class="mb-2">
-                                <h6 class="fw-bold text-dark mb-2" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
+                                <h6 class="fw-bold text-dark mb-2"
+                                    style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
                                     Service Gallery Photos ({{ $service->getMedia('gallery')->count() }} Photos)
                                 </h6>
                                 <div class="row g-2">
@@ -163,7 +172,8 @@
                                             }
                                         @endphp
                                         <div class="col-6 col-sm-4 col-md-3">
-                                            <a href="{{ $mediaUrl }}" target="_blank" class="d-block gallery-thumb-item" title="{{ $media->file_name }}">
+                                            <a href="{{ $mediaUrl }}" target="_blank" class="d-block gallery-thumb-item"
+                                                title="{{ $media->file_name }}">
                                                 <img src="{{ $mediaUrl }}" alt="{{ $media->name }}"
                                                     onerror="this.onerror=null;this.src='{{ asset('admin/assets/images/default.jpg') }}';">
                                             </a>
@@ -191,7 +201,8 @@
                             <div class="col-12">
                                 <div class="service-meta-box">
                                     <div class="service-meta-label">Meta Description</div>
-                                    <div class="service-meta-value text-muted" style="font-weight: 400;">{{ $service->meta_description ?: '—' }}</div>
+                                    <div class="service-meta-value text-muted" style="font-weight: 400;">
+                                        {{ $service->meta_description ?: '—' }}</div>
                                 </div>
                             </div>
                         </div>
@@ -213,14 +224,16 @@
                                     <div class="service-meta-box">
                                         <div class="service-meta-label">Icon Class</div>
                                         <div class="service-meta-value d-flex align-items-center gap-2">
-                                            <i class="{{ $service->icon ?: 'ri-hammer-line' }} text-primary" style="font-size: 18px;"></i>
+                                            <i class="{{ $service->icon ?: 'ri-hammer-line' }} text-primary"
+                                                style="font-size: 18px;"></i>
                                             <code>{{ $service->icon ?: 'ri-hammer-line' }}</code>
                                         </div>
                                     </div>
 
                                     <div class="service-meta-box">
                                         <div class="service-meta-label">URL Slug</div>
-                                        <div class="service-meta-value font-monospace" style="font-size: 12px;">{{ $service->slug }}</div>
+                                        <div class="service-meta-value font-monospace" style="font-size: 12px;">
+                                            {{ $service->slug }}</div>
                                     </div>
 
                                     <div class="service-meta-box">
@@ -228,16 +241,23 @@
                                         <div class="service-meta-value">{{ $service->sort_order }}</div>
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-                                        <span class="fw-semibold text-dark" style="font-size: 13px;">Website Visibility:</span>
-                                        <span class="badge {{ $service->is_published ? 'bg-success' : 'bg-secondary' }}" style="font-size: 11px;">
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
+                                        style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                        <span class="fw-semibold text-dark" style="font-size: 13px;">Website
+                                            Visibility:</span>
+                                        <span class="badge {{ $service->is_published ? 'bg-success' : 'bg-secondary' }}"
+                                            style="font-size: 11px;">
                                             {{ $service->is_published ? 'Published' : 'Draft' }}
                                         </span>
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-                                        <span class="fw-semibold text-dark" style="font-size: 13px;">Homepage Featured:</span>
-                                        <span class="badge {{ $service->featured ? 'bg-warning text-dark' : 'bg-light text-muted border' }}" style="font-size: 11px;">
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
+                                        style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                        <span class="fw-semibold text-dark" style="font-size: 13px;">Homepage
+                                            Featured:</span>
+                                        <span
+                                            class="badge {{ $service->featured ? 'bg-warning text-dark' : 'bg-light text-muted border' }}"
+                                            style="font-size: 11px;">
                                             {{ $service->featured ? 'Featured' : 'Standard' }}
                                         </span>
                                     </div>
@@ -255,17 +275,18 @@
                             <div class="card-body custom-form">
                                 <div class="d-flex flex-column gap-2">
                                     @can('service-edit')
-                                    <a href="{{ route('services.edit', $service->id) }}" class="btn submit-button w-100 d-flex align-items-center justify-content-center gap-1">
-                                        <i class="ri-edit-line"></i> Edit Service
-                                    </a>
+                                        <a href="{{ route('services.edit', $service->id) }}"
+                                            class="btn submit-button w-100 d-flex align-items-center justify-content-center gap-1">
+                                            <i class="ri-edit-line"></i> Edit Service
+                                        </a>
                                     @endcan
                                     @can('service-delete')
-                                    <button type="button" class="btn btn-outline-danger w-100 btn-delete-modal"
-                                        data-title="{{ $service->title }}"
-                                        data-url="{{ route('services.destroy', $service->id) }}"
-                                        style="height: 36px; font-size: 13px; font-weight: 600;">
-                                        <i class="ri-delete-bin-line me-1"></i> Delete Service
-                                    </button>
+                                        <button type="button" class="btn btn-outline-danger w-100 btn-delete-modal"
+                                            data-title="{{ $service->title }}"
+                                            data-url="{{ route('services.destroy', $service->id) }}"
+                                            style="height: 36px; font-size: 13px; font-weight: 600;">
+                                            <i class="ri-delete-bin-line me-1"></i> Delete Service
+                                        </button>
                                     @endcan
                                 </div>
                             </div>
@@ -317,7 +338,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).on('click', '.btn-delete-modal', function () {

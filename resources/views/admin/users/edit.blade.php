@@ -182,7 +182,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script>
         $('.submit-button').click(function(){
             $(this).css('opacity', '1');

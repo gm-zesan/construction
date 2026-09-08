@@ -3,78 +3,108 @@
     Edit Article: {{ $article->title }}
 @endsection
 
-@push('custom-styles')
+@push('custom-style')
     <style>
         .dropzone-box {
             border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            background: #f8fafc;
-            padding: 20px 14px;
+            border-radius: 10px;
+            background-color: #f8fafc;
+            padding: 24px 16px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
+            position: relative;
         }
 
-        .dropzone-box:hover, .dropzone-box.dragover {
+        .dropzone-box:hover,
+        .dropzone-box.dragover {
             border-color: #f95716;
-            background: #fff8f5;
+            background-color: #fff7ed;
+            transform: translateY(-1px);
+        }
+
+        .dropzone-box.dragover {
+            box-shadow: 0 0 0 4px rgba(249, 87, 22, 0.15);
         }
 
         .dropzone-icon {
-            width: 44px;
-            height: 44px;
+            width: 52px;
+            height: 52px;
+            line-height: 52px;
+            border-radius: 50%;
+            background-color: rgba(249, 87, 22, 0.1);
+            color: #f95716;
+            font-size: 26px;
             margin: 0 auto 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            color: #f95716;
-            font-size: 22px;
+            transition: transform 0.2s ease;
+        }
+
+        .dropzone-box:hover .dropzone-icon {
+            transform: scale(1.08);
         }
 
         .upload-btn {
-            background-color: #0f172a;
+            background-color: #f95716;
+            border-color: #f95716;
             color: #ffffff;
             font-weight: 600;
-            border: none;
+            font-size: 13px;
+            border-radius: 6px;
             transition: all 0.15s ease;
         }
 
         .upload-btn:hover {
-            background-color: #f95716;
+            background-color: #ea580c;
             color: #ffffff;
         }
 
         .preview-remove-btn {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 26px;
-            height: 26px;
+            top: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(239, 68, 68, 0.9);
             color: #ffffff;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
-            transition: background 0.15s ease;
-            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            z-index: 5;
         }
 
         .preview-remove-btn:hover {
             background: #dc2626;
+            transform: scale(1.15);
+        }
+
+        .badge-cover-type {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(17, 26, 58, 0.85);
+            color: #ffffff;
+            backdrop-filter: blur(4px);
         }
     </style>
 @endpush
 
 @section('content')
     <div class="container-fluid my-3">
-        <form id="articleEditForm" action="{{ route('articles.update', $article->id) }}" method="POST" enctype="multipart/form-data">
+        <form id="articleEditForm" action="{{ route('articles.update', $article->id) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
@@ -87,13 +117,15 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('articles.index') }}">News & Articles</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('articles.index') }}">News &
+                                                Articles</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Edit</li>
                                     </ol>
                                 </nav>
                             </div>
                             <div class="d-flex gap-2">
-                                <a href="{{ route('articles.show', $article->id) }}" class="add-new" style="background-color: #f1f5f9; color: #334155;">
+                                <a href="{{ route('articles.show', $article->id) }}" class="add-new"
+                                    style="background-color: #f1f5f9; color: #334155;">
                                     <i class="ri-eye-line me-1"></i> Preview
                                 </a>
                                 <a href="{{ route('articles.index') }}" class="add-new">
@@ -105,8 +137,11 @@
                             <div class="row g-3">
                                 {{-- Article Title --}}
                                 <div class="col-md-7 col-12">
-                                    <label for="title" class="form-label custom-label">Article Title <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control custom-input @error('title') is-invalid @enderror" name="title" id="title" value="{{ old('title', $article->title) }}" required>
+                                    <label for="title" class="form-label custom-label">Article Title <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text"
+                                        class="form-control custom-input @error('title') is-invalid @enderror" name="title"
+                                        id="title" value="{{ old('title', $article->title) }}" required>
                                     @error('title')
                                         <div class="text-danger mt-1" style="font-size: 12px;">{{ $message }}</div>
                                     @enderror
@@ -115,7 +150,8 @@
                                 {{-- Slug --}}
                                 <div class="col-md-5 col-12">
                                     <label for="slug" class="form-label custom-label">URL Slug</label>
-                                    <input type="text" class="form-control custom-input @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug', $article->slug) }}">
+                                    <input type="text" class="form-control custom-input @error('slug') is-invalid @enderror"
+                                        name="slug" id="slug" value="{{ old('slug', $article->slug) }}">
                                     @error('slug')
                                         <div class="text-danger mt-1" style="font-size: 12px;">{{ $message }}</div>
                                     @enderror
@@ -124,7 +160,8 @@
                                 {{-- Category & Author & Read Time --}}
                                 <div class="col-md-5 col-12">
                                     <label for="category_id" class="form-label custom-label">Category</label>
-                                    <select class="form-select custom-input @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
+                                    <select class="form-select custom-input @error('category_id') is-invalid @enderror"
+                                        name="category_id" id="category_id">
                                         <option value="">Select Category (None)</option>
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}" {{ old('category_id', $article->category_id) == $category->id ? 'selected' : '' }}>
@@ -139,7 +176,10 @@
 
                                 <div class="col-md-4 col-12">
                                     <label for="author_name" class="form-label custom-label">Author Name</label>
-                                    <input type="text" class="form-control custom-input @error('author_name') is-invalid @enderror" name="author_name" id="author_name" value="{{ old('author_name', $article->author_name) }}">
+                                    <input type="text"
+                                        class="form-control custom-input @error('author_name') is-invalid @enderror"
+                                        name="author_name" id="author_name"
+                                        value="{{ old('author_name', $article->author_name) }}">
                                     @error('author_name')
                                         <div class="text-danger mt-1" style="font-size: 12px;">{{ $message }}</div>
                                     @enderror
@@ -147,7 +187,10 @@
 
                                 <div class="col-md-3 col-12">
                                     <label for="read_time" class="form-label custom-label">Read Time (Mins)</label>
-                                    <input type="number" class="form-control custom-input @error('read_time') is-invalid @enderror" name="read_time" id="read_time" value="{{ old('read_time', $article->read_time) }}" min="1" max="120">
+                                    <input type="number"
+                                        class="form-control custom-input @error('read_time') is-invalid @enderror"
+                                        name="read_time" id="read_time" value="{{ old('read_time', $article->read_time) }}"
+                                        min="1" max="120">
                                     @error('read_time')
                                         <div class="text-danger mt-1" style="font-size: 12px;">{{ $message }}</div>
                                     @enderror
@@ -156,7 +199,9 @@
                                 {{-- Excerpt / Short Summary --}}
                                 <div class="col-12">
                                     <label for="summary" class="form-label custom-label">Excerpt / Short Summary</label>
-                                    <textarea class="form-control custom-input @error('summary') is-invalid @enderror" name="summary" id="summary" rows="3">{{ old('summary', $article->summary) }}</textarea>
+                                    <textarea class="form-control custom-input @error('summary') is-invalid @enderror"
+                                        name="summary" id="summary"
+                                        rows="3">{{ old('summary', $article->summary) }}</textarea>
                                     @error('summary')
                                         <div class="text-danger mt-1" style="font-size: 12px;">{{ $message }}</div>
                                     @enderror
@@ -165,7 +210,9 @@
                                 {{-- Full Content (CKEditor) --}}
                                 <div class="col-12">
                                     <label for="editor" class="form-label custom-label">Full Article Content</label>
-                                    <textarea class="form-control custom-input @error('content') is-invalid @enderror" name="content" id="editor" rows="12">{{ old('content', $article->content) }}</textarea>
+                                    <textarea class="form-control custom-input @error('content') is-invalid @enderror"
+                                        name="content" id="editor"
+                                        rows="12">{{ old('content', $article->content) }}</textarea>
                                     @error('content')
                                         <div class="text-danger mt-1" style="font-size: 12px;">{{ $message }}</div>
                                     @enderror
@@ -183,15 +230,19 @@
                             <div class="row g-3">
                                 <div class="col-12">
                                     <label for="meta_title" class="form-label custom-label">Meta Title</label>
-                                    <input type="text" class="form-control custom-input" name="meta_title" id="meta_title" value="{{ old('meta_title', $article->meta_title) }}">
+                                    <input type="text" class="form-control custom-input" name="meta_title" id="meta_title"
+                                        value="{{ old('meta_title', $article->meta_title) }}">
                                 </div>
                                 <div class="col-12">
                                     <label for="meta_description" class="form-label custom-label">Meta Description</label>
-                                    <textarea class="form-control custom-input" name="meta_description" id="meta_description" rows="2">{{ old('meta_description', $article->meta_description) }}</textarea>
+                                    <textarea class="form-control custom-input" name="meta_description"
+                                        id="meta_description"
+                                        rows="2">{{ old('meta_description', $article->meta_description) }}</textarea>
                                 </div>
                                 <div class="col-12">
                                     <label for="meta_keywords" class="form-label custom-label">Meta Keywords</label>
-                                    <input type="text" class="form-control custom-input" name="meta_keywords" id="meta_keywords" value="{{ old('meta_keywords', $article->meta_keywords) }}">
+                                    <input type="text" class="form-control custom-input" name="meta_keywords"
+                                        id="meta_keywords" value="{{ old('meta_keywords', $article->meta_keywords) }}">
                                 </div>
                             </div>
                         </div>
@@ -210,28 +261,40 @@
                                 <div class="card-body custom-form p-4">
                                     <div class="d-flex flex-column gap-3 mb-4">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="is_published" id="is_published" value="1" {{ old('is_published', $article->is_published) ? 'checked' : '' }} style="cursor: pointer;">
-                                            <label class="form-check-label fw-semibold" for="is_published" style="font-size: 13.5px; cursor: pointer;">
+                                            <input class="form-check-input" type="checkbox" name="is_published"
+                                                id="is_published" value="1" {{ old('is_published', $article->is_published) ? 'checked' : '' }} style="cursor: pointer;">
+                                            <label class="form-check-label fw-semibold" for="is_published"
+                                                style="font-size: 13.5px; cursor: pointer;">
                                                 Visible on Website
                                             </label>
                                         </div>
 
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="featured" id="featured" value="1" {{ old('featured', $article->featured) ? 'checked' : '' }} style="cursor: pointer;">
-                                            <label class="form-check-label fw-semibold" for="featured" style="font-size: 13.5px; cursor: pointer;">
+                                            <input class="form-check-input" type="checkbox" name="featured" id="featured"
+                                                value="1" {{ old('featured', $article->featured) ? 'checked' : '' }}
+                                                style="cursor: pointer;">
+                                            <label class="form-check-label fw-semibold" for="featured"
+                                                style="font-size: 13.5px; cursor: pointer;">
                                                 Feature on Homepage
                                             </label>
                                         </div>
 
                                         <div>
-                                            <label for="published_at" class="form-label custom-label mb-1">Publication Date</label>
-                                            <input type="datetime-local" class="form-control custom-input" name="published_at" id="published_at" value="{{ old('published_at', $article->published_at ? $article->published_at->format('Y-m-d\TH:i') : '') }}">
+                                            <label for="published_at" class="form-label custom-label mb-1">Publication
+                                                Date</label>
+                                            <input type="datetime-local" class="form-control custom-input"
+                                                name="published_at" id="published_at"
+                                                value="{{ old('published_at', $article->published_at ? $article->published_at->format('Y-m-d\TH:i') : '') }}">
                                         </div>
 
                                         <div>
-                                            <label for="sort_order" class="form-label custom-label mb-1">Display Priority Order</label>
-                                            <input type="number" class="form-control custom-input" name="sort_order" id="sort_order" value="{{ old('sort_order', $article->sort_order) }}" min="0">
-                                            <div class="text-muted" style="font-size: 11px;">Lower numbers appear first (e.g. 0, 1, 2)</div>
+                                            <label for="sort_order" class="form-label custom-label mb-1">Display Priority
+                                                Order</label>
+                                            <input type="number" class="form-control custom-input" name="sort_order"
+                                                id="sort_order" value="{{ old('sort_order', $article->sort_order) }}"
+                                                min="0">
+                                            <div class="text-muted" style="font-size: 11px;">Lower numbers appear first
+                                                (e.g. 0, 1, 2)</div>
                                         </div>
                                     </div>
 
@@ -258,39 +321,53 @@
                                     <div class="table-title">Featured Cover Photo</div>
                                 </div>
                                 <div class="card-body custom-form p-3">
-                                    <input type="file" id="image" name="image" class="d-none" accept="image/png,image/jpeg,image/webp,image/jpg">
+                                    <input type="file" id="image" name="image" class="d-none"
+                                        accept="image/png,image/jpeg,image/webp,image/jpg">
 
                                     <div id="image_dropzone" class="dropzone-box">
                                         <div id="image_empty" class="{{ $article->hasMedia('image') ? 'd-none' : '' }}">
                                             <div class="dropzone-icon">
                                                 <i class="ri-image-add-line"></i>
                                             </div>
-                                            <p class="fw-bold text-dark mb-1" style="font-size: 13px;">Drop cover photo here</p>
-                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP up to 10MB</span>
-                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto" onclick="$('#image').click();">
+                                            <p class="fw-bold text-dark mb-1" style="font-size: 13px;">Drop cover photo here
+                                            </p>
+                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP
+                                                up to 10MB</span>
+                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
+                                                onclick="$('#image').click();">
                                                 <i class="ri-upload-2-line me-1"></i> Browse Photo
                                             </button>
                                         </div>
 
                                         {{-- Staged / Current Preview Box --}}
-                                        <div id="image_preview_box" class="{{ $article->hasMedia('image') ? '' : 'd-none' }}">
-                                            <div class="position-relative rounded overflow-hidden mb-2" style="height: 160px; background: #000;">
-                                                <img id="image_preview_img" src="{{ $article->image_url }}" alt="{{ $article->title }}"
+                                        <div id="image_preview_box"
+                                            class="{{ $article->hasMedia('image') ? '' : 'd-none' }}">
+                                            <div class="position-relative rounded overflow-hidden mb-2"
+                                                style="height: 160px; background: #000;">
+                                                <img id="image_preview_img" src="{{ $article->image_url }}"
+                                                    alt="{{ $article->title }}"
                                                     onerror="this.onerror=null;this.src='{{ asset('admin/assets/images/default.jpg') }}';"
                                                     style="width: 100%; height: 100%; object-fit: cover;">
-                                                <span class="badge-cover-type" id="image_badge" style="position: absolute; top: 8px; left: 8px; font-size: 10.5px; padding: 3px 7px; background: rgba(0,0,0,0.65); color: #fff; border-radius: 4px; backdrop-filter: blur(4px);">
+                                                <span class="badge-cover-type" id="image_badge"
+                                                    style="position: absolute; top: 8px; left: 8px; font-size: 10.5px; padding: 3px 7px; background: rgba(0,0,0,0.65); color: #fff; border-radius: 4px; backdrop-filter: blur(4px);">
                                                     <i class="ri-check-line me-1 text-success"></i> Current Cover
                                                 </span>
-                                                <button type="button" class="preview-remove-btn {{ $article->hasMedia('image') ? 'd-none' : '' }}" id="btn_remove_image" title="Cancel selected image">
+                                                <button type="button"
+                                                    class="preview-remove-btn {{ $article->hasMedia('image') ? 'd-none' : '' }}"
+                                                    id="btn_remove_image" title="Cancel selected image">
                                                     <i class="ri-close-line"></i>
                                                 </button>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between px-1">
                                                 <div class="text-start text-truncate me-2">
-                                                    <span id="image_preview_name" class="fw-semibold text-dark d-block text-truncate" style="font-size: 12px;">{{ $article->getFirstMedia('image')?->file_name ?? $article->title }}</span>
-                                                    <span id="image_preview_size" class="text-muted" style="font-size: 11px;">{{ $article->getFirstMedia('image')?->readable_size ?? 'Active cover image' }}</span>
+                                                    <span id="image_preview_name"
+                                                        class="fw-semibold text-dark d-block text-truncate"
+                                                        style="font-size: 12px;">{{ $article->getFirstMedia('image')?->file_name ?? $article->title }}</span>
+                                                    <span id="image_preview_size" class="text-muted"
+                                                        style="font-size: 11px;">{{ $article->getFirstMedia('image')?->readable_size ?? 'Active cover image' }}</span>
                                                 </div>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2" style="font-size: 11.5px; height: 28px;" onclick="$('#image').click();">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2"
+                                                    style="font-size: 11.5px; height: 28px;" onclick="$('#image').click();">
                                                     Change
                                                 </button>
                                             </div>
@@ -309,7 +386,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {

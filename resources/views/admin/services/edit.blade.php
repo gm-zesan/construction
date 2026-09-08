@@ -549,7 +549,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
         $(document).ready(function () {

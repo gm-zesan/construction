@@ -7,7 +7,7 @@
 
     <div class="container-fluid my-3">
         <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
-        @csrf
+            @csrf
             <div class="row">
                 <div class="col-md-8 col-12">
                     <div class="card table-card">
@@ -29,11 +29,12 @@
                             <a href="{{route('users')}}" class="add-new">User List<i class="ms-1 ri-list-ordered-2"></i></a>
                         </div>
                         <div class="card-body custom-form">
-                            
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="name" class="form-label custom-label custom-label">Name</label>
-                                    <input type="text" class="form-control custom-input" name="name" placeholder="Name" id="name">
+                                    <input type="text" class="form-control custom-input" name="name" placeholder="Name"
+                                        id="name">
                                     @if($errors->has('name'))
                                         <div class="error_msg">
                                             {{ $errors->first('name') }}
@@ -43,7 +44,8 @@
 
                                 <div class="col-md-6">
                                     <label for="email" class="form-label custom-label">Email</label>
-                                    <input type="email" class="form-control custom-input" name="email" placeholder="Email" id="email">
+                                    <input type="email" class="form-control custom-input" name="email" placeholder="Email"
+                                        id="email">
                                     @if($errors->has('email'))
                                         <div class="error_msg">
                                             {{ $errors->first('email') }}
@@ -53,7 +55,8 @@
 
                                 <div class="col-md-6">
                                     <label for="" class="form-label custom-label">Password</label>
-                                    <input type="password" class="form-control custom-input" name="password" placeholder="Password">
+                                    <input type="password" class="form-control custom-input" name="password"
+                                        placeholder="Password">
                                     @if($errors->has('password'))
                                         <div class="error_msg">
                                             {{ $errors->first('password') }}
@@ -63,7 +66,8 @@
 
                                 <div class="col-md-6">
                                     <label for="" class="form-label custom-label">Confirm Password</label>
-                                    <input type="password" class="form-control custom-input" name="password_confirmation" placeholder="Confirm Password">
+                                    <input type="password" class="form-control custom-input" name="password_confirmation"
+                                        placeholder="Confirm Password">
                                     @if($errors->has('password_confirmation'))
                                         <div class="error_msg">
                                             {{ $errors->first('password_confirmation') }}
@@ -73,7 +77,8 @@
 
                                 <div class="col-md-6">
                                     <label for="" class="form-label custom-label">Phone No</label>
-                                    <input type="text" class="form-control custom-input" name="phone_no" placeholder="Phone No">
+                                    <input type="text" class="form-control custom-input" name="phone_no"
+                                        placeholder="Phone No">
                                     @if($errors->has('phone_no'))
                                         <div class="error_msg">
                                             {{ $errors->first('phone_no') }}
@@ -99,10 +104,11 @@
                                     @endif
                                 </div>
 
-                                
+
                                 <div class="col-12">
                                     <label for="" class="form-label custom-label">Description</label>
-                                    <textarea class="form-control custom-input" name="description" id="description" rows="5"  placeholder="Description"  style="resize: none; height: auto"></textarea>
+                                    <textarea class="form-control custom-input" name="description" id="description" rows="5"
+                                        placeholder="Description" style="resize: none; height: auto"></textarea>
                                     @if($errors->has('description'))
                                         <div class="error_msg">
                                             {{ $errors->first('description') }}
@@ -115,7 +121,7 @@
                 </div>
 
 
-                
+
 
                 <div class="col-md-4 col-12">
                     <div class="row g-4">
@@ -138,7 +144,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="col-12">
                             <div class="card table-card">
@@ -148,11 +154,16 @@
                                 <div class="custom-form card-body">
                                     <div class="image-select-file">
                                         <label class="form-label custom-label" for="cover_image">
-                                            <input type="hidden" id="cover_image_data" class="form-control custom-input" name="cover_image_data">
-                                            <input type="file" id="cover_image" class="form-file-input form-control custom-input d-none" onchange="imageUpload(this)" name="image">
+                                            <input type="hidden" id="cover_image_data" class="form-control custom-input"
+                                                name="cover_image_data">
+                                            <input type="file" id="cover_image"
+                                                class="form-file-input form-control custom-input d-none"
+                                                onchange="imageUpload(this)" name="image">
                                             <div class="user-image">
                                                 <i id="cover_imagePreviewNo" class="ri-user-3-line no-image-preview"></i>
-                                                <img id="cover_imagePreview" src="{{asset('admin/assets/images/default.jpg')}}" alt="" class="image-preview d-none">
+                                                <img id="cover_imagePreview"
+                                                    src="{{asset('admin/assets/images/default.jpg')}}" alt=""
+                                                    class="image-preview d-none">
                                                 <span class="formate-error cover_imageerror"></span>
                                                 <div class="user-info">
                                                     <h5 id="setName">Your Name</h5>
@@ -163,7 +174,8 @@
                                         </label>
                                     </div>
 
-                                    <div class="delete-btn mt-2 d-none remove-image" id="cover_imageDelete" onclick="removeImage('cover_image')">Remove image</div>
+                                    <div class="delete-btn mt-2 d-none remove-image" id="cover_imageDelete"
+                                        onclick="removeImage('cover_image')">Remove image</div>
 
                                     @if($errors->has('image'))
                                         <div class="error_msg">
@@ -172,9 +184,9 @@
                                     @endif
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -185,9 +197,9 @@
 
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script>
-        $('.submit-button').click(function(){
+        $('.submit-button').click(function () {
             $(this).css('opacity', '1');
             $(this).find('.spinner-border').removeClass('d-none');
             $(this).attr('disabled', true);
@@ -198,82 +210,82 @@
     {{-- CK Editor --}}
     <script src="{{asset('vendor/ckeditor/ckeditor.js')}}"></script>
     <script type="text/javascript">
-        setTimeout(function(){
+        setTimeout(function () {
             CKEDITOR.replace('description', {
-                filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token() ])}}",
+                filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token()])}}",
                 filebrowserUploadMethod: 'form'
             });
-        },100);
+        }, 100);
     </script>
 
     <script>
-        $(document).ready(function(){
-            $('#name').keyup(function(){
+        $(document).ready(function () {
+            $('#name').keyup(function () {
                 var name = $(this).val();
-                if(name == ''){
+                if (name == '') {
                     $('#setName').html('Your Name');
-                }else{
+                } else {
                     $('#setName').html(name);
                 }
-                
+
             });
-            $('#email').keyup(function(){
+            $('#email').keyup(function () {
                 var email = $(this).val();
-                if(email == ''){
+                if (email == '') {
                     $('#setEmail').html('example@gmail.com');
-                }else{
+                } else {
                     $('#setEmail').html(email);
                 }
             });
         });
     </script>
 
-    
+
     {{-- image upload and preview js --}}
     <script>
-        function imageUpload( e ) {
+        function imageUpload(e) {
             var imgPath = e.value;
-            var ext = imgPath.substring( imgPath.lastIndexOf( '.' ) + 1 ).toLowerCase();
-            if ( ext == "gif" || ext == "png" || ext == "jpg" || ext == "jpeg") {
-                readURL( e, e.id );
-                $( '.' + e.id + 'error' ).hide()
-                $( '#' + e.id + 'Delete' ).removeClass( 'd-none' );
+            var ext = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+            if (ext == "gif" || ext == "png" || ext == "jpg" || ext == "jpeg") {
+                readURL(e, e.id);
+                $('.' + e.id + 'error').hide()
+                $('#' + e.id + 'Delete').removeClass('d-none');
             } else {
-                $( '.' + e.id + 'error' ).html( 'Select a jpg, jpeg, png type image file.' ).show();
+                $('.' + e.id + 'error').html('Select a jpg, jpeg, png type image file.').show();
                 $("#" + e.id + "_data").attr("value", "");
-                $( '#' + e.id + 'Preview' ).attr( 'src', "" );
-                $( '#' + e.id ).val( null );
-                $( '#' + e.id + 'Delete' ).addClass( 'd-none' );
+                $('#' + e.id + 'Preview').attr('src', "");
+                $('#' + e.id).val(null);
+                $('#' + e.id + 'Delete').addClass('d-none');
             }
         }
 
         var imageName;
-        function readURL( input, id ) {
-            if ( input.files && input.files[ 0 ] ) {
+        function readURL(input, id) {
+            if (input.files && input.files[0]) {
                 imageName = input.files[0].name;
                 var reader = new FileReader();
-                reader.readAsDataURL( input.files[ 0 ] );
-                reader.onload = function ( e ) {
-                    $( '#' + id + 'Preview' ).removeClass( 'd-none' );
-                    $( '#' + id + 'PreviewNo' ).addClass( 'd-none' );
-                    $( '#' + id + 'Preview' ).attr( 'src', e.target.result ).show();
-                    $( '#' + id + 'Delete' ).css( 'display', 'flex' );
-                    $( '#' + id + 'Delete' ).removeClass( 'd-none' );
-                    $( '#' + id + 'Name' ).html( input.files[ 0 ].name );
+                reader.readAsDataURL(input.files[0]);
+                reader.onload = function (e) {
+                    $('#' + id + 'Preview').removeClass('d-none');
+                    $('#' + id + 'PreviewNo').addClass('d-none');
+                    $('#' + id + 'Preview').attr('src', e.target.result).show();
+                    $('#' + id + 'Delete').css('display', 'flex');
+                    $('#' + id + 'Delete').removeClass('d-none');
+                    $('#' + id + 'Name').html(input.files[0].name);
                     $("#" + id + "_data").attr("value", imageName);
                     setProfileImage(e, imageName);
                 };
             }
         }
         function removeImage(id) {
-            $( "#" + id ).val( null );
+            $("#" + id).val(null);
             // $( '#' + id + 'Preview' ).attr( 'class', noImage  );
-            $( '#' + id + 'Preview' ).addClass( 'd-none' );
-            $( '#' + id + 'PreviewNo' ).removeClass( 'd-none' );
-            $( "#" + id + "_data").attr("value", "");
-            $( '#' + id + 'Name' ).html( 'Not selected' );
-            $( '#' + id + 'Delete' ).css( 'display', 'none' );
-            $( '#' + id + 'Delete' ).addClass( 'd-none' );
+            $('#' + id + 'Preview').addClass('d-none');
+            $('#' + id + 'PreviewNo').removeClass('d-none');
+            $("#" + id + "_data").attr("value", "");
+            $('#' + id + 'Name').html('Not selected');
+            $('#' + id + 'Delete').css('display', 'none');
+            $('#' + id + 'Delete').addClass('d-none');
             setProfileImage();
         }
     </script>

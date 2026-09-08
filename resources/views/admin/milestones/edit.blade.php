@@ -273,7 +273,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             var $imageInput = $('#image');

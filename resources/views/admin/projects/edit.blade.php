@@ -399,12 +399,15 @@
 
                                     {{-- Interactive Dropzone with In-Dropzone Preview --}}
                                     <div id="main_image_dropzone" class="dropzone-box">
-                                        <div id="main_image_empty" class="{{ $project->hasMedia('main_image') || $project->hasMedia('gallery') ? 'd-none' : '' }}">
+                                        <div id="main_image_empty"
+                                            class="{{ $project->hasMedia('main_image') || $project->hasMedia('gallery') ? 'd-none' : '' }}">
                                             <div class="dropzone-icon">
                                                 <i class="ri-image-add-line"></i>
                                             </div>
-                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop cover photo</p>
-                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP up to 5MB (16:9 ratio recommended)</span>
+                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop
+                                                cover photo</p>
+                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP
+                                                up to 5MB (16:9 ratio recommended)</span>
                                             <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
                                                 onclick="$('#main_image').click();">
                                                 <i class="ri-upload-2-line me-1"></i> Browse Photo
@@ -412,9 +415,12 @@
                                         </div>
 
                                         {{-- Staged / Active Preview Box --}}
-                                        <div id="main_image_preview_box" class="{{ $project->hasMedia('main_image') || $project->hasMedia('gallery') ? '' : 'd-none' }}">
-                                            <div class="position-relative rounded overflow-hidden mb-2" style="height: 180px; background: #000;">
-                                                <img id="main_image_img" src="{{ $project->main_image_url }}" alt="{{ $project->title }}"
+                                        <div id="main_image_preview_box"
+                                            class="{{ $project->hasMedia('main_image') || $project->hasMedia('gallery') ? '' : 'd-none' }}">
+                                            <div class="position-relative rounded overflow-hidden mb-2"
+                                                style="height: 180px; background: #000;">
+                                                <img id="main_image_img" src="{{ $project->main_image_url }}"
+                                                    alt="{{ $project->title }}"
                                                     onerror="this.onerror=null;this.src='{{ asset('admin/assets/images/default.jpg') }}';"
                                                     style="width: 100%; height: 100%; object-fit: cover;">
                                                 <span class="badge-cover-type" id="main_image_badge">
@@ -426,19 +432,23 @@
                                                         <i class="ri-image-line me-1"></i> Primary Cover
                                                     @endif
                                                 </span>
-                                                <button type="button" class="preview-remove-btn d-none" id="btn_cancel_cover_replace"
-                                                    title="Cancel replacement">
+                                                <button type="button" class="preview-remove-btn d-none"
+                                                    id="btn_cancel_cover_replace" title="Cancel replacement">
                                                     <i class="ri-close-line"></i>
                                                 </button>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between px-1">
                                                 <div class="text-start text-truncate me-2">
-                                                    <span id="main_image_name" class="fw-semibold text-dark d-block text-truncate" style="font-size: 12px;">
+                                                    <span id="main_image_name"
+                                                        class="fw-semibold text-dark d-block text-truncate"
+                                                        style="font-size: 12px;">
                                                         {{ $project->getFirstMedia('main_image')?->file_name ?? $project->title }}
                                                     </span>
-                                                    <span id="main_image_size" class="text-muted" style="font-size: 11px;">Active cover image</span>
+                                                    <span id="main_image_size" class="text-muted"
+                                                        style="font-size: 11px;">Active cover image</span>
                                                 </div>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2" style="font-size: 11.5px; height: 28px;"
+                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2"
+                                                    style="font-size: 11.5px; height: 28px;"
                                                     onclick="$('#main_image').click();">
                                                     Change
                                                 </button>
@@ -608,7 +618,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
         $(document).ready(function () {

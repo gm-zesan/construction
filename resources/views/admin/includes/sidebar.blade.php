@@ -90,12 +90,14 @@
             </a>
         </li>
         @endcanany
+        @canany(['client-review-list', 'client-review-create', 'client-review-edit', 'client-review-delete'])
         <li>
-            <a href="{{ route('dashboard') }}#testimonials">
+            <a href="{{ route('client-reviews.index') }}" class="{{ request()->routeIs('client-reviews.*') ? 'active-focus' : '' }}">
                 <i class="ri-feedback-line"></i>
                 <span class="link_names">Client Reviews</span>
             </a>
         </li>
+        @endcanany
 
         <!-- User & Access Management -->
         @canany(['user-list', 'user-create', 'user-edit', 'user-delete', 'role-list', 'role-create', 'role-edit', 'role-delete', 'assignrole-list', 'assignrole-create'])

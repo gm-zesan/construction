@@ -21,9 +21,9 @@
                             </nav>
                         </div>
                         @can('service-create')
-                        <a href="{{ route('services.create') }}" class="add-new">
-                            Create Service <i class="ms-1 ri-add-line"></i>
-                        </a>
+                            <a href="{{ route('services.create') }}" class="add-new">
+                                Create Service <i class="ms-1 ri-add-line"></i>
+                            </a>
                         @endcan
                     </div>
 
@@ -32,7 +32,8 @@
                         <div class="row g-2 align-items-end">
                             <div class="col-md-4 col-sm-6">
                                 <label class="form-label mb-1 text-muted"
-                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Published Status</label>
+                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Published
+                                    Status</label>
                                 <select id="filter_status" class="form-select form-select-sm custom-input"
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All Services</option>
@@ -123,7 +124,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             var listUrl = "{{ route('services.index') }}";

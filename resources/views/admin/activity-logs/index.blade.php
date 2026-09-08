@@ -38,7 +38,8 @@
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <label class="form-label mb-1 text-muted"
-                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Action Type</label>
+                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Action
+                                    Type</label>
                                 <select id="filter_action" class="form-select form-select-sm custom-input"
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All Actions</option>
@@ -49,7 +50,8 @@
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <label class="form-label mb-1 text-muted"
-                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">User / Operator</label>
+                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">User
+                                    / Operator</label>
                                 <select id="filter_user" class="form-select form-select-sm custom-input"
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All Users</option>
@@ -92,7 +94,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             var listUrl = "{{ route('activity-logs.index') }}";

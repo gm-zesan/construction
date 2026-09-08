@@ -4,120 +4,135 @@
 @endsection
 
 @push('custom-style')
-<style>
-    /* Interactive Uploader Styles */
-    .dropzone-box {
-        border: 2px dashed #cbd5e1;
-        border-radius: 10px;
-        background-color: #f8fafc;
-        padding: 24px 16px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        position: relative;
-    }
-    .dropzone-box:hover, .dropzone-box.dragover {
-        border-color: #f95716;
-        background-color: #fff7ed;
-        transform: translateY(-1px);
-    }
-    .dropzone-box.dragover {
-        box-shadow: 0 0 0 4px rgba(249, 87, 22, 0.15);
-    }
-    .dropzone-icon {
-        width: 52px;
-        height: 52px;
-        line-height: 52px;
-        border-radius: 50%;
-        background-color: rgba(249, 87, 22, 0.1);
-        color: #f95716;
-        font-size: 26px;
-        margin: 0 auto 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.2s ease;
-    }
-    .dropzone-box:hover .dropzone-icon {
-        transform: scale(1.08);
-    }
-    .preview-card {
-        border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid #e2e8f0;
-        background: #ffffff;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-        position: relative;
-        transition: all 0.2s ease;
-    }
-    .preview-card:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    .preview-thumb {
-        width: 100%;
-        height: 120px;
-        object-fit: cover;
-        display: block;
-        background-color: #f1f5f9;
-    }
-    .preview-info {
-        padding: 8px 10px;
-        background: #ffffff;
-    }
-    .preview-filename {
-        font-size: 11.5px;
-        font-weight: 600;
-        color: #1e293b;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-    }
-    .preview-filesize {
-        font-size: 10.5px;
-        color: #64748b;
-    }
-    .preview-remove-btn {
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: rgba(239, 68, 68, 0.9);
-        color: #ffffff;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 13px;
-        cursor: pointer;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        transition: all 0.2s ease;
-        z-index: 5;
-    }
-    .preview-remove-btn:hover {
-        background: #dc2626;
-        transform: scale(1.15);
-    }
-    .badge-cover-type {
-        position: absolute;
-        bottom: 8px;
-        left: 8px;
-        font-size: 10.5px;
-        font-weight: 600;
-        padding: 3px 8px;
-        border-radius: 4px;
-        background: rgba(17, 26, 58, 0.85);
-        color: #ffffff;
-        backdrop-filter: blur(4px);
-    }
-</style>
+    <style>
+        /* Interactive Uploader Styles */
+        .dropzone-box {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            background-color: #f8fafc;
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .dropzone-box:hover,
+        .dropzone-box.dragover {
+            border-color: #f95716;
+            background-color: #fff7ed;
+            transform: translateY(-1px);
+        }
+
+        .dropzone-box.dragover {
+            box-shadow: 0 0 0 4px rgba(249, 87, 22, 0.15);
+        }
+
+        .dropzone-icon {
+            width: 52px;
+            height: 52px;
+            line-height: 52px;
+            border-radius: 50%;
+            background-color: rgba(249, 87, 22, 0.1);
+            color: #f95716;
+            font-size: 26px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .dropzone-box:hover .dropzone-icon {
+            transform: scale(1.08);
+        }
+
+        .preview-card {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .preview-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .preview-thumb {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+            background-color: #f1f5f9;
+        }
+
+        .preview-info {
+            padding: 8px 10px;
+            background: #ffffff;
+        }
+
+        .preview-filename {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #1e293b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .preview-filesize {
+            font-size: 10.5px;
+            color: #64748b;
+        }
+
+        .preview-remove-btn {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.9);
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            z-index: 5;
+        }
+
+        .preview-remove-btn:hover {
+            background: #dc2626;
+            transform: scale(1.15);
+        }
+
+        .badge-cover-type {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(17, 26, 58, 0.85);
+            color: #ffffff;
+            backdrop-filter: blur(4px);
+        }
+    </style>
 @endpush
 
 @section('content')
     <div class="container-fluid my-3">
-        <form id="projectCreateForm" action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <form id="projectCreateForm" action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
+            autocomplete="off">
             @csrf
             <div class="row">
                 {{-- Main Project Details --}}
@@ -129,7 +144,8 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('projects.index') }}">Projects</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('projects.index') }}">Projects</a>
+                                        </li>
                                         <li class="breadcrumb-item active" aria-current="page">Create</li>
                                     </ol>
                                 </nav>
@@ -142,8 +158,12 @@
                             <div class="row g-3">
                                 {{-- Project Title --}}
                                 <div class="col-md-8 col-12">
-                                    <label for="title" class="form-label custom-label">Project Title <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control custom-input @error('title') is-invalid @enderror" name="title" id="title" value="{{ old('title') }}" placeholder="e.g. Apex Corporate Tower" required>
+                                    <label for="title" class="form-label custom-label">Project Title <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text"
+                                        class="form-control custom-input @error('title') is-invalid @enderror" name="title"
+                                        id="title" value="{{ old('title') }}" placeholder="e.g. Apex Corporate Tower"
+                                        required>
                                     @error('title')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -152,8 +172,11 @@
                                 {{-- Slug --}}
                                 <div class="col-md-4 col-12">
                                     <label for="slug" class="form-label custom-label">Slug (URL Identifier)</label>
-                                    <input type="text" class="form-control custom-input @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug') }}" placeholder="auto-generated-if-blank">
-                                    <div class="text-muted mt-1" style="font-size: 11px;">Leave empty to generate automatically from title</div>
+                                    <input type="text" class="form-control custom-input @error('slug') is-invalid @enderror"
+                                        name="slug" id="slug" value="{{ old('slug') }}"
+                                        placeholder="auto-generated-if-blank">
+                                    <div class="text-muted mt-1" style="font-size: 11px;">Leave empty to generate
+                                        automatically from title</div>
                                     @error('slug')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -161,8 +184,10 @@
 
                                 {{-- Category & Status --}}
                                 <div class="col-md-6 col-12">
-                                    <label for="category" class="form-label custom-label">Category / Sector <span class="text-danger">*</span></label>
-                                    <select class="form-select custom-input @error('category') is-invalid @enderror" name="category" id="category" required>
+                                    <label for="category" class="form-label custom-label">Category / Sector <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select custom-input @error('category') is-invalid @enderror"
+                                        name="category" id="category" required>
                                         <option value="">Select Category...</option>
                                         @foreach($categories as $category)
                                             <option value="{{ $category }}" {{ old('category') == $category ? 'selected' : '' }}>
@@ -176,8 +201,10 @@
                                 </div>
 
                                 <div class="col-md-6 col-12">
-                                    <label for="status" class="form-label custom-label">Project Status <span class="text-danger">*</span></label>
-                                    <select class="form-select custom-input @error('status') is-invalid @enderror" name="status" id="status" required>
+                                    <label for="status" class="form-label custom-label">Project Status <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select custom-input @error('status') is-invalid @enderror"
+                                        name="status" id="status" required>
                                         @foreach($statuses as $status)
                                             <option value="{{ $status->value }}" {{ old('status', 'ongoing') == $status->value ? 'selected' : '' }}>
                                                 {{ $status->label() }}
@@ -192,7 +219,10 @@
                                 {{-- Client & Site Location --}}
                                 <div class="col-md-6 col-12">
                                     <label for="client_name" class="form-label custom-label">Client / Stakeholder</label>
-                                    <input type="text" class="form-control custom-input @error('client_name') is-invalid @enderror" name="client_name" id="client_name" value="{{ old('client_name') }}" placeholder="e.g. Apex Holdings Group">
+                                    <input type="text"
+                                        class="form-control custom-input @error('client_name') is-invalid @enderror"
+                                        name="client_name" id="client_name" value="{{ old('client_name') }}"
+                                        placeholder="e.g. Apex Holdings Group">
                                     @error('client_name')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -200,7 +230,10 @@
 
                                 <div class="col-md-6 col-12">
                                     <label for="location" class="form-label custom-label">Site Location</label>
-                                    <input type="text" class="form-control custom-input @error('location') is-invalid @enderror" name="location" id="location" value="{{ old('location') }}" placeholder="e.g. Gulshan Avenue, Dhaka">
+                                    <input type="text"
+                                        class="form-control custom-input @error('location') is-invalid @enderror"
+                                        name="location" id="location" value="{{ old('location') }}"
+                                        placeholder="e.g. Gulshan Avenue, Dhaka">
                                     @error('location')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -209,15 +242,20 @@
                                 {{-- Timeline Dates --}}
                                 <div class="col-md-6 col-12">
                                     <label for="start_date" class="form-label custom-label">Commencement Date</label>
-                                    <input type="date" class="form-control custom-input @error('start_date') is-invalid @enderror" name="start_date" id="start_date" value="{{ old('start_date') }}">
+                                    <input type="date"
+                                        class="form-control custom-input @error('start_date') is-invalid @enderror"
+                                        name="start_date" id="start_date" value="{{ old('start_date') }}">
                                     @error('start_date')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6 col-12">
-                                    <label for="completion_date" class="form-label custom-label">Completion / Delivery Date</label>
-                                    <input type="date" class="form-control custom-input @error('completion_date') is-invalid @enderror" name="completion_date" id="completion_date" value="{{ old('completion_date') }}">
+                                    <label for="completion_date" class="form-label custom-label">Completion / Delivery
+                                        Date</label>
+                                    <input type="date"
+                                        class="form-control custom-input @error('completion_date') is-invalid @enderror"
+                                        name="completion_date" id="completion_date" value="{{ old('completion_date') }}">
                                     @error('completion_date')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -225,8 +263,13 @@
 
                                 {{-- Short Description --}}
                                 <div class="col-12">
-                                    <label for="short_description" class="form-label custom-label">Executive Summary / Brief</label>
-                                    <textarea class="form-control custom-input @error('short_description') is-invalid @enderror" name="short_description" id="short_description" rows="3" placeholder="Concise 1-2 sentence overview for cards and portfolio highlights..." style="resize: none;">{{ old('short_description') }}</textarea>
+                                    <label for="short_description" class="form-label custom-label">Executive Summary /
+                                        Brief</label>
+                                    <textarea
+                                        class="form-control custom-input @error('short_description') is-invalid @enderror"
+                                        name="short_description" id="short_description" rows="3"
+                                        placeholder="Concise 1-2 sentence overview for cards and portfolio highlights..."
+                                        style="resize: none;">{{ old('short_description') }}</textarea>
                                     @error('short_description')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -234,8 +277,10 @@
 
                                 {{-- Full Description with CKEditor --}}
                                 <div class="col-12">
-                                    <label for="description" class="form-label custom-label">Detailed Case Study &amp; Scope of Work</label>
-                                    <textarea class="form-control custom-input" name="description" id="description" rows="10">{{ old('description') }}</textarea>
+                                    <label for="description" class="form-label custom-label">Detailed Case Study &amp; Scope
+                                        of Work</label>
+                                    <textarea class="form-control custom-input" name="description" id="description"
+                                        rows="10">{{ old('description') }}</textarea>
                                     @error('description')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -253,14 +298,21 @@
                             <div class="row g-3">
                                 <div class="col-12">
                                     <label for="meta_title" class="form-label custom-label">Meta Title</label>
-                                    <input type="text" class="form-control custom-input @error('meta_title') is-invalid @enderror" name="meta_title" id="meta_title" value="{{ old('meta_title') }}" placeholder="Title for Google search engine results...">
+                                    <input type="text"
+                                        class="form-control custom-input @error('meta_title') is-invalid @enderror"
+                                        name="meta_title" id="meta_title" value="{{ old('meta_title') }}"
+                                        placeholder="Title for Google search engine results...">
                                     @error('meta_title')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-12">
                                     <label for="meta_description" class="form-label custom-label">Meta Description</label>
-                                    <textarea class="form-control custom-input @error('meta_description') is-invalid @enderror" name="meta_description" id="meta_description" rows="2" placeholder="Summary snippet for search results (recommended under 160 characters)..." style="resize: none;">{{ old('meta_description') }}</textarea>
+                                    <textarea
+                                        class="form-control custom-input @error('meta_description') is-invalid @enderror"
+                                        name="meta_description" id="meta_description" rows="2"
+                                        placeholder="Summary snippet for search results (recommended under 160 characters)..."
+                                        style="resize: none;">{{ old('meta_description') }}</textarea>
                                     @error('meta_description')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -282,21 +334,29 @@
                                 <div class="card-body custom-form">
                                     <div class="d-flex flex-column gap-3 mb-3">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="is_published" id="is_published" value="1" {{ old('is_published', 1) ? 'checked' : '' }} style="cursor: pointer;">
-                                            <label class="form-check-label fw-semibold" for="is_published" style="font-size: 13.5px; cursor: pointer;">
+                                            <input class="form-check-input" type="checkbox" name="is_published"
+                                                id="is_published" value="1" {{ old('is_published', 1) ? 'checked' : '' }}
+                                                style="cursor: pointer;">
+                                            <label class="form-check-label fw-semibold" for="is_published"
+                                                style="font-size: 13.5px; cursor: pointer;">
                                                 Visible on Website
                                             </label>
                                         </div>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="featured" id="featured" value="1" {{ old('featured') ? 'checked' : '' }} style="cursor: pointer;">
-                                            <label class="form-check-label fw-semibold" for="featured" style="font-size: 13.5px; cursor: pointer;">
+                                            <input class="form-check-input" type="checkbox" name="featured" id="featured"
+                                                value="1" {{ old('featured') ? 'checked' : '' }} style="cursor: pointer;">
+                                            <label class="form-check-label fw-semibold" for="featured"
+                                                style="font-size: 13.5px; cursor: pointer;">
                                                 Feature on Homepage
                                             </label>
                                         </div>
                                         <div>
-                                            <label for="sort_order" class="form-label custom-label mb-1">Display Priority Order</label>
-                                            <input type="number" class="form-control custom-input" name="sort_order" id="sort_order" value="{{ old('sort_order', 0) }}" min="0">
-                                            <div class="text-muted" style="font-size: 11px;">Lower numbers appear first (e.g. 0, 1, 2)</div>
+                                            <label for="sort_order" class="form-label custom-label mb-1">Display Priority
+                                                Order</label>
+                                            <input type="number" class="form-control custom-input" name="sort_order"
+                                                id="sort_order" value="{{ old('sort_order', 0) }}" min="0">
+                                            <div class="text-muted" style="font-size: 11px;">Lower numbers appear first
+                                                (e.g. 0, 1, 2)</div>
                                         </div>
                                     </div>
                                     <div class="row g-2">
@@ -323,7 +383,8 @@
                                 </div>
                                 <div class="card-body custom-form">
                                     {{-- Hidden file input --}}
-                                    <input type="file" id="main_image" name="main_image" class="d-none" accept="image/png,image/jpeg,image/webp,image/jpg">
+                                    <input type="file" id="main_image" name="main_image" class="d-none"
+                                        accept="image/png,image/jpeg,image/webp,image/jpg">
 
                                     {{-- Interactive Dropzone --}}
                                     <div id="main_image_dropzone" class="dropzone-box">
@@ -331,28 +392,40 @@
                                             <div class="dropzone-icon">
                                                 <i class="ri-image-add-line"></i>
                                             </div>
-                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop cover photo</p>
-                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP up to 5MB (16:9 ratio recommended)</span>
-                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto" onclick="$('#main_image').click();">
+                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop
+                                                cover photo</p>
+                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP
+                                                up to 5MB (16:9 ratio recommended)</span>
+                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
+                                                onclick="$('#main_image').click();">
                                                 <i class="ri-upload-2-line me-1"></i> Browse Photo
                                             </button>
                                         </div>
 
                                         {{-- Staged Preview Box --}}
                                         <div id="main_image_preview_box" class="d-none">
-                                            <div class="position-relative rounded overflow-hidden mb-2" style="height: 180px; background: #000;">
-                                                <img id="main_image_img" src="" alt="Cover preview" style="width: 100%; height: 100%; object-fit: cover;">
-                                                <span class="badge-cover-type"><i class="ri-check-line me-1 text-success"></i> Primary Cover</span>
-                                                <button type="button" class="preview-remove-btn" id="btn_remove_main_image" title="Remove selected image">
+                                            <div class="position-relative rounded overflow-hidden mb-2"
+                                                style="height: 180px; background: #000;">
+                                                <img id="main_image_img" src="" alt="Cover preview"
+                                                    style="width: 100%; height: 100%; object-fit: cover;">
+                                                <span class="badge-cover-type"><i
+                                                        class="ri-check-line me-1 text-success"></i> Primary Cover</span>
+                                                <button type="button" class="preview-remove-btn" id="btn_remove_main_image"
+                                                    title="Remove selected image">
                                                     <i class="ri-close-line"></i>
                                                 </button>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between px-1">
                                                 <div class="text-start text-truncate me-2">
-                                                    <span id="main_image_name" class="fw-semibold text-dark d-block text-truncate" style="font-size: 12px;"></span>
-                                                    <span id="main_image_size" class="text-muted" style="font-size: 11px;"></span>
+                                                    <span id="main_image_name"
+                                                        class="fw-semibold text-dark d-block text-truncate"
+                                                        style="font-size: 12px;"></span>
+                                                    <span id="main_image_size" class="text-muted"
+                                                        style="font-size: 11px;"></span>
                                                 </div>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2" style="font-size: 11.5px; height: 28px;" onclick="$('#main_image').click();">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2"
+                                                    style="font-size: 11.5px; height: 28px;"
+                                                    onclick="$('#main_image').click();">
                                                     Change
                                                 </button>
                                             </div>
@@ -370,20 +443,27 @@
                             <div class="card table-card">
                                 <div class="card-header table-header d-flex justify-content-between align-items-center">
                                     <div class="table-title">Project Gallery Photos</div>
-                                    <span class="badge bg-primary" id="gallery_counter_badge" style="font-size: 11px;">0 Selected</span>
+                                    <span class="badge bg-primary" id="gallery_counter_badge" style="font-size: 11px;">0
+                                        Selected</span>
                                 </div>
                                 <div class="card-body custom-form">
                                     {{-- Hidden multi-file input --}}
-                                    <input type="file" id="gallery_input" name="gallery[]" class="d-none" accept="image/png,image/jpeg,image/webp,image/jpg" multiple>
+                                    <input type="file" id="gallery_input" name="gallery[]" class="d-none"
+                                        accept="image/png,image/jpeg,image/webp,image/jpg" multiple>
 
                                     {{-- Interactive Dropzone --}}
                                     <div id="gallery_dropzone" class="dropzone-box mb-3">
-                                        <div class="dropzone-icon" style="background-color: rgba(79, 70, 229, 0.1); color: #4f46e5;">
+                                        <div class="dropzone-icon"
+                                            style="background-color: rgba(79, 70, 229, 0.1); color: #4f46e5;">
                                             <i class="ri-gallery-upload-line"></i>
                                         </div>
-                                        <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop gallery photos</p>
-                                        <span class="text-muted d-block mb-3" style="font-size: 11.5px;">Select multiple site progression or interior photos</span>
-                                        <button type="button" class="btn btn-sm upload-btn px-3 mx-auto" style="background-color: #eef2ff; border-color: #6366f1; color: #4f46e5;" onclick="$('#gallery_input').click();">
+                                        <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop gallery
+                                            photos</p>
+                                        <span class="text-muted d-block mb-3" style="font-size: 11.5px;">Select multiple
+                                            site progression or interior photos</span>
+                                        <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
+                                            style="background-color: #eef2ff; border-color: #6366f1; color: #4f46e5;"
+                                            onclick="$('#gallery_input').click();">
                                             <i class="ri-add-circle-line me-1"></i> Browse Photos
                                         </button>
                                     </div>
@@ -404,8 +484,11 @@
                                     <div class="table-title">Engineering Documents</div>
                                 </div>
                                 <div class="card-body custom-form">
-                                    <input type="file" id="documents_input" name="documents[]" class="form-control custom-input mb-2" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
-                                    <span class="text-muted d-block" style="font-size: 11px;">Upload technical specifications, AutoCAD PDF drawings, or briefs (max 10MB each)</span>
+                                    <input type="file" id="documents_input" name="documents[]"
+                                        class="form-control custom-input mb-2" multiple
+                                        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
+                                    <span class="text-muted d-block" style="font-size: 11px;">Upload technical
+                                        specifications, AutoCAD PDF drawings, or briefs (max 10MB each)</span>
                                     <div id="documents_preview_list" class="mt-2"></div>
                                     @error('documents.*')
                                         <div class="error_msg mt-2">{{ $message }}</div>
@@ -420,17 +503,17 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Auto-slug generator on title input
             var slugManuallyChanged = false;
-            $('#slug').on('input', function() {
+            $('#slug').on('input', function () {
                 slugManuallyChanged = $(this).val().trim().length > 0;
             });
 
-            $('#title').on('input', function() {
+            $('#title').on('input', function () {
                 if (!slugManuallyChanged) {
                     var titleVal = $(this).val();
                     var slug = titleVal.toLowerCase()
@@ -445,7 +528,7 @@
             // Initialize CKEditor
             if (typeof CKEDITOR !== 'undefined' && document.getElementById('description')) {
                 CKEDITOR.replace('description', {
-                    filebrowserUploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token() ]) }}",
+                    filebrowserUploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
                     filebrowserUploadMethod: 'form',
                     height: 300
                 });
@@ -458,26 +541,26 @@
             var $mainInput = $('#main_image');
 
             // Click outside buttons triggers file input
-            $mainDropzone.on('click', function(e) {
+            $mainDropzone.on('click', function (e) {
                 if (!$(e.target).closest('button').length && !$(e.target).is('button')) {
                     $mainInput.click();
                 }
             });
 
             // Drag and Drop Events
-            $mainDropzone.on('dragover dragenter', function(e) {
+            $mainDropzone.on('dragover dragenter', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $mainDropzone.addClass('dragover');
             });
 
-            $mainDropzone.on('dragleave dragend drop', function(e) {
+            $mainDropzone.on('dragleave dragend drop', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $mainDropzone.removeClass('dragover');
             });
 
-            $mainDropzone.on('drop', function(e) {
+            $mainDropzone.on('drop', function (e) {
                 var files = e.originalEvent.dataTransfer.files;
                 if (files && files.length > 0) {
                     var file = files[0];
@@ -498,7 +581,7 @@
                 }
             });
 
-            $mainInput.on('change', function() {
+            $mainInput.on('change', function () {
                 if (this.files && this.files[0]) {
                     var file = this.files[0];
                     if (file.size > 5 * 1024 * 1024) {
@@ -512,7 +595,7 @@
 
             function renderMainImagePreview(file) {
                 var reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     $('#main_image_img').attr('src', e.target.result);
                     $('#main_image_name').text(file.name);
                     $('#main_image_size').text(formatBytes(file.size));
@@ -522,7 +605,7 @@
                 reader.readAsDataURL(file);
             }
 
-            $('#btn_remove_main_image').on('click', function(e) {
+            $('#btn_remove_main_image').on('click', function (e) {
                 e.stopPropagation();
                 $mainInput.val('');
                 $('#main_image_img').attr('src', '');
@@ -537,32 +620,32 @@
             var $galleryInput = $('#gallery_input');
             var galleryDataTransfer = new DataTransfer();
 
-            $galleryDropzone.on('click', function(e) {
+            $galleryDropzone.on('click', function (e) {
                 if (!$(e.target).closest('button').length && !$(e.target).is('button')) {
                     $galleryInput.click();
                 }
             });
 
-            $galleryDropzone.on('dragover dragenter', function(e) {
+            $galleryDropzone.on('dragover dragenter', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $galleryDropzone.addClass('dragover');
             });
 
-            $galleryDropzone.on('dragleave dragend drop', function(e) {
+            $galleryDropzone.on('dragleave dragend drop', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $galleryDropzone.removeClass('dragover');
             });
 
-            $galleryDropzone.on('drop', function(e) {
+            $galleryDropzone.on('drop', function (e) {
                 var files = e.originalEvent.dataTransfer.files;
                 if (files && files.length > 0) {
                     appendGalleryFiles(files);
                 }
             });
 
-            $galleryInput.on('change', function() {
+            $galleryInput.on('change', function () {
                 if (this.files && this.files.length > 0) {
                     appendGalleryFiles(this.files);
                 }
@@ -595,21 +678,21 @@
                     return;
                 }
 
-                Array.from(files).forEach(function(file, index) {
+                Array.from(files).forEach(function (file, index) {
                     var reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         var cardHtml = '<div class="col-6 col-md-4" id="staged_gallery_' + index + '">' +
                             '<div class="preview-card">' +
-                                '<button type="button" class="preview-remove-btn remove-staged-gallery" data-index="' + index + '" title="Remove from upload queue">' +
-                                    '<i class="ri-close-line"></i>' +
-                                '</button>' +
-                                '<img src="' + e.target.result + '" class="preview-thumb" alt="' + file.name + '">' +
-                                '<div class="preview-info">' +
-                                    '<span class="preview-filename">' + file.name + '</span>' +
-                                    '<span class="preview-filesize">' + formatBytes(file.size) + '</span>' +
-                                '</div>' +
+                            '<button type="button" class="preview-remove-btn remove-staged-gallery" data-index="' + index + '" title="Remove from upload queue">' +
+                            '<i class="ri-close-line"></i>' +
+                            '</button>' +
+                            '<img src="' + e.target.result + '" class="preview-thumb" alt="' + file.name + '">' +
+                            '<div class="preview-info">' +
+                            '<span class="preview-filename">' + file.name + '</span>' +
+                            '<span class="preview-filesize">' + formatBytes(file.size) + '</span>' +
                             '</div>' +
-                        '</div>';
+                            '</div>' +
+                            '</div>';
                         $grid.append(cardHtml);
                     };
                     reader.readAsDataURL(file);
@@ -617,11 +700,11 @@
             }
 
             // Remove single file from Gallery DataTransfer queue
-            $(document).on('click', '.remove-staged-gallery', function(e) {
+            $(document).on('click', '.remove-staged-gallery', function (e) {
                 e.stopPropagation();
                 var removeIndex = parseInt($(this).data('index'), 10);
                 var newDt = new DataTransfer();
-                Array.from(galleryDataTransfer.files).forEach(function(file, idx) {
+                Array.from(galleryDataTransfer.files).forEach(function (file, idx) {
                     if (idx !== removeIndex) {
                         newDt.items.add(file);
                     }
@@ -634,19 +717,19 @@
             // ==========================================
             // 3. DOCUMENTS PREVIEW
             // ==========================================
-            $('#documents_input').on('change', function() {
+            $('#documents_input').on('change', function () {
                 var $list = $('#documents_preview_list');
                 $list.empty();
                 if (this.files && this.files.length > 0) {
                     var html = '<ul class="list-group list-group-flush" style="border-radius: 6px; overflow: hidden;">';
-                    Array.from(this.files).forEach(function(file) {
+                    Array.from(this.files).forEach(function (file) {
                         html += '<li class="list-group-item d-flex justify-content-between align-items-center py-2 px-2" style="font-size: 12px; background: #f8fafc;">' +
                             '<div class="text-truncate me-2">' +
-                                '<i class="ri-file-text-line text-primary me-1"></i> ' +
-                                '<strong>' + file.name + '</strong>' +
+                            '<i class="ri-file-text-line text-primary me-1"></i> ' +
+                            '<strong>' + file.name + '</strong>' +
                             '</div>' +
                             '<span class="badge bg-light text-dark border">' + formatBytes(file.size) + '</span>' +
-                        '</li>';
+                            '</li>';
                     });
                     html += '</ul>';
                     $list.append(html);

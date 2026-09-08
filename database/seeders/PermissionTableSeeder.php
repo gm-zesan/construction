@@ -87,6 +87,12 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'milestone-create', 'display_name' => 'Milestone create', 'module' => 'milestone'],
             ['name' => 'milestone-edit', 'display_name' => 'Milestone edit', 'module' => 'milestone'],
             ['name' => 'milestone-delete', 'display_name' => 'Milestone delete', 'module' => 'milestone'],
+
+            // 13. Client Reviews & Testimonials
+            ['name' => 'client-review-list', 'display_name' => 'Review list', 'module' => 'client-review'],
+            ['name' => 'client-review-create', 'display_name' => 'Review create', 'module' => 'client-review'],
+            ['name' => 'client-review-edit', 'display_name' => 'Review edit', 'module' => 'client-review'],
+            ['name' => 'client-review-delete', 'display_name' => 'Review delete', 'module' => 'client-review'],
         ];
 
         // Create or update all active module permissions

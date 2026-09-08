@@ -85,26 +85,29 @@
                             </nav>
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <a href="{{ route('projects.index') }}" class="add-new" style="background-color: #f1f5f9; color: #334155;">
+                            <a href="{{ route('projects.index') }}" class="add-new"
+                                style="background-color: #f1f5f9; color: #334155;">
                                 <i class="ri-arrow-left-line me-1"></i> Project List
                             </a>
                             @can('project-edit')
-                            <a href="{{ route('projects.edit', $project->id) }}" class="add-new">
-                                <i class="ri-edit-line me-1"></i> Edit Project
-                            </a>
+                                <a href="{{ route('projects.edit', $project->id) }}" class="add-new">
+                                    <i class="ri-edit-line me-1"></i> Edit Project
+                                </a>
                             @endcan
                         </div>
                     </div>
                     <div class="card-body custom-form p-4">
                         {{-- Cover Image Showcase --}}
-                        <div class="position-relative rounded overflow-hidden mb-4 border" style="height: 260px; background: #0b0f17;">
+                        <div class="position-relative rounded overflow-hidden mb-4 border"
+                            style="height: 260px; background: #0b0f17;">
                             <img src="{{ $project->main_image_url }}" alt="{{ $project->title }}"
                                 onerror="this.onerror=null;this.src='{{ asset('admin/assets/images/default.jpg') }}';"
                                 style="width: 100%; height: 100%; object-fit: cover;">
                             <div class="position-absolute bottom-0 start-0 end-0 p-3 d-flex justify-content-between align-items-end"
                                 style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);">
                                 <div>
-                                    <span class="badge bg-primary mb-1" style="font-size: 11px;">{{ $project->category }}</span>
+                                    <span class="badge bg-primary mb-1"
+                                        style="font-size: 11px;">{{ $project->category }}</span>
                                     <h4 class="text-white fw-bold mb-0" style="font-size: 20px;">{{ $project->title }}</h4>
                                 </div>
                                 <div class="d-flex gap-2">
@@ -117,7 +120,8 @@
                                             default => 'background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;',
                                         };
                                     @endphp
-                                    <span class="badge" style="{{ $badgeStyle }} font-size: 11.5px; padding: 5px 10px; border-radius: 4px; font-weight: 700;">
+                                    <span class="badge"
+                                        style="{{ $badgeStyle }} font-size: 11.5px; padding: 5px 10px; border-radius: 4px; font-weight: 700;">
                                         {{ $status ? $status->label() : ucfirst($project->status) }}
                                     </span>
                                 </div>
@@ -127,10 +131,12 @@
                         {{-- Executive Summary --}}
                         @if($project->short_description)
                             <div class="mb-4">
-                                <h6 class="fw-bold text-dark mb-2" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
+                                <h6 class="fw-bold text-dark mb-2"
+                                    style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
                                     Executive Summary
                                 </h6>
-                                <p class="text-dark mb-0 p-3 rounded" style="background-color: #f8fafc; border: 1px solid #e2e8f0; font-size: 13.5px; line-height: 1.7;">
+                                <p class="text-dark mb-0 p-3 rounded"
+                                    style="background-color: #f8fafc; border: 1px solid #e2e8f0; font-size: 13.5px; line-height: 1.7;">
                                     {{ $project->short_description }}
                                 </p>
                             </div>
@@ -138,7 +144,8 @@
 
                         {{-- Full Description / Case Study --}}
                         <div class="mb-4">
-                            <h6 class="fw-bold text-dark mb-2" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
+                            <h6 class="fw-bold text-dark mb-2"
+                                style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
                                 Detailed Scope of Work &amp; Case Study
                             </h6>
                             <div class="scope-content-box">
@@ -149,7 +156,8 @@
                         {{-- Project Gallery --}}
                         @if($project->getMedia('gallery')->isNotEmpty())
                             <div class="mb-4">
-                                <h6 class="fw-bold text-dark mb-2" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
+                                <h6 class="fw-bold text-dark mb-2"
+                                    style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
                                     Photo Gallery ({{ $project->getMedia('gallery')->count() }} Photos)
                                 </h6>
                                 <div class="row g-2">
@@ -161,7 +169,8 @@
                                             }
                                         @endphp
                                         <div class="col-6 col-sm-4 col-md-3">
-                                            <a href="{{ $mediaUrl }}" target="_blank" class="d-block gallery-thumb-item" title="{{ $media->file_name }}">
+                                            <a href="{{ $mediaUrl }}" target="_blank" class="d-block gallery-thumb-item"
+                                                title="{{ $media->file_name }}">
                                                 <img src="{{ $mediaUrl }}" alt="{{ $media->name }}"
                                                     onerror="this.onerror=null;this.src='{{ asset('admin/assets/images/default.jpg') }}';">
                                             </a>
@@ -174,7 +183,8 @@
                         {{-- Technical Documents --}}
                         @if($project->getMedia('documents')->isNotEmpty())
                             <div class="mb-2">
-                                <h6 class="fw-bold text-dark mb-2" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
+                                <h6 class="fw-bold text-dark mb-2"
+                                    style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
                                     Engineering &amp; Technical Documents
                                 </h6>
                                 <ul class="list-group list-group-flush border rounded overflow-hidden">
@@ -185,14 +195,17 @@
                                                 $docUrl = parse_url($docUrl, PHP_URL_PATH) ?: $docUrl;
                                             }
                                         @endphp
-                                        <li class="list-group-item d-flex justify-content-between align-items-center py-2 px-3" style="font-size: 13px; background: #f8fafc;">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-2 px-3"
+                                            style="font-size: 13px; background: #f8fafc;">
                                             <div class="d-flex align-items-center text-truncate me-2">
                                                 <i class="ri-file-pdf-line text-danger me-2" style="font-size: 20px;"></i>
                                                 <span class="fw-semibold text-dark text-truncate">{{ $doc->file_name }}</span>
                                             </div>
                                             <div class="d-flex align-items-center gap-2">
                                                 <span class="badge bg-light text-dark border">{{ $doc->readable_size }}</span>
-                                                <a href="{{ $docUrl }}" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2" style="font-size: 12px; height: 26px; line-height: 24px;">
+                                                <a href="{{ $docUrl }}" target="_blank"
+                                                    class="btn btn-sm btn-outline-primary py-0 px-2"
+                                                    style="font-size: 12px; height: 26px; line-height: 24px;">
                                                     <i class="ri-download-2-line me-1"></i> View
                                                 </a>
                                             </div>
@@ -220,7 +233,8 @@
                             <div class="col-12">
                                 <div class="project-meta-box">
                                     <div class="project-meta-label">Meta Description</div>
-                                    <div class="project-meta-value text-muted" style="font-weight: 400;">{{ $project->meta_description ?: '—' }}</div>
+                                    <div class="project-meta-value text-muted" style="font-weight: 400;">
+                                        {{ $project->meta_description ?: '—' }}</div>
                                 </div>
                             </div>
                         </div>
@@ -246,7 +260,8 @@
 
                                     <div class="project-meta-box">
                                         <div class="project-meta-label">Client / Stakeholder</div>
-                                        <div class="project-meta-value">{{ $project->client_name ?: 'Confidential / Direct' }}</div>
+                                        <div class="project-meta-value">
+                                            {{ $project->client_name ?: 'Confidential / Direct' }}</div>
                                     </div>
 
                                     <div class="project-meta-box">
@@ -281,19 +296,27 @@
 
                                     <div class="project-meta-box">
                                         <div class="project-meta-label">Slug Identifier</div>
-                                        <div class="project-meta-value font-monospace" style="font-size: 12px;">{{ $project->slug }}</div>
+                                        <div class="project-meta-value font-monospace" style="font-size: 12px;">
+                                            {{ $project->slug }}</div>
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-                                        <span class="fw-semibold text-dark" style="font-size: 13px;">Website Visibility:</span>
-                                        <span class="badge {{ $project->is_published ? 'bg-success' : 'bg-secondary' }}" style="font-size: 11px;">
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
+                                        style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                        <span class="fw-semibold text-dark" style="font-size: 13px;">Website
+                                            Visibility:</span>
+                                        <span class="badge {{ $project->is_published ? 'bg-success' : 'bg-secondary' }}"
+                                            style="font-size: 11px;">
                                             {{ $project->is_published ? 'Published' : 'Draft' }}
                                         </span>
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-                                        <span class="fw-semibold text-dark" style="font-size: 13px;">Homepage Featured:</span>
-                                        <span class="badge {{ $project->featured ? 'bg-warning text-dark' : 'bg-light text-muted border' }}" style="font-size: 11px;">
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
+                                        style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                        <span class="fw-semibold text-dark" style="font-size: 13px;">Homepage
+                                            Featured:</span>
+                                        <span
+                                            class="badge {{ $project->featured ? 'bg-warning text-dark' : 'bg-light text-muted border' }}"
+                                            style="font-size: 11px;">
                                             {{ $project->featured ? 'Featured' : 'Standard' }}
                                         </span>
                                     </div>
@@ -311,17 +334,18 @@
                             <div class="card-body custom-form">
                                 <div class="d-flex flex-column gap-2">
                                     @can('project-edit')
-                                    <a href="{{ route('projects.edit', $project->id) }}" class="btn submit-button w-100 d-flex align-items-center justify-content-center gap-1">
-                                        <i class="ri-edit-line"></i> Edit Project
-                                    </a>
+                                        <a href="{{ route('projects.edit', $project->id) }}"
+                                            class="btn submit-button w-100 d-flex align-items-center justify-content-center gap-1">
+                                            <i class="ri-edit-line"></i> Edit Project
+                                        </a>
                                     @endcan
                                     @can('project-delete')
-                                    <button type="button" class="btn btn-outline-danger w-100 btn-delete-modal"
-                                        data-title="{{ $project->title }}"
-                                        data-url="{{ route('projects.destroy', $project->id) }}"
-                                        style="height: 36px; font-size: 13px; font-weight: 600;">
-                                        <i class="ri-delete-bin-line me-1"></i> Delete Project
-                                    </button>
+                                        <button type="button" class="btn btn-outline-danger w-100 btn-delete-modal"
+                                            data-title="{{ $project->title }}"
+                                            data-url="{{ route('projects.destroy', $project->id) }}"
+                                            style="height: 36px; font-size: 13px; font-weight: 600;">
+                                            <i class="ri-delete-bin-line me-1"></i> Delete Project
+                                        </button>
                                     @endcan
                                 </div>
                             </div>
@@ -373,7 +397,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).on('click', '.btn-delete-modal', function () {

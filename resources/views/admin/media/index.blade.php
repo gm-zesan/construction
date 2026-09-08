@@ -37,14 +37,18 @@
             transition: all 0.25s ease;
             position: relative;
         }
-        .dropzone-box:hover, .dropzone-box.dragover {
+
+        .dropzone-box:hover,
+        .dropzone-box.dragover {
             border-color: #f95716;
             background-color: #fff7ed;
             transform: translateY(-1px);
         }
+
         .dropzone-box.dragover {
             box-shadow: 0 0 0 4px rgba(249, 87, 22, 0.15);
         }
+
         .dropzone-icon {
             width: 54px;
             height: 54px;
@@ -58,9 +62,11 @@
             justify-content: center;
             transition: transform 0.2s ease;
         }
+
         .dropzone-box:hover .dropzone-icon {
             transform: scale(1.08);
         }
+
         .upload-btn {
             background-color: #f95716;
             border-color: #f95716;
@@ -70,25 +76,29 @@
             border-radius: 6px;
             transition: all 0.2s ease;
         }
+
         .upload-btn:hover {
             background-color: #ea580c;
             border-color: #ea580c;
             color: #ffffff;
             transform: translateY(-1px);
         }
+
         .preview-card {
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid #e2e8f0;
             background: #ffffff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
             position: relative;
             transition: all 0.2s ease;
         }
+
         .preview-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             border-color: #cbd5e1;
         }
+
         .preview-thumb {
             width: 100%;
             height: 110px;
@@ -96,6 +106,7 @@
             display: block;
             background-color: #f1f5f9;
         }
+
         .preview-doc-box {
             width: 100%;
             height: 110px;
@@ -106,10 +117,12 @@
             background-color: #f8fafc;
             border-bottom: 1px solid #e2e8f0;
         }
+
         .preview-info {
             padding: 8px 10px;
             background: #ffffff;
         }
+
         .preview-filename {
             font-size: 11.5px;
             font-weight: 600;
@@ -119,10 +132,12 @@
             text-overflow: ellipsis;
             display: block;
         }
+
         .preview-filesize {
             font-size: 10.5px;
             color: #64748b;
         }
+
         .preview-remove-btn {
             position: absolute;
             top: 6px;
@@ -138,10 +153,11 @@
             justify-content: center;
             font-size: 13px;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             transition: all 0.2s ease;
             z-index: 5;
         }
+
         .preview-remove-btn:hover {
             background: #dc2626;
             transform: scale(1.15);
@@ -202,7 +218,8 @@
                             </div>
                             <div>
                                 <div class="text-muted" style="font-size: 12px; font-weight: 600;">Total Assets</div>
-                                <div class="fw-bold text-dark" style="font-size: 18px;" id="statTotalCount">{{ $totalCount }}</div>
+                                <div class="fw-bold text-dark" style="font-size: 18px;" id="statTotalCount">
+                                    {{ $totalCount }}</div>
                             </div>
                         </div>
                     </div>
@@ -223,7 +240,8 @@
                                 <i class="ri-file-text-line"></i>
                             </div>
                             <div>
-                                <div class="text-muted" style="font-size: 12px; font-weight: 600;">Documents &amp; PDFs</div>
+                                <div class="text-muted" style="font-size: 12px; font-weight: 600;">Documents &amp; PDFs
+                                </div>
                                 <div class="fw-bold text-dark" style="font-size: 18px;">{{ $docCount }}</div>
                             </div>
                         </div>
@@ -262,7 +280,8 @@
                             </nav>
                         </div>
                         @can('media-create')
-                            <button type="button" class="add-new" id="openUploadModalBtn" data-bs-toggle="modal" data-bs-target="#uploadMediaModal">
+                            <button type="button" class="add-new" id="openUploadModalBtn" data-bs-toggle="modal"
+                                data-bs-target="#uploadMediaModal">
                                 <i class="ri-upload-cloud-2-line me-1"></i> Upload Media
                             </button>
                         @endcan
@@ -284,7 +303,8 @@
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <label class="form-label mb-1 text-muted"
-                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">File Type</label>
+                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">File
+                                    Type</label>
                                 <select id="filter_mime_type" class="form-select form-select-sm custom-input"
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All File Types</option>
@@ -294,7 +314,8 @@
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <label class="form-label mb-1 text-muted"
-                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Uploaded By</label>
+                                    style="font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Uploaded
+                                    By</label>
                                 <select id="filter_uploaded_by" class="form-select form-select-sm custom-input"
                                     style="height: 36px; font-size: 13px;">
                                     <option value="">All Uploaders</option>
@@ -339,89 +360,107 @@
 
     {{-- Upload Media Modal --}}
     @can('media-create')
-    <div class="modal fade" id="uploadMediaModal" tabindex="-1" aria-labelledby="uploadMediaModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0" style="width: 32px; height: 32px; background-color: #f95716;">
-                            <i class="ri-upload-cloud-2-line" style="font-size: 18px;"></i>
+        <div class="modal fade" id="uploadMediaModal" tabindex="-1" aria-labelledby="uploadMediaModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0"
+                                style="width: 32px; height: 32px; background-color: #f95716;">
+                                <i class="ri-upload-cloud-2-line" style="font-size: 18px;"></i>
+                            </div>
+                            <div>
+                                <h5 class="modal-title fw-bold text-dark mb-0" id="uploadMediaModalLabel"
+                                    style="font-size: 15.5px;">
+                                    Upload Media Assets
+                                </h5>
+                                <span class="text-muted" style="font-size: 11.5px;">Add photos, blueprints, or documents to the
+                                    media repository</span>
+                            </div>
                         </div>
-                        <div>
-                            <h5 class="modal-title fw-bold text-dark mb-0" id="uploadMediaModalLabel" style="font-size: 15.5px;">
-                                Upload Media Assets
-                            </h5>
-                            <span class="text-muted" style="font-size: 11.5px;">Add photos, blueprints, or documents to the media repository</span>
-                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form id="mediaUploadForm" enctype="multipart/form-data">
-                        {{-- Hidden actual file input --}}
-                        <input type="file" id="fileInput" name="files[]" multiple accept=".jpg,.jpeg,.png,.webp,.svg,.pdf" class="d-none">
+                    <div class="modal-body p-4">
+                        <form id="mediaUploadForm" enctype="multipart/form-data">
+                            {{-- Hidden actual file input --}}
+                            <input type="file" id="fileInput" name="files[]" multiple accept=".jpg,.jpeg,.png,.webp,.svg,.pdf"
+                                class="d-none">
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Target Collection</label>
-                                <select name="collection" id="upload_collection" class="form-select custom-input" style="height: 38px; font-size: 13px;">
-                                    <option value="library" selected>General Library (library)</option>
-                                    <option value="gallery">Project / Service Gallery (gallery)</option>
-                                    <option value="documents">Engineering Documents (documents)</option>
-                                    <option value="main_image">Main Cover Images (main_image)</option>
-                                </select>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Target
+                                        Collection</label>
+                                    <select name="collection" id="upload_collection" class="form-select custom-input"
+                                        style="height: 38px; font-size: 13px;">
+                                        <option value="library" selected>General Library (library)</option>
+                                        <option value="gallery">Project / Service Gallery (gallery)</option>
+                                        <option value="documents">Engineering Documents (documents)</option>
+                                        <option value="main_image">Main Cover Images (main_image)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Asset Title /
+                                        Label (Optional)</label>
+                                    <input type="text" name="title" id="upload_title" class="form-control custom-input"
+                                        placeholder="e.g. Skyline Structural Blueprint" style="height: 38px; font-size: 13px;">
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Asset Title / Label (Optional)</label>
-                                <input type="text" name="title" id="upload_title" class="form-control custom-input" placeholder="e.g. Skyline Structural Blueprint" style="height: 38px; font-size: 13px;">
-                            </div>
-                        </div>
 
-                        {{-- Interactive Dropzone --}}
-                        <div class="dropzone-box mb-3" id="dropZone">
-                            <div class="dropzone-icon">
-                                <i class="ri-image-add-line"></i>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-1" style="font-size: 14px;">Drag &amp; drop files here</h6>
-                            <p class="text-muted mb-3" style="font-size: 12px;">Supports JPG, PNG, WebP, SVG, and PDF up to 15MB each</p>
-                            <button type="button" class="btn btn-sm upload-btn px-4" id="btnBrowseFiles">
-                                <i class="ri-folder-open-line me-1"></i> Browse Files
-                            </button>
-                        </div>
-
-                        {{-- Staged Files Grid Preview --}}
-                        <div id="stagedFilesContainer" class="d-none mb-3">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="fw-bold text-dark" style="font-size: 13px;">
-                                    <i class="ri-checkbox-circle-line text-success me-1"></i> Staged Files (<span id="stagedCount">0</span>)
-                                </span>
-                                <button type="button" id="clearStagedBtn" class="btn btn-sm btn-link text-danger text-decoration-none p-0" style="font-size: 12px;">
-                                    <i class="ri-delete-bin-line me-1"></i> Clear All
+                            {{-- Interactive Dropzone --}}
+                            <div class="dropzone-box mb-3" id="dropZone">
+                                <div class="dropzone-icon">
+                                    <i class="ri-image-add-line"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark mb-1" style="font-size: 14px;">Drag &amp; drop files here</h6>
+                                <p class="text-muted mb-3" style="font-size: 12px;">Supports JPG, PNG, WebP, SVG, and PDF up to
+                                    15MB each</p>
+                                <button type="button" class="btn btn-sm upload-btn px-4" id="btnBrowseFiles">
+                                    <i class="ri-folder-open-line me-1"></i> Browse Files
                                 </button>
                             </div>
-                            <div class="row g-2" id="stagedFilesGrid" style="max-height: 240px; overflow-y: auto;"></div>
-                        </div>
 
-                        {{-- Upload Progress --}}
-                        <div id="uploadProgressBarContainer" class="progress d-none mb-3" style="height: 8px;">
-                            <div id="uploadProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%"></div>
-                        </div>
+                            {{-- Staged Files Grid Preview --}}
+                            <div id="stagedFilesContainer" class="d-none mb-3">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="fw-bold text-dark" style="font-size: 13px;">
+                                        <i class="ri-checkbox-circle-line text-success me-1"></i> Staged Files (<span
+                                            id="stagedCount">0</span>)
+                                    </span>
+                                    <button type="button" id="clearStagedBtn"
+                                        class="btn btn-sm btn-link text-danger text-decoration-none p-0"
+                                        style="font-size: 12px;">
+                                        <i class="ri-delete-bin-line me-1"></i> Clear All
+                                    </button>
+                                </div>
+                                <div class="row g-2" id="stagedFilesGrid" style="max-height: 240px; overflow-y: auto;"></div>
+                            </div>
 
-                        <div class="d-flex justify-content-end gap-2 mt-4">
-                            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal" style="height: 36px; font-weight: 600;">Cancel</button>
-                            <button type="submit" id="startUploadBtn" class="btn btn-primary btn-sm px-4" style="height: 36px; font-weight: 600; background-color: #f95716; border-color: #f95716;" disabled>
-                                <i class="ri-upload-2-line me-1"></i> Start Upload
-                            </button>
-                        </div>
-                    </form>
+                            {{-- Upload Progress --}}
+                            <div id="uploadProgressBarContainer" class="progress d-none mb-3" style="height: 8px;">
+                                <div id="uploadProgressBar"
+                                    class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                    role="progressbar" style="width: 0%"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2 mt-4">
+                                <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal"
+                                    style="height: 36px; font-weight: 600;">Cancel</button>
+                                <button type="submit" id="startUploadBtn" class="btn btn-primary btn-sm px-4"
+                                    style="height: 36px; font-weight: 600; background-color: #f95716; border-color: #f95716;"
+                                    disabled>
+                                    <i class="ri-upload-2-line me-1"></i> Start Upload
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endcan
 
     {{-- View / Inspect Media Modal --}}
-    <div class="modal fade" id="previewMediaModal" tabindex="-1" aria-labelledby="previewMediaModalLabel" aria-hidden="true">
+    <div class="modal fade" id="previewMediaModal" tabindex="-1" aria-labelledby="previewMediaModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
@@ -438,11 +477,13 @@
                                 <img id="modalPreviewImg" src="" alt="Media preview" class="d-none">
                                 <div id="modalPreviewDoc" class="d-none text-center p-4">
                                     <i id="modalDocIcon" class="ri-file-text-line text-white" style="font-size: 64px;"></i>
-                                    <p id="modalDocName" class="text-light mt-2 mb-0 fw-semibold" style="font-size: 13px;"></p>
+                                    <p id="modalDocName" class="text-light mt-2 mb-0 fw-semibold" style="font-size: 13px;">
+                                    </p>
                                 </div>
                             </div>
                             <div class="mt-2 text-center">
-                                <a id="modalDirectLink" href="#" target="_blank" class="btn btn-sm btn-outline-primary" style="font-size: 12px;">
+                                <a id="modalDirectLink" href="#" target="_blank" class="btn btn-sm btn-outline-primary"
+                                    style="font-size: 12px;">
                                     <i class="ri-external-link-line me-1"></i> Open Original in New Tab
                                 </a>
                             </div>
@@ -489,8 +530,11 @@
                                 <div class="info-pill">
                                     <div class="info-pill-label">Public Access URL</div>
                                     <div class="d-flex align-items-center justify-content-between gap-2 mt-1">
-                                        <input type="text" id="modalCopyUrlInput" readonly class="form-control form-control-sm bg-white" style="font-size: 12px; height: 30px;">
-                                        <button type="button" id="modalCopyUrlBtn" class="btn btn-sm btn-dark flex-shrink-0" style="height: 30px; font-size: 12px;" title="Copy to clipboard">
+                                        <input type="text" id="modalCopyUrlInput" readonly
+                                            class="form-control form-control-sm bg-white"
+                                            style="font-size: 12px; height: 30px;">
+                                        <button type="button" id="modalCopyUrlBtn" class="btn btn-sm btn-dark flex-shrink-0"
+                                            style="height: 30px; font-size: 12px;" title="Copy to clipboard">
                                             <i class="ri-file-copy-line me-1"></i> Copy
                                         </button>
                                     </div>
@@ -499,7 +543,8 @@
                                 <div class="info-pill">
                                     <div class="info-pill-label">Uploaded By / Date</div>
                                     <div class="info-pill-val" style="font-size: 12px;">
-                                        <span id="modalUploader">—</span> • <span id="modalCreatedAt" class="text-muted">—</span>
+                                        <span id="modalUploader">—</span> • <span id="modalCreatedAt"
+                                            class="text-muted">—</span>
                                     </div>
                                 </div>
                             </div>
@@ -515,73 +560,85 @@
 
     {{-- Edit Metadata Modal --}}
     @can('media-edit')
-    <div class="modal fade" id="editMediaModal" tabindex="-1" aria-labelledby="editMediaModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
-                    <h5 class="modal-title fw-bold text-dark" id="editMediaModalLabel" style="font-size: 16px;">
-                        <i class="ri-edit-line text-primary me-1"></i> Edit Media Metadata
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form id="editMediaForm">
-                        <input type="hidden" id="edit_media_id" name="media_id">
+        <div class="modal fade" id="editMediaModal" tabindex="-1" aria-labelledby="editMediaModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                        <h5 class="modal-title fw-bold text-dark" id="editMediaModalLabel" style="font-size: 16px;">
+                            <i class="ri-edit-line text-primary me-1"></i> Edit Media Metadata
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form id="editMediaForm">
+                            <input type="hidden" id="edit_media_id" name="media_id">
 
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-dark" style="font-size: 13px;">Title / Label</label>
-                            <input type="text" id="edit_title" name="title" class="form-control custom-input" placeholder="Media title for SEO and display" style="height: 38px; font-size: 13px;">
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-dark" style="font-size: 13px;">Title / Label</label>
+                                <input type="text" id="edit_title" name="title" class="form-control custom-input"
+                                    placeholder="Media title for SEO and display" style="height: 38px; font-size: 13px;">
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-dark" style="font-size: 13px;">Alt Text (for accessibility)</label>
-                            <input type="text" id="edit_alt_text" name="alt_text" class="form-control custom-input" placeholder="Descriptive alternative text for screen readers" style="height: 38px; font-size: 13px;">
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-dark" style="font-size: 13px;">Alt Text (for
+                                    accessibility)</label>
+                                <input type="text" id="edit_alt_text" name="alt_text" class="form-control custom-input"
+                                    placeholder="Descriptive alternative text for screen readers"
+                                    style="height: 38px; font-size: 13px;">
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-dark" style="font-size: 13px;">Caption (Optional)</label>
-                            <textarea id="edit_caption" name="caption" rows="2" class="form-control custom-input" placeholder="Optional caption description" style="font-size: 13px;"></textarea>
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-dark" style="font-size: 13px;">Caption
+                                    (Optional)</label>
+                                <textarea id="edit_caption" name="caption" rows="2" class="form-control custom-input"
+                                    placeholder="Optional caption description" style="font-size: 13px;"></textarea>
+                            </div>
 
-                        <div class="d-flex justify-content-end gap-2 mt-4">
-                            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal" style="height: 36px; font-weight: 600;">Cancel</button>
-                            <button type="submit" id="saveEditBtn" class="btn btn-primary btn-sm px-4" style="height: 36px; font-weight: 600; background-color: #f95716; border-color: #f95716;">
-                                <i class="ri-save-line me-1"></i> Save Changes
-                            </button>
-                        </div>
-                    </form>
+                            <div class="d-flex justify-content-end gap-2 mt-4">
+                                <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal"
+                                    style="height: 36px; font-weight: 600;">Cancel</button>
+                                <button type="submit" id="saveEditBtn" class="btn btn-primary btn-sm px-4"
+                                    style="height: 36px; font-weight: 600; background-color: #f95716; border-color: #f95716;">
+                                    <i class="ri-save-line me-1"></i> Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endcan
 
     {{-- Delete Confirmation Modal --}}
     @can('media-delete')
-    <div class="modal fade" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-body text-center p-4">
-                    <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background-color: #fee2e2; color: #dc2626;">
-                        <i class="ri-delete-bin-line" style="font-size: 28px;"></i>
-                    </div>
-                    <h5 class="fw-bold text-dark mb-1" style="font-size: 16px;">Delete Asset?</h5>
-                    <p class="text-muted mb-3" style="font-size: 12.5px;">Are you sure you want to remove this media file? This action will permanently remove it from storage.</p>
-                    <input type="hidden" id="delete_media_id">
-                    <div class="d-flex justify-content-center gap-2">
-                        <button type="button" class="btn btn-light btn-sm px-3" data-bs-dismiss="modal" style="height: 36px; font-weight: 600;">Cancel</button>
-                        <button type="button" id="confirmDeleteBtn" class="btn btn-danger btn-sm px-3" style="height: 36px; font-weight: 600; background-color: #dc2626; border-color: #dc2626;">
-                            <i class="ri-delete-bin-line me-1"></i> Delete
-                        </button>
+        <div class="modal fade" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-body text-center p-4">
+                        <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 56px; height: 56px; background-color: #fee2e2; color: #dc2626;">
+                            <i class="ri-delete-bin-line" style="font-size: 28px;"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-1" style="font-size: 16px;">Delete Asset?</h5>
+                        <p class="text-muted mb-3" style="font-size: 12.5px;">Are you sure you want to remove this media file?
+                            This action will permanently remove it from storage.</p>
+                        <input type="hidden" id="delete_media_id">
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="button" class="btn btn-light btn-sm px-3" data-bs-dismiss="modal"
+                                style="height: 36px; font-weight: 600;">Cancel</button>
+                            <button type="button" id="confirmDeleteBtn" class="btn btn-danger btn-sm px-3"
+                                style="height: 36px; font-weight: 600; background-color: #dc2626; border-color: #dc2626;">
+                                <i class="ri-delete-bin-line me-1"></i> Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     @endcan
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             var listUrl = "{{ route('media.index') }}";
@@ -745,16 +802,16 @@
                         reader.onload = function (e) {
                             var cardHtml = '<div class="col-6 col-md-3" id="staged_item_' + index + '">' +
                                 '<div class="preview-card">' +
-                                    '<button type="button" class="preview-remove-btn remove-staged-btn" data-index="' + index + '" title="Remove file">' +
-                                        '<i class="ri-close-line"></i>' +
-                                    '</button>' +
-                                    '<img src="' + e.target.result + '" class="preview-thumb" alt="' + file.name + '">' +
-                                    '<div class="preview-info">' +
-                                        '<span class="preview-filename">' + file.name + '</span>' +
-                                        '<span class="preview-filesize">' + formatBytes(file.size) + '</span>' +
-                                    '</div>' +
+                                '<button type="button" class="preview-remove-btn remove-staged-btn" data-index="' + index + '" title="Remove file">' +
+                                '<i class="ri-close-line"></i>' +
+                                '</button>' +
+                                '<img src="' + e.target.result + '" class="preview-thumb" alt="' + file.name + '">' +
+                                '<div class="preview-info">' +
+                                '<span class="preview-filename">' + file.name + '</span>' +
+                                '<span class="preview-filesize">' + formatBytes(file.size) + '</span>' +
                                 '</div>' +
-                            '</div>';
+                                '</div>' +
+                                '</div>';
                             $grid.append(cardHtml);
                         };
                         reader.readAsDataURL(file);
@@ -765,19 +822,19 @@
 
                         var cardHtml = '<div class="col-6 col-md-3" id="staged_item_' + index + '">' +
                             '<div class="preview-card">' +
-                                '<button type="button" class="preview-remove-btn remove-staged-btn" data-index="' + index + '" title="Remove file">' +
-                                    '<i class="ri-close-line"></i>' +
-                                '</button>' +
-                                '<div class="preview-doc-box">' +
-                                    '<i class="' + docIcon + '" style="font-size: 38px;"></i>' +
-                                    '<span class="text-muted fw-semibold mt-1" style="font-size: 11px;">' + docType + '</span>' +
-                                '</div>' +
-                                '<div class="preview-info">' +
-                                    '<span class="preview-filename">' + file.name + '</span>' +
-                                    '<span class="preview-filesize">' + formatBytes(file.size) + '</span>' +
-                                '</div>' +
+                            '<button type="button" class="preview-remove-btn remove-staged-btn" data-index="' + index + '" title="Remove file">' +
+                            '<i class="ri-close-line"></i>' +
+                            '</button>' +
+                            '<div class="preview-doc-box">' +
+                            '<i class="' + docIcon + '" style="font-size: 38px;"></i>' +
+                            '<span class="text-muted fw-semibold mt-1" style="font-size: 11px;">' + docType + '</span>' +
                             '</div>' +
-                        '</div>';
+                            '<div class="preview-info">' +
+                            '<span class="preview-filename">' + file.name + '</span>' +
+                            '<span class="preview-filesize">' + formatBytes(file.size) + '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
                         $grid.append(cardHtml);
                     }
                 });

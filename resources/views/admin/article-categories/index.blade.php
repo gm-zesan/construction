@@ -3,7 +3,7 @@
     Article Categories
 @endsection
 
-@push('custom-styles')
+@push('custom-style')
     <style>
         .mode-badge {
             font-size: 11px;
@@ -150,7 +150,7 @@
     @endcanany
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             var listUrl = "{{ route('article-categories.index') }}";

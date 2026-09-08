@@ -11,21 +11,23 @@
                     <div class="card-header table-header">
                         <div class="title-with-breadcrumb">
                             <div class="table-title">Roles &amp; Permissions</div>
-                            <nav aria-label="breadcrumb"> 
-                                <ol class="breadcrumb mb-0"> 
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
                                         <a href="{{route('dashboard')}}">Dashboard</a>
-                                    </li> 
-                                    <li class="breadcrumb-item active" aria-current="page">Roles</li> 
-                                </ol> 
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">Roles</li>
+                                </ol>
                             </nav>
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <a href="{{ route('permissions.index') }}" class="btn btn-sm btn-outline-secondary px-3" style="height: 36px; border-radius: 6px; font-weight: 600;">
+                            <a href="{{ route('permissions.index') }}" class="btn btn-sm btn-outline-secondary px-3"
+                                style="height: 36px; border-radius: 6px; font-weight: 600;">
                                 <i class="ri-key-2-line me-1"></i> Manage Permissions
                             </a>
                             @if (Auth::user()->hasRole('superadmin'))
-                                <a href="{{ route('role.create') }}" class="btn btn-sm btn-primary px-3" style="height: 36px; border-radius: 6px; font-weight: 600; background-color: #f95716; border-color: #f95716;">
+                                <a href="{{ route('role.create') }}" class="btn btn-sm btn-primary px-3"
+                                    style="height: 36px; border-radius: 6px; font-weight: 600; background-color: #f95716; border-color: #f95716;">
                                     <i class="ri-add-line me-1"></i> New Role
                                 </a>
                             @endif
@@ -51,7 +53,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             var listUrl = "{{ route('role.index') }}";
@@ -60,7 +62,7 @@
                 processing: true,
                 serverSide: true,
                 pageLength: 20,
-                lengthMenu: [ 20, 50, 100, 500 ],
+                lengthMenu: [20, 50, 100, 500],
                 ajax: {
                     url: listUrl,
                     type: 'GET'

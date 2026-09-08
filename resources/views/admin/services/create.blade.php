@@ -178,7 +178,8 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('services.index') }}">Services</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('services.index') }}">Services</a>
+                                        </li>
                                         <li class="breadcrumb-item active" aria-current="page">Create</li>
                                     </ol>
                                 </nav>
@@ -208,7 +209,8 @@
                                     <input type="text" class="form-control custom-input @error('slug') is-invalid @enderror"
                                         name="slug" id="slug" value="{{ old('slug') }}"
                                         placeholder="auto-generated-from-title">
-                                    <small class="text-muted" style="font-size: 11px;">Leave blank to auto-generate unique slug</small>
+                                    <small class="text-muted" style="font-size: 11px;">Leave blank to auto-generate unique
+                                        slug</small>
                                     @error('slug')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -216,7 +218,8 @@
 
                                 {{-- Icon Class with Live Preview --}}
                                 <div class="col-12">
-                                    <label for="icon" class="form-label custom-label">Icon Class (RemixIcon or FontAwesome)</label>
+                                    <label for="icon" class="form-label custom-label">Icon Class (RemixIcon or
+                                        FontAwesome)</label>
                                     <div class="input-group align-items-start">
                                         <div class="input-group-text p-0 bg-transparent border-0 me-2">
                                             <div class="icon-preview-box" id="icon_preview_container">
@@ -262,7 +265,8 @@
 
                                 {{-- Full Description / Features with CKEditor --}}
                                 <div class="col-12">
-                                    <label for="description" class="form-label custom-label">Comprehensive Service Details &amp; Scope</label>
+                                    <label for="description" class="form-label custom-label">Comprehensive Service Details
+                                        &amp; Scope</label>
                                     <textarea class="form-control custom-input @error('description') is-invalid @enderror"
                                         name="description" id="description" rows="10">{{ old('description') }}</textarea>
                                     @error('description')
@@ -291,7 +295,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-12">
-                                    <label for="meta_description" class="form-label custom-label">SEO Meta Description</label>
+                                    <label for="meta_description" class="form-label custom-label">SEO Meta
+                                        Description</label>
                                     <textarea
                                         class="form-control custom-input @error('meta_description') is-invalid @enderror"
                                         name="meta_description" id="meta_description" rows="3"
@@ -317,21 +322,30 @@
                                 <div class="card-body custom-form">
                                     <div class="d-flex flex-column gap-3 mb-3">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="is_published" id="is_published" value="1" {{ old('is_published', '1') == '1' ? 'checked' : '' }} style="cursor: pointer;">
-                                            <label class="form-check-label fw-semibold" for="is_published" style="font-size: 13.5px; cursor: pointer;">
+                                            <input class="form-check-input" type="checkbox" name="is_published"
+                                                id="is_published" value="1" {{ old('is_published', '1') == '1' ? 'checked' : '' }} style="cursor: pointer;">
+                                            <label class="form-check-label fw-semibold" for="is_published"
+                                                style="font-size: 13.5px; cursor: pointer;">
                                                 Visible on Website
                                             </label>
                                         </div>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="featured" id="featured" value="1" {{ old('featured') ? 'checked' : '' }} style="cursor: pointer;">
-                                            <label class="form-check-label fw-semibold" for="featured" style="font-size: 13.5px; cursor: pointer;">
+                                            <input class="form-check-input" type="checkbox" name="featured" id="featured"
+                                                value="1" {{ old('featured') ? 'checked' : '' }} style="cursor: pointer;">
+                                            <label class="form-check-label fw-semibold" for="featured"
+                                                style="font-size: 13.5px; cursor: pointer;">
                                                 Feature on Homepage
                                             </label>
                                         </div>
                                         <div>
-                                            <label for="sort_order" class="form-label custom-label mb-1">Display Priority Order</label>
-                                            <input type="number" class="form-control custom-input @error('sort_order') is-invalid @enderror" name="sort_order" id="sort_order" value="{{ old('sort_order', 0) }}" min="0">
-                                            <div class="text-muted" style="font-size: 11px;">Lower numbers appear first (e.g. 0, 1, 2)</div>
+                                            <label for="sort_order" class="form-label custom-label mb-1">Display Priority
+                                                Order</label>
+                                            <input type="number"
+                                                class="form-control custom-input @error('sort_order') is-invalid @enderror"
+                                                name="sort_order" id="sort_order" value="{{ old('sort_order', 0) }}"
+                                                min="0">
+                                            <div class="text-muted" style="font-size: 11px;">Lower numbers appear first
+                                                (e.g. 0, 1, 2)</div>
                                             @error('sort_order')
                                                 <div class="error_msg">{{ $message }}</div>
                                             @enderror
@@ -361,7 +375,8 @@
                                 </div>
                                 <div class="card-body custom-form">
                                     {{-- Hidden file input --}}
-                                    <input type="file" id="image" name="image" class="d-none" accept="image/png,image/jpeg,image/webp,image/jpg">
+                                    <input type="file" id="image" name="image" class="d-none"
+                                        accept="image/png,image/jpeg,image/webp,image/jpg">
 
                                     {{-- Interactive Dropzone --}}
                                     <div id="main_image_dropzone" class="dropzone-box">
@@ -369,28 +384,40 @@
                                             <div class="dropzone-icon">
                                                 <i class="ri-image-add-line"></i>
                                             </div>
-                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop service photo</p>
-                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP up to 5MB (16:9 ratio recommended)</span>
-                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto" onclick="$('#image').click();">
+                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop
+                                                service photo</p>
+                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP
+                                                up to 5MB (16:9 ratio recommended)</span>
+                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
+                                                onclick="$('#image').click();">
                                                 <i class="ri-upload-2-line me-1"></i> Browse Photo
                                             </button>
                                         </div>
 
                                         {{-- Staged Preview Box --}}
                                         <div id="main_image_preview_box" class="d-none">
-                                            <div class="position-relative rounded overflow-hidden mb-2" style="height: 180px; background: #000;">
-                                                <img id="main_image_img" src="" alt="Service image preview" style="width: 100%; height: 100%; object-fit: cover;">
-                                                <span class="badge-cover-type"><i class="ri-check-line me-1 text-success"></i> Primary Service Image</span>
-                                                <button type="button" class="preview-remove-btn" id="btn_remove_main_image" title="Remove selected image">
+                                            <div class="position-relative rounded overflow-hidden mb-2"
+                                                style="height: 180px; background: #000;">
+                                                <img id="main_image_img" src="" alt="Service image preview"
+                                                    style="width: 100%; height: 100%; object-fit: cover;">
+                                                <span class="badge-cover-type"><i
+                                                        class="ri-check-line me-1 text-success"></i> Primary Service
+                                                    Image</span>
+                                                <button type="button" class="preview-remove-btn" id="btn_remove_main_image"
+                                                    title="Remove selected image">
                                                     <i class="ri-close-line"></i>
                                                 </button>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between px-1">
                                                 <div class="text-start text-truncate me-2">
-                                                    <span id="main_image_name" class="fw-semibold text-dark d-block text-truncate" style="font-size: 12px;"></span>
-                                                    <span id="main_image_size" class="text-muted" style="font-size: 11px;"></span>
+                                                    <span id="main_image_name"
+                                                        class="fw-semibold text-dark d-block text-truncate"
+                                                        style="font-size: 12px;"></span>
+                                                    <span id="main_image_size" class="text-muted"
+                                                        style="font-size: 11px;"></span>
                                                 </div>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2" style="font-size: 11.5px; height: 28px;" onclick="$('#image').click();">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2"
+                                                    style="font-size: 11.5px; height: 28px;" onclick="$('#image').click();">
                                                     Change
                                                 </button>
                                             </div>
@@ -408,20 +435,27 @@
                             <div class="card table-card">
                                 <div class="card-header table-header d-flex justify-content-between align-items-center">
                                     <div class="table-title">Service Gallery Photos</div>
-                                    <span class="badge bg-primary" id="gallery_counter_badge" style="font-size: 11px;">0 Selected</span>
+                                    <span class="badge bg-primary" id="gallery_counter_badge" style="font-size: 11px;">0
+                                        Selected</span>
                                 </div>
                                 <div class="card-body custom-form">
                                     {{-- Hidden multi-file input --}}
-                                    <input type="file" id="gallery_input" name="gallery[]" class="d-none" accept="image/png,image/jpeg,image/webp,image/jpg" multiple>
+                                    <input type="file" id="gallery_input" name="gallery[]" class="d-none"
+                                        accept="image/png,image/jpeg,image/webp,image/jpg" multiple>
 
                                     {{-- Interactive Dropzone --}}
                                     <div id="gallery_dropzone" class="dropzone-box mb-3">
-                                        <div class="dropzone-icon" style="background-color: rgba(79, 70, 229, 0.1); color: #4f46e5;">
+                                        <div class="dropzone-icon"
+                                            style="background-color: rgba(79, 70, 229, 0.1); color: #4f46e5;">
                                             <i class="ri-gallery-upload-line"></i>
                                         </div>
-                                        <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop gallery photos</p>
-                                        <span class="text-muted d-block mb-3" style="font-size: 11.5px;">Select multiple case-study or process photos</span>
-                                        <button type="button" class="btn btn-sm upload-btn px-3 mx-auto" style="background-color: #eef2ff; border-color: #6366f1; color: #4f46e5;" onclick="$('#gallery_input').click();">
+                                        <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop gallery
+                                            photos</p>
+                                        <span class="text-muted d-block mb-3" style="font-size: 11.5px;">Select multiple
+                                            case-study or process photos</span>
+                                        <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
+                                            style="background-color: #eef2ff; border-color: #6366f1; color: #4f46e5;"
+                                            onclick="$('#gallery_input').click();">
                                             <i class="ri-add-circle-line me-1"></i> Browse Photos
                                         </button>
                                     </div>
@@ -441,7 +475,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
         $(document).ready(function () {

@@ -232,7 +232,7 @@
     @endcanany
 @endsection
 
-@push('custom-scripts')
+@push('custom-script')
     <script type="text/javascript">
         $(document).ready(function () {
             var listUrl = "{{ route('articles.index') }}";

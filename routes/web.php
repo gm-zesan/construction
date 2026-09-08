@@ -54,6 +54,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/enquiries/{enquiry}/status', [ClientEnquiryController::class, 'updateStatus'])->name('enquiries.status');
     Route::resource('dashboard/enquiries', ClientEnquiryController::class)->only(['index', 'show', 'update', 'destroy'])->names('enquiries');
 
+    // Client Review Routes
+    Route::post('/dashboard/client-reviews/{id}/toggle-status', [\App\Http\Controllers\ClientReviewController::class, 'toggleStatus'])->name('client-reviews.toggle-status');
+    Route::resource('dashboard/client-reviews', \App\Http\Controllers\ClientReviewController::class)->names('client-reviews');
+
     // Activity Log Routes
     Route::resource('dashboard/activity-logs', ActivityLogController::class)->only(['index', 'show'])->names('activity-logs');
 

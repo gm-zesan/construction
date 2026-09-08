@@ -74,12 +74,12 @@ class ProjectMilestoneController extends Controller implements HasMiddleware
                             <img src="' . e($imgUrl) . '" alt="' . e($row->title) . '" class="w-100 h-100 object-fit-cover">
                         </div>';
                     })
-                    // ->addColumn('milestone_title', function (ProjectMilestone $row) {
-                    //     return '<div class="d-flex flex-column text-truncate" style="max-width: 280px;">
-                    //         <span class="fw-bold text-dark text-truncate text-decoration-none" style="font-size: 13.5px;">' . e($row->title) . '</span>
-                    //         <span class="text-muted text-truncate" style="font-size: 11px;">Slug: ' . e($row->slug) . '</span>
-                    //     </div>';
-                    // })
+                    ->addColumn('milestone_title', function (ProjectMilestone $row) {
+                        return '<div class="d-flex flex-column text-truncate" style="max-width: 280px;">
+                            <span class="fw-bold text-dark text-truncate text-decoration-none" style="font-size: 13.5px;">' . e($row->title) . '</span>
+                            <span class="text-muted text-truncate" style="font-size: 11px;">Slug: ' . e($row->slug) . '</span>
+                        </div>';
+                    })
                     ->addColumn('project_badge', function (ProjectMilestone $row) {
                         if (!$row->project) {
                             return '<span class="text-muted">—</span>';
