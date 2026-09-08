@@ -24,7 +24,7 @@
                             <a href="{{route('role.create')}}" class="add-new">New Role<i class="ms-1 ri-add-line"></i></a>
                         @endif
                     </div>
-                    <div class="card-body" style="overflow-x: auto">
+                    <div class="card-body" style="padding: 20px;">
                         <table class="table dataTable w-100" id="data-table" style="min-width: 700px;">
                             <thead>
                                 <tr>
@@ -51,11 +51,9 @@
 
             var table = $('#data-table').DataTable({
                 processing: true,
-                responsive: true,
                 serverSide: true,
-                fixedHeader: true,
-                "pageLength": 20,
-                "lengthMenu": [ 20, 50, 100, 500 ],
+                pageLength: 20,
+                lengthMenu: [ 20, 50, 100, 500 ],
                 ajax: {
                     url: listUrl,
                     type: 'GET'

@@ -144,13 +144,13 @@
                     </div>
 
                     {{-- Data Table --}}
-                    <div class="card-body" style="overflow-x: auto; padding: 20px;">
+                    <div class="card-body" style="padding: 20px;">
                         <table class="table dataTable w-100" id="milestones-table" style="min-width: 950px;">
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 45px;">SL</th>
                                     <th scope="col" style="width: 65px;" class="text-center">Photo</th>
-                                    <th scope="col">Milestone Title</th>
+                                    <!-- <th scope="col">Milestone Title</th> -->
                                     <th scope="col" style="width: 170px;">Project</th>
                                     <th scope="col" style="width: 140px;">Progress</th>
                                     <th scope="col" style="width: 130px;">Target Date</th>
@@ -207,7 +207,6 @@
             var table = $('#milestones-table').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 pageLength: 25,
                 lengthMenu: [10, 25, 50, 100],
                 ajax: {
@@ -221,7 +220,7 @@
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'thumbnail', name: 'thumbnail', orderable: false, searchable: false, className: 'text-center' },
-                    { data: 'milestone_title', name: 'title', orderable: true, searchable: true },
+                    // { data: 'milestone_title', name: 'title', orderable: true, searchable: true },
                     { data: 'project_badge', name: 'project.title', orderable: true, searchable: true },
                     { data: 'progress_bar', name: 'progress_percentage', orderable: true, searchable: false },
                     { data: 'target_date_formatted', name: 'target_date', orderable: true, searchable: false },

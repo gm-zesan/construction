@@ -84,13 +84,13 @@ class ProjectController extends Controller implements HasMiddleware
                     ->addColumn('featured_toggle', function ($row) {
                         $checked = $row->featured ? 'checked' : '';
                         return '<div class="form-check form-switch m-0 d-flex justify-content-center">
-                            <input class="form-check-input toggle-project-feature" type="checkbox" role="switch" data-id="' . $row->id . '" ' . $checked . ' style="cursor: pointer; width: 34px; height: 18px;">
+                            <input class="form-check-input featured-toggle toggle-project-feature" type="checkbox" role="switch" data-id="' . $row->id . '" ' . $checked . '>
                         </div>';
                     })
                     ->addColumn('published_toggle', function ($row) {
                         $checked = $row->is_published ? 'checked' : '';
                         return '<div class="form-check form-switch m-0 d-flex justify-content-center">
-                            <input class="form-check-input toggle-project-publish" type="checkbox" role="switch" data-id="' . $row->id . '" ' . $checked . ' style="cursor: pointer; width: 34px; height: 18px;">
+                            <input class="form-check-input status-toggle toggle-project-publish" type="checkbox" role="switch" data-id="' . $row->id . '" ' . $checked . '>
                         </div>';
                     })
                     ->addColumn('action-btn', function ($row) {

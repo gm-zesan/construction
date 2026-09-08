@@ -10,6 +10,25 @@
 
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script>
+    if (typeof $.fn.dataTable !== 'undefined') {
+        $.extend(true, $.fn.dataTable.defaults, {
+            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'table-responsive't><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            autoWidth: false,
+            responsive: false,
+            language: {
+                search: "",
+                searchPlaceholder: "Search...",
+                paginate: {
+                    first: '<i class="ri-skip-back-mini-line"></i>',
+                    previous: '<i class="ri-arrow-left-s-line"></i>',
+                    next: '<i class="ri-arrow-right-s-line"></i>',
+                    last: '<i class="ri-skip-forward-mini-line"></i>'
+                }
+            }
+        });
+    }
+</script>
 
 <!-- Select 2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

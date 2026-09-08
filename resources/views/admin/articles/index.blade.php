@@ -170,7 +170,7 @@
                     </div>
 
                     {{-- Data Table --}}
-                    <div class="card-body" style="overflow-x: auto; padding: 20px;">
+                    <div class="card-body" style="padding: 20px;">
                         <table class="table dataTable w-100" id="articles-table" style="min-width: 950px;">
                             <thead>
                                 <tr>
@@ -240,7 +240,6 @@
             var table = $('#articles-table').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 pageLength: 10,
                 lengthMenu: [10, 20, 50, 100],
                 order: [[0, 'asc']],

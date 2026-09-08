@@ -60,7 +60,7 @@
                     </div>
 
                     {{-- Simplified Table Area --}}
-                    <div class="card-body" style="overflow-x: auto; padding: 20px;">
+                    <div class="card-body" style="padding: 20px;">
                         <table class="table dataTable w-100" id="services-table" style="min-width: 750px;">
                             <thead>
                                 <tr>
@@ -131,7 +131,6 @@
             var table = $('#services-table').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 pageLength: 20,
                 lengthMenu: [10, 20, 50, 100],
                 ajax: {

@@ -49,7 +49,7 @@
                     </div>
 
                     {{-- Simplified Table Area: Name, Email, Phone, Subject, Status, Action --}}
-                    <div class="card-body" style="overflow-x: auto; padding: 20px;">
+                    <div class="card-body" style="padding: 20px;">
                         <table class="table dataTable w-100" id="enquiries-table" style="min-width: 800px;">
                             <thead>
                                 <tr>
@@ -120,7 +120,6 @@
             var table = $('#enquiries-table').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 pageLength: 20,
                 lengthMenu: [10, 20, 50, 100],
                 ajax: {
