@@ -39,6 +39,27 @@ class Media extends BaseMedia
     }
 
     /**
+     * Get image dimensions if applicable.
+     */
+    public function getDimensionsAttribute(): ?string
+    {
+        if ($this->isImage()) {
+            try {
+                $path = $this->getPath();
+                if (file_exists($path)) {
+                    $size = @getimagesize($path);
+                    if ($size) {
+                        return "{$size[0]} × {$size[1]} px";
+                    }
+                }
+            } catch (\Throwable $e) {
+                // Ignore if not accessible
+            }
+        }
+        return null;
+    }
+
+    /**
      * Custom property accessors for title, alt text, and caption.
      */
     public function getTitleAttribute(): ?string

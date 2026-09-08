@@ -59,18 +59,17 @@
                         </div>
                     </div>
 
+                    {{-- Simplified Table Area --}}
                     <div class="card-body" style="overflow-x: auto; padding: 20px;">
-                        <table class="table dataTable w-100" id="services-table" style="min-width: 950px;">
+                        <table class="table dataTable w-100" id="services-table" style="min-width: 750px;">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 50px;">SL</th>
+                                    <th scope="col" style="width: 45px;">SL</th>
                                     <th scope="col" style="width: 70px;">Image</th>
-                                    <th scope="col">Service Title &amp; Slug</th>
-                                    <th scope="col" style="width: 260px;">Short Description</th>
-                                    <th scope="col" style="width: 80px;" class="text-center">Order</th>
+                                    <th scope="col">Service Title</th>
                                     <th scope="col" style="width: 90px;" class="text-center">Featured</th>
                                     <th scope="col" style="width: 90px;" class="text-center">Published</th>
-                                    <th scope="col" style="width: 110px;" class="text-center">Action</th>
+                                    <th scope="col" style="width: 100px;" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -146,8 +145,6 @@
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'thumbnail', name: 'thumbnail', orderable: false, searchable: false },
                     { data: 'title_details', name: 'title', orderable: true },
-                    { data: 'short_description_text', name: 'short_description', orderable: false },
-                    { data: 'sort_order_badge', name: 'sort_order', orderable: true, className: 'text-center' },
                     { data: 'featured_toggle', name: 'featured', orderable: false, searchable: false, className: 'text-center' },
                     { data: 'published_toggle', name: 'is_published', orderable: false, searchable: false, className: 'text-center' },
                     {
@@ -157,10 +154,14 @@
                         render: function (data) {
                             var id = data.id;
                             var title = (data.title || '').replace(/"/g, '&quot;');
+                            var showUrl = "{{ url('/dashboard/services') }}/" + id;
                             var editUrl = "{{ url('/dashboard/services') }}/" + id + "/edit";
                             var deleteUrl = "{{ url('/dashboard/services') }}/" + id;
 
                             var html = '<div class="action-btn justify-content-center">';
+                            if (data.can_view !== false) {
+                                html += '<a href="' + showUrl + '" class="btn btn-edit" title="View Service Details" style="background-color: #f1f5f9; color: #334155;"><i class="ri-eye-line"></i></a>';
+                            }
                             if (data.can_edit) {
                                 html += '<a href="' + editUrl + '" class="btn btn-edit" title="Edit Service"><i class="ri-edit-line"></i></a>';
                             }
@@ -172,7 +173,7 @@
                         }
                     }
                 ],
-                order: [[4, 'asc']],
+                order: [[2, 'asc']],
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "Search services by title or description...",

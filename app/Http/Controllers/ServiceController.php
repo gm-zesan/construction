@@ -184,14 +184,18 @@ class ServiceController extends Controller implements HasMiddleware
     /**
      * Display the specified service.
      */
-    public function show(int $id): JsonResponse
+    public function show(Request $request, int $id): JsonResponse|View
     {
         $service = Service::with(['creator', 'updater', 'media', 'enquiries'])->findOrFail($id);
 
-        return response()->json([
-            'success' => true,
-            'data' => $service,
-        ]);
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'data' => $service,
+            ]);
+        }
+
+        return view('admin.services.show', compact('service'));
     }
 
     /**

@@ -30,7 +30,13 @@ test('superadmin can render services admin index, create, and edit views', funct
     $editResponse = $this->actingAs($this->superadmin)->get("/dashboard/services/{$service->id}/edit");
     $editResponse->assertStatus(200);
     $editResponse->assertSee('Edit Service: ' . $service->title);
-    $editResponse->assertSee('Gallery Manager');
+    $editResponse->assertSee('Main Service Image');
+    $editResponse->assertSee('Gallery');
+
+    // 4. Show view
+    $showResponse = $this->actingAs($this->superadmin)->get("/dashboard/services/{$service->id}");
+    $showResponse->assertStatus(200);
+    $showResponse->assertSee('Service Details: ' . $service->title);
 });
 
 test('services index datatables ajax endpoint returns formatted columns', function () {

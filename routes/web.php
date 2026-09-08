@@ -48,6 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('dashboard/services', ServiceController::class)->names('services');
 
     // Client Enquiry Routes
+    Route::post('dashboard/enquiries/{enquiry}/status', [ClientEnquiryController::class, 'updateStatus'])->name('enquiries.status');
     Route::resource('dashboard/enquiries', ClientEnquiryController::class)->only(['index', 'show', 'update', 'destroy'])->names('enquiries');
 
     // Activity Log Routes

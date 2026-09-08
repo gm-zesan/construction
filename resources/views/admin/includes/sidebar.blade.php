@@ -56,12 +56,22 @@
         <li class="category-li">
             <span class="link_names">Inquiries & Editorial</span>
         </li>
+        @can('contact-list')
         <li>
-            <a href="{{ route('dashboard') }}#messages">
+            <a href="{{ route('enquiries.index') }}" class="{{ request()->routeIs('enquiries.*') ? 'active-focus' : '' }}">
                 <i class="ri-mail-open-line"></i>
                 <span class="link_names">Client Inquiries</span>
             </a>
         </li>
+        @endcan
+        @canany(['media-list', 'media-create', 'media-edit', 'media-delete'])
+        <li>
+            <a href="{{ route('media.index') }}" class="{{ request()->routeIs('media.*') ? 'active-focus' : '' }}">
+                <i class="ri-folder-image-line"></i>
+                <span class="link_names">Media Library</span>
+            </a>
+        </li>
+        @endcanany
         <li>
             <a href="{{ route('dashboard') }}#news">
                 <i class="ri-article-line"></i>
@@ -101,6 +111,15 @@
             </a>
         </li>
         @endcan
+
+        @canany(['activity-list', 'user-list', 'role-list'])
+        <li>
+            <a href="{{ route('activity-logs.index') }}" class="{{ request()->routeIs('activity-logs.*') ? 'active-focus' : '' }}">
+                <i class="ri-history-line"></i>
+                <span class="link_names">Activity Logs</span>
+            </a>
+        </li>
+        @endcanany
 
 
         <!-- Site Configuration & Administration -->

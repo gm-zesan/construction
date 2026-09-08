@@ -69,19 +69,18 @@
                         </div>
                     </div>
 
+                    {{-- Simplified Table Area --}}
                     <div class="card-body" style="overflow-x: auto; padding: 20px;">
-                        <table class="table dataTable w-100" id="projects-table" style="min-width: 950px;">
+                        <table class="table dataTable w-100" id="projects-table" style="min-width: 800px;">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 50px;">SL</th>
+                                    <th scope="col" style="width: 45px;">SL</th>
                                     <th scope="col" style="width: 70px;">Media</th>
                                     <th scope="col">Project Title</th>
-                                    <th scope="col" style="width: 130px;">Category</th>
-                                    <th scope="col" style="width: 170px;">Client &amp; Site</th>
-                                    <th scope="col" style="width: 100px;">Status</th>
+                                    <th scope="col" style="width: 110px;">Status</th>
                                     <th scope="col" style="width: 90px;" class="text-center">Featured</th>
                                     <th scope="col" style="width: 90px;" class="text-center">Published</th>
-                                    <th scope="col" style="width: 110px;" class="text-center">Action</th>
+                                    <th scope="col" style="width: 100px;" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -158,8 +157,6 @@
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'thumbnail', name: 'thumbnail', orderable: false, searchable: false },
                     { data: 'title_details', name: 'title', orderable: true },
-                    { data: 'category', name: 'category', orderable: true },
-                    { data: 'client_location', name: 'client_name', orderable: true },
                     { data: 'status_badge', name: 'status', orderable: true },
                     { data: 'featured_toggle', name: 'featured', orderable: false, searchable: false, className: 'text-center' },
                     { data: 'published_toggle', name: 'is_published', orderable: false, searchable: false, className: 'text-center' },
@@ -170,10 +167,14 @@
                         render: function (data) {
                             var id = data.id;
                             var title = (data.title || '').replace(/"/g, '&quot;');
+                            var showUrl = "{{ url('/dashboard/projects') }}/" + id;
                             var editUrl = "{{ url('/dashboard/projects') }}/" + id + "/edit";
                             var deleteUrl = "{{ url('/dashboard/projects') }}/" + id;
 
                             var html = '<div class="action-btn justify-content-center">';
+                            if (data.can_view !== false) {
+                                html += '<a href="' + showUrl + '" class="btn btn-edit" title="View Project Details" style="background-color: #f1f5f9; color: #334155;"><i class="ri-eye-line"></i></a>';
+                            }
                             if (data.can_edit) {
                                 html += '<a href="' + editUrl + '" class="btn btn-edit" title="Edit Project"><i class="ri-edit-line"></i></a>';
                             }

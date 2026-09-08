@@ -178,8 +178,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('services.index') }}">Services</a>
-                                        </li>
+                                        <li class="breadcrumb-item"><a href="{{ route('services.index') }}">Services</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Create</li>
                                     </ol>
                                 </nav>
@@ -209,8 +208,7 @@
                                     <input type="text" class="form-control custom-input @error('slug') is-invalid @enderror"
                                         name="slug" id="slug" value="{{ old('slug') }}"
                                         placeholder="auto-generated-from-title">
-                                    <small class="text-muted" style="font-size: 11px;">Leave blank to auto-generate unique
-                                        slug</small>
+                                    <small class="text-muted" style="font-size: 11px;">Leave blank to auto-generate unique slug</small>
                                     @error('slug')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -218,8 +216,7 @@
 
                                 {{-- Icon Class with Live Preview --}}
                                 <div class="col-12">
-                                    <label for="icon" class="form-label custom-label">Icon Class (RemixIcon or
-                                        FontAwesome)</label>
+                                    <label for="icon" class="form-label custom-label">Icon Class (RemixIcon or FontAwesome)</label>
                                     <div class="input-group align-items-start">
                                         <div class="input-group-text p-0 bg-transparent border-0 me-2">
                                             <div class="icon-preview-box" id="icon_preview_container">
@@ -265,8 +262,7 @@
 
                                 {{-- Full Description / Features with CKEditor --}}
                                 <div class="col-12">
-                                    <label for="description" class="form-label custom-label">Comprehensive Service Details
-                                        &amp; Scope</label>
+                                    <label for="description" class="form-label custom-label">Comprehensive Service Details &amp; Scope</label>
                                     <textarea class="form-control custom-input @error('description') is-invalid @enderror"
                                         name="description" id="description" rows="10">{{ old('description') }}</textarea>
                                     @error('description')
@@ -295,8 +291,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-12">
-                                    <label for="meta_description" class="form-label custom-label">SEO Meta
-                                        Description</label>
+                                    <label for="meta_description" class="form-label custom-label">SEO Meta Description</label>
                                     <textarea
                                         class="form-control custom-input @error('meta_description') is-invalid @enderror"
                                         name="meta_description" id="meta_description" rows="3"
@@ -358,47 +353,47 @@
                             </div>
                         </div>
 
-                        {{-- Primary Service Image --}}
+                        {{-- Main Cover Image / Service Image --}}
                         <div class="col-12">
                             <div class="card table-card">
                                 <div class="card-header table-header">
                                     <div class="table-title">Main Service Image</div>
                                 </div>
                                 <div class="card-body custom-form">
-                                    {{-- Hidden native file input --}}
-                                    <input type="file" id="image" name="image" class="d-none"
-                                        accept="image/png,image/jpeg,image/webp,image/jpg">
+                                    {{-- Hidden file input --}}
+                                    <input type="file" id="image" name="image" class="d-none" accept="image/png,image/jpeg,image/webp,image/jpg">
 
-                                    {{-- Dropzone box --}}
+                                    {{-- Interactive Dropzone --}}
                                     <div id="main_image_dropzone" class="dropzone-box">
                                         <div id="main_image_empty">
                                             <div class="dropzone-icon">
                                                 <i class="ri-image-add-line"></i>
                                             </div>
-                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Click or drag
-                                                service image</p>
-                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP
-                                                up to 5MB</span>
-                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
-                                                onclick="$('#image').click();">
-                                                <i class="ri-folder-open-line me-1"></i> Browse Computer
+                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop service photo</p>
+                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP up to 5MB (16:9 ratio recommended)</span>
+                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto" onclick="$('#image').click();">
+                                                <i class="ri-upload-2-line me-1"></i> Browse Photo
                                             </button>
                                         </div>
 
-                                        {{-- Selected Preview box --}}
-                                        <div id="main_image_preview_box"
-                                            class="d-none position-relative rounded overflow-hidden"
-                                            style="height: 180px; background: #000;">
-                                            <img id="main_image_img" src="" alt="Main Service Image"
-                                                style="width: 100%; height: 100%; object-fit: cover;">
-                                            <button type="button" class="preview-remove-btn" id="btn_remove_main_image"
-                                                title="Remove image">
-                                                <i class="ri-close-line"></i>
-                                            </button>
-                                            <span class="badge-cover-type" id="main_image_badge"
-                                                style="background: rgba(249, 87, 22, 0.9);">
-                                                <i class="ri-image-line me-1"></i> Main Service Image
-                                            </span>
+                                        {{-- Staged Preview Box --}}
+                                        <div id="main_image_preview_box" class="d-none">
+                                            <div class="position-relative rounded overflow-hidden mb-2" style="height: 180px; background: #000;">
+                                                <img id="main_image_img" src="" alt="Service image preview" style="width: 100%; height: 100%; object-fit: cover;">
+                                                <span class="badge-cover-type"><i class="ri-check-line me-1 text-success"></i> Primary Service Image</span>
+                                                <button type="button" class="preview-remove-btn" id="btn_remove_main_image" title="Remove selected image">
+                                                    <i class="ri-close-line"></i>
+                                                </button>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between px-1">
+                                                <div class="text-start text-truncate me-2">
+                                                    <span id="main_image_name" class="fw-semibold text-dark d-block text-truncate" style="font-size: 12px;"></span>
+                                                    <span id="main_image_size" class="text-muted" style="font-size: 11px;"></span>
+                                                </div>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2" style="font-size: 11.5px; height: 28px;" onclick="$('#image').click();">
+                                                    Change
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     @error('image')
@@ -413,27 +408,20 @@
                             <div class="card table-card">
                                 <div class="card-header table-header d-flex justify-content-between align-items-center">
                                     <div class="table-title">Service Gallery Photos</div>
-                                    <span class="badge bg-primary" id="gallery_counter_badge" style="font-size: 11px;">0
-                                        Selected</span>
+                                    <span class="badge bg-primary" id="gallery_counter_badge" style="font-size: 11px;">0 Selected</span>
                                 </div>
                                 <div class="card-body custom-form">
                                     {{-- Hidden multi-file input --}}
-                                    <input type="file" id="gallery_input" name="gallery[]" class="d-none"
-                                        accept="image/png,image/jpeg,image/webp,image/jpg" multiple>
+                                    <input type="file" id="gallery_input" name="gallery[]" class="d-none" accept="image/png,image/jpeg,image/webp,image/jpg" multiple>
 
                                     {{-- Interactive Dropzone --}}
                                     <div id="gallery_dropzone" class="dropzone-box mb-3">
-                                        <div class="dropzone-icon"
-                                            style="background-color: rgba(79, 70, 229, 0.1); color: #4f46e5;">
+                                        <div class="dropzone-icon" style="background-color: rgba(79, 70, 229, 0.1); color: #4f46e5;">
                                             <i class="ri-gallery-upload-line"></i>
                                         </div>
-                                        <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop gallery
-                                            photos</p>
-                                        <span class="text-muted d-block mb-3" style="font-size: 11.5px;">Select multiple
-                                            case-study or process photos</span>
-                                        <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
-                                            style="background-color: #eef2ff; border-color: #6366f1; color: #4f46e5;"
-                                            onclick="$('#gallery_input').click();">
+                                        <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop gallery photos</p>
+                                        <span class="text-muted d-block mb-3" style="font-size: 11.5px;">Select multiple case-study or process photos</span>
+                                        <button type="button" class="btn btn-sm upload-btn px-3 mx-auto" style="background-color: #eef2ff; border-color: #6366f1; color: #4f46e5;" onclick="$('#gallery_input').click();">
                                             <i class="ri-add-circle-line me-1"></i> Browse Photos
                                         </button>
                                     </div>
@@ -496,7 +484,7 @@
             }
 
             // ==========================================
-            // 4. MAIN SERVICE IMAGE DRAG & DROP
+            // 4. MAIN SERVICE IMAGE DRAG & DROP & PREVIEW
             // ==========================================
             var $mainDropzone = $('#main_image_dropzone');
             var $mainInput = $('#image');
@@ -542,6 +530,11 @@
             $mainInput.on('change', function () {
                 if (this.files && this.files[0]) {
                     var file = this.files[0];
+                    if (!file.type.match('image.*')) {
+                        toastr.error('Please select a valid image file (PNG, JPG, WebP)');
+                        this.value = '';
+                        return;
+                    }
                     if (file.size > 5 * 1024 * 1024) {
                         toastr.error('Image must not exceed 5MB');
                         this.value = '';
@@ -555,6 +548,8 @@
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     $('#main_image_img').attr('src', e.target.result);
+                    $('#main_image_name').text(file.name);
+                    $('#main_image_size').text(formatBytes(file.size));
                     $('#main_image_empty').addClass('d-none');
                     $('#main_image_preview_box').removeClass('d-none');
                 };

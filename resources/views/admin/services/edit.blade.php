@@ -128,17 +128,21 @@
         }
 
         .gallery-overlay-btn {
-            width: 26px;
-            height: 26px;
-            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            color: #ffffff !important;
+            font-size: 13px;
             border: none;
-            color: #ffffff;
-            text-decoration: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+
+        .gallery-overlay-btn:hover {
+            transform: scale(1.1);
         }
 
         .icon-preview-box {
@@ -193,8 +197,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('services.index') }}">Services</a>
-                                        </li>
+                                        <li class="breadcrumb-item"><a href="{{ route('services.index') }}">Services</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Edit</li>
                                     </ol>
                                 </nav>
@@ -235,14 +238,14 @@
                                     <div class="input-group align-items-start">
                                         <div class="input-group-text p-0 bg-transparent border-0 me-2">
                                             <div class="icon-preview-box" id="icon_preview_container">
-                                                <i class="{{ $service->icon ?: 'ri-hammer-line' }}"
-                                                    id="icon_preview_element"></i>
+                                                <i class="{{ old('icon', $service->icon ?: 'ri-hammer-line') }}" id="icon_preview_element"></i>
                                             </div>
                                         </div>
                                         <input type="text"
                                             class="form-control custom-input @error('icon') is-invalid @enderror"
-                                            name="icon" id="icon" value="{{ old('icon', $service->icon) }}"
-                                            placeholder="e.g. ri-building-2-line, ri-tools-line">
+                                            name="icon" id="icon"
+                                            value="{{ old('icon', $service->icon ?: 'ri-hammer-line') }}"
+                                            placeholder="e.g. ri-building-2-line, ri-tools-line, fa-solid fa-helmet-safety">
                                     </div>
                                     <div class="d-flex flex-wrap gap-1 mt-2 align-items-center">
                                         <span class="text-muted" style="font-size: 11px;">Quick suggestions:</span>
@@ -269,17 +272,18 @@
                                     <label for="short_description" class="form-label custom-label">Short Summary</label>
                                     <textarea
                                         class="form-control custom-input @error('short_description') is-invalid @enderror"
-                                        name="short_description" id="short_description"
-                                        rows="3">{{ old('short_description', $service->short_description) }}</textarea>
+                                        name="short_description" id="short_description" rows="3"
+                                        placeholder="Concise overview for service cards and homepage highlights..."
+                                        style="resize: none;">{{ old('short_description', $service->short_description) }}</textarea>
                                     @error('short_description')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                {{-- Full Description / Features with CKEditor --}}
+                                {{-- Full Description with CKEditor --}}
                                 <div class="col-12">
-                                    <label for="description" class="form-label custom-label">Comprehensive Service Details
-                                        &amp; Scope</label>
+                                    <label for="description" class="form-label custom-label">Full Service
+                                        Description</label>
                                     <textarea class="form-control custom-input @error('description') is-invalid @enderror"
                                         name="description" id="description"
                                         rows="10">{{ old('description', $service->description) }}</textarea>
@@ -303,7 +307,8 @@
                                     <input type="text"
                                         class="form-control custom-input @error('meta_title') is-invalid @enderror"
                                         name="meta_title" id="meta_title"
-                                        value="{{ old('meta_title', $service->meta_title) }}">
+                                        value="{{ old('meta_title', $service->meta_title) }}"
+                                        placeholder="Title for search engine results...">
                                     @error('meta_title')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -314,7 +319,8 @@
                                     <textarea
                                         class="form-control custom-input @error('meta_description') is-invalid @enderror"
                                         name="meta_description" id="meta_description"
-                                        rows="3">{{ old('meta_description', $service->meta_description) }}</textarea>
+                                        rows="3"
+                                        placeholder="Brief summary snippet for search results...">{{ old('meta_description', $service->meta_description) }}</textarea>
                                     @error('meta_description')
                                         <div class="error_msg">{{ $message }}</div>
                                     @enderror
@@ -382,68 +388,64 @@
                             </div>
                         </div>
 
-                        {{-- Primary Service Image --}}
+                        {{-- Main Service Image --}}
                         <div class="col-12">
                             <div class="card table-card">
                                 <div class="card-header table-header">
                                     <div class="table-title">Main Service Image</div>
                                 </div>
                                 <div class="card-body custom-form">
-                                    {{-- Hidden native file input --}}
+                                    {{-- Hidden file input --}}
                                     <input type="file" id="image" name="image" class="d-none"
                                         accept="image/png,image/jpeg,image/webp,image/jpg">
 
-                                    {{-- Current Active Image Display --}}
-                                    <div id="current_image_card"
-                                        class="position-relative rounded overflow-hidden mb-3 border"
-                                        style="height: 180px; background: #000;">
-                                        <img id="current_image_img" src="{{ $service->image_url }}"
-                                            alt="{{ $service->title }}"
-                                            onerror="this.onerror=null;this.src='{{ asset('admin/assets/images/default.jpg') }}';"
-                                            style="width: 100%; height: 100%; object-fit: cover;">
-                                        @if($service->hasMedia('image'))
-                                            <span class="badge-cover-type" style="background: rgba(16, 185, 129, 0.9);">
-                                                <i class="ri-check-line me-1"></i> Current Active Image
-                                            </span>
-                                        @elseif($service->hasMedia('gallery'))
-                                            <span class="badge-cover-type" style="background: rgba(59, 130, 246, 0.9);">
-                                                <i class="ri-gallery-line me-1"></i> From Gallery (Auto)
-                                            </span>
-                                        @else
-                                            <span class="badge-cover-type" style="background: rgba(100, 116, 139, 0.9);">
-                                                <i class="ri-image-line me-1"></i> Default Placeholder
-                                            </span>
-                                        @endif
-                                    </div>
-
-                                    {{-- Staged Replacement Preview (Hidden initially) --}}
-                                    <div id="staged_image_card"
-                                        class="position-relative rounded overflow-hidden mb-3 border d-none"
-                                        style="height: 180px; background: #000; border-color: #f95716 !important;">
-                                        <img id="staged_image_img" src="" alt="Replacement preview"
-                                            style="width: 100%; height: 100%; object-fit: cover;">
-                                        <span class="badge-cover-type" style="background: rgba(249, 87, 22, 0.95);">
-                                            <i class="ri-refresh-line me-1"></i> Ready to Replace on Save
-                                        </span>
-                                        <button type="button" class="preview-remove-btn" id="btn_cancel_image_replace"
-                                            title="Cancel replacement">
-                                            <i class="ri-close-line"></i>
-                                        </button>
-                                    </div>
-
-                                    {{-- Replace Dropzone --}}
+                                    {{-- Interactive Dropzone with In-Dropzone Preview --}}
                                     <div id="main_image_dropzone" class="dropzone-box">
-                                        <div class="dropzone-icon">
-                                            <i class="ri-image-edit-line"></i>
+                                        <div id="main_image_empty" class="{{ $service->hasMedia('image') || $service->hasMedia('gallery') ? 'd-none' : '' }}">
+                                            <div class="dropzone-icon">
+                                                <i class="ri-image-add-line"></i>
+                                            </div>
+                                            <p class="fw-bold text-dark mb-1" style="font-size: 13.5px;">Drag &amp; drop service photo</p>
+                                            <span class="text-muted d-block mb-3" style="font-size: 11.5px;">PNG, JPG, WebP up to 5MB (16:9 ratio recommended)</span>
+                                            <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
+                                                onclick="$('#image').click();">
+                                                <i class="ri-upload-2-line me-1"></i> Browse Photo
+                                            </button>
                                         </div>
-                                        <p class="fw-bold text-dark mb-1" style="font-size: 13px;">Click or drag to replace
-                                            image</p>
-                                        <span class="text-muted d-block mb-2" style="font-size: 11px;">PNG, JPG, WebP up to
-                                            5MB</span>
-                                        <button type="button" class="btn btn-sm upload-btn px-3 mx-auto"
-                                            onclick="$('#image').click();">
-                                            <i class="ri-upload-cloud-line me-1"></i> Select New Image
-                                        </button>
+
+                                        {{-- Staged / Active Preview Box --}}
+                                        <div id="main_image_preview_box" class="{{ $service->hasMedia('image') || $service->hasMedia('gallery') ? '' : 'd-none' }}">
+                                            <div class="position-relative rounded overflow-hidden mb-2" style="height: 180px; background: #000;">
+                                                <img id="main_image_img" src="{{ $service->image_url }}" alt="{{ $service->title }}"
+                                                    onerror="this.onerror=null;this.src='{{ asset('admin/assets/images/default.jpg') }}';"
+                                                    style="width: 100%; height: 100%; object-fit: cover;">
+                                                <span class="badge-cover-type" id="main_image_badge">
+                                                    @if($service->hasMedia('image'))
+                                                        <i class="ri-check-line me-1 text-success"></i> Current Active Image
+                                                    @elseif($service->hasMedia('gallery'))
+                                                        <i class="ri-gallery-line me-1 text-info"></i> From Gallery (Auto)
+                                                    @else
+                                                        <i class="ri-image-line me-1"></i> Primary Image
+                                                    @endif
+                                                </span>
+                                                <button type="button" class="preview-remove-btn d-none" id="btn_cancel_cover_replace"
+                                                    title="Cancel replacement">
+                                                    <i class="ri-close-line"></i>
+                                                </button>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between px-1">
+                                                <div class="text-start text-truncate me-2">
+                                                    <span id="main_image_name" class="fw-semibold text-dark d-block text-truncate" style="font-size: 12px;">
+                                                        {{ $service->getFirstMedia('image')?->file_name ?? $service->title }}
+                                                    </span>
+                                                    <span id="main_image_size" class="text-muted" style="font-size: 11px;">Active service image</span>
+                                                </div>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary px-2" style="font-size: 11.5px; height: 28px;"
+                                                    onclick="$('#image').click();">
+                                                    Change
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     @error('image')
                                         <div class="error_msg mt-2">{{ $message }}</div>
@@ -532,7 +534,7 @@
                                         </button>
                                     </div>
 
-                                    {{-- 3. Staging Preview for Newly Selected Gallery Photos --}}
+                                    {{-- Staging Preview for Newly Selected Gallery Photos --}}
                                     <div id="staged_gallery_grid" class="row g-2"></div>
                                     @error('gallery.*')
                                         <div class="error_msg mt-2">{{ $message }}</div>
@@ -604,7 +606,7 @@
                         return;
                     }
                     if (file.size > 5 * 1024 * 1024) {
-                        toastr.error('Image must not exceed 5MB');
+                        toastr.error('Service image must not exceed 5MB');
                         return;
                     }
 
@@ -619,7 +621,7 @@
                 if (this.files && this.files[0]) {
                     var file = this.files[0];
                     if (file.size > 5 * 1024 * 1024) {
-                        toastr.error('Image must not exceed 5MB');
+                        toastr.error('Service image must not exceed 5MB');
                         this.value = '';
                         return;
                     }
@@ -627,23 +629,32 @@
                 }
             });
 
+            var originalCoverSrc = "{{ $service->image_url }}";
+            var originalCoverName = $('#main_image_name').text();
+
             function renderCoverReplacement(file) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#staged_image_img').attr('src', e.target.result);
-                    $('#current_image_card').addClass('d-none');
-                    $('#staged_image_card').removeClass('d-none');
-                    toastr.info('New image selected. Click "Update Service" to save changes.');
+                    $('#main_image_img').attr('src', e.target.result);
+                    $('#main_image_name').text(file.name);
+                    $('#main_image_size').text(formatBytes(file.size));
+                    $('#main_image_badge').html('<i class="ri-refresh-line me-1 text-warning"></i> Staged Replacement');
+                    $('#btn_cancel_cover_replace').removeClass('d-none');
+                    $('#main_image_empty').addClass('d-none');
+                    $('#main_image_preview_box').removeClass('d-none');
+                    toastr.info('New image selected. Click "Update" to save changes.');
                 };
                 reader.readAsDataURL(file);
             }
 
-            $('#btn_cancel_image_replace').on('click', function (e) {
+            $('#btn_cancel_cover_replace').on('click', function (e) {
                 e.stopPropagation();
                 $mainInput.val('');
-                $('#staged_image_img').attr('src', '');
-                $('#staged_image_card').addClass('d-none');
-                $('#current_image_card').removeClass('d-none');
+                $('#main_image_img').attr('src', originalCoverSrc);
+                $('#main_image_name').text(originalCoverName);
+                $('#main_image_size').text('Active service image');
+                $('#main_image_badge').html('@if($service->hasMedia('image'))<i class="ri-check-line me-1 text-success"></i> Current Active Image @elseif($service->hasMedia('gallery'))<i class="ri-gallery-line me-1 text-info"></i> From Gallery (Auto) @else<i class="ri-image-line me-1"></i> Primary Image @endif');
+                $(this).addClass('d-none');
             });
 
             // ==========================================
@@ -731,6 +742,7 @@
                 });
             }
 
+            // Remove single file from Gallery DataTransfer queue
             $(document).on('click', '.remove-staged-gallery', function (e) {
                 e.stopPropagation();
                 var removeIndex = parseInt($(this).data('index'), 10);
@@ -769,6 +781,7 @@
                             toastr.success(res.message || 'Media file deleted');
                             $itemContainer.fadeOut(300, function () {
                                 $(this).remove();
+                                // Update count
                                 var currentCount = $('#existing_gallery_grid .media-item-card').length;
                                 $('#gallery_count_badge').text(currentCount + ' Photos');
                                 if (currentCount === 0) {

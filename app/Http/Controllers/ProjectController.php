@@ -62,7 +62,8 @@ class ProjectController extends Controller implements HasMiddleware
                     ->addColumn('title_details', function ($row) {
                         return '<div class="d-flex flex-column">
                             <span class="fw-bold text-dark" style="font-size: 13.5px;">' . e($row->title) . '</span>
-                        </div>';
+                        </div>
+                        <span class="text-muted" style="font-size: 11px;">Slug: ' . e($row->slug) . '</span>';
                     })
                     ->addColumn('client_location', function ($row) {
                         $client = $row->client_name ? e($row->client_name) : '<span class="text-muted">—</span>';
@@ -218,14 +219,18 @@ class ProjectController extends Controller implements HasMiddleware
     /**
      * Display the specified project.
      */
-    public function show(int $id): JsonResponse
+    public function show(Request $request, int $id): JsonResponse|View
     {
         $project = Project::with(['creator', 'updater', 'media', 'enquiries'])->findOrFail($id);
 
-        return response()->json([
-            'success' => true,
-            'data' => $project,
-        ]);
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'data' => $project,
+            ]);
+        }
+
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
