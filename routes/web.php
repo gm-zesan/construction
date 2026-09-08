@@ -37,6 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/dashboard/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
     Route::get('/dashboard/role/delete/{id}', [RoleController::class, 'destroy'])->name('role.delete');
 
+    // Permission Routes (Dynamic Permissions)
+    Route::resource('/dashboard/permissions', \App\Http\Controllers\PermissionController::class)->names('permissions');
+
     // Project Routes
     Route::post('/dashboard/projects/{id}/toggle-status', [ProjectController::class, 'toggleStatus'])->name('projects.toggle-status');
     Route::delete('/dashboard/projects/{id}/media/{mediaId}', [ProjectController::class, 'deleteMedia'])->name('projects.media.destroy');

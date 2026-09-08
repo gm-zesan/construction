@@ -112,17 +112,24 @@
                 <span class="link_names">User List</span>
             </a>
         </li>
-        @endcan
+        @endcanany
 
         @canany(['role-list', 'role-create', 'role-edit', 'role-delete'])
         <li class="drop-item">
             <a href="{{ route('role.index') }}"
                 class="{{ in_array(Route::currentRouteName(), ['role.index', 'role.create', 'role.edit']) ? 'active-focus' : '' }}">
                 <i class="ri-shield-user-line"></i>
-                <span class="link_names">Roles & Permissions</span>
+                <span class="link_names">Roles</span>
             </a>
         </li>
-        @endcan
+        <li class="drop-item">
+            <a href="{{ route('permissions.index') }}"
+                class="{{ request()->routeIs('permissions.*') ? 'active-focus' : '' }}">
+                <i class="ri-key-2-line"></i>
+                <span class="link_names">Permissions</span>
+            </a>
+        </li>
+        @endcanany
 
         @canany(['activity-list', 'user-list', 'role-list'])
         <li>

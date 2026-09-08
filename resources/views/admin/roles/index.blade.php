@@ -20,9 +20,16 @@
                                 </ol> 
                             </nav>
                         </div>
-                        @if (Auth::user()->hasRole('superadmin'))
-                            <a href="{{route('role.create')}}" class="add-new">New Role<i class="ms-1 ri-add-line"></i></a>
-                        @endif
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="{{ route('permissions.index') }}" class="btn btn-sm btn-outline-secondary px-3" style="height: 36px; border-radius: 6px; font-weight: 600;">
+                                <i class="ri-key-2-line me-1"></i> Manage Permissions
+                            </a>
+                            @if (Auth::user()->hasRole('superadmin'))
+                                <a href="{{ route('role.create') }}" class="btn btn-sm btn-primary px-3" style="height: 36px; border-radius: 6px; font-weight: 600; background-color: #f95716; border-color: #f95716;">
+                                    <i class="ri-add-line me-1"></i> New Role
+                                </a>
+                            @endif
+                        </div>
                     </div>
                     <div class="card-body" style="padding: 20px;">
                         <table class="table dataTable w-100" id="data-table" style="min-width: 700px;">
