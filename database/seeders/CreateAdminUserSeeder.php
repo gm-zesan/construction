@@ -55,6 +55,7 @@ class CreateAdminUserSeeder extends Seeder
         $managerPermissions = Permission::whereIn('module', [
             'project',
             'service',
+            'milestone',
             'contact',
             'blog',
         ])->pluck('name')->all();

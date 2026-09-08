@@ -54,8 +54,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Activity Log Routes
     Route::resource('dashboard/activity-logs', ActivityLogController::class)->only(['index', 'show'])->names('activity-logs');
 
+    // Project Milestone Routes
+    Route::post('/dashboard/milestones/{id}/toggle-status', [\App\Http\Controllers\ProjectMilestoneController::class, 'toggleStatus'])->name('milestones.toggle-status');
+    Route::resource('dashboard/milestones', \App\Http\Controllers\ProjectMilestoneController::class)->names('milestones');
+
     // Media Library Routes
     Route::resource('dashboard/media', MediaController::class)->names('media');
+
+    // Article Category Routes
+    Route::post('/dashboard/article-categories/{id}/toggle-status', [\App\Http\Controllers\ArticleCategoryController::class, 'toggleStatus'])->name('article-categories.toggle-status');
+    Route::resource('dashboard/article-categories', \App\Http\Controllers\ArticleCategoryController::class)->names('article-categories');
+
+    // News & Article Routes
+    Route::post('/dashboard/articles/{id}/toggle-status', [\App\Http\Controllers\ArticleController::class, 'toggleStatus'])->name('articles.toggle-status');
+    Route::post('/dashboard/articles/{id}/toggle-featured', [\App\Http\Controllers\ArticleController::class, 'toggleFeatured'])->name('articles.toggle-featured');
+    Route::resource('dashboard/articles', \App\Http\Controllers\ArticleController::class)->names('articles');
 
     // CKEditor Routes
     Route::get('ckeditor', [\App\Http\Controllers\CkeditorController::class, 'index']);

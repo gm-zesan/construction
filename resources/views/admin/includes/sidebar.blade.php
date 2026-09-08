@@ -45,12 +45,14 @@
             </a>
         </li>
         @endcan
+        @canany(['milestone-list', 'milestone-create', 'milestone-edit', 'milestone-delete'])
         <li>
-            <a href="{{ route('dashboard') }}#milestones">
-                <i class="ri-time-line"></i>
-                <span class="link_names">Site Milestones</span>
+            <a href="{{ route('milestones.index') }}" class="{{ request()->routeIs('milestones.*') ? 'active-focus' : '' }}">
+                <i class="ri-flag-2-line"></i>
+                <span class="link_names">Project Milestones</span>
             </a>
         </li>
+        @endcanany
 
         <!-- Communications & Content -->
         <li class="category-li">
@@ -72,12 +74,22 @@
             </a>
         </li>
         @endcanany
+        @canany(['article-category-list', 'article-category-create', 'article-category-edit', 'article-category-delete', 'blog-list', 'blog-create', 'blog-edit', 'blog-delete'])
         <li>
-            <a href="{{ route('dashboard') }}#news">
+            <a href="{{ route('article-categories.index') }}" class="{{ request()->routeIs('article-categories.*') ? 'active-focus' : '' }}">
+                <i class="ri-price-tag-3-line"></i>
+                <span class="link_names">Article Categories</span>
+            </a>
+        </li>
+        @endcanany
+        @canany(['article-list', 'article-create', 'article-edit', 'article-delete', 'blog-list', 'blog-create', 'blog-edit', 'blog-delete'])
+        <li>
+            <a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.*') ? 'active-focus' : '' }}">
                 <i class="ri-article-line"></i>
                 <span class="link_names">News & Articles</span>
             </a>
         </li>
+        @endcanany
         <li>
             <a href="{{ route('dashboard') }}#testimonials">
                 <i class="ri-feedback-line"></i>

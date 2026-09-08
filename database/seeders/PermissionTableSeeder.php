@@ -45,10 +45,16 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'service-delete', 'display_name' => 'Service delete', 'module' => 'service'],
 
             // 6. News & Articles
-            ['name' => 'blog-list', 'display_name' => 'Article list', 'module' => 'blog'],
-            ['name' => 'blog-create', 'display_name' => 'Article create', 'module' => 'blog'],
-            ['name' => 'blog-edit', 'display_name' => 'Article edit', 'module' => 'blog'],
-            ['name' => 'blog-delete', 'display_name' => 'Article delete', 'module' => 'blog'],
+            ['name' => 'article-list', 'display_name' => 'Article list', 'module' => 'blog'],
+            ['name' => 'article-create', 'display_name' => 'Article create', 'module' => 'blog'],
+            ['name' => 'article-edit', 'display_name' => 'Article edit', 'module' => 'blog'],
+            ['name' => 'article-delete', 'display_name' => 'Article delete', 'module' => 'blog'],
+
+            // 6b. Article Categories
+            ['name' => 'article-category-list', 'display_name' => 'Article Category list', 'module' => 'blog'],
+            ['name' => 'article-category-create', 'display_name' => 'Article Category create', 'module' => 'blog'],
+            ['name' => 'article-category-edit', 'display_name' => 'Article Category edit', 'module' => 'blog'],
+            ['name' => 'article-category-delete', 'display_name' => 'Article Category delete', 'module' => 'blog'],
 
             // 7. Client Inquiries & Contact Messages
             ['name' => 'contact-list', 'display_name' => 'Inquiry list', 'module' => 'contact'],
@@ -75,6 +81,12 @@ class PermissionTableSeeder extends Seeder
 
             // 11. Activity Logs
             ['name' => 'activity-list', 'display_name' => 'Activity logs', 'module' => 'activity-log'],
+
+            // 12. Project Milestones
+            ['name' => 'milestone-list', 'display_name' => 'Milestone list', 'module' => 'milestone'],
+            ['name' => 'milestone-create', 'display_name' => 'Milestone create', 'module' => 'milestone'],
+            ['name' => 'milestone-edit', 'display_name' => 'Milestone edit', 'module' => 'milestone'],
+            ['name' => 'milestone-delete', 'display_name' => 'Milestone delete', 'module' => 'milestone'],
         ];
 
         // Create or update all active module permissions

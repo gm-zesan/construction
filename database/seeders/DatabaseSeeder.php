@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
             CreateAdminUserSeeder::class,
             ServiceSeeder::class,
             ProjectSeeder::class,
+            ProjectMilestoneSeeder::class,
+            ArticleCategorySeeder::class,
+            ArticleSeeder::class,
             ClientEnquirySeeder::class,
         ]);
     }

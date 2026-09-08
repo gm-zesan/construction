@@ -161,4 +161,12 @@ class Project extends Model implements HasMedia
     {
         return $query->where('category', $category);
     }
+
+    /**
+     * Relationship to ProjectMilestones.
+     */
+    public function milestones(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProjectMilestone::class, 'project_id')->ordered();
+    }
 }
