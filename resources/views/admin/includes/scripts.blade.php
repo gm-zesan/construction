@@ -114,3 +114,6 @@
         @endif
     });
 </script>
+
+<!-- Dedicated Admin Panel JavaScript -->
+@vite(['resources/js/admin.js'])

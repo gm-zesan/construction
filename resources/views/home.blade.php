@@ -9,8 +9,8 @@
         <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <img id="hero-bg-img" src="{{ asset('images/hero-bg.jpg') }}"
                 alt="Commercial construction skyline and structural engineering"
-                class="w-full h-full object-cover object-center transform will-change-transform scale-105" loading="eager"
-                fetchpriority="high">
+                class="absolute -top-[10%] left-0 w-full h-[120%] object-cover object-center transform will-change-transform scale-105"
+                loading="eager" fetchpriority="high">
 
             <!-- Dark Overlay -->
             <div class="absolute inset-0 bg-[#080c14]/40"></div>
@@ -23,11 +23,16 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
 
                 <!-- Left Side: Main Heading & CTAs -->
-                <div id="hero-content-col" class="lg:col-span-7 flex flex-col items-start text-left">
+                <div id="hero-content-col"
+                    class="parallax-text-layers parallax-layers lg:col-span-7 flex flex-col items-start text-left relative">
+                    <!-- Back Watermark Parallax Text -->
+                    <span class="parallax-text-back back text-white">CONSTRUCT</span>
 
                     <!-- Eyebrow -->
-                    <div class="inline-flex items-center gap-3 mb-6 animate-fade-in">
-                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                    <div
+                        class="parallax-text-front front inline-flex items-center gap-3 mb-6 relative z-10 animate-fade-in">
+                        <span
+                            class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#f95716] uppercase">
                             CONSTRUCTION & DEVELOPMENT
                         </span>
@@ -35,7 +40,7 @@
 
                     <!-- Main Heading -->
                     <h1 id="hero-content"
-                        class="font-heading font-extrabold uppercase text-white tracking-tight leading-[0.96] text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-8 sm:mb-10 animate-fade-in">
+                        class="parallax-text-mid mid section-title font-heading font-extrabold uppercase text-white tracking-tight leading-[0.96] text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-8 sm:mb-10 relative z-10 animate-fade-in">
                         Construction, from planning to completion.
                     </h1>
 
@@ -71,7 +76,8 @@
                     </div>
 
                     <!-- Overlapping Circular Action Badge -->
-                    <div id="hero-action-badge" class="flex items-center -space-x-3 sm:-space-x-4 lg:self-end animate-fade-in will-change-transform">
+                    <div id="hero-action-badge"
+                        class="flex items-center -space-x-3 sm:-space-x-4 lg:self-end animate-fade-in will-change-transform">
 
                         <!-- Rotating Orange Circular Stamp -->
                         <div
@@ -152,21 +158,28 @@
                 <div class="lg:col-span-5 flex flex-col justify-between space-y-8 z-10">
 
                     <div>
-                        <!-- Eyebrow -->
-                        <div class="about-fade-el flex items-center gap-3 mb-5 sm:mb-6">
-                            <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
-                            <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-slate-950">
-                                ABOUT CONSTRUCTION
-                            </span>
-                        </div>
+                        <div class="parallax-text-layers parallax-layers relative">
+                            <!-- Back Watermark Parallax Text -->
+                            <span class="parallax-text-back back text-slate-950">PRECISION</span>
 
-                        <!-- Editorial Heading with Mixed Typography -->
-                        <h2
-                            class="about-fade-el font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.02] text-4xl sm:text-5xl lg:text-[50px] xl:text-[56px] mb-6 sm:mb-8">
-                            Construction built around <span
-                                class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">precision,</span>
-                            planning & detail.
-                        </h2>
+                            <!-- Eyebrow -->
+                            <div
+                                class="parallax-text-front front about-fade-el flex items-center gap-3 mb-5 sm:mb-6 relative z-10">
+                                <span
+                                    class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                                <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-slate-950">
+                                    ABOUT CONSTRUCTION
+                                </span>
+                            </div>
+
+                            <!-- Editorial Heading with Mixed Typography -->
+                            <h2
+                                class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.02] text-4xl sm:text-5xl lg:text-[50px] xl:text-[56px] mb-6 sm:mb-8 relative z-10">
+                                Construction built around <span
+                                    class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">precision,</span>
+                                planning & detail.
+                            </h2>
+                        </div>
 
                         <!-- Description -->
                         <p
@@ -247,7 +260,8 @@
         <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <img id="services-bg-img" src="{{ asset('images/services-bg.jpg') }}"
                 alt="Civil engineers reviewing structural plans on commercial construction site"
-                class="w-full h-full object-cover object-center transform will-change-transform scale-105" loading="lazy" />
+                class="absolute -top-[12%] left-0 w-full h-[125%] object-cover object-center transform will-change-transform"
+                loading="lazy" />
 
             <!-- Atmospheric Dark Overlays for Photo Visibility & Contrast -->
             <div class="absolute inset-0 bg-[#080c14]/50"></div>
@@ -261,10 +275,14 @@
             <!-- Section Header (Editorial & Mixed Typography) -->
             <div id="services-header"
                 class="flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8 mb-14 sm:mb-16 lg:mb-20">
-                <div>
+                <div class="parallax-text-layers parallax-layers relative">
+                    <!-- Back Watermark Parallax Text -->
+                    <span class="parallax-text-back back text-white">SERVICES</span>
+
                     <!-- Eyebrow -->
-                    <div class="flex items-center gap-3 mb-4 sm:mb-5">
-                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                    <div class="parallax-text-front front flex items-center gap-3 mb-4 sm:mb-5 relative z-10">
+                        <span
+                            class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-[#f95716]">
                             CORE CAPABILITIES
                         </span>
@@ -272,7 +290,7 @@
 
                     <!-- Editorial Headline -->
                     <h2
-                        class="font-heading font-black uppercase text-white tracking-tight leading-[1.02] text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px]">
+                        class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.02] text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px] relative z-10">
                         Structured Scopes. <br>
                         <span
                             class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Direct</span>
@@ -485,10 +503,14 @@
             <!-- Section Header (Editorial & Filter Tabs) -->
             <div id="projects-header"
                 class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 sm:mb-16 lg:mb-20">
-                <div>
+                <div class="parallax-text-layers parallax-layers relative">
+                    <!-- Back Watermark Parallax Text -->
+                    <span class="parallax-text-back back text-slate-950">PROJECTS</span>
+
                     <!-- Eyebrow -->
-                    <div class="flex items-center gap-3 mb-4 sm:mb-5">
-                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                    <div class="parallax-text-front front flex items-center gap-3 mb-4 sm:mb-5 relative z-10">
+                        <span
+                            class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-slate-950">
                             RECENT PROJECTS
                         </span>
@@ -496,9 +518,11 @@
 
                     <!-- Editorial Headline -->
                     <h2
-                        class="font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.02] text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px]">
-                        Featured <span
-                            class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Engineering</span>
+                        class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.02] text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px] relative z-10">
+                        Featured
+                        <span
+                            class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Engineering
+                        </span> <br />
                         & Construction Work
                     </h2>
                 </div>
@@ -533,7 +557,7 @@
             </div>
 
             <!-- 4-Project Showcase Grid -->
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10" style="perspective: 1400px;">
 
                 <!-- Project 01: Metropolitan Skyway & Commercial Tower -->
                 <article
@@ -821,10 +845,14 @@
                         class="feature-content-left-2 flex flex-col justify-between h-full max-h-[465px] space-y-6 xl:space-y-0">
 
                         <!-- Section Heading -->
-                        <div class="section-heading white-content">
+                        <div class="parallax-text-layers parallax-layers section-heading white-content relative">
+                            <!-- Back Watermark Parallax Text -->
+                            <span class="parallax-text-back back text-white">INTERIOR</span>
+
                             <!-- Sub Heading / Eyebrow -->
-                            <div class="sub-heading flex items-center gap-2.5 mb-3">
-                                <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                            <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 relative z-10">
+                                <span
+                                    class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                                 <span class="text-xs font-bold uppercase tracking-[0.2em] text-slate-300">
                                     Interior Execution
                                 </span>
@@ -832,7 +860,7 @@
 
                             <!-- Section Title -->
                             <h2
-                                class="section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px]">
+                                class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
                                 Interior Work, <br>
                                 <span
                                     class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">From
@@ -987,10 +1015,15 @@
 
                 <!-- Top-Left Column (5 Cols): Eyebrow, Heading & Lead Description -->
                 <div id="why-choose-left-col" class="lg:col-span-5 flex flex-col justify-between space-y-6">
-                    <div>
+                    <div class="parallax-text-layers parallax-layers relative">
+                        <!-- Back Watermark Parallax Text -->
+                        <span class="parallax-text-back back text-slate-950">EXPERTISE</span>
+
                         <!-- Sub Heading / Eyebrow -->
-                        <div class="sub-heading flex items-center gap-2.5 mb-3 sm:mb-4">
-                            <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                        <div
+                            class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
+                            <span
+                                class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
                                 Our Approach
                             </span>
@@ -998,19 +1031,19 @@
 
                         <!-- Section Title -->
                         <h2
-                            class="section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px]">
+                            class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
                             Practical Construction, <br>
                             <span
                                 class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Carefully</span>
                             Delivered
                         </h2>
-
-                        <!-- Lead Paragraph -->
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mt-4 sm:mt-6 font-normal">
-                            We manage builds through accurate material planning, direct trade superintendence, and clear
-                            milestone reporting from groundbreaking to project closeout.
-                        </p>
                     </div>
+
+                    <!-- Lead Paragraph -->
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mt-4 sm:mt-6 font-normal">
+                        We manage builds through accurate material planning, direct trade superintendence, and clear
+                        milestone reporting from groundbreaking to project closeout.
+                    </p>
 
                     <!-- Bottom-Left: Stat Card (22 Completed Contracts) -->
                     <div id="why-choose-stat-card"
@@ -1150,10 +1183,15 @@
 
                 <!-- Right Col (6 Cols): Eyebrow, Heading, Paragraph & Action CTAs -->
                 <div id="experience-right-col" class="lg:col-span-6 flex flex-col justify-center space-y-6">
-                    <div>
+                    <div class="parallax-text-layers parallax-layers relative">
+                        <!-- Back Watermark Parallax Text -->
+                        <span class="parallax-text-back back text-white">DELIVERY</span>
+
                         <!-- Sub Heading / Eyebrow -->
-                        <div class="sub-heading flex items-center gap-2.5 mb-3 sm:mb-4">
-                            <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                        <div
+                            class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
+                            <span
+                                class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
                                 Project Track Record
                             </span>
@@ -1161,18 +1199,12 @@
 
                         <!-- Section Title -->
                         <h2
-                            class="section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px]">
+                            class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
                             Planned Work. <br>
                             <span
                                 class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Controlled</span>
                             Execution.
                         </h2>
-
-                        <!-- Lead Paragraph -->
-                        <p class="text-slate-300 text-sm sm:text-base font-normal leading-relaxed max-w-lg mt-4 sm:mt-5">
-                            We coordinate heavy equipment, civil trades, and structural crews to maintain strict schedule
-                            milestones from initial ground prep to final building handover.
-                        </p>
                     </div>
 
                     <!-- Action CTA Buttons -->
@@ -1333,10 +1365,15 @@
         <div class="container-fluid relative z-10 max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
 
             <!-- Section Header -->
-            <div id="testimonials-header" class="mb-10 sm:mb-14 will-change-transform">
+            <div id="testimonials-header"
+                class="parallax-text-layers parallax-layers mb-10 sm:mb-14 will-change-transform relative">
+                <!-- Back Watermark Parallax Text -->
+                <span class="parallax-text-back back text-slate-950">FEEDBACK</span>
+
                 <!-- Sub Heading / Eyebrow -->
-                <div class="sub-heading flex items-center gap-2.5 mb-3 sm:mb-4">
-                    <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
+                    <span
+                        class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                     <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
                         Client Feedback
                     </span>
@@ -1344,7 +1381,7 @@
 
                 <!-- Section Title -->
                 <h2
-                    class="section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px]">
+                    class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
                     Direct Feedback From <br>
                     Project <span
                         class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Owners</span>
@@ -1583,10 +1620,14 @@
             <div id="news-header-row"
                 class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 will-change-transform">
                 <!-- Left: Eyebrow + Headline -->
-                <div class="max-w-2xl">
+                <div class="parallax-text-layers parallax-layers max-w-2xl relative">
+                    <!-- Back Watermark Parallax Text -->
+                    <span class="parallax-text-back back text-slate-950">UPDATES</span>
+
                     <!-- Sub Heading / Eyebrow -->
-                    <div class="sub-heading flex items-center gap-2.5 mb-3 sm:mb-4">
-                        <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                    <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
+                        <span
+                            class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
                             Field Logs &amp; Updates
                         </span>
@@ -1594,7 +1635,7 @@
 
                     <!-- Section Title -->
                     <h2
-                        class="section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] m-0">
+                        class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] m-0 relative z-10">
                         Jobsite Notes, Methods &amp; <br>
                         <span
                             class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Field</span>

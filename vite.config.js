@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/scss/admin/style.scss',
                 'resources/scss/admin/table.scss',
+                'resources/js/admin.js',
             ],
             refresh: true,
             fonts: [

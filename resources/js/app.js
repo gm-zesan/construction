@@ -182,22 +182,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Hero GSAP Animations (Parallax & Counter)
     const heroBgImg = document.getElementById('hero-bg-img');
     if (heroBgImg) {
-        gsap.to(heroBgImg, {
-            yPercent: 16,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '#hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true,
-            },
-        });
+        gsap.fromTo(
+            heroBgImg,
+            { yPercent: 0 },
+            {
+                yPercent: 24,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                },
+            }
+        );
     }
 
     const heroContentCol = document.getElementById('hero-content-col');
     if (heroContentCol) {
         gsap.to(heroContentCol, {
-            y: -40,
             opacity: 0.35,
             ease: 'none',
             scrollTrigger: {
@@ -235,14 +238,14 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 opacity: 1,
                 y: 0,
-                duration: 0.9,
-                stagger: 0.12,
+                duration: 0.85,
+                stagger: 0.1,
                 ease: 'power2.out',
-                clearProps: 'opacity,transform',
                 scrollTrigger: {
                     trigger: '#about',
-                    start: 'top 82%',
-                    once: true,
+                    start: 'top 85%',
+                    end: 'bottom 15%',
+                    toggleActions: 'play reverse play reverse',
                 },
             }
         );
@@ -251,27 +254,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const expStatNumber = document.getElementById('experience-stat-number');
     if (expStatNumber) {
         const expObj = { val: 0 };
+        let expTween = null;
+        const runExpCount = () => {
+            expObj.val = 0;
+            if (expTween) expTween.kill();
+            expTween = gsap.to(expObj, {
+                val: 12,
+                duration: 1.5,
+                ease: 'power2.out',
+                onUpdate: () => {
+                    expStatNumber.textContent = Math.round(expObj.val);
+                },
+                onComplete: () => {
+                    gsap.fromTo(expStatNumber, { scale: 1.12 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
+                },
+            });
+        };
+        const resetExpCount = () => {
+            if (expTween) expTween.kill();
+            expStatNumber.textContent = '0';
+        };
         ScrollTrigger.create({
-            trigger: expStatNumber,
-            start: 'top 92%',
-            once: true,
-            onEnter: () => {
-                gsap.to(expObj, {
-                    val: 12,
-                    duration: 1.8,
-                    ease: 'power2.out',
-                    onUpdate: () => {
-                        expStatNumber.textContent = Math.round(expObj.val);
-                    },
-                    onComplete: () => {
-                        gsap.fromTo(expStatNumber, { scale: 1.12 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
-                    },
-                });
-            },
+            trigger: '#about',
+            start: 'top 85%',
+            end: 'bottom 15%',
+            onEnter: runExpCount,
+            onEnterBack: runExpCount,
+            onLeave: resetExpCount,
+            onLeaveBack: resetExpCount,
         });
     }
 
-    // 7. GSAP Image Reveal
+    // 7. GSAP Image Reveal (Both In & Out Multi-scroll Support)
     const revealContainers = document.querySelectorAll('.reveal-image-container');
 
     revealContainers.forEach((container, index) => {
@@ -279,7 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const image = container.querySelector('.reveal-image');
         if (!curtain || !image) return;
 
-        const staggerDelay = index === 0 ? 0 : 0.12;
+        const customDelayAttr = container.getAttribute('data-reveal-delay');
+        const staggerDelay = customDelayAttr ? parseFloat(customDelayAttr) / 1000 : (index === 0 ? 0 : 0.12);
 
         gsap.set(curtain, { xPercent: 0 });
         gsap.set(image, { scale: 1.08 });
@@ -287,16 +302,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const reveal = () => {
             gsap.to(curtain, {
                 xPercent: -101,
-                duration: 1.3,
+                duration: 1.2,
                 ease: 'power2.out',
                 delay: staggerDelay,
                 overwrite: 'auto',
             });
             gsap.to(image, {
                 scale: 1.0,
-                duration: 1.4,
+                duration: 1.3,
                 ease: 'power2.out',
                 delay: staggerDelay,
+                overwrite: 'auto',
+            });
+        };
+
+        const reset = () => {
+            gsap.to(curtain, {
+                xPercent: 0,
+                duration: 0.5,
+                ease: 'power2.in',
+                overwrite: 'auto',
+            });
+            gsap.to(image, {
+                scale: 1.08,
+                duration: 0.5,
+                ease: 'power2.in',
                 overwrite: 'auto',
             });
         };
@@ -304,8 +334,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ScrollTrigger.create({
             trigger: container,
             start: 'top 88%',
-            once: true,
-            onEnter: () => reveal(),
+            end: 'bottom 12%',
+            onEnter: reveal,
+            onLeave: reset,
+            onEnterBack: reveal,
+            onLeaveBack: reset,
         });
     });
 
@@ -316,57 +349,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const serviceRows = document.querySelectorAll('.service-row, .service-card');
 
     if (servicesBgImg && servicesSection) {
-        gsap.to(servicesBgImg, {
-            yPercent: 12,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: servicesSection,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
-            },
-        });
-    }
-
-    if (servicesHeader) {
         gsap.fromTo(
-            servicesHeader,
-            { y: 30, opacity: 0 },
+            servicesBgImg,
+            { yPercent: -15 },
             {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                ease: 'power2.out',
-                clearProps: 'opacity,transform',
+                yPercent: 15,
+                ease: 'none',
                 scrollTrigger: {
-                    trigger: servicesHeader,
-                    start: 'top 85%',
-                    once: true,
+                    trigger: servicesSection,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true,
                 },
             }
         );
     }
 
+    const servicesLeadCopy = servicesHeader ? servicesHeader.querySelector('.max-w-md') : null;
+    if (servicesLeadCopy) {
+        gsap.fromTo(
+            servicesLeadCopy,
+            { y: 20, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: servicesSection,
+                    start: 'top 85%',
+                    end: 'bottom 15%',
+                    toggleActions: 'play reverse play reverse',
+                },
+            }
+        );
+    }
+
+    const servicesList = document.getElementById('services-list');
     if (serviceRows.length > 0) {
-        serviceRows.forEach((row, index) => {
-            gsap.fromTo(
-                row,
-                { y: 30, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.85,
-                    delay: 0.1 + index * 0.1,
-                    ease: 'power3.out',
-                    clearProps: 'opacity,transform',
-                    scrollTrigger: {
-                        trigger: row,
-                        start: 'top 88%',
-                        once: true,
-                    },
-                }
-            );
-        });
+        const triggerEl = servicesList || servicesSection;
+        gsap.fromTo(
+            serviceRows,
+            { y: 35, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.75,
+                stagger: 0.1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: triggerEl,
+                    start: 'top 94%',
+                    end: 'bottom 10%',
+                    toggleActions: 'play reverse play reverse',
+                },
+            }
+        );
     }
 
     // 9. Projects Section Animations (4-Card Showcase Grid)
@@ -374,20 +412,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectsHeader = document.getElementById('projects-header');
     const projectCards = document.querySelectorAll('.project-card');
 
-    if (projectsHeader) {
+    const projectsLeadBox = projectsHeader ? projectsHeader.querySelector('.max-w-md') : null;
+    if (projectsLeadBox) {
         gsap.fromTo(
-            projectsHeader,
-            { y: 25, opacity: 0 },
+            projectsLeadBox,
+            { y: 20, opacity: 0 },
             {
                 y: 0,
                 opacity: 1,
                 duration: 0.8,
                 ease: 'power2.out',
-                clearProps: 'opacity,transform',
                 scrollTrigger: {
-                    trigger: projectsHeader,
-                    start: 'top 88%',
-                    once: true,
+                    trigger: projectsSection,
+                    start: 'top 85%',
+                    end: 'bottom 15%',
+                    toggleActions: 'play reverse play reverse',
                 },
             }
         );
@@ -401,14 +440,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.85,
-                    delay: (index % 2) * 0.14,
+                    duration: 0.8,
+                    delay: (index % 2) * 0.1,
                     ease: 'power3.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: card,
-                        start: 'top 88%',
-                        once: true,
+                        start: 'top 90%',
+                        end: 'bottom 10%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -504,11 +543,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     opacity: 1,
                     duration: 0.85,
                     ease: 'power2.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: featuresLeftCol,
-                        start: 'top 85%',
-                        once: true,
+                        start: 'top 88%',
+                        end: 'bottom 12%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -521,14 +560,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.95,
-                    delay: 0.1,
+                    duration: 0.9,
+                    delay: 0.08,
                     ease: 'power2.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: featuresCenterCol,
-                        start: 'top 85%',
-                        once: true,
+                        start: 'top 88%',
+                        end: 'bottom 12%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -542,14 +581,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     x: 0,
                     opacity: 1,
                     duration: 0.85,
-                    stagger: 0.12,
-                    delay: 0.15,
+                    stagger: 0.1,
+                    delay: 0.12,
                     ease: 'power2.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: featuresSection,
-                        start: 'top 80%',
-                        once: true,
+                        start: 'top 82%',
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -572,33 +611,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     x: 0,
                     opacity: 1,
-                    duration: 0.9,
+                    duration: 0.85,
                     ease: 'power3.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: whyChooseSection,
                         start: 'top 85%',
-                        once: true,
-                    },
-                }
-            );
-        }
-
-        if (whyChooseStatCard) {
-            gsap.fromTo(
-                whyChooseStatCard,
-                { y: 25, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.85,
-                    delay: 0.15,
-                    ease: 'power3.out',
-                    clearProps: 'opacity,transform',
-                    scrollTrigger: {
-                        trigger: whyChooseSection,
-                        start: 'top 82%',
-                        once: true,
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -607,20 +626,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (whyChooseCounter) {
             const target = parseInt(whyChooseCounter.getAttribute('data-target') || '22', 10);
             const obj = { val: 0 };
+            let countTween = null;
+            const runWhyCount = () => {
+                obj.val = 0;
+                if (countTween) countTween.kill();
+                countTween = gsap.to(obj, {
+                    val: target,
+                    duration: 1.5,
+                    ease: 'power2.out',
+                    onUpdate: () => {
+                        whyChooseCounter.textContent = Math.floor(obj.val).toString();
+                    },
+                });
+            };
+            const resetWhyCount = () => {
+                if (countTween) countTween.kill();
+                whyChooseCounter.textContent = '0';
+            };
             ScrollTrigger.create({
                 trigger: whyChooseCounter,
                 start: 'top 88%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(obj, {
-                        val: target,
-                        duration: 1.6,
-                        ease: 'power2.out',
-                        onUpdate: () => {
-                            whyChooseCounter.textContent = Math.floor(obj.val).toString();
-                        },
-                    });
-                },
+                end: 'bottom 12%',
+                onEnter: runWhyCount,
+                onEnterBack: runWhyCount,
+                onLeave: resetWhyCount,
+                onLeaveBack: resetWhyCount,
             });
         }
 
@@ -631,15 +661,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.85,
-                    stagger: 0.12,
-                    delay: 0.15,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    delay: 0.1,
                     ease: 'power2.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: whyChooseSection,
-                        start: 'top 82%',
-                        once: true,
+                        start: 'top 85%',
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -652,15 +682,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     rotation: 0,
                     scale: 1,
-                    duration: 0.9,
-                    stagger: 0.12,
-                    delay: 0.18,
+                    duration: 0.85,
+                    stagger: 0.1,
+                    delay: 0.12,
                     ease: 'back.out(1.4)',
-                    clearProps: 'transform',
                     scrollTrigger: {
                         trigger: whyChooseSection,
-                        start: 'top 82%',
-                        once: true,
+                        start: 'top 85%',
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -681,13 +711,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     x: 0,
                     opacity: 1,
-                    duration: 0.9,
+                    duration: 0.85,
                     ease: 'power3.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: expSection,
                         start: 'top 85%',
-                        once: true,
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -701,42 +731,56 @@ document.addEventListener('DOMContentLoaded', () => {
                     y: 0,
                     scale: 1,
                     opacity: 1,
-                    duration: 0.9,
-                    stagger: 0.12,
-                    delay: 0.15,
+                    duration: 0.85,
+                    stagger: 0.1,
+                    delay: 0.1,
                     ease: 'back.out(1.2)',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: expSection,
                         start: 'top 82%',
-                        once: true,
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
         }
 
         if (expCounters.length > 0) {
+            let expCardTweens = [];
+            const runExpCardCounters = () => {
+                expCardTweens.forEach((t) => t.kill());
+                expCardTweens = [];
+                expCounters.forEach((counter) => {
+                    const target = parseInt(counter.getAttribute('data-target') || '0', 10);
+                    const obj = { val: 0 };
+                    const tw = gsap.to(obj, {
+                        val: target,
+                        duration: 1.6,
+                        ease: 'power2.out',
+                        onUpdate: () => {
+                            counter.textContent = Math.floor(obj.val).toString();
+                        },
+                        onComplete: () => {
+                            gsap.fromTo(counter, { scale: 1.1 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
+                        },
+                    });
+                    expCardTweens.push(tw);
+                });
+            };
+            const resetExpCardCounters = () => {
+                expCardTweens.forEach((t) => t.kill());
+                expCounters.forEach((counter) => {
+                    counter.textContent = '0';
+                });
+            };
             ScrollTrigger.create({
                 trigger: expSection,
                 start: 'top 85%',
-                once: true,
-                onEnter: () => {
-                    expCounters.forEach((counter) => {
-                        const target = parseInt(counter.getAttribute('data-target') || '0', 10);
-                        const obj = { val: 0 };
-                        gsap.to(obj, {
-                            val: target,
-                            duration: 1.8,
-                            ease: 'power2.out',
-                            onUpdate: () => {
-                                counter.textContent = Math.floor(obj.val).toString();
-                            },
-                            onComplete: () => {
-                                gsap.fromTo(counter, { scale: 1.1 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
-                            },
-                        });
-                    });
-                },
+                end: 'bottom 15%',
+                onEnter: runExpCardCounters,
+                onEnterBack: runExpCardCounters,
+                onLeave: resetExpCardCounters,
+                onLeaveBack: resetExpCardCounters,
             });
         }
     }
@@ -771,25 +815,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        if (testHeader) {
-            gsap.fromTo(
-                testHeader,
-                { y: -25, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.85,
-                    ease: 'power3.out',
-                    clearProps: 'opacity,transform',
-                    scrollTrigger: {
-                        trigger: testSection,
-                        start: 'top 85%',
-                        once: true,
-                    },
-                }
-            );
-        }
-
         if (testSwiperBox) {
             gsap.fromTo(
                 testSwiperBox,
@@ -797,14 +822,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     x: 0,
                     opacity: 1,
-                    duration: 0.9,
-                    delay: 0.1,
+                    duration: 0.85,
+                    delay: 0.08,
                     ease: 'power3.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: testSection,
                         start: 'top 85%',
-                        once: true,
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -817,14 +842,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     x: 0,
                     opacity: 1,
-                    duration: 0.9,
-                    delay: 0.15,
+                    duration: 0.85,
+                    delay: 0.12,
                     ease: 'power3.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: testSection,
                         start: 'top 85%',
-                        once: true,
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -833,20 +858,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (testCounter) {
             const target = parseInt(testCounter.getAttribute('data-target') || '12', 10);
             const obj = { val: 0 };
+            let testTw = null;
+            const runTestCount = () => {
+                obj.val = 0;
+                if (testTw) testTw.kill();
+                testTw = gsap.to(obj, {
+                    val: target,
+                    duration: 1.5,
+                    ease: 'power2.out',
+                    onUpdate: () => {
+                        testCounter.textContent = Math.floor(obj.val).toString();
+                    },
+                });
+            };
+            const resetTestCount = () => {
+                if (testTw) testTw.kill();
+                testCounter.textContent = '0';
+            };
             ScrollTrigger.create({
                 trigger: testCounter,
                 start: 'top 88%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(obj, {
-                        val: target,
-                        duration: 1.6,
-                        ease: 'power2.out',
-                        onUpdate: () => {
-                            testCounter.textContent = Math.floor(obj.val).toString();
-                        },
-                    });
-                },
+                end: 'bottom 12%',
+                onEnter: runTestCount,
+                onEnterBack: runTestCount,
+                onLeave: resetTestCount,
+                onLeaveBack: resetTestCount,
             });
         }
     }
@@ -858,20 +894,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (newsSection) {
         const newsCards = newsSection.querySelectorAll('.news-card');
 
-        if (newsHeaderRow) {
+        const newsCtaPill = newsHeaderRow ? newsHeaderRow.querySelector('.flex-shrink-0') : null;
+        if (newsCtaPill) {
             gsap.fromTo(
-                newsHeaderRow,
-                { y: -25, opacity: 0 },
+                newsCtaPill,
+                { y: 20, opacity: 0 },
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.85,
-                    ease: 'power3.out',
-                    clearProps: 'opacity,transform',
+                    duration: 0.8,
+                    ease: 'power2.out',
                     scrollTrigger: {
                         trigger: newsSection,
                         start: 'top 85%',
-                        once: true,
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -884,14 +921,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.85,
-                    stagger: 0.12,
+                    duration: 0.8,
+                    stagger: 0.1,
                     ease: 'power3.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: newsSection,
                         start: 'top 85%',
-                        once: true,
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -906,16 +943,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (footerEl) {
         if (footerBgImg) {
-            gsap.to(footerBgImg, {
-                yPercent: 12,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: footerEl,
-                    start: 'top bottom',
-                    end: 'bottom bottom',
-                    scrub: 1.2,
-                },
-            });
+            gsap.fromTo(
+                footerBgImg,
+                { yPercent: -15 },
+                {
+                    yPercent: 15,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: footerEl,
+                        start: 'top bottom',
+                        end: 'bottom bottom',
+                        scrub: 1.2,
+                    },
+                }
+            );
         }
 
         if (footerCtaRow) {
@@ -925,13 +966,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.85,
+                    duration: 0.8,
                     ease: 'power3.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: footerEl,
                         start: 'top 85%',
-                        once: true,
+                        end: 'bottom 10%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -944,14 +985,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.9,
-                    delay: 0.1,
+                    duration: 0.85,
+                    delay: 0.08,
                     ease: 'power3.out',
-                    clearProps: 'opacity,transform',
                     scrollTrigger: {
                         trigger: footerEl,
                         start: 'top 85%',
-                        once: true,
+                        end: 'bottom 10%',
+                        toggleActions: 'play reverse play reverse',
                     },
                 }
             );
@@ -967,25 +1008,234 @@ document.addEventListener('DOMContentLoaded', () => {
             { scaleX: 0, transformOrigin: 'left center' },
             {
                 scaleX: 1,
-                duration: 0.95,
+                duration: 0.9,
                 ease: 'power3.out',
-                clearProps: 'transform',
                 scrollTrigger: {
                     trigger: triggerEl,
                     start: 'top 92%',
-                    once: true,
+                    end: 'bottom 10%',
+                    toggleActions: 'play reverse play reverse',
                 },
             }
         );
     });
 
-    // 18. Multi-layer Architectural Parallax Depth (Engineered 3D Depth of Field Across Core Sections)
+    // 18. Word-By-Word Reveal Animation for Section Titles Only
+    function splitTextIntoWords(container) {
+        const wordSpans = [];
+
+        function walk(node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.textContent;
+                if (!text || text.trim() === '') {
+                    return [node];
+                }
+                const parts = text.split(/(\s+)/);
+                const fragmentNodes = [];
+                parts.forEach((part) => {
+                    if (!part) return;
+                    if (/^\s+$/.test(part)) {
+                        fragmentNodes.push(document.createTextNode(part));
+                    } else {
+                        const span = document.createElement('span');
+                        span.className = 'word-token';
+                        span.textContent = part;
+                        wordSpans.push(span);
+                        fragmentNodes.push(span);
+                    }
+                });
+                return fragmentNodes;
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                if (node.tagName.toLowerCase() === 'br') {
+                    return [node];
+                }
+                const childNodes = Array.from(node.childNodes);
+                node.innerHTML = '';
+                childNodes.forEach((child) => {
+                    const processed = walk(child);
+                    processed.forEach((p) => node.appendChild(p));
+                });
+                return [node];
+            }
+            return [node];
+        }
+
+        const childNodes = Array.from(container.childNodes);
+        container.innerHTML = '';
+        childNodes.forEach((child) => {
+            const processed = walk(child);
+            processed.forEach((p) => container.appendChild(p));
+        });
+
+        return wordSpans;
+    }
+
+    const sectionTitles = document.querySelectorAll('.section-title');
+    sectionTitles.forEach((titleEl) => {
+        const words = splitTextIntoWords(titleEl);
+        if (words.length === 0) return;
+
+        const section = titleEl.closest('section') || titleEl.closest('footer') || titleEl;
+        const isHero = section.id === 'hero';
+
+        if (isHero) {
+            gsap.fromTo(
+                words,
+                { opacity: 0, y: 16 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    stagger: 0.05,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: '#hero',
+                        start: 'top 95%',
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
+                    },
+                }
+            );
+        } else {
+            gsap.fromTo(
+                words,
+                { opacity: 0, y: 16 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    stagger: 0.045,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%',
+                        end: 'bottom 15%',
+                        toggleActions: 'play reverse play reverse',
+                    },
+                }
+            );
+        }
+    });
+
+    // 19. Continuous Parallax Text Effect All Time (Back Watermark, Mid Title, Front Eyebrow)
+    const parallaxTextContainers = document.querySelectorAll('.parallax-text-layers, .parallax-layers');
+    parallaxTextContainers.forEach((container) => {
+        const section = container.closest('section') || container.closest('footer') || container;
+        const isHero = section.id === 'hero';
+        const back = container.querySelector('.parallax-text-back, .back');
+        const mid = container.querySelector('.parallax-text-mid, .mid');
+        const front = container.querySelector('.parallax-text-front, .front');
+
+        if (back) {
+            if (isHero) {
+                gsap.fromTo(
+                    back,
+                    { y: 0 },
+                    {
+                        y: -80,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top top',
+                            end: 'bottom top',
+                            scrub: true,
+                        },
+                    }
+                );
+            } else {
+                gsap.fromTo(
+                    back,
+                    { y: 50 },
+                    {
+                        y: -80,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true,
+                        },
+                    }
+                );
+            }
+        }
+
+        if (mid) {
+            if (isHero) {
+                gsap.fromTo(
+                    mid,
+                    { y: 0 },
+                    {
+                        y: -40,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top top',
+                            end: 'bottom top',
+                            scrub: true,
+                        },
+                    }
+                );
+            } else {
+                gsap.fromTo(
+                    mid,
+                    { y: 25 },
+                    {
+                        y: -40,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true,
+                        },
+                    }
+                );
+            }
+        }
+
+        if (front) {
+            if (isHero) {
+                gsap.fromTo(
+                    front,
+                    { y: 0 },
+                    {
+                        y: -20,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top top',
+                            end: 'bottom top',
+                            scrub: true,
+                        },
+                    }
+                );
+            } else {
+                gsap.fromTo(
+                    front,
+                    { y: 15 },
+                    {
+                        y: -20,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true,
+                        },
+                    }
+                );
+            }
+        }
+    });
+
+    // 20. Multi-layer Architectural Parallax Depth (Images & Floating Elements Across Sections)
 
     // Hero Floating Badges Multi-Plane Depth
     const heroActionBadge = document.getElementById('hero-action-badge');
     if (heroActionBadge) {
         gsap.to(heroActionBadge, {
-            y: -30,
+            y: -35,
             ease: 'none',
             scrollTrigger: {
                 trigger: '#hero',
@@ -999,7 +1249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroSnapshotBadge = document.getElementById('hero-snapshot-badge');
     if (heroSnapshotBadge) {
         gsap.to(heroSnapshotBadge, {
-            y: 22,
+            y: 30,
             ease: 'none',
             scrollTrigger: {
                 trigger: '#hero',
@@ -1011,80 +1261,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // About Section Multi-Layer Plates & Experience Floating Card
-    const aboutSecondaryImg = document.querySelector('#about .lg\\:col-span-3 .reveal-image-container');
-    const aboutPrimaryImg = document.querySelector('#about .lg\\:col-span-4 .reveal-image-container');
+    const aboutCol3 = document.querySelector('#about .lg\\:col-span-3');
+    const aboutCol4 = document.querySelector('#about .lg\\:col-span-4');
     const aboutExpCard = document.getElementById('about-experience-card');
 
-    if (aboutSecondaryImg && aboutPrimaryImg) {
-        gsap.to(aboutSecondaryImg, {
-            y: -24,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '#about',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 0.8,
-            },
-        });
-        gsap.to(aboutPrimaryImg, {
-            y: 20,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '#about',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 0.8,
-            },
-        });
-    }
-
-    if (aboutExpCard) {
-        gsap.to(aboutExpCard, {
-            y: -18,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '#about',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 0.7,
-            },
-        });
-    }
-
-    // Projects Showcase Architectural Parallax (Inner Photo Drift & Masonry Tier)
-    const projectImgs = document.querySelectorAll('.project-card-img');
-    projectImgs.forEach((img) => {
+    if (aboutCol3 && aboutCol4) {
         gsap.fromTo(
-            img,
-            { yPercent: -5, scale: 1.07 },
+            aboutCol3,
+            { y: 30 },
             {
-                yPercent: 5,
-                scale: 1.07,
+                y: -35,
                 ease: 'none',
                 scrollTrigger: {
-                    trigger: img.closest('.project-card'),
+                    trigger: '#about',
                     start: 'top bottom',
                     end: 'bottom top',
-                    scrub: 1.0,
+                    scrub: 1,
                 },
             }
         );
-    });
-
-    if (window.innerWidth >= 768) {
-        const evenProjectCards = document.querySelectorAll('#projects-grid > article:nth-child(even)');
-        evenProjectCards.forEach((card) => {
-            gsap.to(card, {
-                y: 20,
+        gsap.fromTo(
+            aboutCol4,
+            { y: -25 },
+            {
+                y: 35,
                 ease: 'none',
                 scrollTrigger: {
-                    trigger: '#projects',
+                    trigger: '#about',
                     start: 'top bottom',
                     end: 'bottom top',
-                    scrub: 1.0,
+                    scrub: 1,
                 },
-            });
-        });
+            }
+        );
+    }
+
+    if (aboutExpCard) {
+        gsap.fromTo(
+            aboutExpCard,
+            { y: 25 },
+            {
+                y: -25,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#about',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.8,
+                },
+            }
+        );
     }
 
     // Features Section Architectural Parallax
@@ -1092,10 +1318,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (featuresFocalImg) {
         gsap.fromTo(
             featuresFocalImg,
-            { yPercent: -5, scale: 1.07 },
+            { yPercent: -8, scale: 1.08 },
             {
-                yPercent: 5,
-                scale: 1.07,
+                yPercent: 8,
+                scale: 1.08,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: '#features',
@@ -1107,60 +1333,61 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
-    // Why Choose Us Landscape Photo Parallax
-    const whyChooseMainImg = document.getElementById('why-choose-main-img');
-    if (whyChooseMainImg) {
+    // Why Choose Us Section Parallax
+    const whyChooseStatCardParallax = document.getElementById('why-choose-stat-card');
+    const whyChooseImgBox = document.getElementById('why-choose-img-box');
+    if (whyChooseStatCardParallax) {
         gsap.fromTo(
-            whyChooseMainImg,
-            { yPercent: -5, scale: 1.07 },
+            whyChooseStatCardParallax,
+            { y: 25 },
             {
-                yPercent: 5,
-                scale: 1.07,
+                y: -25,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: '#why-choose-us',
                     start: 'top bottom',
                     end: 'bottom top',
-                    scrub: 0.9,
+                    scrub: 1,
                 },
             }
         );
     }
-
-    // Experience Section Team Photo & Cantilevered Cards Multi-Plane Depth
-    const experienceMainImg = document.getElementById('experience-main-img');
-    if (experienceMainImg) {
+    if (whyChooseImgBox) {
         gsap.fromTo(
-            experienceMainImg,
-            { yPercent: -5, scale: 1.07 },
+            whyChooseImgBox,
+            { y: -15 },
             {
-                yPercent: 5,
-                scale: 1.07,
+                y: 20,
                 ease: 'none',
                 scrollTrigger: {
-                    trigger: '#experience',
+                    trigger: '#why-choose-us',
                     start: 'top bottom',
                     end: 'bottom top',
-                    scrub: 0.9,
+                    scrub: 1,
                 },
             }
         );
     }
 
+    // Experience Metric Cards Alternating Scroll Parallax
     const expStatCards = document.querySelectorAll('.experience-stat-card');
     if (expStatCards.length > 0 && window.innerWidth >= 640) {
         expStatCards.forEach((card, idx) => {
-            const offset = idx % 2 === 0 ? -12 : 12;
-            gsap.to(card, {
-                y: offset,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '#experience',
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 0.9,
-                },
-            });
+            const offset = idx % 2 === 0 ? -15 : 15;
+            gsap.fromTo(
+                card,
+                { y: -offset },
+                {
+                    y: offset,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: '#experience',
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 0.9,
+                    },
+                }
+            );
         });
     }
 

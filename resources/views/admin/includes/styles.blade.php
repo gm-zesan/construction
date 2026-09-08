@@ -179,5 +179,5 @@
     #toast-container > .toast-info .toast-progress { background-color: #3B82F6 !important; }
 </style>
 
-<!-- Admin SCSS Styles & Vite bundle -->
-@vite(['resources/scss/admin/style.scss', 'resources/scss/admin/table.scss', 'resources/js/app.js'])
+<!-- Admin SCSS Styles -->
+@vite(['resources/scss/admin/style.scss', 'resources/scss/admin/table.scss'])

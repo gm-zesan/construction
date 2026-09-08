@@ -17,13 +17,13 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
         $superadminUser = User::firstOrCreate(
-            ['email' => 'admin@example.com'],
+            ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Alexander Reed',
                 'designation' => 'Lead Superintendent & Executive Admin',
                 'password' => bcrypt('password'),
-                'phone_no' => '+8801700000000',
-                'address' => 'Dhaka Financial District, Bangladesh',
+                'phone_no' => '01700000000',
+                'address' => 'House 40/A, Road 20, Mohakhali DOHS, Dhaka',
                 'description' => 'Super Administrator with full operations and site governance permissions.',
                 'email_verified_at' => now(),
             ]

@@ -4,7 +4,7 @@
     <!-- Cinematic Twilight Background Photo with Dark Overlay -->
     <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img id="footer-bg-img" src="{{ asset('images/footer-bg.jpg') }}" alt="Construction silhouette background"
-            class="w-full h-full object-cover object-center opacity-25 will-change-transform" loading="lazy" />
+            class="absolute -top-[12%] left-0 w-full h-[125%] object-cover object-center opacity-30 will-change-transform scale-105" loading="lazy" />
         <div class="absolute inset-0 bg-gradient-to-t from-[#070a10] via-[#0b0f17]/95 to-[#0b0f17]/90"></div>
         <!-- Subtle Architectural Blueprint Grid Motif -->
         <div
@@ -232,7 +232,7 @@
                             </svg>
                         </div>
                         <p class="text-slate-400 leading-relaxed m-0">
-                            2715 Ash Dr. San Jose,<br>South Dakota 83475, USA
+                            House 40/A, Road 20,<br>Mohakhali DOHS
                         </p>
                     </div>
 
@@ -258,9 +258,9 @@
                                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
                         </div>
-                        <a href="tel:+25854921583215"
+                        <a href="tel:01700000000"
                             class="text-slate-400 hover:text-[#f95716] transition-colors duration-200">
-                            +258 (549) 2158 3215
+                            01700000000
                         </a>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ beforeEach(function () {
 });
 
 it('allows superadmin to view users list', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
 
     $response = $this->actingAs($superadmin)->get('/dashboard/users');
 
@@ -19,7 +19,7 @@ it('allows superadmin to view users list', function () {
 });
 
 it('allows superadmin to view roles management', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
 
     $response = $this->actingAs($superadmin)->get('/dashboard/role');
 
@@ -28,7 +28,7 @@ it('allows superadmin to view roles management', function () {
 });
 
 it('allows superadmin to view assign role page', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
 
     $response = $this->actingAs($superadmin)->get('/dashboard/assign-role');
 
@@ -37,7 +37,7 @@ it('allows superadmin to view assign role page', function () {
 });
 
 it('allows superadmin to create, edit, update, and delete a user', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
 
     // 1. Create form
     $this->actingAs($superadmin)->get('/dashboard/user/create')->assertStatus(200);
@@ -73,7 +73,7 @@ it('allows superadmin to create, edit, update, and delete a user', function () {
 });
 
 it('allows superadmin to create, edit, update, and delete a custom role', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
     $permId = Permission::first()->id;
 
     // 1. Create form
@@ -108,7 +108,7 @@ it('allows superadmin to create, edit, update, and delete a custom role', functi
 });
 
 it('allows superadmin to assign a role to a user', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
     $worker = User::create([
         'name' => 'Worker User',
         'email' => 'worker@example.com',
@@ -128,7 +128,7 @@ it('allows superadmin to assign a role to a user', function () {
 });
 
 it('allows authenticated user to view ckeditor studio page', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
 
     $response = $this->actingAs($superadmin)->get('/ckeditor');
 
@@ -138,7 +138,7 @@ it('allows authenticated user to view ckeditor studio page', function () {
 });
 
 it('serves datatables ajax response for users, roles, and assign-role', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
 
     // Users DataTables AJAX
     $usersAjax = $this->actingAs($superadmin)
@@ -160,7 +160,7 @@ it('serves datatables ajax response for users, roles, and assign-role', function
 });
 
 it('handles ckeditor upload gracefully', function () {
-    $superadmin = User::where('email', 'admin@example.com')->first();
+    $superadmin = User::role('superadmin')->first();
     \Illuminate\Support\Facades\Storage::fake('public');
 
     $file = \Illuminate\Http\UploadedFile::fake()->image('diagram.png');
