@@ -142,7 +142,7 @@ class WebsiteContent extends Model implements HasMedia
     }
 
     /**
-     * Get list of all distinct pages with metadata dynamically from the database ordered by earliest ID (insertion order).
+     * Get list of all distinct pages with metadata dynamically from the database ordered by page sequence.
      */
     public static function getAvailablePagesWithMeta(): array
     {
@@ -155,16 +155,50 @@ class WebsiteContent extends Model implements HasMedia
             ->toArray();
 
         if (empty($pages)) {
-            $pages = ['home', 'about', 'contact', 'footer', 'seo'];
+            $pages = ['home', 'about', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
         }
+
+        $defaultOrder = ['home', 'about', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
+        usort($pages, function ($a, $b) use ($defaultOrder) {
+            $posA = array_search($a, $defaultOrder);
+            $posB = array_search($b, $defaultOrder);
+            $posA = $posA === false ? 999 : $posA;
+            $posB = $posB === false ? 999 : $posB;
+            return $posA <=> $posB;
+        });
+
+        $pageIcons = [
+            'home' => 'ri-home-4-line',
+            'about' => 'ri-building-line',
+            'projects' => 'ri-community-line',
+            'project_detail' => 'ri-layout-grid-line',
+            'articles' => 'ri-newspaper-line',
+            'article_detail' => 'ri-article-line',
+            'contact' => 'ri-customer-service-2-line',
+            'footer' => 'ri-layout-bottom-line',
+            'seo' => 'ri-search-eye-line',
+        ];
+
+        $pageBadges = [
+            'home' => 'Home',
+            'about' => 'About Us',
+            'projects' => 'Projects',
+            'project_detail' => 'Project Detail',
+            'articles' => 'Articles & News',
+            'article_detail' => 'Article Detail',
+            'contact' => 'Contact',
+            'footer' => 'Footer & Global',
+            'seo' => 'SEO & Meta',
+        ];
 
         $result = [];
         foreach ($pages as $p) {
+            $badge = $pageBadges[$p] ?? ucwords(str_replace(['_', '-'], ' ', $p));
             $result[$p] = [
-                'title' => ucwords(str_replace(['_', '-'], ' ', $p)) . ' Content',
-                'badge' => ucwords(str_replace(['_', '-'], ' ', $p)),
-                'icon' => 'ri-file-list-3-line',
-                'sections_title' => ucwords(str_replace(['_', '-'], ' ', $p)) . ' Sections',
+                'title' => $badge . ' Content',
+                'badge' => $badge,
+                'icon' => $pageIcons[$p] ?? 'ri-file-list-3-line',
+                'sections_title' => $badge . ' Sections',
             ];
         }
 
@@ -172,7 +206,7 @@ class WebsiteContent extends Model implements HasMedia
     }
 
     /**
-     * Get list of all distinct sections with metadata dynamically from the database for a page ordered by earliest ID.
+     * Get list of all distinct sections with metadata dynamically from the database for a page ordered by logical flow.
      */
     public static function getPageSectionsWithMeta(string $page): array
     {
@@ -185,11 +219,87 @@ class WebsiteContent extends Model implements HasMedia
             ->pluck('section')
             ->toArray();
 
+        $defaultSectionOrders = [
+            'home' => ['hero', 'about_story', 'features', 'experience', 'services', 'projects', 'testimonials', 'why_choose_us', 'news'],
+            'about' => ['hero', 'story', 'chairman_speech', 'values', 'timeline', 'leadership', 'accreditations'],
+            'projects' => ['hero', 'showcase', 'spotlight', 'index_matrix'],
+            'project_detail' => ['narrative', 'highlights', 'sidebar', 'gallery', 'milestones', 'cta', 'related'],
+            'articles' => ['hero', 'featured', 'archive', 'sidebar'],
+            'article_detail' => ['hero', 'plate', 'author', 'sidebar', 'related'],
+            'contact' => ['hero', 'info', 'form', 'map', 'faq'],
+            'footer' => ['cta', 'brand_bio'],
+            'seo' => ['meta'],
+        ];
+
+        if (isset($defaultSectionOrders[$page])) {
+            $preferred = $defaultSectionOrders[$page];
+            usort($sections, function ($a, $b) use ($preferred) {
+                $posA = array_search($a, $preferred);
+                $posB = array_search($b, $preferred);
+                $posA = $posA === false ? 999 : $posA;
+                $posB = $posB === false ? 999 : $posB;
+                return $posA <=> $posB;
+            });
+        }
+
+        $sectionIcons = [
+            'hero' => 'ri-artboard-2-line',
+            'about_story' => 'ri-book-open-line',
+            'features' => 'ri-checkbox-circle-line',
+            'experience' => 'ri-trophy-line',
+            'services' => 'ri-tools-line',
+            'projects' => 'ri-building-4-line',
+            'testimonials' => 'ri-chat-smile-2-line',
+            'why_choose_us' => 'ri-star-line',
+            'news' => 'ri-newspaper-line',
+            'story' => 'ri-history-line',
+            'chairman_speech' => 'ri-mic-line',
+            'values' => 'ri-shield-star-line',
+            'timeline' => 'ri-time-line',
+            'leadership' => 'ri-team-line',
+            'accreditations' => 'ri-award-line',
+            'cta' => 'ri-phone-camera-line',
+            'showcase' => 'ri-gallery-line',
+            'spotlight' => 'ri-focus-3-line',
+            'index_matrix' => 'ri-grid-fill',
+            'standards' => 'ri-list-check-2',
+            'narrative' => 'ri-article-line',
+            'highlights' => 'ri-flashlight-line',
+            'sidebar' => 'ri-side-bar-line',
+            'gallery' => 'ri-image-line',
+            'milestones' => 'ri-flag-line',
+            'related' => 'ri-links-line',
+            'featured' => 'ri-pushpin-line',
+            'archive' => 'ri-archive-line',
+            'plate' => 'ri-information-line',
+            'author' => 'ri-user-star-line',
+            'info' => 'ri-contacts-line',
+            'form' => 'ri-mail-send-line',
+            'map' => 'ri-map-pin-2-line',
+            'faq' => 'ri-questionnaire-line',
+            'brand_bio' => 'ri-file-info-line',
+            'newsletter' => 'ri-mail-line',
+            'copyright' => 'ri-copyright-line',
+            'meta' => 'ri-global-line',
+            'og' => 'ri-share-line',
+        ];
+
+        $sectionLabels = [
+            'about_story' => 'About & Company Story',
+            'why_choose_us' => 'Why Choose Us / Excellence Matrix',
+            'chairman_speech' => 'Leadership Speech & Vision',
+            'index_matrix' => 'Portfolio Matrix & Filters',
+            'brand_bio' => 'Brand Bio & Company Info',
+            'faq' => 'Frequently Asked Questions (FAQ)',
+            'og' => 'OpenGraph Social Sharing',
+        ];
+
         $result = [];
         foreach ($sections as $s) {
+            $title = $sectionLabels[$s] ?? ucwords(str_replace(['_', '-'], ' ', $s));
             $result[$s] = [
-                'title' => ucwords(str_replace(['_', '-'], ' ', $s)),
-                'icon' => 'ri-layout-masonry-line',
+                'title' => $title,
+                'icon' => $sectionIcons[$s] ?? 'ri-layout-masonry-line',
             ];
         }
 

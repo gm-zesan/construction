@@ -8,16 +8,16 @@ use Illuminate\Database\Seeder;
 class WebsiteContentSeeder extends Seeder
 {
     /**
-     * Run the database seeds with exact website homepage content.
+     * Run the database seeds with structured website content ordered by page and section.
      */
     public function run(): void
     {
         $contents = [
-            // ==========================================
-            // 1. HOMEPAGE CONTENT (100% Website Aligned)
-            // ==========================================
+            // =========================================================================
+            // 1. HOMEPAGE CONTENT
+            // =========================================================================
 
-            // 1.1 Hero Section
+            // --- 1.1 Hero Section ---
             [
                 'page' => 'home',
                 'section' => 'hero',
@@ -99,7 +99,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Hero Circular Rotating Stamp Text',
             ],
 
-            // 1.2 About Section
+            // --- 1.2 About Story Section ---
             [
                 'page' => 'home',
                 'section' => 'about_story',
@@ -107,14 +107,6 @@ class WebsiteContentSeeder extends Seeder
                 'value' => 'ABOUT CONSTRUCTION',
                 'type' => 'text',
                 'label' => 'About Section Badge',
-            ],
-            [
-                'page' => 'home',
-                'section' => 'about_story',
-                'key' => 'title',
-                'value' => 'Construction built around precision, planning & detail.',
-                'type' => 'text',
-                'label' => 'About Heading Title',
             ],
             [
                 'page' => 'home',
@@ -181,7 +173,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Experience Subtitle Line',
             ],
 
-            // 1.3 Features / Interior Execution
+            // --- 1.3 Quality & Features Section ---
             [
                 'page' => 'home',
                 'section' => 'features',
@@ -189,14 +181,6 @@ class WebsiteContentSeeder extends Seeder
                 'value' => 'Interior Execution',
                 'type' => 'text',
                 'label' => 'Features Badge',
-            ],
-            [
-                'page' => 'home',
-                'section' => 'features',
-                'key' => 'title',
-                'value' => 'Interior Work, From Plan To Finish',
-                'type' => 'text',
-                'label' => 'Features Heading Title',
             ],
             [
                 'page' => 'home',
@@ -271,7 +255,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Feature 3 Description',
             ],
 
-            // 1.4 Experience & Results Section
+            // --- 1.4 Engineering Experience & Statistics Section ---
             [
                 'page' => 'home',
                 'section' => 'experience',
@@ -279,22 +263,6 @@ class WebsiteContentSeeder extends Seeder
                 'value' => 'Project Track Record',
                 'type' => 'text',
                 'label' => 'Track Record Badge',
-            ],
-            [
-                'page' => 'home',
-                'section' => 'experience',
-                'key' => 'title',
-                'value' => 'Planned Work. Controlled Execution.',
-                'type' => 'text',
-                'label' => 'Section Title',
-            ],
-            [
-                'page' => 'home',
-                'section' => 'experience',
-                'key' => 'description',
-                'value' => 'We coordinate heavy equipment, civil trades, and structural crews to maintain strict schedule milestones from initial ground prep to final building handover.',
-                'type' => 'textarea',
-                'label' => 'Lead Description',
             ],
             [
                 'page' => 'home',
@@ -457,7 +425,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Metric 4 Description',
             ],
 
-            // 1.5 Services Section Header
+            // --- 1.5 Core Services Showcase Section ---
             [
                 'page' => 'home',
                 'section' => 'services',
@@ -469,21 +437,13 @@ class WebsiteContentSeeder extends Seeder
             [
                 'page' => 'home',
                 'section' => 'services',
-                'key' => 'title',
-                'value' => 'Structured Scopes. Direct Site Execution.',
-                'type' => 'text',
-                'label' => 'Services Headline',
-            ],
-            [
-                'page' => 'home',
-                'section' => 'services',
                 'key' => 'subtitle',
                 'value' => 'Clear project scopes, realistic floor cycle timelines, and full-time site superintendence for commercial and structural projects.',
                 'type' => 'textarea',
                 'label' => 'Services Lead Description',
             ],
 
-            // 1.6 Projects Section Header
+            // --- 1.6 Featured Projects Section ---
             [
                 'page' => 'home',
                 'section' => 'projects',
@@ -495,21 +455,13 @@ class WebsiteContentSeeder extends Seeder
             [
                 'page' => 'home',
                 'section' => 'projects',
-                'key' => 'title',
-                'value' => 'Featured Engineering & Construction Work',
-                'type' => 'text',
-                'label' => 'Projects Headline',
-            ],
-            [
-                'page' => 'home',
-                'section' => 'projects',
                 'key' => 'subtitle',
                 'value' => 'Explore our signature portfolio of commercial towers, industrial logistics facilities, civic architecture, and civil infrastructure.',
                 'type' => 'textarea',
                 'label' => 'Projects Lead Description',
             ],
 
-            // 1.7 Testimonials Header & Metrics
+            // --- 1.7 Testimonials & Client Reviews Section ---
             [
                 'page' => 'home',
                 'section' => 'testimonials',
@@ -559,7 +511,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Testimonials Metric Description',
             ],
 
-            // 1.8 Why Choose Us Section
+            // --- 1.8 Why Choose Us (Excellence Matrix) Section ---
             [
                 'page' => 'home',
                 'section' => 'why_choose_us',
@@ -665,7 +617,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Feature 2 Description',
             ],
 
-            // 1.9 News & Field Logs Header
+            // --- 1.9 Latest Insights & News Section ---
             [
                 'page' => 'home',
                 'section' => 'news',
@@ -707,11 +659,11 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'All Field Notes Button URL',
             ],
 
-            // ==========================================
-            // 2. ABOUT US PAGE
-            // ==========================================
+            // =========================================================================
+            // 2. ABOUT US PAGE CONTENT
+            // =========================================================================
 
-            // 2.1 About Hero Banner
+            // --- 2.1 Hero Banner Section ---
             [
                 'page' => 'about',
                 'section' => 'hero',
@@ -748,7 +700,7 @@ class WebsiteContentSeeder extends Seeder
                 'page' => 'about',
                 'section' => 'hero',
                 'key' => 'btn_1_text',
-                'value' => "Chairman's Speech",
+                'value' => 'Chairman\'s Speech',
                 'type' => 'text',
                 'label' => 'Primary Button Text',
             ],
@@ -777,7 +729,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Secondary Button URL',
             ],
 
-            // 2.2 Corporate Narrative & Origins
+            // --- 2.2 Company Narrative & Story Section ---
             [
                 'page' => 'about',
                 'section' => 'story',
@@ -883,7 +835,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Experience Card Subtitle',
             ],
 
-            // 2.3 Chairman's Speech & Leadership Vision
+            // --- 2.3 Chairman & Leadership Speech Section ---
             [
                 'page' => 'about',
                 'section' => 'chairman_speech',
@@ -896,7 +848,7 @@ class WebsiteContentSeeder extends Seeder
                 'page' => 'about',
                 'section' => 'chairman_speech',
                 'key' => 'badge',
-                'value' => "Chairman's Address",
+                'value' => 'Chairman\'s Address',
                 'type' => 'text',
                 'label' => 'Chairman Section Eyebrow',
             ],
@@ -976,7 +928,7 @@ class WebsiteContentSeeder extends Seeder
                 'page' => 'about',
                 'section' => 'chairman_speech',
                 'key' => 'signature_title',
-                'value' => "Executive Chairman's Desk",
+                'value' => 'Executive Chairman\'s Desk',
                 'type' => 'text',
                 'label' => 'Chairman Signature Title',
             ],
@@ -989,7 +941,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Established Year Badge',
             ],
 
-            // 2.4 Core Construction Principles & Values
+            // --- 2.4 Core Values & Guiding Pillars Section ---
             [
                 'page' => 'about',
                 'section' => 'values',
@@ -1021,78 +973,6 @@ class WebsiteContentSeeder extends Seeder
                 'value' => 'Four non-negotiable operational principles engineered into every deep foundation, reinforced frame, and commercial handover.',
                 'type' => 'textarea',
                 'label' => 'Values Subtitle',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_heading',
-                'value' => 'Operational Benchmark Summary',
-                'type' => 'text',
-                'label' => 'Benchmark Summary Heading',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_1_label',
-                'value' => '01 / Safety Discipline',
-                'type' => 'text',
-                'label' => 'Summary 1 Label',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_1_val',
-                'value' => 'Zero-Incident HSE',
-                'type' => 'text',
-                'label' => 'Summary 1 Value',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_2_label',
-                'value' => '02 / Digital Engineering',
-                'type' => 'text',
-                'label' => 'Summary 2 Label',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_2_val',
-                'value' => 'BIM 5D · LOD 400',
-                'type' => 'text',
-                'label' => 'Summary 2 Value',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_3_label',
-                'value' => '03 / Material Quality',
-                'type' => 'text',
-                'label' => 'Summary 3 Label',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_3_val',
-                'value' => '65+ MPa Verified',
-                'type' => 'text',
-                'label' => 'Summary 3 Value',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_4_label',
-                'value' => '04 / Schedule Control',
-                'type' => 'text',
-                'label' => 'Summary 4 Label',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'values',
-                'key' => 'summary_4_val',
-                'value' => 'Critical-Path CPM',
-                'type' => 'text',
-                'label' => 'Summary 4 Value',
             ],
             [
                 'page' => 'about',
@@ -1255,7 +1135,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Value 4 Tag 3',
             ],
 
-            // 2.5 Milestones Journey Timeline
+            // --- 2.5 Milestones & Historical Timeline Section ---
             [
                 'page' => 'about',
                 'section' => 'timeline',
@@ -1385,7 +1265,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Timeline Item 4 Description',
             ],
 
-            // 2.6 Executive Leadership Team
+            // --- 2.6 Executive Leadership Section ---
             [
                 'page' => 'about',
                 'section' => 'leadership',
@@ -1419,7 +1299,7 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Team Member Vertical Label',
             ],
 
-            // 2.7 Accreditations & Honors
+            // --- 2.7 Global Standards & Accreditations Section ---
             [
                 'page' => 'about',
                 'section' => 'accreditations',
@@ -1645,221 +1525,11 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Accreditation 6 Status',
             ],
 
-            // 2.8 About CTA Banner
-            [
-                'page' => 'about',
-                'section' => 'cta',
-                'key' => 'watermark',
-                'value' => 'PARTNER',
-                'type' => 'text',
-                'label' => 'CTA Watermark',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'cta',
-                'key' => 'eyebrow',
-                'value' => 'Start Your Development',
-                'type' => 'text',
-                'label' => 'CTA Eyebrow Badge',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'cta',
-                'key' => 'title',
-                'value' => 'Ready to build with certainty, schedule <br>discipline & structural excellence?',
-                'type' => 'textarea',
-                'label' => 'CTA Title',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'cta',
-                'key' => 'description',
-                'value' => 'Schedule a technical consultation with our senior project estimators and structural engineers for your upcoming commercial tender.',
-                'type' => 'textarea',
-                'label' => 'CTA Description',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'cta',
-                'key' => 'btn_text',
-                'value' => 'Request Project Tender',
-                'type' => 'text',
-                'label' => 'CTA Button Text',
-            ],
-            [
-                'page' => 'about',
-                'section' => 'cta',
-                'key' => 'btn_url',
-                'value' => '#footer',
-                'type' => 'url',
-                'label' => 'CTA Button URL',
-            ],
+            // =========================================================================
+            // 3. PROJECTS PAGE CONTENT
+            // =========================================================================
 
-            // ==========================================
-            // 3. CONTACT PAGE
-            // ==========================================
-            [
-                'page' => 'contact',
-                'section' => 'intro',
-                'key' => 'badge',
-                'value' => 'Direct Inquiries',
-                'type' => 'text',
-                'label' => 'Contact Intro Badge',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'intro',
-                'key' => 'title',
-                'value' => 'Connect With Our Field Operations & Estimations Team',
-                'type' => 'text',
-                'label' => 'Contact Heading',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'intro',
-                'key' => 'description',
-                'value' => 'Submit blueprints, request tender estimates, or schedule an on-site geotechnical inspection with our senior site engineers.',
-                'type' => 'textarea',
-                'label' => 'Contact Description',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'intro',
-                'key' => 'sla_text',
-                'value' => 'Average response time: within 4 business hours',
-                'type' => 'text',
-                'label' => 'Response SLA Notice',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'office',
-                'key' => 'office_name',
-                'value' => 'Metropolitan Engineering Headquarters',
-                'type' => 'text',
-                'label' => 'Office Center Name',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'office',
-                'key' => 'working_hours',
-                'value' => 'Mon - Sat: 08:00 AM - 06:00 PM',
-                'type' => 'text',
-                'label' => 'Working Operating Hours',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'office',
-                'key' => 'address',
-                'value' => '742 Evergreen Terrace, Sector 4, Metropolitan Zone, NY 10001',
-                'type' => 'textarea',
-                'label' => 'Office Physical Address',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'office',
-                'key' => 'map_embed_url',
-                'value' => 'https://maps.google.com',
-                'type' => 'url',
-                'label' => 'Google Maps URL',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'social',
-                'key' => 'facebook',
-                'value' => 'https://facebook.com',
-                'type' => 'url',
-                'label' => 'Facebook URL',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'social',
-                'key' => 'linkedin',
-                'value' => 'https://linkedin.com',
-                'type' => 'url',
-                'label' => 'LinkedIn URL',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'social',
-                'key' => 'instagram',
-                'value' => 'https://instagram.com',
-                'type' => 'url',
-                'label' => 'Instagram URL',
-            ],
-            [
-                'page' => 'contact',
-                'section' => 'social',
-                'key' => 'youtube',
-                'value' => 'https://youtube.com',
-                'type' => 'url',
-                'label' => 'YouTube URL',
-            ],
-
-            // ==========================================
-            // 4. FOOTER & GLOBAL
-            // ==========================================
-            [
-                'page' => 'footer',
-                'section' => 'cta',
-                'key' => 'headline',
-                'value' => 'Ready To Start Your Next Commercial Build?',
-                'type' => 'text',
-                'label' => 'Footer CTA Headline',
-            ],
-            [
-                'page' => 'footer',
-                'section' => 'cta',
-                'key' => 'btn_text',
-                'value' => 'Discuss Project',
-                'type' => 'text',
-                'label' => 'Footer CTA Button Text',
-            ],
-            [
-                'page' => 'footer',
-                'section' => 'cta',
-                'key' => 'btn_url',
-                'value' => '#hero-content',
-                'type' => 'url',
-                'label' => 'Footer CTA Button URL',
-            ],
-            [
-                'page' => 'footer',
-                'section' => 'brand_bio',
-                'key' => 'about_company',
-                'value' => 'Commercial construction, structural engineering, and general contracting across metropolitan developments.',
-                'type' => 'textarea',
-                'label' => 'Footer Company Bio',
-            ],
-            [
-                'page' => 'footer',
-                'section' => 'newsletter',
-                'key' => 'headline',
-                'value' => 'Subscribe to Engineering & Construction Briefings',
-                'type' => 'text',
-                'label' => 'Newsletter Headline',
-            ],
-            [
-                'page' => 'footer',
-                'section' => 'newsletter',
-                'key' => 'description',
-                'value' => 'Get monthly insights on structural engineering breakthroughs, BIM technologies, and regional project tenders.',
-                'type' => 'textarea',
-                'label' => 'Newsletter Subtext',
-            ],
-            [
-                'page' => 'footer',
-                'section' => 'copyright',
-                'key' => 'copyright_text',
-                'value' => '© 2026 Building & Co. Construction Enterprise. All rights reserved.',
-                'type' => 'text',
-                'label' => 'Footer Copyright Text',
-            ],
-
-            // ==========================================
-            // 4. PROJECTS PAGE
-            // ==========================================
-
-            // 4.1 Hero Section
+            // --- 3.1 Hero Banner Section ---
             [
                 'page' => 'projects',
                 'section' => 'hero',
@@ -1887,69 +1557,13 @@ class WebsiteContentSeeder extends Seeder
             [
                 'page' => 'projects',
                 'section' => 'hero',
-                'key' => 'description',
-                'value' => 'A comprehensive showcase of heavy civil engineering contracts, 28-story commercial headquarters, automated industrial fulfillment hubs, and coastal resilient infrastructure.',
-                'type' => 'textarea',
-                'label' => 'Projects Hero Description',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'hero',
-                'key' => 'stat_1_val',
-                'value' => '100%',
-                'type' => 'text',
-                'label' => 'Hero Stat 1 Value',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'hero',
-                'key' => 'stat_1_label',
-                'value' => 'Milestone Delivery Guarantee',
-                'type' => 'text',
-                'label' => 'Hero Stat 1 Label',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'hero',
-                'key' => 'stat_2_val',
-                'value' => '420k+',
-                'type' => 'text',
-                'label' => 'Hero Stat 2 Value',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'hero',
-                'key' => 'stat_2_label',
-                'value' => 'Sq.Ft Commercial Footprint',
-                'type' => 'text',
-                'label' => 'Hero Stat 2 Label',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'hero',
-                'key' => 'stat_3_val',
-                'value' => 'Zero',
-                'type' => 'text',
-                'label' => 'Hero Stat 3 Value',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'hero',
-                'key' => 'stat_3_label',
-                'value' => 'Lost-Time HSE Record',
-                'type' => 'text',
-                'label' => 'Hero Stat 3 Label',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'hero',
                 'key' => 'bg_image',
                 'value' => 'images/project-commercial-tower.jpg',
                 'type' => 'image',
                 'label' => 'Projects Hero Background Image',
             ],
 
-            // 4.2 Projects Showcase Grid Header
+            // --- 3.2 Signature Builds Showcase Section ---
             [
                 'page' => 'projects',
                 'section' => 'showcase',
@@ -1982,16 +1596,6 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'textarea',
                 'label' => 'Showcase Subtitle',
             ],
-
-            // 4.3 Flagship Project Spotlight
-            [
-                'page' => 'projects',
-                'section' => 'spotlight',
-                'key' => 'watermark',
-                'value' => 'SPOTLIGHT',
-                'type' => 'text',
-                'label' => 'Spotlight Watermark',
-            ],
             [
                 'page' => 'projects',
                 'section' => 'spotlight',
@@ -2000,24 +1604,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Spotlight Eyebrow Badge',
             ],
-            [
-                'page' => 'projects',
-                'section' => 'spotlight',
-                'key' => 'title',
-                'value' => 'Engineering Excellence in <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">High-Density</span> Commercial Zones',
-                'type' => 'textarea',
-                'label' => 'Spotlight Main Title',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'spotlight',
-                'key' => 'subtitle',
-                'value' => 'A deep-dive analysis into the geotechnical stabilization, continuous raft pour telemetry, and dual-shear structural core of our premier commercial delivery.',
-                'type' => 'textarea',
-                'label' => 'Spotlight Subtitle',
-            ],
 
-            // 4.4 Project Index Matrix
+            // --- 3.4 Portfolio Matrix Section ---
             [
                 'page' => 'projects',
                 'section' => 'index_matrix',
@@ -2051,173 +1639,11 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Index Matrix Subtitle',
             ],
 
-            // 4.5 Engineering Standards & Delivery Assurance
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'watermark',
-                'value' => 'RIGOR',
-                'type' => 'text',
-                'label' => 'Standards Watermark',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'badge',
-                'value' => 'ENGINEERING ASSURANCE PROTOCOLS',
-                'type' => 'text',
-                'label' => 'Standards Eyebrow Badge',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'title',
-                'value' => 'How We Guarantee Zero-Incident <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Structural</span> Integrity',
-                'type' => 'textarea',
-                'label' => 'Standards Main Title',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'subtitle',
-                'value' => 'Every square meter of our job sites operates under computerized QA/QC inspection regimes, LIDAR drone surveys, and third-party laboratory verified material batches.',
-                'type' => 'textarea',
-                'label' => 'Standards Subtitle',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'item_1_title',
-                'value' => '01 / BIM 5D Preconstruction Clash Detection',
-                'type' => 'text',
-                'label' => 'Standard 1 Title',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'item_1_desc',
-                'value' => 'Full LOD 400 digital twins mapped to mechanical, electrical, and plumbing runs before ground breaking, eliminating costly on-site change orders.',
-                'type' => 'textarea',
-                'label' => 'Standard 1 Description',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'item_2_title',
-                'value' => '02 / Real-Time Strut & Soil Telemetry',
-                'type' => 'text',
-                'label' => 'Standard 2 Title',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'item_2_desc',
-                'value' => 'Automated strain gauges and vibrating-wire piezometers continuously monitoring earth pressure and deep foundation settlement in real time.',
-                'type' => 'textarea',
-                'label' => 'Standard 2 Description',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'item_3_title',
-                'value' => '03 / 65+ MPa Continuous Batch QA',
-                'type' => 'text',
-                'label' => 'Standard 3 Title',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'item_3_desc',
-                'value' => 'Mandatory 7-day, 14-day, and 28-day hydraulic compression crush tests on every structural pour, adhering strictly to ASTM C39 compliance.',
-                'type' => 'textarea',
-                'label' => 'Standard 3 Description',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'item_4_title',
-                'value' => '04 / Transparent Lookahead Milestones',
-                'type' => 'text',
-                'label' => 'Standard 4 Title',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'standards',
-                'key' => 'item_4_desc',
-                'value' => 'Dedicated site superintendents providing 4-week lookahead stage schedules and live digital reporting portals for owners and developers.',
-                'type' => 'textarea',
-                'label' => 'Standard 4 Description',
-            ],
+            // =========================================================================
+            // 4. PROJECT DETAIL & CASE STUDY CONTENT
+            // =========================================================================
 
-            // 4.6 Projects CTA Banner
-            [
-                'page' => 'projects',
-                'section' => 'cta',
-                'key' => 'watermark',
-                'value' => 'PARTNER',
-                'type' => 'text',
-                'label' => 'CTA Watermark',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'cta',
-                'key' => 'eyebrow',
-                'value' => 'Tender & Preconstruction',
-                'type' => 'text',
-                'label' => 'CTA Eyebrow',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'cta',
-                'key' => 'title',
-                'value' => 'Have an ambitious architectural or <br>commercial <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">development</span> in mind?',
-                'type' => 'textarea',
-                'label' => 'CTA Title',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'cta',
-                'key' => 'description',
-                'value' => 'Engage our senior preconstruction estimators and structural engineers for comprehensive constructability reviews, budget models, and tender packages.',
-                'type' => 'textarea',
-                'label' => 'CTA Description',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'cta',
-                'key' => 'btn_1_text',
-                'value' => 'Request Project Tender',
-                'type' => 'text',
-                'label' => 'CTA Button 1 Text',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'cta',
-                'key' => 'btn_1_url',
-                'value' => '#footer',
-                'type' => 'url',
-                'label' => 'CTA Button 1 URL',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'cta',
-                'key' => 'btn_2_text',
-                'value' => 'Schedule Technical Consultation',
-                'type' => 'text',
-                'label' => 'CTA Button 2 Text',
-            ],
-            [
-                'page' => 'projects',
-                'section' => 'cta',
-                'key' => 'btn_2_url',
-                'value' => '#footer',
-                'type' => 'url',
-                'label' => 'CTA Button 2 URL',
-            ],
-
-            // ==========================================
-            // 5. PROJECT DETAIL / CASE STUDY CONTENT
-            // ==========================================
+            // --- 4.1 Project Narrative Section ---
             [
                 'page' => 'project_detail',
                 'section' => 'narrative',
@@ -2242,6 +1668,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Narrative Section Title',
             ],
+
+            // --- 4.2 Key Project Highlights Section ---
             [
                 'page' => 'project_detail',
                 'section' => 'highlights',
@@ -2290,6 +1718,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'textarea',
                 'label' => 'Highlight Card 2 Text',
             ],
+
+            // --- 4.3 Project Specifications Sidebar Section ---
             [
                 'page' => 'project_detail',
                 'section' => 'sidebar',
@@ -2314,6 +1744,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'url',
                 'label' => 'Sidebar Button URL',
             ],
+
+            // --- 4.4 High-Resolution Gallery Section ---
             [
                 'page' => 'project_detail',
                 'section' => 'gallery',
@@ -2330,6 +1762,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Gallery Section Title',
             ],
+
+            // --- 4.5 Project Milestones Timeline Section ---
             [
                 'page' => 'project_detail',
                 'section' => 'milestones',
@@ -2362,6 +1796,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'textarea',
                 'label' => 'Milestones Section Subtitle',
             ],
+
+            // --- 4.6 Project Consultation CTA Section ---
             [
                 'page' => 'project_detail',
                 'section' => 'cta',
@@ -2410,6 +1846,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Detail CTA Button 2 Text',
             ],
+
+            // --- 4.7 Related Projects Section ---
             [
                 'page' => 'project_detail',
                 'section' => 'related',
@@ -2435,9 +1873,11 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Related Section Link Text',
             ],
 
-            // ==========================================
-            // 6. NEWS & ARTICLES (BLOG ARCHIVE)
-            // ==========================================
+            // =========================================================================
+            // 5. ARTICLES & INSIGHTS (BLOG) CONTENT
+            // =========================================================================
+
+            // --- 5.1 Hero Banner Section ---
             [
                 'page' => 'articles',
                 'section' => 'hero',
@@ -2454,6 +1894,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Hero Main Headline',
             ],
+
+            // --- 5.2 Featured Article Spotlight Section ---
             [
                 'page' => 'articles',
                 'section' => 'featured',
@@ -2478,6 +1920,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Featured Slide CTA Button Text',
             ],
+
+            // --- 5.3 Articles Archive Grid Section ---
             [
                 'page' => 'articles',
                 'section' => 'archive',
@@ -2534,6 +1978,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Archive Empty State Reset Link',
             ],
+
+            // --- 5.4 Blog Search & Categories Sidebar Section ---
             [
                 'page' => 'articles',
                 'section' => 'sidebar',
@@ -2607,9 +2053,11 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Sidebar Consultation Button URL',
             ],
 
-            // ==========================================
-            // 7. ARTICLE DETAIL (CASE STUDY)
-            // ==========================================
+            // =========================================================================
+            // 6. ARTICLE DETAIL CONTENT
+            // =========================================================================
+
+            // --- 6.1 Article Header & Breadcrumbs Section ---
             [
                 'page' => 'article_detail',
                 'section' => 'hero',
@@ -2650,6 +2098,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Hero Verified Dispatch Label',
             ],
+
+            // --- 6.2 Technical Plate & Compliance Section ---
             [
                 'page' => 'article_detail',
                 'section' => 'plate',
@@ -2666,6 +2116,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Cover Plate Caption Right',
             ],
+
+            // --- 6.3 Author & Editorial Bio Section ---
             [
                 'page' => 'article_detail',
                 'section' => 'author',
@@ -2674,6 +2126,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'textarea',
                 'label' => 'Default Author Bio Description',
             ],
+
+            // --- 6.4 Article Specifications Sidebar Section ---
             [
                 'page' => 'article_detail',
                 'section' => 'sidebar',
@@ -2778,6 +2232,8 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'url',
                 'label' => 'Sidebar CTA Button URL',
             ],
+
+            // --- 6.5 Related Articles Section ---
             [
                 'page' => 'article_detail',
                 'section' => 'related',
@@ -2811,9 +2267,481 @@ class WebsiteContentSeeder extends Seeder
                 'label' => 'Related Card Read Link Text',
             ],
 
-            // ==========================================
-            // 7. SEO & META TAGS
-            // ==========================================
+            // =========================================================================
+            // 7. CONTACT & CONSULTATION PAGE CONTENT
+            // =========================================================================
+
+            // --- 7.1 Hero Banner Section ---
+            [
+                'page' => 'contact',
+                'section' => 'hero',
+                'key' => 'bg_image',
+                'value' => 'images/hero-bg.jpg',
+                'type' => 'image',
+                'label' => 'Contact Hero Background Image',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'hero',
+                'key' => 'badge',
+                'value' => 'CONTACT & CONSULTATION',
+                'type' => 'text',
+                'label' => 'Contact Hero Eyebrow',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'hero',
+                'key' => 'headline',
+                'value' => 'Let\'s Build Something Great Together',
+                'type' => 'text',
+                'label' => 'Contact Hero Main Headline',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'hero',
+                'key' => 'subheadline',
+                'value' => 'Whether you have an upcoming commercial build, need structural engineering consultation, or want an accurate project estimate, our team is ready to discuss your plans.',
+                'type' => 'textarea',
+                'label' => 'Contact Hero Subheadline',
+            ],
+
+            // --- 7.2 Direct Contact Information Cards Section ---
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'office_card_title',
+                'value' => 'Our Main Office',
+                'type' => 'text',
+                'label' => 'Headquarters Card Title',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'office_directions_text',
+                'value' => 'View on Google Maps',
+                'type' => 'text',
+                'label' => 'Office Google Maps Link Text',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'direct_contacts_title',
+                'value' => 'Direct Contacts',
+                'type' => 'text',
+                'label' => 'Direct Contacts Card Title',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'phone_label',
+                'value' => 'Phone Number',
+                'type' => 'text',
+                'label' => 'Phone Field Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'phone_btn_text',
+                'value' => 'Call',
+                'type' => 'text',
+                'label' => 'Phone Button Text',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'email_label',
+                'value' => 'Email Address',
+                'type' => 'text',
+                'label' => 'Email Field Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'email_btn_text',
+                'value' => 'Email',
+                'type' => 'text',
+                'label' => 'Email Button Text',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'whatsapp_label',
+                'value' => 'WhatsApp',
+                'type' => 'text',
+                'label' => 'WhatsApp Field Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'whatsapp_btn_text',
+                'value' => 'Chat',
+                'type' => 'text',
+                'label' => 'WhatsApp Button Text',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'hours_card_title',
+                'value' => 'Working Hours',
+                'type' => 'text',
+                'label' => 'Hours Card Title',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'info',
+                'key' => 'weekend_hours',
+                'value' => 'Saturday & Sunday: Closed',
+                'type' => 'text',
+                'label' => 'Weekend Hours Subtext',
+            ],
+
+            // --- 7.3 Consultation & Inquiry Form Section ---
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'badge',
+                'value' => 'GET IN TOUCH',
+                'type' => 'text',
+                'label' => 'Form Eyebrow Badge',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'title',
+                'value' => 'Send Us a Message',
+                'type' => 'text',
+                'label' => 'Form Headline',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'description',
+                'value' => 'Please fill out the form below with your project requirements. We will review your inquiry and get back to you promptly.',
+                'type' => 'textarea',
+                'label' => 'Form Description',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'name_label',
+                'value' => 'Your Name',
+                'type' => 'text',
+                'label' => 'Form Name Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'name_placeholder',
+                'value' => 'e.g. John Smith',
+                'type' => 'text',
+                'label' => 'Form Name Placeholder',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'email_label',
+                'value' => 'Email Address',
+                'type' => 'text',
+                'label' => 'Form Email Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'email_placeholder',
+                'value' => 'e.g. john@example.com',
+                'type' => 'text',
+                'label' => 'Form Email Placeholder',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'phone_label',
+                'value' => 'Phone Number',
+                'type' => 'text',
+                'label' => 'Form Phone Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'phone_placeholder',
+                'value' => 'e.g. +1 (555) 019-2831',
+                'type' => 'text',
+                'label' => 'Form Phone Placeholder',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'company_label',
+                'value' => 'Company Name',
+                'type' => 'text',
+                'label' => 'Form Company Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'company_placeholder',
+                'value' => 'e.g. Apex Developments',
+                'type' => 'text',
+                'label' => 'Form Company Placeholder',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'service_label',
+                'value' => 'Interested Service',
+                'type' => 'text',
+                'label' => 'Form Service Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'service_placeholder',
+                'value' => 'Select Construction Service',
+                'type' => 'text',
+                'label' => 'Form Service Placeholder',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'project_label',
+                'value' => 'Project Reference',
+                'type' => 'text',
+                'label' => 'Form Project Reference Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'project_placeholder',
+                'value' => 'Select Project Reference',
+                'type' => 'text',
+                'label' => 'Form Project Reference Placeholder',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'subject_label',
+                'value' => 'Subject',
+                'type' => 'text',
+                'label' => 'Form Subject Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'subject_placeholder',
+                'value' => 'e.g. Quotation request for warehouse construction',
+                'type' => 'text',
+                'label' => 'Form Subject Placeholder',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'message_label',
+                'value' => 'Your Message / Project Details',
+                'type' => 'text',
+                'label' => 'Form Message Label',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'message_placeholder',
+                'value' => 'Tell us about your project location, approximate size, timeline, or any specific questions...',
+                'type' => 'textarea',
+                'label' => 'Form Message Placeholder',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'btn_text',
+                'value' => 'Send Message',
+                'type' => 'text',
+                'label' => 'Form Submit Button Text',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'form',
+                'key' => 'success_message',
+                'value' => 'Thank you for reaching out. We have received your message and will respond within 24 hours.',
+                'type' => 'textarea',
+                'label' => 'Form Success Message',
+            ],
+
+            // --- 7.4 Head Office Map & Directions Section ---
+            [
+                'page' => 'contact',
+                'section' => 'map',
+                'key' => 'badge',
+                'value' => 'OUR LOCATION',
+                'type' => 'text',
+                'label' => 'Map Eyebrow Badge',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'map',
+                'key' => 'headline',
+                'value' => 'Find Us On The Map',
+                'type' => 'text',
+                'label' => 'Map Headline',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'map',
+                'key' => 'description',
+                'value' => 'Visit our head office for scheduled project reviews, blueprints consultation, and material samples.',
+                'type' => 'textarea',
+                'label' => 'Map Description',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'map',
+                'key' => 'directions_text',
+                'value' => 'Get Directions',
+                'type' => 'text',
+                'label' => 'Map Directions Button Text',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'map',
+                'key' => 'iframe_src',
+                'value' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7302.005096378369!2d90.39713902765229!3d23.78292359489599!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1788950705692!5m2!1sen!2sbd',
+                'type' => 'textarea',
+                'label' => 'Google Map Embed Iframe URL or Full HTML Code',
+            ],
+
+            // --- 7.5 Frequently Asked Questions (FAQ) Section ---
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'badge',
+                'value' => 'FREQUENTLY ASKED QUESTIONS',
+                'type' => 'text',
+                'label' => 'FAQ Eyebrow Badge',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'headline',
+                'value' => 'Common Questions About Working With Us',
+                'type' => 'text',
+                'label' => 'FAQ Main Headline',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'subheadline',
+                'value' => 'Find quick answers to common questions regarding estimates, site visits, and project execution.',
+                'type' => 'textarea',
+                'label' => 'FAQ Subheadline',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'faq_1_q',
+                'value' => 'How can I get a quotation for my construction project?',
+                'type' => 'text',
+                'label' => 'FAQ 1 Question',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'faq_1_a',
+                'value' => 'You can send us your architectural plans, drawings, or project requirements through the contact form. Our estimating team will review your scope and provide a detailed quotation.',
+                'type' => 'textarea',
+                'label' => 'FAQ 1 Answer',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'faq_2_q',
+                'value' => 'Do you provide on-site inspections and surveys?',
+                'type' => 'text',
+                'label' => 'FAQ 2 Question',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'faq_2_a',
+                'value' => 'Yes. Our engineers and project managers conduct thorough site visits to evaluate terrain, access, and specific project conditions before finalizing contracts.',
+                'type' => 'textarea',
+                'label' => 'FAQ 2 Answer',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'faq_3_q',
+                'value' => 'What types of construction projects do you handle?',
+                'type' => 'text',
+                'label' => 'FAQ 3 Question',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'faq_3_a',
+                'value' => 'We specialize in commercial buildings, industrial facilities, civil infrastructure, residential structures, and complete renovation projects.',
+                'type' => 'textarea',
+                'label' => 'FAQ 3 Answer',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'faq_4_q',
+                'value' => 'How long does it take to start a project after contract signing?',
+                'type' => 'text',
+                'label' => 'FAQ 4 Question',
+            ],
+            [
+                'page' => 'contact',
+                'section' => 'faq',
+                'key' => 'faq_4_a',
+                'value' => 'Typically, site mobilization begins within 1 to 2 weeks following final permit approvals and contract execution.',
+                'type' => 'textarea',
+                'label' => 'FAQ 4 Answer',
+            ],
+
+            // =========================================================================
+            // 8. FOOTER & GLOBAL CTA CONTENT
+            // =========================================================================
+
+            // --- 8.1 Footer Call To Action Section ---
+            [
+                'page' => 'footer',
+                'section' => 'cta',
+                'key' => 'headline',
+                'value' => 'Ready To Start Your Next Commercial Build?',
+                'type' => 'text',
+                'label' => 'Footer CTA Headline',
+            ],
+            [
+                'page' => 'footer',
+                'section' => 'cta',
+                'key' => 'btn_text',
+                'value' => 'Discuss Project',
+                'type' => 'text',
+                'label' => 'Footer CTA Button Text',
+            ],
+            [
+                'page' => 'footer',
+                'section' => 'cta',
+                'key' => 'btn_url',
+                'value' => '#hero-content',
+                'type' => 'url',
+                'label' => 'Footer CTA Button URL',
+            ],
+
+            // --- 8.2 Brand Bio / About Snippet Section ---
+            [
+                'page' => 'footer',
+                'section' => 'brand_bio',
+                'key' => 'about_company',
+                'value' => 'Commercial construction, structural engineering, and general contracting across metropolitan developments.',
+                'type' => 'textarea',
+                'label' => 'Footer Company Bio',
+            ],
+
+            // =========================================================================
+            // 9. GLOBAL SEO & OPENGRAPH META CONTENT
+            // =========================================================================
+
+            // --- 9.1 Search Engine Optimization (SEO) Meta Tags Section ---
             [
                 'page' => 'seo',
                 'section' => 'meta',
@@ -2830,47 +2758,22 @@ class WebsiteContentSeeder extends Seeder
                 'type' => 'textarea',
                 'label' => 'Global Meta Description',
             ],
-            [
-                'page' => 'seo',
-                'section' => 'meta',
-                'key' => 'meta_keywords',
-                'value' => 'construction, civil engineering, structural engineering, commercial towers, building contractors, BIM modeling, infrastructure',
-                'type' => 'text',
-                'label' => 'Target SEO Keywords',
-            ],
-            [
-                'page' => 'seo',
-                'section' => 'og',
-                'key' => 'og_title',
-                'value' => 'Building & Co. - Engineering Landmark Structures',
-                'type' => 'text',
-                'label' => 'OpenGraph Social Title',
-            ],
-            [
-                'page' => 'seo',
-                'section' => 'og',
-                'key' => 'og_description',
-                'value' => 'Explore premier civil engineering, architectural mastery, and construction capabilities.',
-                'type' => 'textarea',
-                'label' => 'OpenGraph Social Description',
-            ],
+
         ];
 
-        foreach ($contents as $item) {
+        foreach ($contents as $content) {
             WebsiteContent::updateOrCreate(
                 [
-                    'page' => $item['page'],
-                    'section' => $item['section'],
-                    'key' => $item['key'],
+                    'page' => $content['page'],
+                    'section' => $content['section'],
+                    'key' => $content['key'],
                 ],
                 [
-                    'value' => $item['value'],
-                    'type' => $item['type'],
-                    'label' => $item['label'],
+                    'value' => $content['value'],
+                    'type' => $content['type'],
+                    'label' => $content['label'] ?? null,
                 ]
             );
         }
-
-        WebsiteContent::clearPageCache();
     }
 }

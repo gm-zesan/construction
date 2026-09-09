@@ -46,8 +46,8 @@
                     class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.articles.*') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
                     News & Articles
                 </a>
-                <a href="#footer"
-                    class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
+                <a href="{{ route('contact') }}"
+                    class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('contact') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
                     Contact
                 </a>
             </nav>
@@ -64,7 +64,7 @@
                         class="inline-flex items-center justify-center px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition-colors">
                         Sign In
                     </a>
-                    <a href="#footer"
+                    <a href="{{ route('contact') }}"
                         class="inline-flex items-center justify-center px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all rounded-xs shadow-sm shadow-[#f95716]/20">
                         Get a Quote
                     </a>
@@ -138,15 +138,15 @@
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.articles.*') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
                     News & Articles
                 </a>
-                <a href="#footer"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
+                <a href="{{ route('contact') }}"
+                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('contact') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
                     Contact
                 </a>
             </nav>
         </div>
 
         <div class="pt-6 border-t border-white/10">
-            <a href="#footer"
+            <a href="{{ route('contact') }}"
                 class="mobile-nav-link block w-full py-3 text-center text-xs font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all rounded-xs shadow-sm shadow-[#f95716]/20">
                 Get a Quote
             </a>

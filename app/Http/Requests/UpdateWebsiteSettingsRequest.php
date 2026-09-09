@@ -28,6 +28,8 @@ class UpdateWebsiteSettingsRequest extends FormRequest
             'whatsapp_number' => ['nullable', 'string', 'max:50'],
             'office_address' => ['nullable', 'string', 'max:1000'],
             'google_maps_url' => ['nullable', 'url', 'max:2000'],
+            'google_map_iframe' => ['nullable', 'string', 'max:3000'],
+            'google_maps_iframe' => ['nullable', 'string', 'max:3000'],
 
             // Social Media Group
             'facebook_url' => ['nullable', 'url', 'max:500'],

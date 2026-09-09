@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ArticleController as PublicArticleController;
+use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProjectController as PublicProjectController;
 use App\Http\Controllers\ProfileController;
@@ -18,6 +19,8 @@ Route::get('/projects', [PublicProjectController::class, 'index'])->name('public
 Route::get('/projects/{slug}', [PublicProjectController::class, 'show'])->name('public.projects.show');
 Route::get('/articles', [PublicArticleController::class, 'index'])->name('public.articles.index');
 Route::get('/articles/{slug}', [PublicArticleController::class, 'show'])->name('public.articles.show');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 /*
 |--------------------------------------------------------------------------

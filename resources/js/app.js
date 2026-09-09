@@ -24,6 +24,7 @@ import { initHomePage } from './pages/home';
 import { initAboutPage } from './pages/about';
 import { initProjectsPage } from './pages/projects';
 import { initArticlesPage } from './pages/articles';
+import { initContactPage } from './pages/contact';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Lenis Smooth Scroll with buttery inertia
@@ -68,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAboutPage();
     initProjectsPage();
     initArticlesPage();
+    initContactPage();
 
     // Refresh ScrollTrigger after all page assets and webfonts finish loading
     window.addEventListener('load', () => {

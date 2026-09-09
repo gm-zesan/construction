@@ -28,7 +28,7 @@
 
             <!-- Right: Primary CTA Button -->
             <div class="flex-shrink-0">
-                <a href="{{ get_content('footer', 'cta', 'btn_url', '#hero-content') }}"
+                <a href="{{ get_content('footer', 'cta', 'btn_url', route('contact')) }}"
                     class="group inline-flex items-center gap-3 px-8 sm:px-10 py-4 sm:py-4.5 rounded-full bg-[#f95716] hover:bg-[#ea4907] text-white text-sm sm:text-base font-bold uppercase tracking-wider transition-all duration-300 shadow-xl shadow-[#f95716]/25 hover:shadow-[#f95716]/40 hover:scale-[1.02] cursor-pointer">
                     <span>{{ get_content('footer', 'cta', 'btn_text', 'Discuss Project') }}</span>
                     <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
@@ -166,6 +166,13 @@
                             class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
                             <span>News &amp; Articles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('contact') }}"
+                            class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
+                            <span>Contact &amp; Estimate</span>
                         </a>
                     </li>
                 </ul>

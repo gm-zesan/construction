@@ -287,7 +287,7 @@
                                     <button type="submit" class="btn submit-button me-2" style="width: auto; height: 38px; padding: 0 24px;">
                                         <i class="ri-check-line me-1"></i> Save {{ $currentPageMeta['badge'] }}
                                     </button>
-                                    <a href="{{ route('dashboard') }}" class="btn leave-button" style="width: auto; height: 38px; padding: 0 20px;">
+                                    <a href="{{ route('dashboard') }}" class="btn leave-button" style="width: auto; height: 38px; padding: 8px 20px;">
                                         <i class="ri-arrow-left-line me-1"></i> Dashboard
                                     </a>
                                 </div>
