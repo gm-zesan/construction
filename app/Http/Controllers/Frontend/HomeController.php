@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\ClientReview;
 use App\Models\Project;
@@ -39,6 +40,6 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        return view('home', compact('services', 'projects', 'articles', 'testimonials'));
+        return view('frontend.home', compact('services', 'projects', 'articles', 'testimonials'));
     }
 }

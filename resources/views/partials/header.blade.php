@@ -34,8 +34,8 @@
                     class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
                     Services
                 </a>
-                <a href="{{ route('home') }}#projects"
-                    class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
+                <a href="{{ route('public.projects.index') }}"
+                    class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.projects.*') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
                     Projects
                 </a>
                 <a href="{{ route('home') }}#why-choose-us"
@@ -126,8 +126,8 @@
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
                     Services
                 </a>
-                <a href="{{ route('home') }}#projects"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
+                <a href="{{ route('public.projects.index') }}"
+                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.projects.*') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
                     Projects
                 </a>
                 <a href="{{ route('home') }}#why-choose-us"

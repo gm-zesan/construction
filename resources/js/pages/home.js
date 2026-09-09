@@ -1,3 +1,5 @@
+import Isotope from 'isotope-layout';
+import imagesLoaded from 'imagesloaded';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Swiper from 'swiper';
@@ -222,63 +224,53 @@ export function initHomePage() {
         });
     }
 
-    // 5. Projects Interactive Category Filter Tabs
+    // 5. Projects Interactive Category Filter Tabs (Isotope)
+    const homeProjectsGrid = document.getElementById('home-projects-grid') || document.getElementById('projects-grid');
     const filterButtons = document.querySelectorAll('.project-filter-btn');
-    if (filterButtons.length > 0 && projectCards.length > 0) {
-        let isFilterTransitioning = false;
 
-        const handleFilter = (targetFilter) => {
-            if (isFilterTransitioning) return;
-            isFilterTransitioning = true;
-
-            projectCards.forEach((card) => {
-                const category = card.getAttribute('data-category');
-                const matches = targetFilter === 'all' || category === targetFilter;
-
-                if (matches) {
-                    card.style.display = 'flex';
-                    gsap.to(card, {
-                        opacity: 1,
-                        scale: 1,
-                        duration: 0.35,
-                        ease: 'power2.out',
-                        clearProps: 'opacity,transform',
-                    });
-                } else {
-                    gsap.to(card, {
-                        opacity: 0,
-                        scale: 0.95,
-                        duration: 0.25,
-                        ease: 'power2.in',
-                        onComplete: () => {
-                            card.style.display = 'none';
-                        },
-                    });
-                }
-            });
-
-            setTimeout(() => {
-                isFilterTransitioning = false;
-                ScrollTrigger.refresh();
-            }, 360);
-        };
-
-        filterButtons.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                if (btn.classList.contains('active')) return;
-                const filter = btn.getAttribute('data-filter');
-
-                filterButtons.forEach((b) => {
-                    b.classList.remove('active', 'bg-[#0b0f17]', 'text-white', 'shadow-md');
-                    b.classList.add('bg-slate-100', 'text-slate-700');
-                });
-
-                btn.classList.add('active', 'bg-[#0b0f17]', 'text-white', 'shadow-md');
-                btn.classList.remove('bg-slate-100', 'text-slate-700');
-
-                handleFilter(filter);
-            });
+    if (homeProjectsGrid) {
+        const homeIso = new Isotope(homeProjectsGrid, {
+            itemSelector: '.project-grid-item',
+            layoutMode: 'fitRows',
+            transitionDuration: '0.45s',
+            hiddenStyle: {
+                opacity: 0,
+                transform: 'scale(0.92)'
+            },
+            visibleStyle: {
+                opacity: 1,
+                transform: 'scale(1)'
+            }
         });
+
+        imagesLoaded(homeProjectsGrid, () => {
+            homeIso.layout();
+            ScrollTrigger.refresh();
+        });
+
+        if (filterButtons.length > 0) {
+            filterButtons.forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (btn.classList.contains('active')) return;
+                    const filter = btn.getAttribute('data-filter');
+
+                    filterButtons.forEach((b) => {
+                        b.classList.remove('active', 'bg-[#0b0f17]', 'text-white', 'shadow-md');
+                        b.classList.add('bg-slate-100', 'text-slate-700');
+                    });
+
+                    btn.classList.add('active', 'bg-[#0b0f17]', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-slate-100', 'text-slate-700');
+
+                    homeIso.arrange({ filter: filter });
+
+                    setTimeout(() => {
+                        ScrollTrigger.refresh();
+                    }, 480);
+                });
+            });
+        }
     }
 
     // 6. Core Features Section Parallax & Reveal

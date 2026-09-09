@@ -421,29 +421,41 @@
                     </p>
 
                     <!-- Category Filter Buttons -->
+                    @php
+                        $homeCategories = $projects->pluck('category')->filter()->unique();
+                    @endphp
                     <div id="project-filters" class="flex flex-wrap items-center gap-2">
-                        <button type="button" data-filter="all"
-                            class="project-filter-btn active px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-[#0b0f17] text-white shadow-md">
-                            All Work
+                        <button type="button" data-filter="*"
+                            class="project-filter-btn active px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-[#0b0f17] text-white shadow-md cursor-pointer">
+                            All Work ({{ $projects->count() }})
                         </button>
-                        <button type="button" data-filter="commercial"
-                            class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950">
-                            Commercial
-                        </button>
-                        <button type="button" data-filter="industrial"
-                            class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950">
-                            Industrial
-                        </button>
-                        <button type="button" data-filter="structural"
-                            class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950">
-                            Structural
-                        </button>
+                        @if($homeCategories->isNotEmpty())
+                            @foreach($homeCategories as $cat)
+                                @php
+                                    $homeCatSlug = \Illuminate\Support\Str::slug($cat);
+                                    $homeCatCount = $projects->where('category', $cat)->count();
+                                @endphp
+                                <button type="button" data-filter=".cat-{{ $homeCatSlug }}"
+                                    class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950 cursor-pointer">
+                                    {{ $cat }} ({{ $homeCatCount }})
+                                </button>
+                            @endforeach
+                        @else
+                            <button type="button" data-filter=".cat-commercial"
+                                class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950 cursor-pointer">
+                                Commercial
+                            </button>
+                            <button type="button" data-filter=".cat-industrial"
+                                class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950 cursor-pointer">
+                                Industrial
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <!-- Projects Showcase Grid -->
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10" style="perspective: 1400px;">
+            <!-- Projects Showcase Isotope Grid -->
+            <div id="home-projects-grid" class="projects-isotope-grid relative -mx-3 sm:-mx-4 lg:-mx-5 flex flex-wrap">
 
                 @forelse($projects as $index => $project)
                     @php
@@ -455,89 +467,93 @@
                             : ($project->status ? $project->status->label() : 'Active');
                     @endphp
                     <!-- Project {{ $projectIndex }}: {{ $project->title }} -->
-                    <article
-                        class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
-                        data-category="{{ $catSlug }}">
-                        <div>
-                            <!-- Photo Container with Smooth Hover Zoom -->
-                            <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
-                                <img src="{{ $cardImg }}"
-                                    alt="{{ $project->title }}"
-                                    class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
+                    <div class="project-grid-item cat-{{ $catSlug }} w-full md:w-1/2 px-3 sm:px-4 lg:px-5 pb-8 lg:pb-10">
+                        <article
+                            class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between h-full"
+                            data-category="{{ $catSlug }}">
+                            <div>
+                                <!-- Photo Container with Smooth Hover Zoom -->
+                                <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
+                                    <img src="{{ $cardImg }}"
+                                        alt="{{ $project->title }}"
+                                        class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
 
-                                <!-- Top Gradient Overlay & Badges -->
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none">
-                                </div>
-
-                                <!-- Category Pill (Top Left) -->
-                                <div class="absolute top-5 left-5 z-10">
-                                    <span
-                                        class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">
-                                        {{ $project->category ?? 'Commercial' }}
-                                    </span>
-                                </div>
-
-                                <!-- Scale / Location Tag (Bottom Left) -->
-                                @if($project->location)
-                                    <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
-                                        <span class="text-[#f95716] font-bold">{{ $project->client_name ?? 'Featured' }}</span> • {{ $project->location }}
+                                    <!-- Top Gradient Overlay & Badges -->
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none">
                                     </div>
-                                @endif
-                            </div>
 
-                            <!-- Project Content -->
-                            <div class="p-6 sm:p-8">
-                                <div class="flex items-baseline gap-2 mb-2">
-                                    <span class="text-xs font-black text-[#f95716] tracking-widest uppercase">{{ $projectIndex }}</span>
-                                    <span class="w-4 h-[1px] bg-slate-300"></span>
-                                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ $statusText }}</span>
+                                    <!-- Category Pill (Top Left) -->
+                                    <div class="absolute top-5 left-5 z-10">
+                                        <span
+                                            class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">
+                                            {{ $project->category ?? 'Commercial' }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Scale / Location Tag (Bottom Left) -->
+                                    @if($project->location)
+                                        <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
+                                            <span class="text-[#f95716] font-bold">{{ $project->client_name ?? 'Featured' }}</span> • {{ $project->location }}
+                                        </div>
+                                    @endif
                                 </div>
 
-                                <h3
-                                    class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">
-                                    {{ $project->title }}
-                                </h3>
+                                <!-- Project Content -->
+                                <div class="p-6 sm:p-8">
+                                    <div class="flex items-baseline gap-2 mb-2">
+                                        <span class="text-xs font-black text-[#f95716] tracking-widest uppercase">{{ $projectIndex }}</span>
+                                        <span class="w-4 h-[1px] bg-slate-300"></span>
+                                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ $statusText }}</span>
+                                    </div>
 
-                                <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">
-                                    {{ $project->short_description }}
-                                </p>
+                                    <h3
+                                        class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">
+                                        {{ $project->title }}
+                                    </h3>
+
+                                    <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">
+                                        {{ $project->short_description }}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Action Link Footer -->
-                        <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2">
-                            <a href="#footer"
-                                class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors">
-                                <span>VIEW CASE STUDY</span>
-                                <svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                        d="M7 17L17 7M17 7H7M17 7V17" />
-                                </svg>
-                            </a>
-                        </div>
-                    </article>
+                            <!-- Action Link Footer -->
+                            <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2 mt-auto">
+                                <a href="{{ route('public.projects.show', $project->slug) }}"
+                                    class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors">
+                                    <span>VIEW CASE STUDY</span>
+                                    <svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                            d="M7 17L17 7M17 7H7M17 7V17" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
                 @empty
                     <!-- Fallback Project 01 -->
-                    <article class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between" data-category="commercial">
-                        <div>
-                            <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
-                                <img src="{{ asset('images/project-commercial-tower.jpg') }}" alt="Commercial Tower" class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
-                                <div class="absolute top-5 left-5 z-10"><span class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">Commercial High-Rise</span></div>
-                                <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide"><span class="text-[#f95716] font-bold">38 Storeys</span> • Downtown Central Core</div>
+                    <div class="project-grid-item cat-commercial w-full md:w-1/2 px-3 sm:px-4 lg:px-5 pb-8 lg:pb-10">
+                        <article class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between h-full" data-category="commercial">
+                            <div>
+                                <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
+                                    <img src="{{ asset('images/project-commercial-tower.jpg') }}" alt="Commercial Tower" class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
+                                    <div class="absolute top-5 left-5 z-10"><span class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">Commercial High-Rise</span></div>
+                                    <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide"><span class="text-[#f95716] font-bold">38 Storeys</span> • Downtown Central Core</div>
+                                </div>
+                                <div class="p-6 sm:p-8">
+                                    <div class="flex items-baseline gap-2 mb-2"><span class="text-xs font-black text-[#f95716] tracking-widest uppercase">01</span><span class="w-4 h-[1px] bg-slate-300"></span><span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed 2025</span></div>
+                                    <h3 class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">Metropolitan Skyway & Commercial Tower</h3>
+                                    <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">38-Storey reinforced concrete core, post-tensioned floor slabs, structural steel crown, and unitized curtain wall glazing.</p>
+                                </div>
                             </div>
-                            <div class="p-6 sm:p-8">
-                                <div class="flex items-baseline gap-2 mb-2"><span class="text-xs font-black text-[#f95716] tracking-widest uppercase">01</span><span class="w-4 h-[1px] bg-slate-300"></span><span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed 2025</span></div>
-                                <h3 class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">Metropolitan Skyway & Commercial Tower</h3>
-                                <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">38-Storey reinforced concrete core, post-tensioned floor slabs, structural steel crown, and unitized curtain wall glazing.</p>
+                            <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2 mt-auto">
+                                <a href="/projects" class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors"><span>VIEW CASE STUDY</span><svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17" /></svg></a>
                             </div>
-                        </div>
-                        <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2">
-                            <a href="#footer" class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors"><span>VIEW CASE STUDY</span><svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17" /></svg></a>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
                 @endforelse
 
             </div>

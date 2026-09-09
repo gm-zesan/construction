@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Enums\EnquiryStatus;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateClientEnquiryRequest;
 use App\Models\ClientEnquiry;
 use App\Services\ActivityLogger;

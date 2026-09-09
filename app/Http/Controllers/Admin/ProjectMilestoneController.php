@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Enums\MilestoneStatus;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectMilestoneRequest;
 use App\Http\Requests\UpdateProjectMilestoneRequest;
 use App\Models\Project;

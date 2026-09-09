@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Service;
+use App\Models\TeamMember;
 use App\Models\WebsiteSetting;
 use Illuminate\View\View;
-
-use App\Models\TeamMember;
 
 class AboutController extends Controller
 {
@@ -82,6 +82,6 @@ class AboutController extends Controller
         $companyName = WebsiteSetting::get('company_name', 'COMPANY NAME');
         $title = "About Us | {$companyName} — Engineering & Construction Heritage";
 
-        return view('about', compact('leadership', 'accreditations', 'title'));
+        return view('frontend.about', compact('leadership', 'accreditations', 'title'));
     }
 }

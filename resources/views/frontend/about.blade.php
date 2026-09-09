@@ -3,7 +3,7 @@
 @section('content')
     <!-- 1. About Hero Section -->
     <section id="about-hero"
-        class="relative min-h-[70vh] sm:min-h-[75vh] lg:min-h-[100vh] flex items-center justify-center pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24 overflow-hidden bg-[#0b0f17] text-white">
+        class="relative min-h-[85vh] lg:min-h-[98vh] flex items-center justify-center pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24 overflow-hidden bg-[#0b0f17] text-white">
 
         <!-- Background Cinematic Image with Architectural Gradient Wash -->
         <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
