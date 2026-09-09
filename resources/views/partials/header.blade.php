@@ -42,9 +42,9 @@
                     class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
                     Why Us
                 </a>
-                <a href="{{ route('home') }}#news"
-                    class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
-                    News
+                <a href="{{ route('public.articles.index') }}"
+                    class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.articles.*') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
+                    News & Articles
                 </a>
                 <a href="#footer"
                     class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
@@ -134,9 +134,9 @@
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
                     Why Us
                 </a>
-                <a href="{{ route('home') }}#news"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
-                    News
+                <a href="{{ route('public.articles.index') }}"
+                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.articles.*') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
+                    News & Articles
                 </a>
                 <a href="#footer"
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">

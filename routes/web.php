@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\ArticleController as PublicArticleController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProjectController as PublicProjectController;
 use App\Http\Controllers\ProfileController;
@@ -15,6 +16,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/projects', [PublicProjectController::class, 'index'])->name('public.projects.index');
 Route::get('/projects/{slug}', [PublicProjectController::class, 'show'])->name('public.projects.show');
+Route::get('/articles', [PublicArticleController::class, 'index'])->name('public.articles.index');
+Route::get('/articles/{slug}', [PublicArticleController::class, 'show'])->name('public.articles.show');
 
 /*
 |--------------------------------------------------------------------------

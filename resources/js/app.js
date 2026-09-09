@@ -5,6 +5,7 @@ Alpine.start();
 import 'lenis/dist/lenis.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import Lenis from 'lenis';
 import gsap from 'gsap';
@@ -22,6 +23,7 @@ import { initBlueprintEffects } from './modules/blueprint-effects';
 import { initHomePage } from './pages/home';
 import { initAboutPage } from './pages/about';
 import { initProjectsPage } from './pages/projects';
+import { initArticlesPage } from './pages/articles';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Lenis Smooth Scroll with buttery inertia
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHomePage();
     initAboutPage();
     initProjectsPage();
+    initArticlesPage();
 
     // Refresh ScrollTrigger after all page assets and webfonts finish loading
     window.addEventListener('load', () => {
