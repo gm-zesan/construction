@@ -3,10 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Construction, from planning to completion. Projects delivered with careful planning, clear coordination and attention to detail.">
+    <meta name="description" content="{{ get_content('seo', 'meta', 'meta_description', 'Construction, from planning to completion. Projects delivered with careful planning, clear coordination and attention to detail.') }}">
     <meta name="theme-color" content="#0b0f17">
 
-    <title>{{ $title ?? 'COMPANY NAME — Construction & Development' }}</title>
+    @if(get_setting('site_favicon'))
+        <link rel="icon" type="image/x-icon" href="{{ asset(get_setting('site_favicon')) }}">
+    @endif
+
+    <title>{{ $title ?? (get_content('seo', 'meta', 'meta_title', get_setting('company_name', 'COMPANY NAME') . ' — Construction & Development')) }}</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

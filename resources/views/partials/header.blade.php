@@ -5,11 +5,19 @@
         <div class="flex items-center justify-between">
 
             <!-- Company Logo / Placeholder -->
-            <a href="/" class="flex items-center gap-3 focus:outline-none" aria-label="COMPANY NAME Home">
-                <span class="w-2.5 h-6 bg-[#f95716]"></span>
-                <span class="font-heading text-2xl sm:text-3xl font-bold tracking-wider text-white uppercase">
-                    COMPANY <span class="text-slate-400 font-normal">NAME</span>
-                </span>
+            <a href="/" class="flex items-center gap-3 focus:outline-none" aria-label="{{ get_setting('company_name', 'COMPANY NAME') }} Home">
+                @if(get_setting('site_logo'))
+                    <img src="{{ asset(get_setting('site_logo')) }}" alt="{{ get_setting('company_name', 'COMPANY NAME') }}" class="h-8 w-auto object-contain">
+                @else
+                    <span class="w-2.5 h-6 bg-[#f95716]"></span>
+                    @php
+                        $companyName = get_setting('company_name', 'COMPANY NAME');
+                        $nameParts = explode(' ', $companyName, 2);
+                    @endphp
+                    <span class="font-heading text-2xl sm:text-3xl font-bold tracking-wider text-white uppercase">
+                        {{ $nameParts[0] }} @if(isset($nameParts[1]))<span class="text-slate-400 font-normal">{{ $nameParts[1] }}</span>@endif
+                    </span>
+                @endif
             </a>
 
             <!-- Desktop Navigation -->
@@ -89,9 +97,13 @@
         class="fixed top-0 right-0 bottom-0 w-72 bg-[#0b0f17] border-l border-white/10 z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-6">
         <div>
             <div class="flex items-center justify-between pb-6 border-b border-white/10">
-                <span class="font-heading text-xl font-bold tracking-wider text-white uppercase">
-                    COMPANY <span class="text-[#f95716]">NAME</span>
-                </span>
+                @if(get_setting('site_logo'))
+                    <img src="{{ asset(get_setting('site_logo')) }}" alt="{{ get_setting('company_name', 'COMPANY NAME') }}" class="h-7 w-auto object-contain">
+                @else
+                    <span class="font-heading text-xl font-bold tracking-wider text-white uppercase">
+                        {{ $nameParts[0] }} @if(isset($nameParts[1]))<span class="text-[#f95716]">{{ $nameParts[1] }}</span>@endif
+                    </span>
+                @endif
                 <button id="mobile-menu-close" type="button" class="p-1.5 text-slate-400 hover:text-white"
                     aria-label="Close navigation">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

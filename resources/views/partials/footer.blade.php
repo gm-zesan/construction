@@ -22,18 +22,15 @@
             <div class="max-w-2xl">
                 <h2
                     class="font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl m-0">
-                    Ready To Start Your Next <br>
-                    <span
-                        class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Commercial</span>
-                    Build?
+                    {!! nl2br(e(get_content('footer', 'cta', 'headline', "Ready To Start Your Next\nCommercial Build?"))) !!}
                 </h2>
             </div>
 
             <!-- Right: Primary CTA Button -->
             <div class="flex-shrink-0">
-                <a href="#hero-content"
+                <a href="{{ get_content('footer', 'cta', 'btn_url', '#hero-content') }}"
                     class="group inline-flex items-center gap-3 px-8 sm:px-10 py-4 sm:py-4.5 rounded-full bg-[#f95716] hover:bg-[#ea4907] text-white text-sm sm:text-base font-bold uppercase tracking-wider transition-all duration-300 shadow-xl shadow-[#f95716]/25 hover:shadow-[#f95716]/40 hover:scale-[1.02] cursor-pointer">
-                    <span>Discuss Project</span>
+                    <span>{{ get_content('footer', 'cta', 'btn_text', 'Discuss Project') }}</span>
                     <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -51,30 +48,33 @@
             <div class="lg:col-span-4 flex flex-col justify-between space-y-6">
                 <div>
                     <!-- Brand Logo -->
-                    <a href="#" class="inline-flex items-center gap-3 text-white focus:outline-none mb-4 group">
-                        <div
-                            class="w-10 h-10 rounded-lg bg-[#f95716] flex items-center justify-center shadow-lg shadow-[#f95716]/20 transition-transform duration-300 group-hover:scale-105">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.84L18 11v7h-3v-5H9v5H6v-7l6-5.16zM11 15h2v3h-2v-3z" />
-                            </svg>
-                        </div>
-                        <span class="font-heading font-black uppercase text-2xl tracking-tight text-white">
-                            COMPANY NAME
-                        </span>
+                    <a href="/" class="inline-flex items-center gap-3 text-white focus:outline-none mb-4 group" aria-label="{{ get_setting('company_name', 'COMPANY NAME') }} Home">
+                        @if(get_setting('site_logo'))
+                            <img src="{{ asset(get_setting('site_logo')) }}" alt="{{ get_setting('company_name', 'COMPANY NAME') }}" class="h-10 w-auto object-contain">
+                        @else
+                            <div
+                                class="w-10 h-10 rounded-lg bg-[#f95716] flex items-center justify-center shadow-lg shadow-[#f95716]/20 transition-transform duration-300 group-hover:scale-105">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.84L18 11v7h-3v-5H9v5H6v-7l6-5.16zM11 15h2v3h-2v-3z" />
+                                </svg>
+                            </div>
+                            <span class="font-heading font-black uppercase text-2xl tracking-tight text-white">
+                                {{ get_setting('company_name', 'COMPANY NAME') }}
+                            </span>
+                        @endif
                     </a>
 
                     <!-- Brand Statement -->
                     <p class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed m-0 max-w-sm mb-4">
-                        Licensed general contractors providing structural concrete, steel framing, and commercial
-                        site supervision.
+                        {{ get_content('footer', 'brand_bio', 'about_company', 'Licensed general contractors providing structural concrete, steel framing, and commercial site supervision.') }}
                     </p>
 
                     <!-- Established Architectural Typography -->
                     <div class="my-5 select-none">
                         <span
                             class="font-heading font-black text-3xl sm:text-4xl tracking-tight text-transparent [-webkit-text-stroke:1.5px_rgba(255,255,255,0.3)] hover:[-webkit-text-stroke:1.5px_#f95716] transition-all duration-300 block uppercase leading-none">
-                            Since 2012
+                            Since {{ get_content('about', 'history', 'milestone_1_year', '2012') }}
                         </span>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                 <!-- Social Follow Icons -->
                 <div class="flex items-center gap-3 pt-2">
                     <!-- Facebook -->
-                    <a href="#"
+                    <a href="{{ get_setting('facebook_url', 'https://facebook.com') }}" target="_blank" rel="noopener noreferrer"
                         class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f95716] text-slate-400 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 focus:outline-none cursor-pointer"
                         aria-label="Facebook">
                         <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 24 24">
@@ -91,7 +91,7 @@
                         </svg>
                     </a>
                     <!-- LinkedIn / Pinterest -->
-                    <a href="#"
+                    <a href="{{ get_setting('linkedin_url', 'https://linkedin.com') }}" target="_blank" rel="noopener noreferrer"
                         class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f95716] text-slate-400 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 focus:outline-none cursor-pointer"
                         aria-label="LinkedIn">
                         <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@
                         </svg>
                     </a>
                     <!-- Twitter / X -->
-                    <a href="#"
+                    <a href="{{ get_setting('twitter_url', 'https://twitter.com') }}" target="_blank" rel="noopener noreferrer"
                         class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f95716] text-slate-400 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 focus:outline-none cursor-pointer"
                         aria-label="Twitter">
                         <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 24 24">
@@ -109,7 +109,7 @@
                         </svg>
                     </a>
                     <!-- Instagram -->
-                    <a href="#"
+                    <a href="{{ get_setting('instagram_url', 'https://instagram.com') }}" target="_blank" rel="noopener noreferrer"
                         class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f95716] text-slate-400 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 focus:outline-none cursor-pointer"
                         aria-label="Instagram">
                         <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 24 24">
@@ -232,7 +232,7 @@
                             </svg>
                         </div>
                         <p class="text-slate-400 leading-relaxed m-0">
-                            House 40/A, Road 20,<br>Mohakhali DOHS
+                            {!! nl2br(e(get_setting('office_address', "House 40/A, Road 20,\nMohakhali DOHS"))) !!}
                         </p>
                     </div>
 
@@ -244,9 +244,9 @@
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <a href="mailto:support@agency.com"
+                        <a href="mailto:{{ get_setting('primary_email', 'support@agency.com') }}"
                             class="text-slate-400 hover:text-[#f95716] transition-colors duration-200">
-                            support@agency.com
+                            {{ get_setting('primary_email', 'support@agency.com') }}
                         </a>
                     </div>
 
@@ -258,9 +258,9 @@
                                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
                         </div>
-                        <a href="tel:01700000000"
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('primary_phone', '01700000000')) }}"
                             class="text-slate-400 hover:text-[#f95716] transition-colors duration-200">
-                            01700000000
+                            {{ get_setting('primary_phone', '01700000000') }}
                         </a>
                     </div>
                 </div>
@@ -283,7 +283,7 @@
             class="container-fluid max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-500">
             <!-- Copyright -->
             <p class="m-0">
-                &copy; {{ date('Y') }} COMPANY NAME. All Rights Reserved.
+                {{ get_setting('copyright_text', '© ' . date('Y') . ' ' . get_setting('company_name', 'COMPANY NAME') . '. All Rights Reserved.') }}
             </p>
 
             <!-- Legal Links -->

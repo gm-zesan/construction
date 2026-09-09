@@ -57,6 +57,8 @@
             padding: 14px 20px;
             background: #f8fafc;
             border-bottom: 1px solid #e2e8f0;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
             font-size: 14px;
             font-weight: 700;
             color: #1e293b;

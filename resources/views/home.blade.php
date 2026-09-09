@@ -26,7 +26,7 @@
                 <div id="hero-content-col"
                     class="parallax-text-layers parallax-layers lg:col-span-7 flex flex-col items-start text-left relative">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-white">CONSTRUCT</span>
+                    <span class="parallax-text-back back text-white">{{ get_content('home', 'hero', 'watermark', 'CONSTRUCT') }}</span>
 
                     <!-- Eyebrow -->
                     <div
@@ -34,14 +34,14 @@
                         <span
                             class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#f95716] uppercase">
-                            CONSTRUCTION & DEVELOPMENT
+                            {{ get_content('home', 'hero', 'badge', 'CONSTRUCTION & DEVELOPMENT') }}
                         </span>
                     </div>
 
                     <!-- Main Heading -->
                     <h1 id="hero-content"
                         class="parallax-text-mid mid section-title font-heading font-extrabold uppercase text-white tracking-tight leading-[0.96] text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-8 sm:mb-10 relative z-10 animate-fade-in">
-                        Construction, from planning to completion.
+                        {{ get_content('home', 'hero', 'headline', 'Construction, from planning to completion.') }}
                     </h1>
 
                     <!-- Action Buttons -->
@@ -49,15 +49,15 @@
                         class="w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-4 animate-fade-in">
 
                         <!-- Primary Action -->
-                        <a href="#projects"
+                        <a href="{{ get_content('home', 'hero', 'primary_btn_url', '#projects') }}"
                             class="inline-flex items-center justify-center px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all duration-200 rounded-sm shadow-lg shadow-[#f95716]/25 hover:shadow-xl hover:shadow-[#f95716]/40">
-                            View Projects
+                            {{ get_content('home', 'hero', 'primary_btn_text', 'View Projects') }}
                         </a>
 
                         <!-- Secondary Action -->
-                        <a href="#footer"
+                        <a href="{{ get_content('home', 'hero', 'secondary_btn_url', '#footer') }}"
                             class="inline-flex items-center justify-center px-8 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white border border-white/30 hover:border-[#f95716] hover:bg-[#f95716]/10 transition-colors rounded-sm">
-                            Contact Us
+                            {{ get_content('home', 'hero', 'secondary_btn_text', 'Contact Us') }}
                         </a>
 
                     </div>
@@ -71,7 +71,7 @@
                     <!-- Editorial Supporting Text -->
                     <div class="max-w-md lg:text-right animate-fade-in">
                         <p class="text-slate-200 text-sm sm:text-base md:text-lg font-normal leading-relaxed">
-                            Projects delivered with careful planning, clear coordination and attention to detail.
+                            {{ get_content('home', 'hero', 'subheadline', 'Projects delivered with careful planning, clear coordination and attention to detail.') }}
                         </p>
                     </div>
 
@@ -88,7 +88,7 @@
                                 </defs>
                                 <text class="text-[9.5px] font-black uppercase tracking-[2px] fill-white">
                                     <textPath href="#textCircle">
-                                        • EXPLORE WORK • VIEW PROJECTS
+                                        {{ get_content('home', 'hero', 'stamp_text', '• EXPLORE WORK • VIEW PROJECTS') }}
                                     </textPath>
                                 </text>
                             </svg>
@@ -131,12 +131,12 @@
                         <div class="pr-2">
                             <div id="hero-stat-number"
                                 class="font-heading text-3xl sm:text-4xl font-black text-white leading-none tracking-tight">
-                                24k+
+                                {{ get_content('home', 'hero', 'stat_number', '24k+') }}
                             </div>
                             <div
                                 class="text-[11px] sm:text-xs font-semibold text-slate-300 uppercase tracking-wider mt-1 flex items-center gap-1.5">
                                 <span class="w-1.5 h-1.5 rounded-full bg-[#f95716]"></span>
-                                Project Success
+                                {{ get_content('home', 'hero', 'stat_label', 'Project Success') }}
                             </div>
                         </div>
 
@@ -160,7 +160,7 @@
                     <div>
                         <div class="parallax-text-layers parallax-layers relative">
                             <!-- Back Watermark Parallax Text -->
-                            <span class="parallax-text-back back text-slate-950">PRECISION</span>
+                            <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'about_story', 'watermark', 'PRECISION') }}</span>
 
                             <!-- Eyebrow -->
                             <div
@@ -168,31 +168,30 @@
                                 <span
                                     class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                                 <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-slate-950">
-                                    ABOUT CONSTRUCTION
+                                    {{ get_content('home', 'about_story', 'badge', 'ABOUT CONSTRUCTION') }}
                                 </span>
                             </div>
 
                             <!-- Editorial Heading with Mixed Typography -->
                             <h2
                                 class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.02] text-4xl sm:text-5xl lg:text-[50px] xl:text-[56px] mb-6 sm:mb-8 relative z-10">
-                                Construction built around <span
-                                    class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">precision,</span>
-                                planning & detail.
+                                {{ get_content('home', 'about_story', 'title_prefix', 'Construction built around') }} <span
+                                    class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">{{ get_content('home', 'about_story', 'highlight_word', 'precision,') }}</span>
+                                {{ get_content('home', 'about_story', 'title_suffix', 'planning & detail.') }}
                             </h2>
                         </div>
 
                         <!-- Description -->
                         <p
                             class="about-fade-el text-slate-600 text-base sm:text-lg font-normal leading-relaxed mb-8 sm:mb-10 max-w-lg">
-                            We approach every project with careful planning, coordinated execution and close attention to
-                            the details that shape the finished work.
+                            {{ get_content('home', 'about_story', 'description', 'We approach every project with careful planning, coordinated execution and close attention to the details that shape the finished work.') }}
                         </p>
 
                         <!-- Primary CTA Button -->
                         <div class="about-fade-el">
-                            <a href="#projects"
+                            <a href="{{ get_content('home', 'about_story', 'btn_url', '#projects') }}"
                                 class="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all duration-200 rounded-full shadow-lg shadow-[#f95716]/25 hover:shadow-xl hover:shadow-[#f95716]/35 group">
-                                <span>DISCOVER MORE</span>
+                                <span>{{ get_content('home', 'about_story', 'btn_text', 'DISCOVER MORE') }}</span>
                                 <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -207,16 +206,16 @@
                         class="about-fade-el w-fit min-w-[240px] sm:min-w-[270px] p-6 sm:p-7 bg-[#0b0f17] text-white rounded-2xl border border-white/10 shadow-2xl flex items-center gap-5 sm:gap-6 will-change-transform">
                         <div class="flex items-baseline">
                             <span id="experience-stat-number"
-                                class="font-heading text-6xl sm:text-7xl font-extrabold text-white leading-none tracking-tight">12</span>
-                            <span class="text-[#f95716] text-3xl sm:text-4xl font-black leading-none ml-1.5">+</span>
+                                class="font-heading text-6xl sm:text-7xl font-extrabold text-white leading-none tracking-tight">{{ get_content('home', 'about_story', 'exp_years', '12') }}</span>
+                            <span class="text-[#f95716] text-3xl sm:text-4xl font-black leading-none ml-1.5">{{ get_content('home', 'about_story', 'exp_suffix', '+') }}</span>
                         </div>
                         <div class="border-l border-white/15 pl-4 sm:pl-5">
                             <span
                                 class="block text-sm sm:text-base font-bold text-white uppercase tracking-wider leading-tight">
-                                Years of
+                                {{ get_content('home', 'about_story', 'exp_title', 'Years of') }}
                             </span>
                             <span class="block text-xs sm:text-sm font-medium text-slate-400 tracking-wide mt-0.5">
-                                Experience.
+                                {{ get_content('home', 'about_story', 'exp_subtitle', 'Experience.') }}
                             </span>
                         </div>
                     </div>
@@ -277,32 +276,31 @@
                 class="flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8 mb-14 sm:mb-16 lg:mb-20">
                 <div class="parallax-text-layers parallax-layers relative">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-white">SERVICES</span>
+                    <span class="parallax-text-back back text-white">{{ get_content('home', 'services', 'watermark', 'SERVICES') }}</span>
 
                     <!-- Eyebrow -->
                     <div class="parallax-text-front front flex items-center gap-3 mb-4 sm:mb-5 relative z-10">
                         <span
                             class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-[#f95716]">
-                            CORE CAPABILITIES
+                            {{ get_content('home', 'services', 'badge', 'CORE CAPABILITIES') }}
                         </span>
                     </div>
 
                     <!-- Editorial Headline -->
                     <h2
                         class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.02] text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px] relative z-10">
-                        Structured Scopes. <br>
+                        {{ get_content('home', 'services', 'title_prefix', 'Structured Scopes.') }} <br>
                         <span
-                            class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Direct</span>
-                        Site Execution.
+                            class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">{{ get_content('home', 'services', 'highlight_word', 'Direct') }}</span>
+                        {{ get_content('home', 'services', 'title_suffix', 'Site Execution.') }}
                     </h2>
                 </div>
 
                 <!-- Supporting Lead Copy -->
                 <div class="max-w-md">
                     <p class="text-slate-300 text-sm sm:text-base font-normal leading-relaxed">
-                        Clear project scopes, realistic floor cycle timelines, and full-time site superintendence for
-                        commercial and structural projects.
+                        {{ get_content('home', 'services', 'subtitle', 'Clear project scopes, realistic floor cycle timelines, and full-time site superintendence for commercial and structural projects.') }}
                     </p>
                 </div>
             </div>
@@ -310,184 +308,73 @@
             <!-- Editorial Service Rows -->
             <div id="services-list" class="divide-y divide-white/10 border-t border-b border-white/10">
 
-                <!-- Service Row 01: Design & Planning -->
-                <a href="#contact"
-                    class="service-row group block py-8 sm:py-10 lg:py-12 transition-all duration-300 hover:bg-white/[0.02]">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
-                        <!-- Index & Line -->
-                        <div class="lg:col-span-2 flex items-center gap-4">
-                            <span
-                                class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-500 group-hover:text-[#f95716] transition-colors tracking-tight">
-                                01
-                            </span>
-                            <span
-                                class="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-[#f95716] transition-all duration-300 hidden sm:block"></span>
-                        </div>
+                @forelse($services as $index => $service)
+                    <!-- Service Row {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}: {{ $service->title }} -->
+                    <a href="#footer"
+                        class="service-row group block py-8 sm:py-10 lg:py-12 transition-all duration-300 hover:bg-white/[0.02]">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
+                            <!-- Index & Line -->
+                            <div class="lg:col-span-2 flex items-center gap-4">
+                                <span
+                                    class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-500 group-hover:text-[#f95716] transition-colors tracking-tight">
+                                    {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                                </span>
+                                <span
+                                    class="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-[#f95716] transition-all duration-300 hidden sm:block"></span>
+                            </div>
 
-                        <!-- Title -->
-                        <div class="lg:col-span-4">
-                            <h3
-                                class="font-heading font-black uppercase text-2xl sm:text-3xl lg:text-[32px] text-white group-hover:text-[#f95716] transition-colors tracking-tight leading-snug">
-                                Design & Planning
-                            </h3>
-                        </div>
+                            <!-- Title -->
+                            <div class="lg:col-span-4">
+                                <h3
+                                    class="font-heading font-black uppercase text-2xl sm:text-3xl lg:text-[32px] text-white group-hover:text-[#f95716] transition-colors tracking-tight leading-snug">
+                                    {{ $service->title }}
+                                </h3>
+                            </div>
 
-                        <!-- Description -->
-                        <div class="lg:col-span-5">
-                            <p
-                                class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed group-hover:text-slate-300 transition-colors">
-                                Project planning, architectural drafting, structural calculations, and technical site
-                                preparation.
-                            </p>
-                        </div>
+                            <!-- Description -->
+                            <div class="lg:col-span-5">
+                                <p
+                                    class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed group-hover:text-slate-300 transition-colors">
+                                    {{ $service->short_description }}
+                                </p>
+                            </div>
 
-                        <!-- Interactive Arrow -->
-                        <div class="lg:col-span-1 flex justify-start lg:justify-end mt-2 lg:mt-0">
-                            <div
-                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/15 flex items-center justify-center text-slate-400 group-hover:border-[#f95716] group-hover:bg-[#f95716] group-hover:text-white transition-all duration-300">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
+                            <!-- Interactive Arrow -->
+                            <div class="lg:col-span-1 flex justify-start lg:justify-end mt-2 lg:mt-0">
+                                <div
+                                    class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/15 flex items-center justify-center text-slate-400 group-hover:border-[#f95716] group-hover:bg-[#f95716] group-hover:text-white transition-all duration-300">
+                                    <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-
-                <!-- Service Row 02: General Construction -->
-                <a href="#contact"
-                    class="service-row group block py-8 sm:py-10 lg:py-12 transition-all duration-300 hover:bg-white/[0.02]">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
-                        <!-- Index & Line -->
-                        <div class="lg:col-span-2 flex items-center gap-4">
-                            <span
-                                class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-500 group-hover:text-[#f95716] transition-colors tracking-tight">
-                                02
-                            </span>
-                            <span
-                                class="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-[#f95716] transition-all duration-300 hidden sm:block"></span>
-                        </div>
-
-                        <!-- Title -->
-                        <div class="lg:col-span-4">
-                            <h3
-                                class="font-heading font-black uppercase text-2xl sm:text-3xl lg:text-[32px] text-white group-hover:text-[#f95716] transition-colors tracking-tight leading-snug">
-                                General Construction
-                            </h3>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="lg:col-span-5">
-                            <p
-                                class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed group-hover:text-slate-300 transition-colors">
-                                Direct site execution, reinforced concrete framing, steel erection, and superintendent
-                                management.
-                            </p>
-                        </div>
-
-                        <!-- Interactive Arrow -->
-                        <div class="lg:col-span-1 flex justify-start lg:justify-end mt-2 lg:mt-0">
-                            <div
-                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/15 flex items-center justify-center text-slate-400 group-hover:border-[#f95716] group-hover:bg-[#f95716] group-hover:text-white transition-all duration-300">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
+                    </a>
+                @empty
+                    <!-- Fallback Service Row 01: Design & Planning -->
+                    <a href="#footer"
+                        class="service-row group block py-8 sm:py-10 lg:py-12 transition-all duration-300 hover:bg-white/[0.02]">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
+                            <div class="lg:col-span-2 flex items-center gap-4">
+                                <span class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-500 group-hover:text-[#f95716] transition-colors tracking-tight">01</span>
+                                <span class="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-[#f95716] transition-all duration-300 hidden sm:block"></span>
+                            </div>
+                            <div class="lg:col-span-4">
+                                <h3 class="font-heading font-black uppercase text-2xl sm:text-3xl lg:text-[32px] text-white group-hover:text-[#f95716] transition-colors tracking-tight leading-snug">Design & Planning</h3>
+                            </div>
+                            <div class="lg:col-span-5">
+                                <p class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed group-hover:text-slate-300 transition-colors">Project planning, architectural drafting, structural calculations, and technical site preparation.</p>
+                            </div>
+                            <div class="lg:col-span-1 flex justify-start lg:justify-end mt-2 lg:mt-0">
+                                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/15 flex items-center justify-center text-slate-400 group-hover:border-[#f95716] group-hover:bg-[#f95716] group-hover:text-white transition-all duration-300">
+                                    <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-
-                <!-- Service Row 03: Project Management -->
-                <a href="#contact"
-                    class="service-row group block py-8 sm:py-10 lg:py-12 transition-all duration-300 hover:bg-white/[0.02]">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
-                        <!-- Index & Line -->
-                        <div class="lg:col-span-2 flex items-center gap-4">
-                            <span
-                                class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-500 group-hover:text-[#f95716] transition-colors tracking-tight">
-                                03
-                            </span>
-                            <span
-                                class="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-[#f95716] transition-all duration-300 hidden sm:block"></span>
-                        </div>
-
-                        <!-- Title -->
-                        <div class="lg:col-span-4">
-                            <h3
-                                class="font-heading font-black uppercase text-2xl sm:text-3xl lg:text-[32px] text-white group-hover:text-[#f95716] transition-colors tracking-tight leading-snug">
-                                Project Management
-                            </h3>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="lg:col-span-5">
-                            <p
-                                class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed group-hover:text-slate-300 transition-colors">
-                                Critical-path milestone scheduling, trade coordination, and site safety compliance.
-                            </p>
-                        </div>
-
-                        <!-- Interactive Arrow -->
-                        <div class="lg:col-span-1 flex justify-start lg:justify-end mt-2 lg:mt-0">
-                            <div
-                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/15 flex items-center justify-center text-slate-400 group-hover:border-[#f95716] group-hover:bg-[#f95716] group-hover:text-white transition-all duration-300">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Service Row 04: Renovation -->
-                <a href="#contact"
-                    class="service-row group block py-8 sm:py-10 lg:py-12 transition-all duration-300 hover:bg-white/[0.02]">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
-                        <!-- Index & Line -->
-                        <div class="lg:col-span-2 flex items-center gap-4">
-                            <span
-                                class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-500 group-hover:text-[#f95716] transition-colors tracking-tight">
-                                04
-                            </span>
-                            <span
-                                class="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-[#f95716] transition-all duration-300 hidden sm:block"></span>
-                        </div>
-
-                        <!-- Title -->
-                        <div class="lg:col-span-4">
-                            <h3
-                                class="font-heading font-black uppercase text-2xl sm:text-3xl lg:text-[32px] text-white group-hover:text-[#f95716] transition-colors tracking-tight leading-snug">
-                                Renovation
-                            </h3>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="lg:col-span-5">
-                            <p
-                                class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed group-hover:text-slate-300 transition-colors">
-                                Interior and structural renovation work, commercial fit-outs, and architectural adaptive
-                                reuse.
-                            </p>
-                        </div>
-
-                        <!-- Interactive Arrow -->
-                        <div class="lg:col-span-1 flex justify-start lg:justify-end mt-2 lg:mt-0">
-                            <div
-                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/15 flex items-center justify-center text-slate-400 group-hover:border-[#f95716] group-hover:bg-[#f95716] group-hover:text-white transition-all duration-300">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                @endforelse
 
             </div>
 
@@ -505,33 +392,32 @@
                 class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 sm:mb-16 lg:mb-20">
                 <div class="parallax-text-layers parallax-layers relative">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-slate-950">PROJECTS</span>
+                    <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'projects', 'watermark', 'PROJECTS') }}</span>
 
                     <!-- Eyebrow -->
                     <div class="parallax-text-front front flex items-center gap-3 mb-4 sm:mb-5 relative z-10">
                         <span
                             class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-slate-950">
-                            RECENT PROJECTS
+                            {{ get_content('home', 'projects', 'badge', 'RECENT PROJECTS') }}
                         </span>
                     </div>
 
                     <!-- Editorial Headline -->
                     <h2
                         class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.02] text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px] relative z-10">
-                        Featured
+                        {{ get_content('home', 'projects', 'title_prefix', 'Featured') }}
                         <span
-                            class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Engineering
+                            class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">{{ get_content('home', 'projects', 'highlight_word', 'Engineering') }}
                         </span> <br />
-                        & Construction Work
+                        {{ get_content('home', 'projects', 'title_suffix', '& Construction Work') }}
                     </h2>
                 </div>
 
                 <!-- Supporting Lead Copy & Filter Tabs -->
                 <div class="flex flex-col sm:items-start lg:items-end space-y-6 max-w-md">
                     <p class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed lg:text-right">
-                        Explore our signature portfolio of commercial towers, industrial logistics facilities, civic
-                        architecture, and civil infrastructure.
+                        {{ get_content('home', 'projects', 'subtitle', 'Explore our signature portfolio of commercial towers, industrial logistics facilities, civic architecture, and civil infrastructure.') }}
                     </p>
 
                     <!-- Category Filter Buttons -->
@@ -544,280 +430,117 @@
                             class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950">
                             Commercial
                         </button>
+                        <button type="button" data-filter="industrial"
+                            class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950">
+                            Industrial
+                        </button>
                         <button type="button" data-filter="structural"
                             class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950">
                             Structural
-                        </button>
-                        <button type="button" data-filter="infrastructure"
-                            class="project-filter-btn px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950">
-                            Infrastructure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- 4-Project Showcase Grid -->
+            <!-- Projects Showcase Grid -->
             <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10" style="perspective: 1400px;">
 
-                <!-- Project 01: Metropolitan Skyway & Commercial Tower -->
-                <article
-                    class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
-                    data-category="commercial">
-                    <div>
-                        <!-- Photo Container with Smooth Hover Zoom -->
-                        <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
-                            <img src="{{ asset('images/project-commercial-tower.jpg') }}"
-                                alt="Metropolitan Skyway & Commercial Tower high-rise under construction"
-                                class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
+                @forelse($projects as $index => $project)
+                    @php
+                        $catSlug = \Illuminate\Support\Str::slug($project->category ?? 'commercial');
+                        $cardImg = $project->main_image_url;
+                        $projectIndex = str_pad($index + 1, 2, '0', STR_PAD_LEFT);
+                        $statusText = $project->completion_date 
+                            ? 'Completed ' . $project->completion_date->format('Y') 
+                            : ($project->status ? $project->status->label() : 'Active');
+                    @endphp
+                    <!-- Project {{ $projectIndex }}: {{ $project->title }} -->
+                    <article
+                        class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
+                        data-category="{{ $catSlug }}">
+                        <div>
+                            <!-- Photo Container with Smooth Hover Zoom -->
+                            <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
+                                <img src="{{ $cardImg }}"
+                                    alt="{{ $project->title }}"
+                                    class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
 
-                            <!-- Top Gradient Overlay & Badges -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none">
+                                <!-- Top Gradient Overlay & Badges -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none">
+                                </div>
+
+                                <!-- Category Pill (Top Left) -->
+                                <div class="absolute top-5 left-5 z-10">
+                                    <span
+                                        class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">
+                                        {{ $project->category ?? 'Commercial' }}
+                                    </span>
+                                </div>
+
+                                <!-- Scale / Location Tag (Bottom Left) -->
+                                @if($project->location)
+                                    <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
+                                        <span class="text-[#f95716] font-bold">{{ $project->client_name ?? 'Featured' }}</span> • {{ $project->location }}
+                                    </div>
+                                @endif
                             </div>
 
-                            <!-- Category Pill (Top Left) -->
-                            <div class="absolute top-5 left-5 z-10">
-                                <span
-                                    class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">
-                                    Commercial High-Rise
-                                </span>
-                            </div>
+                            <!-- Project Content -->
+                            <div class="p-6 sm:p-8">
+                                <div class="flex items-baseline gap-2 mb-2">
+                                    <span class="text-xs font-black text-[#f95716] tracking-widest uppercase">{{ $projectIndex }}</span>
+                                    <span class="w-4 h-[1px] bg-slate-300"></span>
+                                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ $statusText }}</span>
+                                </div>
 
-                            <!-- Scale / Storey Tag (Bottom Left) -->
-                            <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
-                                <span class="text-[#f95716] font-bold">38 Storeys</span> • Downtown Central Core
-                            </div>
-                        </div>
+                                <h3
+                                    class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">
+                                    {{ $project->title }}
+                                </h3>
 
-                        <!-- Project Content -->
-                        <div class="p-6 sm:p-8">
-                            <div class="flex items-baseline gap-2 mb-2">
-                                <span class="text-xs font-black text-[#f95716] tracking-widest uppercase">01</span>
-                                <span class="w-4 h-[1px] bg-slate-300"></span>
-                                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed
-                                    2025</span>
-                            </div>
-
-                            <h3
-                                class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">
-                                Metropolitan Skyway & Commercial Tower
-                            </h3>
-
-                            <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">
-                                38-Storey reinforced concrete core, post-tensioned floor slabs, structural steel crown, and
-                                unitized curtain wall glazing.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Action Link Footer -->
-                    <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2">
-                        <a href="#contact"
-                            class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors">
-                            <span>VIEW CASE STUDY</span>
-                            <svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Project 02: Apex Industrial Logistics Hub -->
-                <article
-                    class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
-                    data-category="structural">
-                    <div>
-                        <!-- Photo Container with Smooth Hover Zoom -->
-                        <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
-                            <img src="{{ asset('images/project-industrial-hub.jpg') }}"
-                                alt="Apex Industrial Logistics Hub pre-engineered steel superstructure"
-                                class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
-
-                            <!-- Top Gradient Overlay & Badges -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none">
-                            </div>
-
-                            <!-- Category Pill (Top Left) -->
-                            <div class="absolute top-5 left-5 z-10">
-                                <span
-                                    class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">
-                                    Heavy Industrial
-                                </span>
-                            </div>
-
-                            <!-- Scale Tag (Bottom Left) -->
-                            <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
-                                <span class="text-[#f95716] font-bold">45,000 m²</span> • Metro Industrial Park
+                                <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">
+                                    {{ $project->short_description }}
+                                </p>
                             </div>
                         </div>
 
-                        <!-- Project Content -->
-                        <div class="p-6 sm:p-8">
-                            <div class="flex items-baseline gap-2 mb-2">
-                                <span class="text-xs font-black text-[#f95716] tracking-widest uppercase">02</span>
-                                <span class="w-4 h-[1px] bg-slate-300"></span>
-                                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed
-                                    2024</span>
-                            </div>
-
-                            <h3
-                                class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">
-                                Apex Industrial Logistics Hub
-                            </h3>
-
-                            <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">
-                                45,000 m² pre-engineered steel superstructure, heavy-duty laser-screeded slab, and automated
-                                multi-bay loading docks.
-                            </p>
+                        <!-- Action Link Footer -->
+                        <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2">
+                            <a href="#footer"
+                                class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors">
+                                <span>VIEW CASE STUDY</span>
+                                <svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M7 17L17 7M17 7H7M17 7V17" />
+                                </svg>
+                            </a>
                         </div>
-                    </div>
-
-                    <!-- Action Link Footer -->
-                    <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2">
-                        <a href="#contact"
-                            class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors">
-                            <span>VIEW CASE STUDY</span>
-                            <svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Project 03: Meridian Waterfront Civic Center -->
-                <article
-                    class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
-                    data-category="commercial">
-                    <div>
-                        <!-- Photo Container with Smooth Hover Zoom -->
-                        <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
-                            <img src="{{ asset('images/project-civic-center.jpg') }}"
-                                alt="Meridian Waterfront Civic Center modern architecture"
-                                class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
-
-                            <!-- Top Gradient Overlay & Badges -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none">
+                    </article>
+                @empty
+                    <!-- Fallback Project 01 -->
+                    <article class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between" data-category="commercial">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
+                                <img src="{{ asset('images/project-commercial-tower.jpg') }}" alt="Commercial Tower" class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
+                                <div class="absolute top-5 left-5 z-10"><span class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">Commercial High-Rise</span></div>
+                                <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide"><span class="text-[#f95716] font-bold">38 Storeys</span> • Downtown Central Core</div>
                             </div>
-
-                            <!-- Category Pill (Top Left) -->
-                            <div class="absolute top-5 left-5 z-10">
-                                <span
-                                    class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">
-                                    Civic & Institutional
-                                </span>
-                            </div>
-
-                            <!-- Scale Tag (Bottom Left) -->
-                            <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
-                                <span class="text-[#f95716] font-bold">LEED Gold</span> • Waterfront Plaza
+                            <div class="p-6 sm:p-8">
+                                <div class="flex items-baseline gap-2 mb-2"><span class="text-xs font-black text-[#f95716] tracking-widest uppercase">01</span><span class="w-4 h-[1px] bg-slate-300"></span><span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed 2025</span></div>
+                                <h3 class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">Metropolitan Skyway & Commercial Tower</h3>
+                                <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">38-Storey reinforced concrete core, post-tensioned floor slabs, structural steel crown, and unitized curtain wall glazing.</p>
                             </div>
                         </div>
-
-                        <!-- Project Content -->
-                        <div class="p-6 sm:p-8">
-                            <div class="flex items-baseline gap-2 mb-2">
-                                <span class="text-xs font-black text-[#f95716] tracking-widest uppercase">03</span>
-                                <span class="w-4 h-[1px] bg-slate-300"></span>
-                                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed
-                                    2025</span>
-                            </div>
-
-                            <h3
-                                class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">
-                                Meridian Waterfront Civic Center
-                            </h3>
-
-                            <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">
-                                Long-span steel truss roof, exposed architectural concrete, seismic dampening systems, and
-                                LEED Gold energy rating.
-                            </p>
+                        <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2">
+                            <a href="#footer" class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors"><span>VIEW CASE STUDY</span><svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17" /></svg></a>
                         </div>
-                    </div>
+                    </article>
+                @endforelse
 
-                    <!-- Action Link Footer -->
-                    <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2">
-                        <a href="#contact"
-                            class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors">
-                            <span>VIEW CASE STUDY</span>
-                            <svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Project 04: Crestview Multi-Tier Transit Terminal -->
-                <article
-                    class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between"
-                    data-category="infrastructure">
-                    <div>
-                        <!-- Photo Container with Smooth Hover Zoom -->
-                        <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
-                            <img src="{{ asset('images/project-transit-terminal.jpg') }}"
-                                alt="Crestview Multi-Tier Transit Terminal engineering"
-                                class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
-
-                            <!-- Top Gradient Overlay & Badges -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none">
-                            </div>
-
-                            <!-- Category Pill (Top Left) -->
-                            <div class="absolute top-5 left-5 z-10">
-                                <span
-                                    class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">
-                                    Civil Infrastructure
-                                </span>
-                            </div>
-
-                            <!-- Scale Tag (Bottom Left) -->
-                            <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
-                                <span class="text-[#f95716] font-bold">Civil Transit</span> • Multi-Tier Canopy
-                            </div>
-                        </div>
-
-                        <!-- Project Content -->
-                        <div class="p-6 sm:p-8">
-                            <div class="flex items-baseline gap-2 mb-2">
-                                <span class="text-xs font-black text-[#f95716] tracking-widest uppercase">04</span>
-                                <span class="w-4 h-[1px] bg-slate-300"></span>
-                                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed
-                                    2024</span>
-                            </div>
-
-                            <h3
-                                class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">
-                                Crestview Multi-Tier Transit Terminal
-                            </h3>
-
-                            <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">
-                                Heavy structural steel cantilever canopies, precast bridge beams, high-traffic terrazzo
-                                flooring, and integrated utility conduits.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Action Link Footer -->
-                    <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2">
-                        <a href="#contact"
-                            class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors">
-                            <span>VIEW CASE STUDY</span>
-                            <svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
+            </div>
 
             </div>
 
@@ -847,26 +570,25 @@
                         <!-- Section Heading -->
                         <div class="parallax-text-layers parallax-layers section-heading white-content relative">
                             <!-- Back Watermark Parallax Text -->
-                            <span class="parallax-text-back back text-white">INTERIOR</span>
+                            <span class="parallax-text-back back text-white">{{ get_content('home', 'features', 'watermark', 'INTERIOR') }}</span>
 
                             <!-- Sub Heading / Eyebrow -->
                             <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 relative z-10">
                                 <span
                                     class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                                 <span class="text-xs font-bold uppercase tracking-[0.2em] text-slate-300">
-                                    Interior Execution
+                                    {{ get_content('home', 'features', 'badge', 'Interior Execution') }}
                                 </span>
                             </div>
 
                             <!-- Section Title -->
                             <h2
                                 class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
-                                Interior Work, <br>
+                                {{ get_content('home', 'features', 'title_prefix', 'Interior Work,') }} <br>
                                 <span
-                                    class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">From
-                                    Plan</span>
+                                    class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">{{ get_content('home', 'features', 'highlight_word', 'From Plan') }}</span>
                                 <br>
-                                To Finish
+                                {{ get_content('home', 'features', 'title_suffix', 'To Finish') }}
                             </h2>
                         </div>
 
@@ -875,7 +597,7 @@
                             class="feature-box bg-white rounded-xl p-5 shadow-2xl text-slate-900 border border-slate-100 max-w-2xs will-change-transform mt-auto">
                             <p
                                 class="desc font-heading font-extrabold uppercase text-slate-950 text-xs sm:text-sm leading-snug tracking-tight mb-3.5">
-                                “Coordinated drywall framing, MEP routing &amp; architectural finishes delivered to spec.”
+                                {{ get_content('home', 'features', 'quote', '“Coordinated drywall framing, MEP routing & architectural finishes delivered to spec.”') }}
                             </p>
 
                             <!-- Author Client Wrap -->
@@ -883,7 +605,7 @@
                                 <ul class="author-list flex items-center -space-x-2.5 list-none p-0 m-0">
                                     <li>
                                         <img src="{{ asset('images/about-engineer-tablet.jpg') }}"
-                                            alt="Alexander Joseph Reed"
+                                            alt="{{ get_content('home', 'features', 'author_name', 'Alexander Joseph Reed') }}"
                                             class="w-10 h-10 rounded-full object-cover object-top border-2 border-white shadow-md bg-slate-900"
                                             loading="lazy" />
                                     </li>
@@ -898,10 +620,9 @@
                                 <div>
                                     <h3
                                         class="name font-heading font-bold uppercase text-slate-950 text-sm sm:text-[15px] leading-tight tracking-tight m-0">
-                                        Alexander Joseph Reed
+                                        {{ get_content('home', 'features', 'author_name', 'Alexander Joseph Reed') }}
                                     </h3>
-                                    <span class="text-xs font-semibold text-slate-500 tracking-wide block mt-0.5">Founder
-                                        &amp; CEO</span>
+                                    <span class="text-xs font-semibold text-slate-500 tracking-wide block mt-0.5">{{ get_content('home', 'features', 'author_title', 'Founder & CEO') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -944,10 +665,10 @@
                                 </div>
                                 <h3
                                     class="title font-heading font-black uppercase text-base sm:text-xl text-white tracking-tight leading-snug mb-1 group-hover:text-[#f95716] transition-colors">
-                                    Structural Accuracy & Detailing
+                                    {{ get_content('home', 'features', 'feature_1_title', 'Structural Accuracy & Detailing') }}
                                 </h3>
                                 <p class="desc text-slate-400 text-xs sm:text-[13px] font-normal leading-relaxed m-0">
-                                    Detailed shop drawings and rebar schedules for clean on-site fabrication.
+                                    {{ get_content('home', 'features', 'feature_1_desc', 'Detailed shop drawings and rebar schedules for clean on-site fabrication.') }}
                                 </p>
                             </div>
 
@@ -964,10 +685,10 @@
                                 </div>
                                 <h3
                                     class="title font-heading font-black uppercase text-base sm:text-xl text-white tracking-tight leading-snug mb-1 group-hover:text-[#f95716] transition-colors">
-                                    Spatial & MEP Coordination
+                                    {{ get_content('home', 'features', 'feature_2_title', 'Spatial & MEP Coordination') }}
                                 </h3>
                                 <p class="desc text-slate-400 text-xs sm:text-[13px] font-normal leading-relaxed m-0">
-                                    Clash-free routing between structural reinforced concrete and mechanical runs.
+                                    {{ get_content('home', 'features', 'feature_2_desc', 'Clash-free routing between structural reinforced concrete and mechanical runs.') }}
                                 </p>
                             </div>
 
@@ -982,10 +703,10 @@
                                 </div>
                                 <h3
                                     class="title font-heading font-black uppercase text-base sm:text-xl text-white tracking-tight leading-snug mb-1 group-hover:text-[#f95716] transition-colors">
-                                    Modular Prefabrication
+                                    {{ get_content('home', 'features', 'feature_3_title', 'Modular Prefabrication') }}
                                 </h3>
                                 <p class="desc text-slate-400 text-xs sm:text-[13px] font-normal leading-relaxed m-0">
-                                    Pre-assembled steel sections reducing active crane time and floor cycles.
+                                    {{ get_content('home', 'features', 'feature_3_desc', 'Pre-assembled steel sections reducing active crane time and floor cycles.') }}
                                 </p>
                             </div>
 
@@ -1017,7 +738,7 @@
                 <div id="why-choose-left-col" class="lg:col-span-5 flex flex-col justify-between space-y-6">
                     <div class="parallax-text-layers parallax-layers relative">
                         <!-- Back Watermark Parallax Text -->
-                        <span class="parallax-text-back back text-slate-950">EXPERTISE</span>
+                        <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'why_choose_us', 'watermark', 'EXPERTISE') }}</span>
 
                         <!-- Sub Heading / Eyebrow -->
                         <div
@@ -1025,24 +746,23 @@
                             <span
                                 class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                                Our Approach
+                                {{ get_content('home', 'why_choose_us', 'badge', 'Our Approach') }}
                             </span>
                         </div>
 
                         <!-- Section Title -->
                         <h2
                             class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
-                            Practical Construction, <br>
+                            {{ get_content('home', 'why_choose_us', 'title_prefix', 'Practical Construction,') }} <br>
                             <span
-                                class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Carefully</span>
-                            Delivered
+                                class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">{{ get_content('home', 'why_choose_us', 'highlight_word', 'Carefully') }}</span>
+                            {{ get_content('home', 'why_choose_us', 'title_suffix', 'Delivered') }}
                         </h2>
                     </div>
 
                     <!-- Lead Paragraph -->
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mt-4 sm:mt-6 font-normal">
-                        We manage builds through accurate material planning, direct trade superintendence, and clear
-                        milestone reporting from groundbreaking to project closeout.
+                        {{ get_content('home', 'why_choose_us', 'description', 'We manage builds through accurate material planning, direct trade superintendence, and clear milestone reporting from groundbreaking to project closeout.') }}
                     </p>
 
                     <!-- Bottom-Left: Stat Card (22 Completed Contracts) -->
@@ -1060,12 +780,12 @@
                         <div>
                             <div
                                 class="flex items-baseline font-heading font-black text-4xl sm:text-5xl text-slate-950 tracking-tight leading-none">
-                                <span id="why-choose-counter" data-target="22">0</span>
-                                <span class="text-[#f95716]">+</span>
+                                <span id="why-choose-counter" data-target="{{ get_content('home', 'why_choose_us', 'stat_count', '22') }}">0</span>
+                                <span class="text-[#f95716]">{{ get_content('home', 'why_choose_us', 'stat_suffix', '+') }}</span>
                             </div>
                             <p
                                 class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-slate-500 mt-1 sm:mt-1.5 m-0">
-                                Completed Builds
+                                {{ get_content('home', 'why_choose_us', 'stat_label', 'Completed Builds') }}
                             </p>
                         </div>
                     </div>
@@ -1108,11 +828,10 @@
                             </div>
                             <h3
                                 class="font-heading font-black uppercase text-lg sm:text-xl text-slate-900 tracking-tight leading-snug mb-1 group-hover:text-[#f95716] transition-colors">
-                                Tested Materials &amp; Sourcing
+                                {{ get_content('home', 'why_choose_us', 'feature_1_title', 'Tested Materials & Sourcing') }}
                             </h3>
                             <p class="text-slate-500 text-xs sm:text-[13px] font-normal leading-relaxed m-0">
-                                Certified grade structural steel, batch-tested concrete, and verified supplier supply
-                                chains.
+                                {{ get_content('home', 'why_choose_us', 'feature_1_desc', 'Certified grade structural steel, batch-tested concrete, and verified supplier supply chains.') }}
                             </p>
                         </div>
 
@@ -1130,11 +849,10 @@
                             </div>
                             <h3
                                 class="font-heading font-black uppercase text-lg sm:text-xl text-slate-900 tracking-tight leading-snug mb-1 group-hover:text-[#f95716] transition-colors">
-                                On-Site Superintendent Control
+                                {{ get_content('home', 'why_choose_us', 'feature_2_title', 'On-Site Superintendent Control') }}
                             </h3>
                             <p class="text-slate-500 text-xs sm:text-[13px] font-normal leading-relaxed m-0">
-                                Full-time field engineers reviewing structural tolerances, subcontractor safety, and
-                                daily QA logs.
+                                {{ get_content('home', 'why_choose_us', 'feature_2_desc', 'Full-time field engineers reviewing structural tolerances, subcontractor safety, and daily QA logs.') }}
                             </p>
                         </div>
 
@@ -1185,7 +903,7 @@
                 <div id="experience-right-col" class="lg:col-span-6 flex flex-col justify-center space-y-6">
                     <div class="parallax-text-layers parallax-layers relative">
                         <!-- Back Watermark Parallax Text -->
-                        <span class="parallax-text-back back text-white">DELIVERY</span>
+                        <span class="parallax-text-back back text-white">{{ get_content('home', 'experience', 'watermark', 'DELIVERY') }}</span>
 
                         <!-- Sub Heading / Eyebrow -->
                         <div
@@ -1193,34 +911,34 @@
                             <span
                                 class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                                Project Track Record
+                                {{ get_content('home', 'experience', 'badge', 'Project Track Record') }}
                             </span>
                         </div>
 
                         <!-- Section Title -->
                         <h2
                             class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
-                            Planned Work. <br>
+                            {{ get_content('home', 'experience', 'title_prefix', 'Planned Work.') }} <br>
                             <span
-                                class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Controlled</span>
-                            Execution.
+                                class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">{{ get_content('home', 'experience', 'highlight_word', 'Controlled') }}</span>
+                            {{ get_content('home', 'experience', 'title_suffix', 'Execution.') }}
                         </h2>
                     </div>
 
                     <!-- Action CTA Buttons -->
                     <div class="flex flex-wrap items-center gap-4 pt-2 sm:pt-4">
-                        <a href="#footer"
+                        <a href="{{ get_content('home', 'experience', 'primary_btn_url', '#footer') }}"
                             class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#f95716] hover:bg-[#ea4907] text-white font-heading font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-[#f95716]/25 transition-all duration-300 group">
-                            <span>DISCUSS A PROJECT</span>
+                            <span>{{ get_content('home', 'experience', 'primary_btn_text', 'DISCUSS A PROJECT') }}</span>
                             <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                                     d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
                         </a>
-                        <a href="#projects"
+                        <a href="{{ get_content('home', 'experience', 'secondary_btn_url', '#projects') }}"
                             class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/20 hover:border-[#f95716] hover:bg-[#f95716]/10 text-white font-heading font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300">
-                            <span>VIEW RECENT SITES</span>
+                            <span>{{ get_content('home', 'experience', 'secondary_btn_text', 'VIEW RECENT SITES') }}</span>
                         </a>
                     </div>
                 </div>
@@ -1245,17 +963,17 @@
                     <!-- Big Numeric Counter -->
                     <div
                         class="font-heading font-black text-4xl sm:text-5xl text-slate-950 tracking-tight leading-none mb-3">
-                        <span class="exp-counter" data-target="240">0</span><span class="text-[#f95716]">+</span>
+                        <span class="exp-counter" data-target="{{ get_content('home', 'experience', 'stat_1_count', '240') }}">0</span><span class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_1_suffix', '+') }}</span>
                     </div>
 
                     <!-- Title & Context -->
                     <div>
                         <h3
                             class="font-heading font-black uppercase text-base sm:text-lg text-slate-950 tracking-tight leading-snug m-0">
-                            Commercial Builds
+                            {{ get_content('home', 'experience', 'stat_1_title', 'Commercial Builds') }}
                         </h3>
                         <p class="text-slate-500 text-xs font-normal leading-relaxed mt-1 m-0">
-                            Delivered under direct site supervision.
+                            {{ get_content('home', 'experience', 'stat_1_desc', 'Delivered under direct site supervision.') }}
                         </p>
                     </div>
                 </div>
@@ -1273,17 +991,17 @@
 
                     <!-- Big Numeric Counter -->
                     <div class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight leading-none mb-3">
-                        <span class="exp-counter" data-target="99">0</span><span class="text-white">%</span>
+                        <span class="exp-counter" data-target="{{ get_content('home', 'experience', 'stat_2_count', '99') }}">0</span><span class="text-white">{{ get_content('home', 'experience', 'stat_2_suffix', '%') }}</span>
                     </div>
 
                     <!-- Title & Context -->
                     <div>
                         <h3
                             class="font-heading font-black uppercase text-base sm:text-lg text-white tracking-tight leading-snug m-0">
-                            Milestone Compliance
+                            {{ get_content('home', 'experience', 'stat_2_title', 'Milestone Compliance') }}
                         </h3>
                         <p class="text-white/80 text-xs font-normal leading-relaxed mt-1 m-0">
-                            On-schedule stage completions &amp; handovers.
+                            {{ get_content('home', 'experience', 'stat_2_desc', 'On-schedule stage completions & handovers.') }}
                         </p>
                     </div>
                 </div>
@@ -1301,17 +1019,17 @@
 
                     <!-- Big Numeric Counter -->
                     <div class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight leading-none mb-3">
-                        <span class="exp-counter" data-target="12">0</span><span class="text-[#f95716]">+</span>
+                        <span class="exp-counter" data-target="{{ get_content('home', 'experience', 'stat_3_count', '12') }}">0</span><span class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_3_suffix', '+') }}</span>
                     </div>
 
                     <!-- Title & Context -->
                     <div>
                         <h3
                             class="font-heading font-black uppercase text-base sm:text-lg text-white tracking-tight leading-snug m-0">
-                            Years In Field
+                            {{ get_content('home', 'experience', 'stat_3_title', 'Years In Field') }}
                         </h3>
                         <p class="text-slate-400 text-xs font-normal leading-relaxed mt-1 m-0">
-                            Continuous active contractor operations.
+                            {{ get_content('home', 'experience', 'stat_3_desc', 'Continuous active contractor operations.') }}
                         </p>
                     </div>
                 </div>
@@ -1330,17 +1048,17 @@
                     <!-- Big Numeric Counter -->
                     <div
                         class="font-heading font-black text-4xl sm:text-5xl text-slate-950 tracking-tight leading-none mb-3">
-                        <span class="exp-counter" data-target="180">0</span><span class="text-[#f95716]">+</span>
+                        <span class="exp-counter" data-target="{{ get_content('home', 'experience', 'stat_4_count', '180') }}">0</span><span class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_4_suffix', '+') }}</span>
                     </div>
 
                     <!-- Title & Context -->
                     <div>
                         <h3
                             class="font-heading font-black uppercase text-base sm:text-lg text-slate-950 tracking-tight leading-snug m-0">
-                            Trade Specialists
+                            {{ get_content('home', 'experience', 'stat_4_title', 'Trade Specialists') }}
                         </h3>
                         <p class="text-slate-500 text-xs font-normal leading-relaxed mt-1 m-0">
-                            Certified steel erectors, formworkers &amp; operators.
+                            {{ get_content('home', 'experience', 'stat_4_desc', 'Certified steel erectors, formworkers & operators.') }}
                         </p>
                     </div>
                 </div>
@@ -1368,24 +1086,21 @@
             <div id="testimonials-header"
                 class="parallax-text-layers parallax-layers mb-10 sm:mb-14 will-change-transform relative">
                 <!-- Back Watermark Parallax Text -->
-                <span class="parallax-text-back back text-slate-950">FEEDBACK</span>
+                <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'testimonials', 'watermark', 'FEEDBACK') }}</span>
 
                 <!-- Sub Heading / Eyebrow -->
                 <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
                     <span
                         class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                     <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                        Client Feedback
+                        {{ get_content('home', 'testimonials', 'eyebrow', 'Client Feedback') }}
                     </span>
                 </div>
 
                 <!-- Section Title -->
                 <h2
                     class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
-                    Direct Feedback From <br>
-                    Project <span
-                        class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Owners</span>
-                    &amp; Developers
+                    {!! get_content('home', 'testimonials', 'title', 'Direct Feedback From <br> Project <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Owners</span> &amp; Developers') !!}
                 </h2>
             </div>
 
@@ -1396,166 +1111,102 @@
                 <div class="lg:col-span-9 w-full min-w-0">
                     <div id="testimonial-swiper-box" class="swiper testimonial-swiper w-full h-full will-change-transform">
                         <div class="swiper-wrapper">
+                            @forelse($testimonials as $testimonial)
+                                <div class="swiper-slide h-full">
+                                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-stretch h-full">
+                                        <!-- Quote Card (7 Cols) -->
+                                        <div class="md:col-span-7 flex flex-col">
+                                            <div
+                                                class="bg-[#f4f3ef] rounded-xl p-7 sm:p-9 lg:p-10 border border-slate-100 flex flex-col justify-between h-full">
+                                                <div>
+                                                    <!-- Double Quote Mark Icon -->
+                                                    <div class="text-[#f95716] mb-5 sm:mb-6">
+                                                        <svg class="w-10 h-10 sm:w-12 sm:h-12 opacity-90" viewBox="0 0 24 24"
+                                                            fill="currentColor">
+                                                            <path
+                                                                d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                                                        </svg>
+                                                    </div>
 
-                            <!-- Slide 1: Aylani Rowyn -->
-                            <div class="swiper-slide h-full">
-                                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-stretch h-full">
-                                    <!-- Quote Card (7 Cols) -->
-                                    <div class="md:col-span-7 flex flex-col">
-                                        <div
-                                            class="bg-[#f4f3ef] rounded-xl p-7 sm:p-9 lg:p-10 border border-slate-100 flex flex-col justify-between h-full">
-                                            <div>
-                                                <!-- Double Quote Mark Icon -->
-                                                <div class="text-[#f95716] mb-5 sm:mb-6">
-                                                    <svg class="w-10 h-10 sm:w-12 sm:h-12 opacity-90" viewBox="0 0 24 24"
-                                                        fill="currentColor">
-                                                        <path
-                                                            d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                                                    </svg>
+                                                    <p
+                                                        class="text-slate-800 text-sm sm:text-base lg:text-lg font-normal leading-relaxed m-0">
+                                                        {{ $testimonial->review }}
+                                                    </p>
                                                 </div>
 
-                                                <p
-                                                    class="text-slate-800 text-sm sm:text-base lg:text-lg font-normal leading-relaxed m-0">
-                                                    From site preparation through structural topping-out, their
-                                                    superintendent
-                                                    team maintained rigid milestone control, direct subcontractor
-                                                    management,
-                                                    and clear weekly lookahead schedules on our multi-storey commercial
-                                                    build.
-                                                </p>
-                                            </div>
-
-                                            <div class="pt-6 sm:pt-8 border-t border-slate-200/60 mt-6 sm:mt-8">
-                                                <h3
-                                                    class="font-heading font-black uppercase text-slate-950 text-lg sm:text-xl tracking-tight leading-tight m-0">
-                                                    Aylani Rowyn
-                                                </h3>
-                                                <span
-                                                    class="text-xs sm:text-[13px] font-semibold text-slate-500 tracking-wide block mt-1">
-                                                    Founder &amp; CEO, Horizon Developments
-                                                </span>
+                                                <div class="pt-6 sm:pt-8 border-t border-slate-200/60 mt-6 sm:mt-8">
+                                                    <h3
+                                                        class="font-heading font-black uppercase text-slate-950 text-lg sm:text-xl tracking-tight leading-tight m-0">
+                                                        {{ $testimonial->client_name }}
+                                                    </h3>
+                                                    <span
+                                                        class="text-xs sm:text-[13px] font-semibold text-slate-500 tracking-wide block mt-1">
+                                                        {{ $testimonial->designation }}{{ $testimonial->designation && $testimonial->company_name ? ', ' : '' }}{{ $testimonial->company_name }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Client Portrait Photo (5 Cols) -->
-                                    <div class="md:col-span-5 flex flex-col h-full">
-                                        <div
-                                            class="relative w-full h-full min-h-[260px] md:min-h-0 rounded-xl overflow-hidden ring-1 ring-slate-900/10 bg-slate-100">
-                                            <img src="{{ asset('images/testimonial-1.jpg') }}" alt="Aylani Rowyn"
-                                                class="w-full h-full object-cover object-center block" loading="lazy" />
+                                        <!-- Client Portrait Photo (5 Cols) -->
+                                        <div class="md:col-span-5 flex flex-col h-full">
                                             <div
-                                                class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none">
+                                                class="relative w-full h-full min-h-[260px] md:min-h-0 rounded-xl overflow-hidden ring-1 ring-slate-900/10 bg-slate-100">
+                                                <img src="{{ $testimonial->client_photo_url ?: asset('images/testimonial-' . (($loop->index % 3) + 1) . '.jpg') }}" alt="{{ $testimonial->client_name }}"
+                                                    class="w-full h-full object-cover object-center block" loading="lazy" />
+                                                <div
+                                                    class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Slide 2: Elena Rostova -->
-                            <div class="swiper-slide h-full">
-                                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-stretch h-full">
-                                    <!-- Quote Card (7 Cols) -->
-                                    <div class="md:col-span-7 flex flex-col">
-                                        <div
-                                            class="bg-[#f4f3ef] rounded-xl p-7 sm:p-9 lg:p-10 border border-slate-100 flex flex-col justify-between h-full">
-                                            <div>
-                                                <!-- Double Quote Mark Icon -->
-                                                <div class="text-[#f95716] mb-5 sm:mb-6">
-                                                    <svg class="w-10 h-10 sm:w-12 sm:h-12 opacity-90" viewBox="0 0 24 24"
-                                                        fill="currentColor">
-                                                        <path
-                                                            d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                                                    </svg>
+                            @empty
+                                <!-- Fallback Slide -->
+                                <div class="swiper-slide h-full">
+                                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-stretch h-full">
+                                        <div class="md:col-span-7 flex flex-col">
+                                            <div
+                                                class="bg-[#f4f3ef] rounded-xl p-7 sm:p-9 lg:p-10 border border-slate-100 flex flex-col justify-between h-full">
+                                                <div>
+                                                    <div class="text-[#f95716] mb-5 sm:mb-6">
+                                                        <svg class="w-10 h-10 sm:w-12 sm:h-12 opacity-90" viewBox="0 0 24 24"
+                                                            fill="currentColor">
+                                                            <path
+                                                                d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                                                        </svg>
+                                                    </div>
+                                                    <p
+                                                        class="text-slate-800 text-sm sm:text-base lg:text-lg font-normal leading-relaxed m-0">
+                                                        From site preparation through structural topping-out, their
+                                                        superintendent team maintained rigid milestone control, direct subcontractor
+                                                        management, and clear weekly lookahead schedules.
+                                                    </p>
                                                 </div>
-
-                                                <p
-                                                    class="text-slate-800 text-sm sm:text-base lg:text-lg font-normal leading-relaxed m-0">
-                                                    From initial structural calculations through multi-tier steel framing
-                                                    and final QA handover, their engineering team demonstrated unmatched
-                                                    precision, proactive communication, and zero milestone delay.
-                                                </p>
-                                            </div>
-
-                                            <div class="pt-6 sm:pt-8 border-t border-slate-200/60 mt-6 sm:mt-8">
-                                                <h3
-                                                    class="font-heading font-black uppercase text-slate-950 text-lg sm:text-xl tracking-tight leading-tight m-0">
-                                                    Elena Rostova
-                                                </h3>
-                                                <span
-                                                    class="text-xs sm:text-[13px] font-semibold text-slate-500 tracking-wide block mt-1">
-                                                    Director of Infrastructure, Metro Transit Group
-                                                </span>
+                                                <div class="pt-6 sm:pt-8 border-t border-slate-200/60 mt-6 sm:mt-8">
+                                                    <h3
+                                                        class="font-heading font-black uppercase text-slate-950 text-lg sm:text-xl tracking-tight leading-tight m-0">
+                                                        Aylani Rowyn
+                                                    </h3>
+                                                    <span
+                                                        class="text-xs sm:text-[13px] font-semibold text-slate-500 tracking-wide block mt-1">
+                                                        Founder &amp; CEO, Horizon Developments
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <!-- Client Portrait Photo (5 Cols) -->
-                                    <div class="md:col-span-5 flex flex-col h-full">
-                                        <div
-                                            class="relative w-full h-full min-h-[260px] md:min-h-0 rounded-xl overflow-hidden ring-1 ring-slate-900/10 bg-slate-100">
-                                            <img src="{{ asset('images/testimonial-2.jpg') }}" alt="Elena Rostova"
-                                                class="w-full h-full object-cover object-center block" loading="lazy" />
+                                        <div class="md:col-span-5 flex flex-col h-full">
                                             <div
-                                                class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none">
+                                                class="relative w-full h-full min-h-[260px] md:min-h-0 rounded-xl overflow-hidden ring-1 ring-slate-900/10 bg-slate-100">
+                                                <img src="{{ asset('images/testimonial-1.jpg') }}" alt="Aylani Rowyn"
+                                                    class="w-full h-full object-cover object-center block" loading="lazy" />
+                                                <div
+                                                    class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Slide 3: David Sterling -->
-                            <div class="swiper-slide h-full">
-                                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-stretch h-full">
-                                    <!-- Quote Card (7 Cols) -->
-                                    <div class="md:col-span-7 flex flex-col">
-                                        <div
-                                            class="bg-[#f4f3ef] rounded-xl p-7 sm:p-9 lg:p-10 border border-slate-100 flex flex-col justify-between h-full">
-                                            <div>
-                                                <!-- Double Quote Mark Icon -->
-                                                <div class="text-[#f95716] mb-5 sm:mb-6">
-                                                    <svg class="w-10 h-10 sm:w-12 sm:h-12 opacity-90" viewBox="0 0 24 24"
-                                                        fill="currentColor">
-                                                        <path
-                                                            d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                                                    </svg>
-                                                </div>
-
-                                                <p
-                                                    class="text-slate-800 text-sm sm:text-base lg:text-lg font-normal leading-relaxed m-0">
-                                                    Their team managed our 45,000 m² industrial logistics facility with
-                                                    exceptional discipline. Clear weekly BIM reporting, proactive safety
-                                                    management, and flawless execution from ground-breaking to handover.
-                                                </p>
-                                            </div>
-
-                                            <div class="pt-6 sm:pt-8 border-t border-slate-200/60 mt-6 sm:mt-8">
-                                                <h3
-                                                    class="font-heading font-black uppercase text-slate-950 text-lg sm:text-xl tracking-tight leading-tight m-0">
-                                                    David Sterling
-                                                </h3>
-                                                <span
-                                                    class="text-xs sm:text-[13px] font-semibold text-slate-500 tracking-wide block mt-1">
-                                                    Managing Partner, Apex Logistics Real Estate
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Client Portrait Photo (5 Cols) -->
-                                    <div class="md:col-span-5 flex flex-col h-full">
-                                        <div
-                                            class="relative w-full h-full min-h-[260px] md:min-h-0 rounded-xl overflow-hidden ring-1 ring-slate-900/10 bg-slate-100">
-                                            <img src="{{ asset('images/testimonial-3.jpg') }}" alt="David Sterling"
-                                                class="w-full h-full object-cover object-center block" loading="lazy" />
-                                            <div
-                                                class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -1568,10 +1219,10 @@
                     <div>
                         <div
                             class="font-heading font-black text-5xl sm:text-7xl lg:text-8xl text-slate-950 tracking-tight leading-none mb-3">
-                            <span id="testimonial-counter" data-target="12">0</span><span class="text-[#f95716]">+</span>
+                            <span id="testimonial-counter" data-target="{{ get_content('home', 'testimonials', 'stat_count', '12') }}">0</span><span class="text-[#f95716]">{{ get_content('home', 'testimonials', 'stat_suffix', '+') }}</span>
                         </div>
                         <p class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed m-0 max-w-xs">
-                            Years of repeat commercial developer partnerships and general contracting delivery.
+                            {{ get_content('home', 'testimonials', 'stat_desc', 'Years of repeat commercial developer partnerships and general contracting delivery.') }}
                         </p>
                     </div>
 
@@ -1622,32 +1273,29 @@
                 <!-- Left: Eyebrow + Headline -->
                 <div class="parallax-text-layers parallax-layers max-w-2xl relative">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-slate-950">UPDATES</span>
+                    <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'news', 'watermark', 'UPDATES') }}</span>
 
                     <!-- Sub Heading / Eyebrow -->
                     <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
                         <span
                             class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                            Field Logs &amp; Updates
+                            {{ get_content('home', 'news', 'eyebrow', 'Field Logs & Updates') }}
                         </span>
                     </div>
 
                     <!-- Section Title -->
                     <h2
                         class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] m-0 relative z-10">
-                        Jobsite Notes, Methods &amp; <br>
-                        <span
-                            class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Field</span>
-                        Updates
+                        {!! get_content('home', 'news', 'title', 'Jobsite Notes, Methods &amp; <br> <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Field</span> Updates') !!}
                     </h2>
                 </div>
 
                 <!-- Right: All Field Notes Pill CTA -->
                 <div class="flex-shrink-0">
-                    <a href="#news"
+                    <a href="{{ get_content('home', 'news', 'button_url', '#news') }}"
                         class="group inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-slate-950 hover:bg-[#f95716] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-[#f95716]/25">
-                        <span>All Field Notes</span>
+                        <span>{{ get_content('home', 'news', 'button_text', 'All Field Notes') }}</span>
                         <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -1659,172 +1307,84 @@
 
             <!-- 3-Column News / Insights Grid -->
             <div id="news-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-
-                <!-- Card 1: Site Progress Update -->
-                <article
-                    class="news-card group bg-[#f4f3ef] rounded-2xl p-5 sm:p-6 border border-slate-200/80 flex flex-col justify-between transition-all duration-300 hover:border-slate-300/80 will-change-transform">
-                    <div>
-                        <!-- Card Image Wrapper -->
-                        <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-slate-200">
-                            <img src="{{ asset('images/blog-1.jpg') }}"
-                                alt="Site Progress Update — Metropolitan Commercial Tower"
-                                class="news-card-img w-full h-full object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
-                                loading="lazy" />
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none">
+                @forelse($articles as $article)
+                    <article
+                        class="news-card group bg-[#f4f3ef] rounded-2xl p-5 sm:p-6 border border-slate-200/80 flex flex-col justify-between transition-all duration-300 hover:border-slate-300/80 will-change-transform">
+                        <div>
+                            <!-- Card Image Wrapper -->
+                            <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-slate-200">
+                                <img src="{{ $article->image_url }}"
+                                    alt="{{ $article->title }}"
+                                    class="news-card-img w-full h-full object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                                    loading="lazy" />
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none">
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Meta: Date Badge & Category -->
-                        <div class="flex items-center gap-3 mb-4">
-                            <span
-                                class="inline-block px-3 py-1 rounded-md bg-white text-slate-800 text-xs font-bold uppercase tracking-wider ring-1 ring-slate-900/5 shadow-sm">
-                                Feb 18, 2026
-                            </span>
-                            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                                Site Progress • 3 min
-                            </span>
-                        </div>
-
-                        <!-- Article Title -->
-                        <h3
-                            class="font-heading font-bold uppercase text-slate-950 text-xl sm:text-2xl tracking-tight leading-tight mb-3 transition-colors duration-200 group-hover:text-[#f95716]">
-                            <a href="#news" class="focus:outline-none">
-                                Site Progress Update — Metropolitan Commercial Tower
-                            </a>
-                        </h3>
-
-                        <!-- Excerpt -->
-                        <p class="text-slate-600 text-sm font-normal leading-relaxed m-0 mb-6 line-clamp-2">
-                            Core shear wall concrete pours reach level 24 with perimeter curtain wall installation
-                            actively progressing on lower tiers.
-                        </p>
-                    </div>
-
-                    <!-- Read More Action Link -->
-                    <div class="pt-4 border-t border-slate-200/70">
-                        <a href="#news"
-                            class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 group-hover:text-[#f95716] transition-colors duration-200">
-                            <span>Read Update</span>
-                            <svg class="w-4 h-4 text-[#f95716] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Card 2: Choosing Structural Systems -->
-                <article
-                    class="news-card group bg-[#f4f3ef] rounded-2xl p-5 sm:p-6 border border-slate-200/80 flex flex-col justify-between transition-all duration-300 hover:border-slate-300/80 will-change-transform">
-                    <div>
-                        <!-- Card Image Wrapper -->
-                        <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-slate-200">
-                            <img src="{{ asset('images/blog-2.jpg') }}"
-                                alt="Choosing Structural Systems for Large Buildings"
-                                class="news-card-img w-full h-full object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
-                                loading="lazy" />
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none">
+                            <!-- Meta: Date Badge & Category -->
+                            <div class="flex items-center gap-3 mb-4">
+                                <span
+                                    class="inline-block px-3 py-1 rounded-md bg-white text-slate-800 text-xs font-bold uppercase tracking-wider ring-1 ring-slate-900/5 shadow-sm">
+                                    {{ $article->published_at ? $article->published_at->format('M d, Y') : now()->format('M d, Y') }}
+                                </span>
+                                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                    {{ $article->category?->name ?? 'Field Log' }} • {{ $article->read_time ?? 3 }} min
+                                </span>
                             </div>
+
+                            <!-- Article Title -->
+                            <h3
+                                class="font-heading font-bold uppercase text-slate-950 text-xl sm:text-2xl tracking-tight leading-tight mb-3 transition-colors duration-200 group-hover:text-[#f95716]">
+                                <a href="#news" class="focus:outline-none">
+                                    {{ $article->title }}
+                                </a>
+                            </h3>
+
+                            <!-- Excerpt -->
+                            <p class="text-slate-600 text-sm font-normal leading-relaxed m-0 mb-6 line-clamp-2">
+                                {{ $article->summary }}
+                            </p>
                         </div>
 
-                        <!-- Meta: Date Badge & Category -->
-                        <div class="flex items-center gap-3 mb-4">
-                            <span
-                                class="inline-block px-3 py-1 rounded-md bg-white text-slate-800 text-xs font-bold uppercase tracking-wider ring-1 ring-slate-900/5 shadow-sm">
-                                Jan 29, 2026
-                            </span>
-                            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                                Engineering • 5 min
-                            </span>
-                        </div>
-
-                        <!-- Article Title -->
-                        <h3
-                            class="font-heading font-bold uppercase text-slate-950 text-xl sm:text-2xl tracking-tight leading-tight mb-3 transition-colors duration-200 group-hover:text-[#f95716]">
-                            <a href="#news" class="focus:outline-none">
-                                Choosing Structural Systems for Large Buildings
+                        <!-- Read More Action Link -->
+                        <div class="pt-4 border-t border-slate-200/70">
+                            <a href="#news"
+                                class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 group-hover:text-[#f95716] transition-colors duration-200">
+                                <span>Read Update</span>
+                                <svg class="w-4 h-4 text-[#f95716] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M7 17L17 7M17 7H7M17 7V17" />
+                                </svg>
                             </a>
-                        </h3>
-
-                        <!-- Excerpt -->
-                        <p class="text-slate-600 text-sm font-normal leading-relaxed m-0 mb-6 line-clamp-2">
-                            A comparative look at cast-in-place post-tensioned concrete versus structural steel framing for
-                            floor vibration control and MEP integration.
-                        </p>
-                    </div>
-
-                    <!-- Read More Action Link -->
-                    <div class="pt-4 border-t border-slate-200/70">
-                        <a href="#news"
-                            class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 group-hover:text-[#f95716] transition-colors duration-200">
-                            <span>Read Article</span>
-                            <svg class="w-4 h-4 text-[#f95716] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Card 3: Project Handover -->
-                <article
-                    class="news-card group bg-[#f4f3ef] rounded-2xl p-5 sm:p-6 border border-slate-200/80 flex flex-col justify-between transition-all duration-300 hover:border-slate-300/80 will-change-transform">
-                    <div>
-                        <!-- Card Image Wrapper -->
-                        <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-slate-200">
-                            <img src="{{ asset('images/blog-3.jpg') }}"
-                                alt="Project Handover — Apex Industrial Logistics Hub"
-                                class="news-card-img w-full h-full object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
-                                loading="lazy" />
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none">
+                        </div>
+                    </article>
+                @empty
+                    <!-- Fallback if no articles found -->
+                    <article class="news-card group bg-[#f4f3ef] rounded-2xl p-5 sm:p-6 border border-slate-200/80 flex flex-col justify-between transition-all duration-300 hover:border-slate-300/80 will-change-transform">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-slate-200">
+                                <img src="{{ asset('images/blog-1.jpg') }}" alt="Site Progress Update" class="news-card-img w-full h-full object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform" loading="lazy" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
                             </div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="inline-block px-3 py-1 rounded-md bg-white text-slate-800 text-xs font-bold uppercase tracking-wider ring-1 ring-slate-900/5 shadow-sm">{{ now()->format('M d, Y') }}</span>
+                                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Site Progress • 3 min</span>
+                            </div>
+                            <h3 class="font-heading font-bold uppercase text-slate-950 text-xl sm:text-2xl tracking-tight leading-tight mb-3 transition-colors duration-200 group-hover:text-[#f95716]">
+                                <a href="#news" class="focus:outline-none">Metropolitan Commercial Tower Progress</a>
+                            </h3>
+                            <p class="text-slate-600 text-sm font-normal leading-relaxed m-0 mb-6 line-clamp-2">Core shear wall concrete pours reach level 24 with perimeter curtain wall installation actively progressing.</p>
                         </div>
-
-                        <!-- Meta: Date Badge & Category -->
-                        <div class="flex items-center gap-3 mb-4">
-                            <span
-                                class="inline-block px-3 py-1 rounded-md bg-white text-slate-800 text-xs font-bold uppercase tracking-wider ring-1 ring-slate-900/5 shadow-sm">
-                                Jan 12, 2026
-                            </span>
-                            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                                Completion • 4 min
-                            </span>
-                        </div>
-
-                        <!-- Article Title -->
-                        <h3
-                            class="font-heading font-bold uppercase text-slate-950 text-xl sm:text-2xl tracking-tight leading-tight mb-3 transition-colors duration-200 group-hover:text-[#f95716]">
-                            <a href="#news" class="focus:outline-none">
-                                Project Handover — Apex Industrial Logistics Hub
+                        <div class="pt-4 border-t border-slate-200/70">
+                            <a href="#news" class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 group-hover:text-[#f95716] transition-colors duration-200">
+                                <span>Read Update</span>
+                                <svg class="w-4 h-4 text-[#f95716] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17" /></svg>
                             </a>
-                        </h3>
-
-                        <!-- Excerpt -->
-                        <p class="text-slate-600 text-sm font-normal leading-relaxed m-0 mb-6 line-clamp-2">
-                            Final occupancy certification, automated loading bay commissioning, and client facility handover
-                            completed two weeks ahead of schedule.
-                        </p>
-                    </div>
-
-                    <!-- Read More Action Link -->
-                    <div class="pt-4 border-t border-slate-200/70">
-                        <a href="#news"
-                            class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 group-hover:text-[#f95716] transition-colors duration-200">
-                            <span>Read Note</span>
-                            <svg class="w-4 h-4 text-[#f95716] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
+                        </div>
+                    </article>
+                @endforelse
             </div>
 
         </div>

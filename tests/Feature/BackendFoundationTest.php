@@ -156,7 +156,7 @@ test('superadmin can list, store, update, and delete services', function () {
             'success' => true,
         ])
         ->assertJsonFragment([
-            'slug' => 'commercial-construction-contracting',
+            'slug' => 'general-construction',
         ]);
 
     // 2. Store
