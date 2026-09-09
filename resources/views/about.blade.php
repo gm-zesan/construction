@@ -7,7 +7,8 @@
 
         <!-- Background Cinematic Image with Architectural Gradient Wash -->
         <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            <img id="about-hero-bg-img" src="{{ get_content_image('about', 'hero', 'bg_image', asset('images/hero-bg.jpg')) }}"
+            <img id="about-hero-bg-img"
+                src="{{ get_content_image('about', 'hero', 'bg_image', asset('images/hero-bg.jpg')) }}"
                 alt="Construction Engineering Architecture"
                 class="absolute -top-[10%] left-0 w-full h-[125%] object-cover object-center opacity-60 will-change-transform" />
             <div class="absolute inset-0 bg-gradient-to-r from-[#0b0f17]/95 via-[#0b0f17]/75 to-[#0b0f17]/45"></div>
@@ -185,7 +186,8 @@
                             <div
                                 class="reveal-image-container relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl bg-slate-200 ring-1 ring-slate-900/10">
                                 <div class="reveal-curtain absolute inset-0 bg-[#f95716] z-10 pointer-events-none"></div>
-                                <img src="{{ get_content_image('about', 'story', 'main_image', asset('images/about-main.jpg')) }}" alt="Heavy Civil Construction Operations"
+                                <img src="{{ get_content_image('about', 'story', 'main_image', asset('images/about-main.jpg')) }}"
+                                    alt="Heavy Civil Construction Operations"
                                     class="reveal-image w-full h-full object-cover object-center block" loading="lazy" />
                             </div>
                         </div>
@@ -196,7 +198,8 @@
                             <div class="reveal-image-container relative aspect-square rounded-2xl overflow-hidden shadow-xl bg-slate-200 ring-1 ring-slate-900/10"
                                 data-reveal-delay="150">
                                 <div class="reveal-curtain absolute inset-0 bg-[#0b0f17] z-10 pointer-events-none"></div>
-                                <img src="{{ get_content_image('about', 'story', 'secondary_image', asset('images/about-secondary.jpg')) }}" alt="Structural Steel Detailing"
+                                <img src="{{ get_content_image('about', 'story', 'secondary_image', asset('images/about-secondary.jpg')) }}"
+                                    alt="Structural Steel Detailing"
                                     class="reveal-image w-full h-full object-cover object-center block" loading="lazy" />
                             </div>
 
@@ -501,68 +504,56 @@
 
     </section>
 
-    <!-- 5. Pillars of Practice & Core Values Section (Editorial Architectural Monograph) -->
+    <!-- 5. Pillars of Practice & Core Values Section (Scroll-Pinned Title on Left) -->
     <section id="core-values"
         class="core-values-section relative py-20 sm:py-24 lg:py-32 bg-[#0c101a] text-white overflow-hidden border-t border-white/10">
+
+        <!-- Blueprint Subtle Grid -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+            <div
+                class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]">
+            </div>
+        </div>
 
         <div class="container-fluid relative z-10 max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20 items-start">
 
-                <!-- Left Column: Sticky Editorial Header & Specification Index (5 Cols) -->
-                <div class="values-left-col lg:col-span-5 lg:sticky lg:top-28">
-
-                    <!-- Eyebrow -->
-                    <div class="flex items-center gap-2.5 mb-4 sm:mb-5">
+                <!-- Left Column: Scroll-Pinned Sticky Editorial Header (5 Cols) -->
+                <div class="values-left-col lg:col-span-5 xl:col-span-5">
+                    <div id="values-pinned-title"
+                        class="parallax-text-layers parallax-layers relative will-change-transform">
+                        <!-- Watermark -->
                         <span
-                            class="inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
-                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                            {{ get_content('about', 'values', 'badge', 'Our Pillars of Practice') }}
-                        </span>
-                    </div>
+                            class="parallax-text-back back text-white">{{ get_content('about', 'values', 'watermark', 'VALUES') }}</span>
 
-                    <!-- Main Section Title -->
-                    <h2
-                        class="font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] m-0 mb-6">
-                        {!! get_content('about', 'values', 'title', 'Engineering Benchmarks That <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Define</span> Every Build') !!}
-                    </h2>
-
-                    <!-- Narrative Subtitle -->
-                    <p
-                        class="text-slate-300 text-sm sm:text-base lg:text-lg font-normal leading-relaxed max-w-lg m-0 mb-10">
-                        {{ get_content('about', 'values', 'subtitle', 'Four non-negotiable operational principles engineered into every deep foundation, reinforced frame, and commercial handover.') }}
-                    </p>
-
-                    <!-- Architectural Specification Matrix Box -->
-                    <div class="p-6 sm:p-7 rounded-2xl bg-[#141a29] border border-white/10">
-                        <div class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#f95716] mb-4">
-                            {{ get_content('about', 'values', 'summary_heading', 'Operational Benchmark Summary') }}
+                        <!-- Eyebrow -->
+                        <div
+                            class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
+                            <span
+                                class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                            <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
+                                {{ get_content('about', 'values', 'badge', 'Our Pillars of Practice') }}
+                            </span>
                         </div>
-                        <ul
-                            class="space-y-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-300 m-0 p-0 list-none">
-                            <li class="flex items-center justify-between pb-2.5 border-b border-white/5">
-                                <span class="text-slate-400">{{ get_content('about', 'values', 'summary_1_label', '01 / Safety Discipline') }}</span>
-                                <span class="text-white">{{ get_content('about', 'values', 'summary_1_val', 'Zero-Incident HSE') }}</span>
-                            </li>
-                            <li class="flex items-center justify-between pb-2.5 border-b border-white/5">
-                                <span class="text-slate-400">{{ get_content('about', 'values', 'summary_2_label', '02 / Digital Engineering') }}</span>
-                                <span class="text-white">{{ get_content('about', 'values', 'summary_2_val', 'BIM 5D · LOD 400') }}</span>
-                            </li>
-                            <li class="flex items-center justify-between pb-2.5 border-b border-white/5">
-                                <span class="text-slate-400">{{ get_content('about', 'values', 'summary_3_label', '03 / Material Quality') }}</span>
-                                <span class="text-white">{{ get_content('about', 'values', 'summary_3_val', '65+ MPa Verified') }}</span>
-                            </li>
-                            <li class="flex items-center justify-between">
-                                <span class="text-slate-400">{{ get_content('about', 'values', 'summary_4_label', '04 / Schedule Control') }}</span>
-                                <span class="text-white">{{ get_content('about', 'values', 'summary_4_val', 'Critical-Path CPM') }}</span>
-                            </li>
-                        </ul>
-                    </div>
 
+                        <!-- Main Section Title -->
+                        <h2
+                            class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] m-0 mb-6 relative z-10">
+                            {!! get_content('about', 'values', 'title', 'Engineering Benchmarks That <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Define</span> Every Build') !!}
+                        </h2>
+
+                        <!-- Narrative Subtitle -->
+                        <p
+                            class="text-slate-300 text-sm sm:text-base lg:text-lg font-normal leading-relaxed max-w-lg m-0 relative z-10">
+                            {{ get_content('about', 'values', 'subtitle', 'Four non-negotiable operational principles engineered into every deep foundation, reinforced frame, and commercial handover.') }}
+                        </p>
+                    </div>
                 </div>
 
                 <!-- Right Column: 4 Editorial Architectural Rows (7 Cols) -->
-                <div class="lg:col-span-7 divide-y divide-white/10 border-y border-white/10">
+                <div id="values-content-col"
+                    class="lg:col-span-7 xl:col-span-7 divide-y divide-white/10 border-y border-white/10">
 
                     <!-- Pillar 01 -->
                     <div class="pillar-row group py-8 sm:py-10 lg:py-12 transition-colors duration-300">
@@ -725,14 +716,6 @@
 
                 <!-- Left Column: Eyebrow & Custom 30+ Graphic (approx 22% width) -->
                 <div class="w-full lg:w-[22%] xl:w-[20%] flex flex-col justify-between flex-shrink-0">
-                    <!-- Top: Blueprint Eyebrow Badge -->
-                    <div class="sub-heading flex items-center gap-2.5">
-                        <span
-                            class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
-                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716] select-none">
-                            {{ get_content('about', 'leadership', 'badge', 'OUR EXPERIENCE TEAM') }}
-                        </span>
-                    </div>
 
                     <!-- Center: Precision 30 Graphic with Slash & Plus in Zero + Vertical Label (Vertically Centered with Slider) -->
                     <div class="my-auto py-8 lg:py-0 flex items-center">
@@ -780,9 +763,17 @@
                         class="parallax-text-layers parallax-layers relative flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 sm:mb-10 will-change-transform">
                         <!-- Watermark -->
                         <span
-                            class="parallax-text-back back text-slate-950/5">{{ get_content('about', 'leadership', 'watermark', 'LEADERS') }}</span>
+                            class="parallax-text-back back text-slate-950">{{ get_content('about', 'leadership', 'watermark', 'LEADERS') }}</span>
 
                         <div class="relative z-10">
+                            <!-- Top: Blueprint Eyebrow Badge -->
+                            <div class="sub-heading flex items-center gap-2.5">
+                                <span
+                                    class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
+                                <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716] select-none">
+                                    {{ get_content('about', 'leadership', 'badge', 'OUR EXPERIENCE TEAM') }}
+                                </span>
+                            </div>
                             <h2
                                 class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] tracking-tight leading-[1.05] m-0">
                                 {!! get_content('about', 'leadership', 'title', 'Leaders Driving Future <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Building Excellence</span>') !!}
@@ -870,7 +861,8 @@
             <div
                 class="accreditations-header parallax-text-layers parallax-layers relative mb-12 sm:mb-16 will-change-transform">
                 <!-- Watermark -->
-                <span class="parallax-text-back back text-slate-950/5">{{ get_content('about', 'accreditations', 'watermark', 'HONORS') }}</span>
+                <span
+                    class="parallax-text-back back text-slate-950">{{ get_content('about', 'accreditations', 'watermark', 'HONORS') }}</span>
 
                 <!-- Eyebrow -->
                 <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">

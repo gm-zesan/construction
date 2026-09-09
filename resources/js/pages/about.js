@@ -206,52 +206,54 @@ export function initAboutPage() {
         }
     }
 
-    // 4. Pillars of Practice / Core Values Section Animations (In & Out)
+    // 4. Pillars of Practice / Core Values Section Scroll-Pinned Title & Pillar Rows (In & Out)
     const valuesSection = document.getElementById('core-values');
-    if (valuesSection) {
-        // Left sticky column header & specification summary
-        const valuesLeftCol = valuesSection.querySelector('.values-left-col');
-        if (valuesLeftCol) {
-            gsap.fromTo(
-                valuesLeftCol,
-                { y: 40, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.85,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: valuesSection,
-                        start: 'top 82%',
-                        end: 'bottom 15%',
-                        toggleActions: 'play reverse play reverse',
-                    },
-                }
-            );
-        }
+    const valuesTitle = document.getElementById('values-pinned-title');
+    const valuesContentCol = document.getElementById('values-content-col');
 
-        // Right column 4 architectural spec rows appearing separately & staggered (In & Out)
-        const pillarRows = valuesSection.querySelectorAll('.pillar-row');
-        pillarRows.forEach((row, index) => {
-            gsap.fromTo(
-                row,
-                { y: 40, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.7,
-                    delay: index * 0.1,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: row,
-                        start: 'top 88%',
-                        end: 'bottom 12%',
-                        toggleActions: 'play reverse play reverse',
+    if (valuesSection && valuesTitle) {
+        ScrollTrigger.matchMedia({
+            // Desktop only pinning (1024px+)
+            '(min-width: 1024px)': function () {
+                ScrollTrigger.create({
+                    trigger: valuesSection,
+                    pin: valuesTitle,
+                    start: 'top 120px',
+                    end: () => {
+                        const contentHeight = valuesContentCol ? valuesContentCol.offsetHeight : valuesSection.offsetHeight;
+                        const titleHeight = valuesTitle.offsetHeight;
+                        return `+=${Math.max(0, contentHeight - titleHeight)}`;
                     },
-                }
-            );
+                    pinSpacing: false,
+                    invalidateOnRefresh: true,
+                });
+            },
         });
+
+        // Staggered reveal for each pillar row as they enter/leave viewport (In & Out)
+        if (valuesContentCol) {
+            const pillarRows = valuesContentCol.querySelectorAll('.pillar-row');
+            pillarRows.forEach((row) => {
+                gsap.fromTo(
+                    row,
+                    { opacity: 0, y: 35 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.65,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: row,
+                            start: 'top 88%',
+                            end: 'bottom 12%',
+                            toggleActions: 'play reverse play reverse',
+                        },
+                    }
+                );
+            });
+        }
     }
+
 
     // 5. Evolution of Excellence Scroll-Pinned Title & Timeline Items (In & Out)
     const evolutionSection = document.getElementById('evolution-timeline');

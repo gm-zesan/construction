@@ -181,7 +181,7 @@ export function initBlueprintEffects() {
     const parallaxTextContainers = document.querySelectorAll('.parallax-text-layers, .parallax-layers');
     parallaxTextContainers.forEach((container) => {
         const section = container.closest('section') || container.closest('footer') || container;
-        const isHero = section.id === 'hero';
+        const isHero = section.id === 'hero' || section.id === 'about-hero';
         const back = container.querySelector('.parallax-text-back, .back');
         const mid = container.querySelector('.parallax-text-mid, .mid');
         const front = container.querySelector('.parallax-text-front, .front');
