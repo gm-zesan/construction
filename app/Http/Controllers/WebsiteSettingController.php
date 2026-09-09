@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreWebsiteSettingFieldRequest;
 use App\Http\Requests\UpdateWebsiteSettingsRequest;
 use App\Models\WebsiteSetting;
 use App\Services\ActivityLogger;
@@ -19,6 +20,8 @@ class WebsiteSettingController extends Controller implements HasMiddleware
         return [
             new Middleware('permission:website-setting-list|website-setting-edit', only: ['index']),
             new Middleware('permission:website-setting-edit', only: ['update']),
+            new Middleware('permission:website-setting-create|role:superadmin', only: ['storeField']),
+            new Middleware('permission:website-setting-delete|role:superadmin', only: ['destroyField']),
         ];
     }
 
@@ -28,7 +31,7 @@ class WebsiteSettingController extends Controller implements HasMiddleware
     public function index(Request $request): View
     {
         $activeGroup = $request->query('group', 'general');
-        $allSettings = WebsiteSetting::all();
+        $allSettings = WebsiteSetting::orderBy('id')->get();
         $settings = $allSettings->pluck('value', 'key')->toArray();
         $groupedSettings = $allSettings->groupBy('group');
         $groupMeta = WebsiteSetting::getGroupMeta();
@@ -37,20 +40,23 @@ class WebsiteSettingController extends Controller implements HasMiddleware
     }
 
     /**
-     * Update the global website settings.
+     * Update the global website settings (both default and dynamic custom fields).
      */
     public function update(UpdateWebsiteSettingsRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         $oldSettings = WebsiteSetting::pluck('value', 'key')->toArray();
+        $allDbSettings = WebsiteSetting::all()->keyBy('key');
+        $updatedValues = [];
 
-        // Handle Site Logo Upload / Removal
+        // 1. Handle Core Site Logo Upload / Removal
         if ($request->boolean('remove_logo')) {
             $currentLogo = WebsiteSetting::get('site_logo');
             if ($currentLogo && file_exists(public_path($currentLogo))) {
                 @unlink(public_path($currentLogo));
             }
-            $validated['site_logo'] = null;
+            WebsiteSetting::where('key', 'site_logo')->update(['value' => null]);
+            $updatedValues['site_logo'] = null;
         } elseif ($request->hasFile('site_logo')) {
             $logoFile = $request->file('site_logo');
             $destDir = 'upload/settings/';
@@ -64,18 +70,18 @@ class WebsiteSettingController extends Controller implements HasMiddleware
             if ($currentLogo && file_exists(public_path($currentLogo))) {
                 @unlink(public_path($currentLogo));
             }
-            $validated['site_logo'] = $logoPath;
-        } else {
-            unset($validated['site_logo']);
+            WebsiteSetting::where('key', 'site_logo')->update(['value' => $logoPath]);
+            $updatedValues['site_logo'] = $logoPath;
         }
 
-        // Handle Site Favicon Upload / Removal
+        // 2. Handle Core Site Favicon Upload / Removal
         if ($request->boolean('remove_favicon')) {
             $currentFavicon = WebsiteSetting::get('site_favicon');
             if ($currentFavicon && file_exists(public_path($currentFavicon))) {
                 @unlink(public_path($currentFavicon));
             }
-            $validated['site_favicon'] = null;
+            WebsiteSetting::where('key', 'site_favicon')->update(['value' => null]);
+            $updatedValues['site_favicon'] = null;
         } elseif ($request->hasFile('site_favicon')) {
             $favFile = $request->file('site_favicon');
             $destDir = 'upload/settings/';
@@ -89,48 +95,44 @@ class WebsiteSettingController extends Controller implements HasMiddleware
             if ($currentFavicon && file_exists(public_path($currentFavicon))) {
                 @unlink(public_path($currentFavicon));
             }
-            $validated['site_favicon'] = $favPath;
-        } else {
-            unset($validated['site_favicon']);
+            WebsiteSetting::where('key', 'site_favicon')->update(['value' => $favPath]);
+            $updatedValues['site_favicon'] = $favPath;
         }
 
-        unset($validated['remove_logo'], $validated['remove_favicon']);
+        // 3. Process all other fields dynamically (both predefined and custom)
+        foreach ($request->except(['_token', 'active_group', 'site_logo', 'site_favicon', 'remove_logo', 'remove_favicon']) as $key => $value) {
+            if (str_starts_with($key, 'remove_')) {
+                continue;
+            }
 
-        // Field definitions mapping to types and groups
-        $fieldMeta = [
-            'company_name' => ['type' => 'text', 'group' => 'general'],
-            'company_tagline' => ['type' => 'text', 'group' => 'general'],
-            'site_logo' => ['type' => 'image', 'group' => 'general'],
-            'site_favicon' => ['type' => 'image', 'group' => 'general'],
+            $settingItem = $allDbSettings->get($key);
+            if ($settingItem) {
+                if ($settingItem->type === 'image') {
+                    if ($request->boolean('remove_' . $key)) {
+                        if ($settingItem->value && file_exists(public_path($settingItem->value))) {
+                            @unlink(public_path($settingItem->value));
+                        }
+                        $settingItem->update(['value' => null]);
+                        $updatedValues[$key] = null;
+                    } elseif ($request->hasFile($key)) {
+                        $imgFile = $request->file($key);
+                        $destDir = 'upload/settings/';
+                        if (!file_exists(public_path($destDir))) {
+                            mkdir(public_path($destDir), 0755, true);
+                        }
+                        $imgPath = $destDir . $key . '_' . date('YmdHis') . '_' . uniqid() . '.' . $imgFile->getClientOriginalExtension();
+                        $imgFile->move(public_path($destDir), basename($imgPath));
 
-            'primary_phone' => ['type' => 'phone', 'group' => 'contact'],
-            'primary_email' => ['type' => 'email', 'group' => 'contact'],
-            'whatsapp_number' => ['type' => 'phone', 'group' => 'contact'],
-            'office_address' => ['type' => 'textarea', 'group' => 'contact'],
-            'google_maps_url' => ['type' => 'url', 'group' => 'contact'],
-
-            'facebook_url' => ['type' => 'url', 'group' => 'social'],
-            'instagram_url' => ['type' => 'url', 'group' => 'social'],
-            'linkedin_url' => ['type' => 'url', 'group' => 'social'],
-            'youtube_url' => ['type' => 'url', 'group' => 'social'],
-
-            'office_hours' => ['type' => 'text', 'group' => 'business'],
-            'copyright_text' => ['type' => 'text', 'group' => 'business'],
-        ];
-
-        $updatedValues = [];
-
-        foreach ($validated as $key => $value) {
-            if (isset($fieldMeta[$key])) {
-                WebsiteSetting::updateOrCreate(
-                    ['key' => $key],
-                    [
-                        'value' => $value,
-                        'type' => $fieldMeta[$key]['type'],
-                        'group' => $fieldMeta[$key]['group'],
-                    ]
-                );
-                $updatedValues[$key] = $value;
+                        if ($settingItem->value && file_exists(public_path($settingItem->value))) {
+                            @unlink(public_path($settingItem->value));
+                        }
+                        $settingItem->update(['value' => $imgPath]);
+                        $updatedValues[$key] = $imgPath;
+                    }
+                } else {
+                    $settingItem->update(['value' => $value]);
+                    $updatedValues[$key] = $value;
+                }
             }
         }
 
@@ -151,5 +153,70 @@ class WebsiteSettingController extends Controller implements HasMiddleware
 
         return redirect()->route('settings.index', ['group' => $activeGroup])
             ->with('success', 'Website settings updated successfully.');
+    }
+
+    /**
+     * Store a newly created dynamic website setting field (Superadmin only).
+     */
+    public function storeField(StoreWebsiteSettingFieldRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $setting = WebsiteSetting::create([
+            'key' => $validated['key'],
+            'label' => $validated['label'],
+            'type' => $validated['type'],
+            'group' => $validated['group'],
+            'placeholder' => $validated['placeholder'] ?? null,
+            'value' => $validated['value'] ?? null,
+            'col_class' => $validated['col_class'] ?? 'col-md-6 col-12',
+            'is_custom' => true,
+        ]);
+
+        ActivityLogger::log(
+            action: 'create',
+            module: 'website-setting',
+            description: 'Created dynamic website setting field: ' . $setting->label . ' (' . $setting->key . ')',
+            subject: $setting,
+            oldValues: null,
+            newValues: $setting->toArray()
+        );
+
+        return redirect()->route('settings.index', ['group' => $validated['group']])
+            ->with('success', 'New setting field "' . $setting->label . '" created successfully.');
+    }
+
+    /**
+     * Remove a dynamic custom setting field (Superadmin only).
+     */
+    public function destroyField(int $id): RedirectResponse
+    {
+        $setting = WebsiteSetting::findOrFail($id);
+
+        if (!$setting->is_custom) {
+            return redirect()->back()->with('error', 'Default core system settings cannot be deleted.');
+        }
+
+        $label = $setting->label;
+        $group = $setting->group;
+        $oldValues = $setting->toArray();
+
+        if ($setting->type === 'image' && $setting->value && file_exists(public_path($setting->value))) {
+            @unlink(public_path($setting->value));
+        }
+
+        $setting->delete();
+
+        ActivityLogger::log(
+            action: 'delete',
+            module: 'website-setting',
+            description: 'Deleted dynamic website setting field: ' . $label,
+            subject: null,
+            oldValues: $oldValues,
+            newValues: null
+        );
+
+        return redirect()->route('settings.index', ['group' => $group])
+            ->with('success', 'Custom setting field "' . $label . '" deleted successfully.');
     }
 }

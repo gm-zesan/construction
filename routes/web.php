@@ -78,13 +78,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('dashboard/articles', \App\Http\Controllers\ArticleController::class)->names('articles');
 
     // Website Content Management Workspace (Page Sections)
-    Route::get('/dashboard/content-management', function () {
-        return view('admin.content-management.index');
-    })->name('content-management.index');
+    Route::get('/dashboard/content-management', [\App\Http\Controllers\ContentManagementController::class, 'index'])->name('content-management.index');
+    Route::post('/dashboard/content-management', [\App\Http\Controllers\ContentManagementController::class, 'update'])->name('content-management.update');
+    Route::post('/dashboard/content-management/fields', [\App\Http\Controllers\ContentManagementController::class, 'storeField'])->name('content-management.fields.store');
+    Route::delete('/dashboard/content-management/fields/{id}', [\App\Http\Controllers\ContentManagementController::class, 'destroyField'])->name('content-management.fields.destroy');
 
-    // Global Website Settings (General, Contact, Social, Business)
+    // Global Website Settings (General, Contact, Social, Business, Dynamic Custom Fields)
     Route::get('/dashboard/settings', [\App\Http\Controllers\WebsiteSettingController::class, 'index'])->name('settings.index');
     Route::post('/dashboard/settings', [\App\Http\Controllers\WebsiteSettingController::class, 'update'])->name('settings.update');
+    Route::post('/dashboard/settings/fields', [\App\Http\Controllers\WebsiteSettingController::class, 'storeField'])->name('settings.fields.store');
+    Route::delete('/dashboard/settings/fields/{id}', [\App\Http\Controllers\WebsiteSettingController::class, 'destroyField'])->name('settings.fields.destroy');
 
     // CKEditor Media Upload Endpoint
     Route::post('ckeditor/upload', [\App\Http\Controllers\CkeditorController::class, 'upload'])->name('ckeditor.upload');

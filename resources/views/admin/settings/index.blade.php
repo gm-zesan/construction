@@ -2,9 +2,10 @@
 
 @php
     $currentGroupMeta = $groupMeta[$activeGroup] ?? [
-        'title' => ucwords(str_replace('_', ' ', $activeGroup)),
+        'title' => ucwords(str_replace(['_', '-'], ' ', $activeGroup)),
         'icon' => 'ri-settings-4-line text-primary'
     ];
+    $isSuperadmin = Auth::check() && (Auth::user()->hasRole('superadmin') || Auth::user()->can('website-setting-create'));
 @endphp
 
 @section('title')
@@ -75,7 +76,7 @@
         <div class="row g-3">
             <div class="col-12">
                 <div class="card table-card mb-4">
-                    <div class="card-header table-header d-flex justify-content-between align-items-center">
+                    <div class="card-header table-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div class="title-with-breadcrumb">
                             <div class="table-title">{{ $currentGroupMeta['title'] }}</div>
                             <nav aria-label="breadcrumb">
@@ -87,7 +88,12 @@
                             </nav>
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <a href="{{ route('home') }}" target="_blank" class="add-new">
+                            @if($isSuperadmin)
+                                <button type="button" class="add-new" data-bs-toggle="modal" data-bs-target="#createSettingFieldModal">
+                                    <i class="ri-add-line me-1"></i> Add Dynamic Field
+                                </button>
+                            @endif
+                            <a href="{{ route('home') }}" target="_blank" class="add-new" style="background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1;">
                                 <i class="ri-external-link-line me-1"></i> View Live Site
                             </a>
                         </div>
@@ -104,8 +110,14 @@
                             @endphp
 
                             <div class="settings-section-card" id="section-{{ $activeGroup }}">
-                                <div class="settings-section-header">
-                                    <i class="{{ $currentGroupMeta['icon'] ?? 'ri-settings-4-line text-primary' }}" style="font-size: 18px;"></i> {{ $currentGroupMeta['title'] }}
+                                <div class="settings-section-header justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="{{ $currentGroupMeta['icon'] ?? 'ri-settings-4-line text-primary' }}" style="font-size: 18px;"></i>
+                                        <span>{{ $currentGroupMeta['title'] }}</span>
+                                    </div>
+                                    <span class="badge bg-light text-dark border" style="font-size: 11px;">
+                                        {{ count($settingsInActiveGroup) }} Fields
+                                    </span>
                                 </div>
                                 <div class="settings-section-body">
                                     <div class="row g-3">
@@ -117,12 +129,23 @@
                                             @endphp
 
                                             <div class="{{ $colClass }}">
-                                                <label for="{{ $setting->key }}" class="form-label custom-label">
-                                                    {{ $setting->label }}
-                                                    @if($isRequired)
-                                                        <span class="text-danger">*</span>
+                                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                                    <label for="{{ $setting->key }}" class="form-label custom-label mb-0">
+                                                        {{ $setting->label }}
+                                                        @if($isRequired)
+                                                            <span class="text-danger">*</span>
+                                                        @endif
+                                                        @if($setting->is_custom)
+                                                            <span class="badge bg-light text-primary border ms-1" style="font-size: 10px;">Custom</span>
+                                                        @endif
+                                                    </label>
+
+                                                    @if($setting->is_custom && $isSuperadmin)
+                                                        <button type="button" class="btn btn-link text-danger p-0 delete-field-btn" data-id="{{ $setting->id }}" data-name="{{ $setting->label }}" title="Delete custom field" style="font-size: 13px; text-decoration: none;">
+                                                            <i class="ri-delete-bin-line"></i>
+                                                        </button>
                                                     @endif
-                                                </label>
+                                                </div>
 
                                                 {{-- 1. Image Type Field --}}
                                                 @if($setting->type === 'image')
@@ -173,7 +196,12 @@
                                                     <input type="url" class="form-control custom-input @error($setting->key) is-invalid @enderror"
                                                         id="{{ $setting->key }}" name="{{ $setting->key }}" value="{{ $val }}" placeholder="{{ $setting->placeholder }}" {{ $isRequired ? 'required' : '' }}>
 
-                                                {{-- 5. Text / Phone / Default Field --}}
+                                                {{-- 5. Number Type Field --}}
+                                                @elseif($setting->type === 'number')
+                                                    <input type="number" step="any" class="form-control custom-input @error($setting->key) is-invalid @enderror"
+                                                        id="{{ $setting->key }}" name="{{ $setting->key }}" value="{{ $val }}" placeholder="{{ $setting->placeholder }}" {{ $isRequired ? 'required' : '' }}>
+
+                                                {{-- 6. Text / Phone / Default Field --}}
                                                 @else
                                                     <input type="text" class="form-control custom-input @error($setting->key) is-invalid @enderror"
                                                         id="{{ $setting->key }}" name="{{ $setting->key }}" value="{{ $val }}" placeholder="{{ $setting->placeholder }}" {{ $isRequired ? 'required' : '' }}>
@@ -211,6 +239,124 @@
             </div>
         </div>
     </div>
+
+    {{-- Superadmin Dynamic Setting Field Creation Modal --}}
+    @if($isSuperadmin)
+        <div class="modal fade" id="createSettingFieldModal" tabindex="-1" aria-labelledby="createSettingFieldModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0"
+                                style="width: 32px; height: 32px; background-color: #f95716;">
+                                <i class="ri-settings-4-line" style="font-size: 18px;"></i>
+                            </div>
+                            <div>
+                                <h5 class="modal-title fw-bold text-dark mb-0" id="createSettingFieldModalLabel"
+                                    style="font-size: 15.5px;">
+                                    Create Dynamic Website Setting
+                                </h5>
+                                <span class="text-muted" style="font-size: 11.5px;">Add custom configuration fields to the website settings repository</span>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body p-4">
+                        <form action="{{ route('settings.fields.store') }}" method="POST">
+                            @csrf
+                            <div class="row g-3 mb-3">
+                                {{-- Target Group Selection --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Target Group <span class="text-danger">*</span></label>
+                                    <select name="group" id="field_group_select" class="form-select custom-input" style="height: 38px; font-size: 13px;" required>
+                                        @foreach($groupMeta as $gKey => $gMeta)
+                                            <option value="{{ $gKey }}" {{ $activeGroup === $gKey ? 'selected' : '' }}>
+                                                {{ $gMeta['title'] }} ({{ $gKey }})
+                                            </option>
+                                        @endforeach
+                                        <option value="__new__">+ Create New Group...</option>
+                                    </select>
+                                </div>
+
+                                {{-- Custom Group Name (if new group selected) --}}
+                                <div class="col-md-6 d-none" id="custom_group_wrapper">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">New Group Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="custom_group_input" class="form-control custom-input" placeholder="e.g. Integrations or Analytics" style="height: 38px; font-size: 13px;">
+                                </div>
+
+                                {{-- Field Label --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Field Label / Title <span class="text-danger">*</span></label>
+                                    <input type="text" id="field_label" name="label" class="form-control custom-input" placeholder="e.g. Emergency Hotline Number" required style="height: 38px; font-size: 13px;">
+                                </div>
+
+                                {{-- Field Key (auto-generated snake_case) --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Setting Key (Identifier) <span class="text-danger">*</span></label>
+                                    <input type="text" id="field_key" name="key" class="form-control custom-input" placeholder="e.g. emergency_hotline" required style="height: 38px; font-size: 13px;">
+                                    <div class="text-muted mt-1" style="font-size: 11px;">Code accessor: <code>get_setting('key')</code></div>
+                                </div>
+
+                                {{-- Field Input Type --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Field Type <span class="text-danger">*</span></label>
+                                    <select id="field_type" name="type" class="form-select custom-input" style="height: 38px; font-size: 13px;" required>
+                                        <option value="text">Text (Single Line)</option>
+                                        <option value="textarea">Textarea (Multi-line)</option>
+                                        <option value="email">Email Address</option>
+                                        <option value="phone">Phone Number</option>
+                                        <option value="url">URL / Web Link</option>
+                                        <option value="image">Image File Upload</option>
+                                        <option value="number">Numeric Value</option>
+                                    </select>
+                                </div>
+
+                                {{-- Column Grid Size --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Grid Width Class</label>
+                                    <select id="field_col_class" name="col_class" class="form-select custom-input" style="height: 38px; font-size: 13px;">
+                                        <option value="col-md-6 col-12">Half Width (col-md-6)</option>
+                                        <option value="col-12">Full Width (col-12)</option>
+                                        <option value="col-md-4 col-12">One Third (col-md-4)</option>
+                                        <option value="col-md-8 col-12">Two Thirds (col-md-8)</option>
+                                    </select>
+                                </div>
+
+                                {{-- Placeholder Helper --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Placeholder Text (Optional)</label>
+                                    <input type="text" id="field_placeholder" name="placeholder" class="form-control custom-input" placeholder="e.g. Enter phone number..." style="height: 38px; font-size: 13px;">
+                                </div>
+
+                                {{-- Initial / Default Value --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Initial Default Value (Optional)</label>
+                                    <input type="text" id="field_value" name="value" class="form-control custom-input" placeholder="Optional initial value" style="height: 38px; font-size: 13px;">
+                                </div>
+                            </div>
+
+                            {{-- Modal Action Buttons matching uploadMediaModal --}}
+                            <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                                <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal"
+                                    style="height: 36px; font-weight: 600;">Cancel</button>
+                                <button type="submit" class="btn btn-primary btn-sm px-4"
+                                    style="height: 36px; font-weight: 600; background-color: #f95716; border-color: #f95716;">
+                                    <i class="ri-check-line me-1"></i> Save Setting Field
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Hidden Delete Field Form --}}
+        <form id="deleteSettingFieldForm" action="" method="POST" class="d-none">
+            @csrf
+            @method('DELETE')
+        </form>
+    @endif
 @endsection
 
 @push('custom-script')
@@ -308,6 +454,86 @@
                     if (typeof toastr !== 'undefined') toastr.success('Image selected: ' + file.name);
                 };
                 reader.readAsDataURL(file);
+            }
+
+            // Modal Dynamic Key Generation from Label
+            const labelInput = document.getElementById('field_label');
+            const keyInput = document.getElementById('field_key');
+            let manualKeyEdit = false;
+
+            if (keyInput) {
+                keyInput.addEventListener('input', function () {
+                    manualKeyEdit = true;
+                });
+            }
+
+            if (labelInput && keyInput) {
+                labelInput.addEventListener('input', function () {
+                    if (!manualKeyEdit) {
+                        const slug = this.value
+                            .toLowerCase()
+                            .replace(/[^a-z0-9]+/g, '_')
+                            .replace(/^_+|_+$/g, '');
+                        keyInput.value = slug;
+                    }
+                });
+            }
+
+            // Custom Group Input Toggle
+            const groupSelect = document.getElementById('field_group_select');
+            const customGroupWrapper = document.getElementById('custom_group_wrapper');
+            const customGroupInput = document.getElementById('custom_group_input');
+
+            if (groupSelect && customGroupWrapper && customGroupInput) {
+                groupSelect.addEventListener('change', function () {
+                    if (this.value === '__new__') {
+                        customGroupWrapper.classList.remove('d-none');
+                        customGroupInput.setAttribute('required', 'required');
+                        customGroupInput.name = 'group';
+                        groupSelect.name = '';
+                    } else {
+                        customGroupWrapper.classList.add('d-none');
+                        customGroupInput.removeAttribute('required');
+                        customGroupInput.name = '';
+                        groupSelect.name = 'group';
+                    }
+                });
+            }
+
+            // Delete Custom Field Handler
+            const deleteButtons = document.querySelectorAll('.delete-field-btn');
+            const deleteForm = document.getElementById('deleteSettingFieldForm');
+
+            deleteButtons.forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const fieldId = this.getAttribute('data-id');
+                    const fieldName = this.getAttribute('data-name');
+
+                    if (confirm(`Are you sure you want to delete the custom field "${fieldName}"? This will permanently remove its value.`)) {
+                        deleteForm.action = `/dashboard/settings/fields/${fieldId}`;
+                        deleteForm.submit();
+                    }
+                });
+            });
+
+            // Auto-trigger Create Group Modal if requested from sidebar
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('create_group')) {
+                const modalEl = document.getElementById('createSettingFieldModal');
+                if (modalEl) {
+                    if (groupSelect && customGroupWrapper && customGroupInput) {
+                        groupSelect.value = '__new__';
+                        customGroupWrapper.classList.remove('d-none');
+                        customGroupInput.setAttribute('required', 'required');
+                        customGroupInput.name = 'group';
+                        groupSelect.name = '';
+                    }
+                    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+                    }
+                }
             }
         });
     </script>

@@ -16,9 +16,9 @@
     </div>
 
     <ul class="nav_list ps-0 scrollbar">
-        <!-- Main / Dashboard -->
+        <!-- 1. Overview -->
         <li class="category-li">
-            <span class="link_names">Main</span>
+            <span class="link_names">Overview</span>
         </li>
         <li>
             <a href="{{ route('dashboard') }}" class="{{ Route::is('dashboard') ? ' active-focus' : '' }}">
@@ -27,24 +27,28 @@
             </a>
         </li>
 
-        <!-- Projects & Field Operations -->
+        <!-- 2. Operations & Portfolio -->
+        @canany(['project-list', 'project-create', 'project-edit', 'project-delete', 'service-list', 'service-create', 'service-edit', 'service-delete', 'milestone-list', 'milestone-create', 'milestone-edit', 'milestone-delete'])
         <li class="category-li">
-            <span class="link_names">Projects & Operations</span>
+            <span class="link_names">Operations</span>
         </li>
+        @endcanany
+        @canany(['project-list', 'project-create', 'project-edit', 'project-delete'])
         <li>
             <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'active-focus' : '' }}">
                 <i class="ri-community-line"></i>
                 <span class="link_names">Project Portfolio</span>
             </a>
         </li>
-        @can('service-list')
+        @endcanany
+        @canany(['service-list', 'service-create', 'service-edit', 'service-delete'])
         <li>
             <a href="{{ route('services.index') }}" class="{{ request()->routeIs('services.*') ? 'active-focus' : '' }}">
                 <i class="ri-hammer-line"></i>
                 <span class="link_names">Core Services</span>
             </a>
         </li>
-        @endcan
+        @endcanany
         @canany(['milestone-list', 'milestone-create', 'milestone-edit', 'milestone-delete'])
         <li>
             <a href="{{ route('milestones.index') }}" class="{{ request()->routeIs('milestones.*') ? 'active-focus' : '' }}">
@@ -54,16 +58,32 @@
         </li>
         @endcanany
 
-        <!-- Communications & Content -->
+        <!-- 3. Dedicated Content Management -->
+        @canany(['website-content-list', 'website-content-create', 'website-content-edit', 'website-content-delete'])
         <li class="category-li">
-            <span class="link_names">Inquiries & Editorial</span>
+            <span class="link_names">Content Management</span>
         </li>
+        @php
+            $cmsPages = \App\Models\WebsiteContent::getAvailablePagesWithMeta();
+            $currentCmsPage = request('page', array_key_first($cmsPages) ?? 'home');
+        @endphp
+        @foreach($cmsPages as $pKey => $pMeta)
         <li>
-            <a href="{{ route('content-management.index') }}" class="{{ request()->routeIs('content-management.*') ? 'active-focus' : '' }}">
-                <i class="ri-layout-masonry-line"></i>
-                <span class="link_names">Content Management</span>
+            <a href="{{ route('content-management.index', ['page' => $pKey]) }}"
+                class="{{ request()->routeIs('content-management.*') && $currentCmsPage === $pKey ? 'active-focus' : '' }}">
+                <i class="{{ $pMeta['icon'] }}"></i>
+                <span class="link_names">{{ $pMeta['title'] }}</span>
             </a>
         </li>
+        @endforeach
+        @endcanany
+
+        <!-- 4. Editorial & Communications -->
+        @canany(['contact-list', 'article-list', 'article-create', 'article-edit', 'article-delete', 'article-category-list', 'article-category-create', 'article-category-edit', 'article-category-delete', 'media-list', 'media-create', 'media-edit', 'media-delete', 'client-review-list', 'client-review-create', 'client-review-edit', 'client-review-delete'])
+        <li class="category-li">
+            <span class="link_names">Editorial & Inquiries</span>
+        </li>
+        @endcanany
         @can('contact-list')
         <li>
             <a href="{{ route('enquiries.index') }}" class="{{ request()->routeIs('enquiries.*') ? 'active-focus' : '' }}">
@@ -72,15 +92,15 @@
             </a>
         </li>
         @endcan
-        @canany(['media-list', 'media-create', 'media-edit', 'media-delete'])
+        @canany(['article-list', 'article-create', 'article-edit', 'article-delete', 'blog-list', 'blog-create', 'blog-edit', 'blog-delete'])
         <li>
-            <a href="{{ route('media.index') }}" class="{{ request()->routeIs('media.*') ? 'active-focus' : '' }}">
-                <i class="ri-folder-image-line"></i>
-                <span class="link_names">Media Library</span>
+            <a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.*') ? 'active-focus' : '' }}">
+                <i class="ri-article-line"></i>
+                <span class="link_names">News & Articles</span>
             </a>
         </li>
         @endcanany
-        @canany(['article-category-list', 'article-category-create', 'article-category-edit', 'article-category-delete', 'blog-list', 'blog-create', 'blog-edit', 'blog-delete'])
+        @canany(['article-category-list', 'article-category-create', 'article-category-edit', 'article-category-delete'])
         <li>
             <a href="{{ route('article-categories.index') }}" class="{{ request()->routeIs('article-categories.*') ? 'active-focus' : '' }}">
                 <i class="ri-price-tag-3-line"></i>
@@ -88,11 +108,11 @@
             </a>
         </li>
         @endcanany
-        @canany(['article-list', 'article-create', 'article-edit', 'article-delete', 'blog-list', 'blog-create', 'blog-edit', 'blog-delete'])
+        @canany(['media-list', 'media-create', 'media-edit', 'media-delete'])
         <li>
-            <a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.*') ? 'active-focus' : '' }}">
-                <i class="ri-article-line"></i>
-                <span class="link_names">News & Articles</span>
+            <a href="{{ route('media.index') }}" class="{{ request()->routeIs('media.*') ? 'active-focus' : '' }}">
+                <i class="ri-folder-image-line"></i>
+                <span class="link_names">Media Library</span>
             </a>
         </li>
         @endcanany
@@ -105,32 +125,32 @@
         </li>
         @endcanany
 
-        <!-- User & Access Management -->
+        <!-- 5. Access Control & Users -->
         @canany(['user-list', 'user-create', 'user-edit', 'user-delete', 'role-list', 'role-create', 'role-edit', 'role-delete', 'assignrole-list', 'assignrole-create'])
-            <li class="category-li">
-                <span class="link_names">User Management</span>
-            </li>
+        <li class="category-li">
+            <span class="link_names">Access Control</span>
+        </li>
         @endcanany
 
         @canany(['user-list', 'user-create', 'user-edit', 'user-delete'])
-        <li class="drop-item">
+        <li>
             <a href="{{ route('users') }}"
                 class="{{ in_array(Route::currentRouteName(), ['users', 'user.create', 'user.edit']) ? 'active-focus' : '' }}">
                 <i class="ri-user-3-line"></i>
-                <span class="link_names">User List</span>
+                <span class="link_names">User Accounts</span>
             </a>
         </li>
         @endcanany
 
         @canany(['role-list', 'role-create', 'role-edit', 'role-delete'])
-        <li class="drop-item">
+        <li>
             <a href="{{ route('role.index') }}"
                 class="{{ in_array(Route::currentRouteName(), ['role.index', 'role.create', 'role.edit']) ? 'active-focus' : '' }}">
                 <i class="ri-shield-user-line"></i>
-                <span class="link_names">Roles</span>
+                <span class="link_names">Roles &amp; Access</span>
             </a>
         </li>
-        <li class="drop-item">
+        <li>
             <a href="{{ route('permissions.index') }}"
                 class="{{ request()->routeIs('permissions.*') ? 'active-focus' : '' }}">
                 <i class="ri-key-2-line"></i>
@@ -148,8 +168,7 @@
         </li>
         @endcanany
 
-
-        <!-- Website Settings -->
+        <!-- 6. Website Settings -->
         @canany(['website-setting-list', 'website-setting-edit'])
         <li class="category-li">
             <span class="link_names">Website Settings</span>
@@ -161,12 +180,24 @@
         @foreach($settingGroupMeta as $sGroupKey => $sMeta)
         <li>
             <a href="{{ route('settings.index', ['group' => $sGroupKey]) }}"
-                class="{{ request()->routeIs('settings.*') && $currentSettingGroup === $sGroupKey ? 'active-focus' : '' }}">
+                class="{{ request()->routeIs('settings.*') && $currentSettingGroup === $sGroupKey && !request()->has('create_group') ? 'active-focus' : '' }}">
                 <i class="{{ $sMeta['nav_icon'] ?? 'ri-settings-4-line' }}"></i>
                 <span class="link_names">{{ $sMeta['title'] }}</span>
             </a>
         </li>
         @endforeach
+
+        @if(Auth::check() && (Auth::user()->hasRole('superadmin') || Auth::user()->can('website-setting-create')))
+        <li>
+            <a href="{{ route('settings.index', ['create_group' => '1']) }}"
+                class="{{ request()->routeIs('settings.*') && request()->has('create_group') ? 'active-focus' : '' }}"
+                style="color: #f95716; font-weight: 600;"
+                title="Create New Settings Group">
+                <i class="ri-add-circle-line" style="color: #f95716;"></i>
+                <span class="link_names">+ New Group</span>
+            </a>
+        </li>
+        @endif
         @endcanany
     </ul>
 

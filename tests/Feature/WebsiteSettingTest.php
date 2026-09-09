@@ -153,3 +153,89 @@ test('viewing settings workspace does not generate activity log', function () {
     $logsCount = ActivityLog::where('module', 'website-setting')->count();
     expect($logsCount)->toBe(0);
 });
+
+test('superadmin can dynamically create a new setting field', function () {
+    $payload = [
+        'group' => 'general',
+        'label' => 'Emergency 24/7 Hotline',
+        'key' => 'emergency_hotline',
+        'type' => 'phone',
+        'col_class' => 'col-md-6 col-12',
+        'placeholder' => '+1 (800) 911-0000',
+        'value' => '+1 (800) 911-0000',
+    ];
+
+    $response = $this->actingAs($this->superadmin)->post('/dashboard/settings/fields', $payload);
+
+    $response->assertRedirect('/dashboard/settings?group=general');
+    $response->assertSessionHas('success');
+
+    $setting = WebsiteSetting::where('key', 'emergency_hotline')->first();
+    expect($setting)->not->toBeNull()
+        ->and($setting->label)->toBe('Emergency 24/7 Hotline')
+        ->and($setting->value)->toBe('+1 (800) 911-0000')
+        ->and($setting->type)->toBe('phone')
+        ->and($setting->is_custom)->toBeTrue();
+
+    // Verify helper get_setting
+    expect(get_setting('emergency_hotline'))->toBe('+1 (800) 911-0000');
+});
+
+test('non-superadmin cannot create dynamic setting field', function () {
+    $payload = [
+        'group' => 'general',
+        'label' => 'Hacked Field',
+        'key' => 'hacked_field',
+        'type' => 'text',
+    ];
+
+    $response = $this->actingAs($this->unauthorizedUser)->post('/dashboard/settings/fields', $payload);
+
+    $response->assertStatus(403);
+    expect(WebsiteSetting::where('key', 'hacked_field')->exists())->toBeFalse();
+});
+
+test('superadmin can create setting with custom new group', function () {
+    $payload = [
+        'group' => 'integrations',
+        'label' => 'Crisp Chat Website ID',
+        'key' => 'crisp_chat_id',
+        'type' => 'text',
+        'value' => 'abc-123-xyz',
+    ];
+
+    $response = $this->actingAs($this->superadmin)->post('/dashboard/settings/fields', $payload);
+
+    $response->assertRedirect('/dashboard/settings?group=integrations');
+
+    $groupMeta = WebsiteSetting::getGroupMeta();
+    expect($groupMeta)->toHaveKey('integrations');
+
+    // Access new group workspace
+    $workspaceResponse = $this->actingAs($this->superadmin)->get('/dashboard/settings?group=integrations');
+    $workspaceResponse->assertStatus(200);
+    $workspaceResponse->assertSee('Crisp Chat Website ID');
+});
+
+test('superadmin can delete a custom setting field but cannot delete default core settings', function () {
+    // 1. Create custom setting
+    $custom = WebsiteSetting::create([
+        'key' => 'custom_tracking_id',
+        'label' => 'Tracking ID',
+        'type' => 'text',
+        'group' => 'general',
+        'is_custom' => true,
+    ]);
+
+    $response = $this->actingAs($this->superadmin)->delete('/dashboard/settings/fields/' . $custom->id);
+    $response->assertRedirect('/dashboard/settings?group=general');
+    $response->assertSessionHas('success');
+    expect(WebsiteSetting::where('id', $custom->id)->exists())->toBeFalse();
+
+    // 2. Attempt to delete default setting
+    $coreSetting = WebsiteSetting::where('key', 'company_name')->first();
+    $coreResponse = $this->actingAs($this->superadmin)->delete('/dashboard/settings/fields/' . $coreSetting->id);
+    $coreResponse->assertSessionHas('error');
+    expect(WebsiteSetting::where('key', 'company_name')->exists())->toBeTrue();
+});
+

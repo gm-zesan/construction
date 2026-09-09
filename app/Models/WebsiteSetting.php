@@ -15,8 +15,16 @@ class WebsiteSetting extends Model
     protected $fillable = [
         'key',
         'value',
+        'label',
         'type',
         'group',
+        'placeholder',
+        'col_class',
+        'is_custom',
+    ];
+
+    protected $casts = [
+        'is_custom' => 'boolean',
     ];
 
     public const CACHE_KEY = 'website_settings_all';
@@ -47,14 +55,18 @@ class WebsiteSetting extends Model
     /**
      * Set or update a setting value.
      */
-    public static function set(string $key, mixed $value, string $type = 'text', string $group = 'general'): self
+    public static function set(string $key, mixed $value, string $type = 'text', string $group = 'general', ?string $label = null, ?string $placeholder = null, string $col_class = 'col-md-6 col-12', bool $is_custom = false): self
     {
         $setting = self::updateOrCreate(
             ['key' => $key],
             [
                 'value' => $value,
+                'label' => $label,
                 'type' => $type,
                 'group' => $group,
+                'placeholder' => $placeholder,
+                'col_class' => $col_class,
+                'is_custom' => $is_custom,
             ]
         );
 
@@ -66,8 +78,12 @@ class WebsiteSetting extends Model
     /**
      * Human-readable label accessor for key.
      */
-    public function getLabelAttribute(): string
+    public function getLabelAttribute(?string $value): string
     {
+        if (!empty($value)) {
+            return $value;
+        }
+
         $customLabels = [
             'company_name' => 'Company Name',
             'company_tagline' => 'Company Tagline / Slogan',
@@ -86,14 +102,18 @@ class WebsiteSetting extends Model
             'copyright_text' => 'Footer Copyright Notice',
         ];
 
-        return $customLabels[$this->key] ?? ucwords(str_replace('_', ' ', $this->key));
+        return $customLabels[$this->key] ?? ucwords(str_replace(['_', '-'], ' ', $this->key));
     }
 
     /**
      * Bootstrap column width class for responsive grid.
      */
-    public function getColClassAttribute(): string
+    public function getColClassAttribute(?string $value): string
     {
+        if (!empty($value)) {
+            return $value;
+        }
+
         if (in_array($this->type, ['textarea']) || in_array($this->key, ['office_address', 'google_maps_url'])) {
             return 'col-12';
         }
@@ -108,8 +128,12 @@ class WebsiteSetting extends Model
     /**
      * Placeholder text helper.
      */
-    public function getPlaceholderAttribute(): string
+    public function getPlaceholderAttribute(?string $value): string
     {
+        if (!empty($value)) {
+            return $value;
+        }
+
         $placeholders = [
             'company_name' => 'Enter company name',
             'company_tagline' => 'e.g. Architectural Precision & Engineering Excellence',
@@ -134,7 +158,7 @@ class WebsiteSetting extends Model
      */
     public static function getGroupMeta(): array
     {
-        return [
+        $defaultMeta = [
             'general' => [
                 'title' => 'General Settings',
                 'icon' => 'ri-building-4-line text-primary',
@@ -156,6 +180,24 @@ class WebsiteSetting extends Model
                 'nav_icon' => 'ri-briefcase-4-line',
             ],
         ];
+
+        // Merge any dynamic custom groups present in DB
+        try {
+            $dbGroups = self::distinct()->pluck('group')->filter()->toArray();
+            foreach ($dbGroups as $dbGroup) {
+                if (!isset($defaultMeta[$dbGroup])) {
+                    $defaultMeta[$dbGroup] = [
+                        'title' => ucwords(str_replace(['_', '-'], ' ', $dbGroup)),
+                        'icon' => 'ri-settings-5-line text-primary',
+                        'nav_icon' => 'ri-settings-5-line',
+                    ];
+                }
+            }
+        } catch (\Throwable $e) {
+            // fallback gracefully
+        }
+
+        return $defaultMeta;
     }
 
     /**

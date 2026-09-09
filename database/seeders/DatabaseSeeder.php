@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             ClientEnquirySeeder::class,
             ClientReviewSeeder::class,
             WebsiteSettingSeeder::class,
+            WebsiteContentSeeder::class,
         ]);
     }
 }

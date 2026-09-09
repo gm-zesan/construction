@@ -1,71 +1,52 @@
 @extends('admin.app')
 
+@php
+    $canCreate = auth()->user() && (auth()->user()->hasRole('superadmin') || auth()->user()->can('website-content-create'));
+    $canDelete = auth()->user() && (auth()->user()->hasRole('superadmin') || auth()->user()->can('website-content-delete'));
+    $canEdit = auth()->user() && (auth()->user()->hasRole('superadmin') || auth()->user()->can('website-content-edit'));
+    $currentPageMeta = $availablePages[$activePage] ?? [
+        'title' => ucwords(str_replace(['_', '-'], ' ', $activePage)) . ' Content',
+        'badge' => ucwords(str_replace(['_', '-'], ' ', $activePage)),
+        'sections_title' => ucwords(str_replace(['_', '-'], ' ', $activePage)) . ' Sections',
+    ];
+    $firstSectionKey = array_key_first($sectionsMeta);
+@endphp
+
 @section('title')
-    Content Management
+    {{ $currentPageMeta['title'] }} - Content Management
 @endsection
 
 @push('custom-style')
     <style>
-        .cms-group-btn {
-            width: 100%;
+        .cms-nav-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 9px 12px;
-            background: transparent;
-            border: none;
+            padding: 10px 14px;
             border-radius: 6px;
+            color: #334155;
             font-size: 13px;
-            font-weight: 600;
-            color: #1e293b;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: left;
-            margin-bottom: 2px;
-        }
-
-        .cms-group-btn:hover {
-            background-color: #f1f5f9;
-            color: #0f172a;
-        }
-
-        .cms-chevron {
-            transition: transform 0.2s ease;
-            font-size: 16px;
-            color: #64748b;
-        }
-
-        .cms-group-btn:not(.collapsed) .cms-chevron {
-            transform: rotate(180deg);
-        }
-
-        .cms-nav-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 12px 8px 24px;
-            border-radius: 6px;
-            color: #475569;
-            font-size: 12.5px;
             font-weight: 500;
             text-decoration: none;
             transition: all 0.15s ease;
             cursor: pointer;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
+            border: 1px solid transparent;
         }
 
-        .cms-nav-link:hover {
+        .cms-nav-item:hover {
             background-color: #f1f5f9;
             color: #0f172a;
         }
 
-        .cms-nav-link.active {
-            background-color: #fff3ee;
+        .cms-nav-item.active {
+            background-color: #fff7ed;
             color: #f95716;
+            border-color: #ffedd5;
             font-weight: 600;
         }
 
-        .cms-nav-link.active i {
+        .cms-nav-item.active i {
             color: #f95716 !important;
         }
 
@@ -86,18 +67,57 @@
             background-color: #fff7ed;
         }
 
-        .dropzone-icon {
-            width: 44px;
-            height: 44px;
-            line-height: 44px;
-            border-radius: 50%;
-            background-color: rgba(249, 87, 22, 0.1);
-            color: #f95716;
-            font-size: 22px;
-            margin: 0 auto 8px;
+        .cms-pane {
+            display: none;
+        }
+
+        .cms-pane.active {
+            display: block;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .settings-section-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #ffffff;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .settings-section-header {
+            padding: 14px 20px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+        }
+
+        .settings-section-body {
+            padding: 20px;
+        }
+
+        .delete-field-btn {
+            color: #94a3b8;
+            font-size: 15px;
+            transition: color 0.15s ease;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin-left: 6px;
+        }
+
+        .delete-field-btn:hover {
+            color: #ef4444;
         }
     </style>
 @endpush
@@ -106,655 +126,408 @@
     <div class="container-fluid my-3">
         <div class="row g-3">
 
-            {{-- Left Column: Sections Navigation --}}
+            {{-- Left Column: Dynamic Page Section Tabs Sidebar --}}
             <div class="col-lg-3 col-md-4 col-12">
                 <div class="card table-card sticky-top" style="top: 75px; z-index: 10;">
                     <div class="card-header table-header d-flex justify-content-between align-items-center">
-                        <div class="table-title">Content Sections</div>
-                        <span class="badge bg-light text-dark border" style="font-size: 11px;">CMS</span>
+                        <div class="table-title">{{ $currentPageMeta['sections_title'] }}</div>
+                        <span class="badge bg-light text-dark border" style="font-size: 11px;">{{ $currentPageMeta['badge'] }}</span>
                     </div>
-                    <div class="card-body p-2" id="cmsAccordionParent" style="max-height: calc(100vh - 160px); overflow-y: auto;">
-                        
-                        {{-- Group 1: Homepage --}}
-                        <div class="cms-accordion-group mb-1">
-                            <button class="cms-group-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#group-homepage" aria-expanded="false">
-                                <span class="d-flex align-items-center"><i class="ri-home-4-line me-2 text-primary"></i> Homepage</span>
-                                <i class="ri-arrow-down-s-line cms-chevron"></i>
-                            </button>
-                            <div class="collapse" id="group-homepage" data-bs-parent="#cmsAccordionParent">
-                                <div class="cms-group-body py-1">
-                                    <a class="cms-nav-link active" data-target="home-hero" data-breadcrumb-page="Homepage" data-breadcrumb-section="Hero Banner">
-                                        <span><i class="ri-tv-line me-2 text-muted"></i>Hero Banner</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="home-about" data-breadcrumb-page="Homepage" data-breadcrumb-section="About Section">
-                                        <span><i class="ri-file-user-line me-2 text-muted"></i>About Section</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="home-services" data-breadcrumb-page="Homepage" data-breadcrumb-section="Services Section">
-                                        <span><i class="ri-hammer-line me-2 text-muted"></i>Services Section</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="home-projects" data-breadcrumb-page="Homepage" data-breadcrumb-section="Projects Section">
-                                        <span><i class="ri-community-line me-2 text-muted"></i>Projects Section</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="home-why-choose" data-breadcrumb-page="Homepage" data-breadcrumb-section="Why Choose Us">
-                                        <span><i class="ri-shield-check-line me-2 text-muted"></i>Why Choose Us</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="home-stats" data-breadcrumb-page="Homepage" data-breadcrumb-section="Statistics & Counters">
-                                        <span><i class="ri-bar-chart-box-line me-2 text-muted"></i>Statistics</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="home-reviews" data-breadcrumb-page="Homepage" data-breadcrumb-section="Client Reviews">
-                                        <span><i class="ri-feedback-line me-2 text-muted"></i>Client Reviews</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="home-cta" data-breadcrumb-page="Homepage" data-breadcrumb-section="CTA Banner">
-                                        <span><i class="ri-megaphone-line me-2 text-muted"></i>CTA Banner</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Group 2: About Us Page --}}
-                        <div class="cms-accordion-group mb-1">
-                            <button class="cms-group-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#group-about" aria-expanded="false">
-                                <span class="d-flex align-items-center"><i class="ri-building-line me-2 text-info"></i> About Us Page</span>
-                                <i class="ri-arrow-down-s-line cms-chevron"></i>
-                            </button>
-                            <div class="collapse" id="group-about" data-bs-parent="#cmsAccordionParent">
-                                <div class="cms-group-body py-1">
-                                    <a class="cms-nav-link" data-target="about-overview" data-breadcrumb-page="About Us" data-breadcrumb-section="Overview">
-                                        <span><i class="ri-information-line me-2 text-muted"></i>Overview</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="about-mission-vision" data-breadcrumb-page="About Us" data-breadcrumb-section="Mission & Vision">
-                                        <span><i class="ri-focus-3-line me-2 text-muted"></i>Mission &amp; Vision</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="about-values" data-breadcrumb-page="About Us" data-breadcrumb-section="Core Values">
-                                        <span><i class="ri-heart-pulse-line me-2 text-muted"></i>Core Values</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="about-history" data-breadcrumb-page="About Us" data-breadcrumb-section="Company History">
-                                        <span><i class="ri-history-line me-2 text-muted"></i>Company History</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Group 3: Contact Page --}}
-                        <div class="cms-accordion-group mb-1">
-                            <button class="cms-group-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#group-contact" aria-expanded="false">
-                                <span class="d-flex align-items-center"><i class="ri-phone-line me-2 text-success"></i> Contact Page</span>
-                                <i class="ri-arrow-down-s-line cms-chevron"></i>
-                            </button>
-                            <div class="collapse" id="group-contact" data-bs-parent="#cmsAccordionParent">
-                                <div class="cms-group-body py-1">
-                                    <a class="cms-nav-link" data-target="contact-info" data-breadcrumb-page="Contact" data-breadcrumb-section="Contact Information">
-                                        <span><i class="ri-contacts-line me-2 text-muted"></i>Contact Info</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="contact-office" data-breadcrumb-page="Contact" data-breadcrumb-section="Office & Map">
-                                        <span><i class="ri-map-pin-2-line me-2 text-muted"></i>Office &amp; Map</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                    <a class="cms-nav-link" data-target="contact-social" data-breadcrumb-page="Contact" data-breadcrumb-section="Social Media">
-                                        <span><i class="ri-share-line me-2 text-muted"></i>Social Links</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Group 4: Footer --}}
-                        <div class="cms-accordion-group mb-1">
-                            <button class="cms-group-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#group-footer" aria-expanded="false">
-                                <span class="d-flex align-items-center"><i class="ri-layout-bottom-line me-2 text-warning"></i> Footer &amp; Global</span>
-                                <i class="ri-arrow-down-s-line cms-chevron"></i>
-                            </button>
-                            <div class="collapse" id="group-footer" data-bs-parent="#cmsAccordionParent">
-                                <div class="cms-group-body py-1">
-                                    <a class="cms-nav-link" data-target="footer-content" data-breadcrumb-page="Footer" data-breadcrumb-section="Footer Content & Links">
-                                        <span><i class="ri-layout-bottom-line me-2 text-muted"></i>Footer &amp; Links</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Group 5: SEO --}}
-                        <div class="cms-accordion-group mb-1">
-                            <button class="cms-group-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#group-seo" aria-expanded="false">
-                                <span class="d-flex align-items-center"><i class="ri-search-eye-line me-2 text-danger"></i> SEO &amp; Meta</span>
-                                <i class="ri-arrow-down-s-line cms-chevron"></i>
-                            </button>
-                            <div class="collapse" id="group-seo" data-bs-parent="#cmsAccordionParent">
-                                <div class="cms-group-body py-1">
-                                    <a class="cms-nav-link" data-target="seo-settings" data-breadcrumb-page="SEO" data-breadcrumb-section="Page Meta Settings">
-                                        <span><i class="ri-search-eye-line me-2 text-muted"></i>SEO Settings</span>
-                                        <i class="ri-arrow-right-s-line text-muted"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="card-body p-2">
+                        @forelse($sectionsMeta as $secKey => $secMeta)
+                            <a class="cms-nav-item {{ $loop->first ? 'active' : '' }}" data-target="{{ $secKey }}" data-title="{{ $secMeta['title'] }}">
+                                <span><i class="{{ $secMeta['icon'] }} me-2 text-muted"></i>{{ $secMeta['title'] }}</span>
+                                <i class="ri-arrow-right-s-line text-muted"></i>
+                            </a>
+                        @empty
+                            <div class="text-muted p-3 text-center" style="font-size: 13px;">No sections found.</div>
+                        @endforelse
                     </div>
                 </div>
             </div>
 
-            {{-- Right Column: Active Content Section Form --}}
+            {{-- Right Column: Dynamic Section Content Panes --}}
             <div class="col-lg-9 col-md-8 col-12">
                 <div class="card table-card mb-4">
-                    <div class="card-header table-header d-flex justify-content-between align-items-center">
+                    <div class="card-header table-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div class="title-with-breadcrumb">
-                            <div class="table-title" id="activeSectionTitle">Hero Banner Section</div>
+                            <div class="table-title" id="activeSectionHeaderTitle">
+                                {{ $firstSectionKey ? $sectionsMeta[$firstSectionKey]['title'] : 'Content Management' }}
+                            </div>
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                    <li class="breadcrumb-item" id="breadcrumbPage">Homepage</li>
-                                    <li class="breadcrumb-item active" id="breadcrumbSection" aria-current="page">Hero Banner</li>
+                                    <li class="breadcrumb-item">Content Management</li>
+                                    <li class="breadcrumb-item" id="breadcrumbPageLabel">{{ $currentPageMeta['badge'] }}</li>
+                                    <li class="breadcrumb-item active" id="breadcrumbSectionLabel" aria-current="page">
+                                        {{ $firstSectionKey ? $sectionsMeta[$firstSectionKey]['title'] : '' }}
+                                    </li>
                                 </ol>
                             </nav>
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <a href="{{ route('home') }}" target="_blank" class="add-new">
+                            @if($canCreate)
+                                <button type="button" class="add-new" data-bs-toggle="modal" data-bs-target="#createCmsFieldModal">
+                                    <i class="ri-add-line me-1"></i> Add Page / Field
+                                </button>
+                            @endif
+                            <a href="{{ route('home') }}" target="_blank" class="add-new" style="background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1;">
                                 <i class="ri-external-link-line me-1"></i> View Live Site
                             </a>
                         </div>
                     </div>
 
                     <div class="card-body custom-form">
+                        <form id="cmsContentForm" action="{{ route('content-management.update') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="active_page" value="{{ $activePage }}">
 
-                        {{-- PANE 1: Homepage - Hero Section --}}
-                        <div class="cms-section-pane" id="pane-home-hero">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Hero Badge / Tagline</label>
-                                    <input type="text" class="form-control custom-input" value="BUILDING TOMORROW'S LANDMARKS">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Main Headline <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control custom-input" value="Architectural Precision, Industrial Strength">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Subheadline / Description</label>
-                                    <textarea class="form-control custom-input" rows="3">Delivering landmark commercial complexes, transit hubs, and heavy industrial infrastructures with uncompromising structural integrity and sustainable engineering.</textarea>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Primary Button Label</label>
-                                    <input type="text" class="form-control custom-input" value="Explore Projects">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Primary Button URL</label>
-                                    <input type="text" class="form-control custom-input" value="#projects">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Secondary Button Label</label>
-                                    <input type="text" class="form-control custom-input" value="Get Free Consultation">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Secondary Button URL</label>
-                                    <input type="text" class="form-control custom-input" value="#contact">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Hero Background Image</label>
-                                    <input type="file" id="hero_background_input" class="d-none" accept="image/png,image/jpeg,image/webp,image/jpg">
-                                    
-                                    <div id="hero_dropzone_box" class="dropzone-box">
-                                        <div id="hero_empty_state">
-                                            <div class="dropzone-icon">
-                                                <i class="ri-image-add-line"></i>
+                            {{-- Dynamically Rendered Section Panes directly from Database --}}
+                            @forelse($sectionsMeta as $secKey => $secMeta)
+                                <div class="cms-pane {{ $loop->first ? 'active' : '' }}" id="pane-{{ $secKey }}">
+                                    <div class="settings-section-card">
+                                        <div class="settings-section-header">
+                                            <div>
+                                                <i class="{{ $secMeta['icon'] }} text-primary me-1" style="font-size: 18px;"></i> {{ $secMeta['title'] }}
                                             </div>
-                                            <div class="fw-semibold text-dark mt-1" style="font-size: 13.5px;">Click to upload or drag &amp; drop background image</div>
-                                            <div class="text-muted" style="font-size: 11.5px;">Recommended size: 1920x1080 (PNG, JPG, WebP up to 10MB)</div>
+                                            <span class="text-muted" style="font-size: 11.5px; font-weight: 500;">
+                                                Section: <code>{{ $secKey }}</code>
+                                            </span>
                                         </div>
+                                        <div class="settings-section-body">
+                                            @php
+                                                $sectionRecords = $contentRecords[$secKey] ?? [];
+                                            @endphp
 
-                                        <div id="hero_preview_state" class="d-none">
-                                            <div class="position-relative d-inline-block rounded overflow-hidden border mb-2" style="max-width: 100%; max-height: 240px; background: #0f172a;">
-                                                <img id="hero_preview_img" src="" alt="Hero Preview" style="max-height: 220px; width: auto; max-width: 100%; object-fit: contain; display: block;">
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-center gap-2 mt-1">
-                                                <span id="hero_filename" class="text-dark fw-semibold" style="font-size: 12px;"></span>
-                                                <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2" id="hero_remove_btn" style="font-size: 11px;">
-                                                    <i class="ri-delete-bin-line me-1"></i> Remove
-                                                </button>
-                                            </div>
+                                            @if(empty($sectionRecords))
+                                                <div class="text-center py-4 text-muted">
+                                                    <i class="ri-inbox-line" style="font-size: 32px;"></i>
+                                                    <p class="mt-2 mb-0" style="font-size: 13px;">No configurable fields found for this section.</p>
+                                                </div>
+                                            @else
+                                                <div class="row g-3">
+                                                    @foreach($sectionRecords as $fieldKey => $record)
+                                                        @php
+                                                            $fieldVal = old("content.{$secKey}.{$fieldKey}", $record->value);
+                                                            $fieldLabel = $record->label ?: ucwords(str_replace('_', ' ', $fieldKey));
+                                                            $isLongText = in_array($record->type, ['textarea', 'richtext']) || strlen($fieldVal ?? '') > 80;
+                                                            $colClass = $isLongText ? 'col-12' : 'col-md-6 col-12';
+                                                        @endphp
+
+                                                        <div class="{{ $colClass }}">
+                                                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                                                <label class="form-label custom-label mb-0">{{ $fieldLabel }}</label>
+                                                                @if($canDelete)
+                                                                    <button type="button" class="delete-field-btn" title="Delete this field"
+                                                                        onclick="confirmDeleteField({{ $record->id }}, '{{ addslashes($fieldLabel) }}')">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </button>
+                                                                @endif
+                                                            </div>
+
+                                                            @if($record->type === 'textarea' || $isLongText)
+                                                                <textarea name="content[{{ $secKey }}][{{ $fieldKey }}]"
+                                                                    class="form-control custom-input"
+                                                                    rows="3"
+                                                                    placeholder="Enter {{ strtolower($fieldLabel) }}...">{{ $fieldVal }}</textarea>
+                                                            @elseif($record->type === 'url')
+                                                                <input type="text"
+                                                                    name="content[{{ $secKey }}][{{ $fieldKey }}]"
+                                                                    class="form-control custom-input"
+                                                                    value="{{ $fieldVal }}"
+                                                                    placeholder="e.g. https://... or #section">
+                                                            @elseif($record->type === 'number')
+                                                                <input type="number"
+                                                                    name="content[{{ $secKey }}][{{ $fieldKey }}]"
+                                                                    class="form-control custom-input"
+                                                                    value="{{ $fieldVal }}">
+                                                            @elseif($record->type === 'image')
+                                                                <div class="dropzone-box" id="dropzone_{{ $secKey }}_{{ $fieldKey }}">
+                                                                    <input type="file"
+                                                                        name="media_files[{{ $secKey }}][{{ $fieldKey }}]"
+                                                                        id="file_{{ $secKey }}_{{ $fieldKey }}"
+                                                                        class="d-none"
+                                                                        accept="image/*">
+                                                                    <div class="dropzone-content">
+                                                                        <i class="ri-image-add-line text-primary" style="font-size: 24px;"></i>
+                                                                        <p class="mb-0 mt-1" style="font-size: 12px; font-weight: 600;">Click or drag image here</p>
+                                                                    </div>
+                                                                    @if(!empty($record->image_url))
+                                                                        <div class="mt-2">
+                                                                            <img src="{{ $record->image_url }}" alt="{{ $fieldLabel }}" style="max-height: 80px; border-radius: 6px;" class="border">
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            @else
+                                                                <input type="text"
+                                                                    name="content[{{ $secKey }}][{{ $fieldKey }}]"
+                                                                    class="form-control custom-input"
+                                                                    value="{{ $fieldVal }}"
+                                                                    placeholder="Enter {{ strtolower($fieldLabel) }}...">
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            @empty
+                                <div class="text-center py-5 text-muted">
+                                    <i class="ri-folder-info-line" style="font-size: 40px;"></i>
+                                    <h6 class="mt-2">No sections available for {{ $currentPageMeta['badge'] }}</h6>
+                                </div>
+                            @endforelse
 
-                        {{-- PANE 2: Homepage - About Section --}}
-                        <div class="cms-section-pane d-none" id="pane-home-about">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Section Tag / Badge</label>
-                                    <input type="text" class="form-control custom-input" value="About Our Company">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Years of Experience</label>
-                                    <input type="text" class="form-control custom-input" value="25+">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Section Title</label>
-                                    <input type="text" class="form-control custom-input" value="Crafting Heavy-Duty Landmarks That Stand For Generations">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Story & Description</label>
-                                    <textarea class="form-control custom-input" rows="4">With over two decades of engineering excellence, Building & Co. leads the industry in delivering mega infrastructure, commercial towers, and industrial logistics facilities with rigorous safety standards and BIM-enabled precision.</textarea>
+                            {{-- Action Buttons --}}
+                            <div class="row mt-4 pt-3 border-top">
+                                <div class="col-12 d-flex align-items-center">
+                                    <button type="submit" class="btn submit-button me-2" style="width: auto; height: 38px; padding: 0 24px;">
+                                        <i class="ri-check-line me-1"></i> Save {{ $currentPageMeta['badge'] }}
+                                    </button>
+                                    <a href="{{ route('dashboard') }}" class="btn leave-button" style="width: auto; height: 38px; padding: 0 20px;">
+                                        <i class="ri-arrow-left-line me-1"></i> Dashboard
+                                    </a>
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- PANE 3: Homepage - Services Section --}}
-                        <div class="cms-section-pane d-none" id="pane-home-services">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Section Tag</label>
-                                    <input type="text" class="form-control custom-input" value="Engineering Specialties">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Section Title</label>
-                                    <input type="text" class="form-control custom-input" value="Comprehensive Construction & Structural Solutions">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Section Intro Text</label>
-                                    <textarea class="form-control custom-input" rows="3">From turnkey general contracting to seismic structural engineering and MEP systems, we handle complex builds from conception to commissioning.</textarea>
-                                </div>
-                                <div class="col-12">
-                                    <div class="alert alert-info py-2 px-3 mb-0" style="font-size: 12.5px;">
-                                        <i class="ri-information-line me-1"></i> Individual service cards and details are managed directly in the <a href="{{ route('services.index') }}" class="fw-bold text-primary">Core Services</a> module.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 4: Homepage - Projects Section --}}
-                        <div class="cms-section-pane d-none" id="pane-home-projects">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Section Tag</label>
-                                    <input type="text" class="form-control custom-input" value="Featured Portfolio">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Section Title</label>
-                                    <input type="text" class="form-control custom-input" value="Landmark Developments Built to Last">
-                                </div>
-                                <div class="col-12">
-                                    <div class="alert alert-info py-2 px-3 mb-0" style="font-size: 12.5px;">
-                                        <i class="ri-information-line me-1"></i> Project items and gallery photos are managed in the <a href="{{ route('projects.index') }}" class="fw-bold text-primary">Project Portfolio</a> module.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 5: Homepage - Why Choose Us --}}
-                        <div class="cms-section-pane d-none" id="pane-home-why-choose">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Section Badge</label>
-                                    <input type="text" class="form-control custom-input" value="Why Choose Building & Co.">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Section Headline</label>
-                                    <input type="text" class="form-control custom-input" value="Precision Engineering, Uncompromising Safety & On-Time Delivery">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 6: Homepage - Statistics --}}
-                        <div class="cms-section-pane d-none" id="pane-home-stats">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Stat 1: Number & Suffix</label>
-                                    <input type="text" class="form-control custom-input mb-1" value="350+">
-                                    <label class="form-label custom-label">Stat 1: Label</label>
-                                    <input type="text" class="form-control custom-input" value="Completed Builds">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Stat 2: Number & Suffix</label>
-                                    <input type="text" class="form-control custom-input mb-1" value="99.8%">
-                                    <label class="form-label custom-label">Stat 2: Label</label>
-                                    <input type="text" class="form-control custom-input" value="Safety Record">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 7: Homepage - Client Reviews --}}
-                        <div class="cms-section-pane d-none" id="pane-home-reviews">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Section Tag</label>
-                                    <input type="text" class="form-control custom-input" value="Client Testimonials">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Headline</label>
-                                    <input type="text" class="form-control custom-input" value="Trusted by Global Developers & Institutional Investors">
-                                </div>
-                                <div class="col-12">
-                                    <div class="alert alert-info py-2 px-3 mb-0" style="font-size: 12.5px;">
-                                        <i class="ri-information-line me-1"></i> Reviews are managed and featured in the <a href="{{ route('client-reviews.index') }}" class="fw-bold text-primary">Client Reviews</a> module.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 8: Homepage - CTA --}}
-                        <div class="cms-section-pane d-none" id="pane-home-cta">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label custom-label">CTA Heading <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control custom-input" value="Ready to Construct Your Next Landmark?">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">CTA Paragraph</label>
-                                    <textarea class="form-control custom-input" rows="3">Consult with our licensed civil engineers and project directors for feasibility studies, pre-construction estimates, and turnkey construction planning.</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 9: About Us - Overview --}}
-                        <div class="cms-section-pane d-none" id="pane-about-overview">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Page Title</label>
-                                    <input type="text" class="form-control custom-input" value="Engineering the Future of Infrastructure & Commercial Spaces">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Company Overview</label>
-                                    <textarea class="form-control custom-input" rows="4">Founded with a vision to redefine commercial and heavy infrastructure construction, Building & Co. has grown into a premier multi-disciplinary general contractor trusted across North America.</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 10: About Us - Mission & Vision --}}
-                        <div class="cms-section-pane d-none" id="pane-about-mission-vision">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Mission Statement</label>
-                                    <textarea class="form-control custom-input" rows="3">Our mission is to construct resilient, sustainable, and technologically superior physical environments that enrich communities, foster economic growth, and ensure maximum safety for our workforce.</textarea>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Vision Statement</label>
-                                    <textarea class="form-control custom-input" rows="3">To lead the construction industry into an era of zero carbon footprint, automated digital twins, and zero incident worksites across all global projects.</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 11: About Us - Core Values --}}
-                        <div class="cms-section-pane d-none" id="pane-about-values">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Value 1</label>
-                                    <input type="text" class="form-control custom-input mb-1" value="Uncompromising Structural Safety">
-                                    <input type="text" class="form-control custom-input" value="Every life on our job site matters above all else.">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Value 2</label>
-                                    <input type="text" class="form-control custom-input mb-1" value="BIM-Driven Precision">
-                                    <input type="text" class="form-control custom-input" value="Eliminating tolerances through digital engineering modeling.">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 12: About Us - Company History --}}
-                        <div class="cms-section-pane d-none" id="pane-about-history">
-                            <div class="row g-3">
-                                <div class="col-md-4 col-12">
-                                    <label class="form-label custom-label">Year 1999</label>
-                                    <input type="text" class="form-control custom-input" value="Company Founded in Seattle, WA">
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <label class="form-label custom-label">Year 2010</label>
-                                    <input type="text" class="form-control custom-input" value="Completed 100th High-Rise Project">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 13: Contact - Contact Information --}}
-                        <div class="cms-section-pane d-none" id="pane-contact-info">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Primary Office Phone</label>
-                                    <input type="text" class="form-control custom-input" value="+1 (800) 555-0199">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Direct Project Hotline</label>
-                                    <input type="text" class="form-control custom-input" value="+1 (206) 555-8822">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Inquiry Email</label>
-                                    <input type="email" class="form-control custom-input" value="bids@buildingco-construct.com">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Support Email</label>
-                                    <input type="email" class="form-control custom-input" value="info@buildingco-construct.com">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 14: Contact - Office & Map --}}
-                        <div class="cms-section-pane d-none" id="pane-contact-office">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Headquarters Physical Address</label>
-                                    <input type="text" class="form-control custom-input" value="742 Evergreen Terrace, Industrial Park Suite 400, Seattle, WA 98101">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Monday - Friday Hours</label>
-                                    <input type="text" class="form-control custom-input" value="07:00 AM - 06:00 PM PST">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Saturday Hours</label>
-                                    <input type="text" class="form-control custom-input" value="08:00 AM - 02:00 PM PST">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Google Maps Embed URL</label>
-                                    <input type="text" class="form-control custom-input" value="https://maps.google.com/embed?pb=...">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 15: Contact - Social Links --}}
-                        <div class="cms-section-pane d-none" id="pane-contact-social">
-                            <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">LinkedIn</label>
-                                    <input type="url" class="form-control custom-input" value="https://linkedin.com/company/buildingco">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Facebook</label>
-                                    <input type="url" class="form-control custom-input" value="https://facebook.com/buildingco">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Twitter / X</label>
-                                    <input type="url" class="form-control custom-input" value="https://x.com/buildingco">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Instagram</label>
-                                    <input type="url" class="form-control custom-input" value="https://instagram.com/buildingco">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 16: Footer - Content & Links --}}
-                        <div class="cms-section-pane d-none" id="pane-footer-content">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Footer Brand Bio</label>
-                                    <textarea class="form-control custom-input" rows="3">A premier civil engineering and general contracting firm executing heavy commercial, residential, and transit projects with state-of-the-art precision.</textarea>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">Copyright Text</label>
-                                    <input type="text" class="form-control custom-input" value="© 2026 Building & Co. Construction. All Rights Reserved.">
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <label class="form-label custom-label">License & Registration</label>
-                                    <input type="text" class="form-control custom-input" value="State GC License: #WA-CON-8849201">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- PANE 17: SEO Settings --}}
-                        <div class="cms-section-pane d-none" id="pane-seo-settings">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Homepage Meta Title</label>
-                                    <input type="text" class="form-control custom-input" value="Building & Co. | Premier Commercial & Civil Engineering Construction">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Homepage Meta Description</label>
-                                    <textarea class="form-control custom-input" rows="3">Leading general contractor delivering mega commercial complexes, transit infrastructure, and heavy industrial facilities with certified engineering precision.</textarea>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label custom-label">Meta Keywords</label>
-                                    <input type="text" class="form-control custom-input" value="commercial construction, civil engineering, general contractor, heavy infrastructure">
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Action Buttons --}}
-                        <div class="row mt-4 pt-3 border-top">
-                            <div class="col-12 d-flex align-items-center">
-                                <button type="button" class="btn submit-button me-2" onclick="handleMockSave()">
-                                    <i class="ri-check-line me-1"></i> Save Changes
-                                </button>
-                                <a href="{{ route('dashboard') }}" class="btn leave-button">
-                                    <i class="ri-arrow-left-line me-1"></i> Dashboard
-                                </a>
-                            </div>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
+    {{-- Dynamic CMS Field / Page Creation Modal --}}
+    @if($canCreate)
+        <div class="modal fade" id="createCmsFieldModal" tabindex="-1" aria-labelledby="createCmsFieldModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0"
+                                style="width: 32px; height: 32px; background-color: #f95716;">
+                                <i class="ri-layout-masonry-line" style="font-size: 18px;"></i>
+                            </div>
+                            <div>
+                                <h5 class="modal-title fw-bold text-dark mb-0" id="createCmsFieldModalLabel"
+                                    style="font-size: 15.5px;">
+                                    Add Dynamic CMS Page / Field
+                                </h5>
+                                <span class="text-muted" style="font-size: 11.5px;">Add custom sections, pages, or content keys to the website CMS repository</span>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body p-4">
+                        <form action="{{ route('content-management.fields.store') }}" method="POST">
+                            @csrf
+                            <div class="row g-3 mb-3">
+                                {{-- Target Page Selection --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Target Page <span class="text-danger">*</span></label>
+                                    <select name="page" id="cms_page_select" class="form-select custom-input" style="height: 38px; font-size: 13px;" required>
+                                        @foreach($availablePages as $pKey => $pMeta)
+                                            <option value="{{ $pKey }}" {{ $activePage === $pKey ? 'selected' : '' }}>
+                                                {{ $pMeta['title'] }} ({{ $pKey }})
+                                            </option>
+                                        @endforeach
+                                        <option value="__new__">+ Create New Page...</option>
+                                    </select>
+                                </div>
+
+                                {{-- Custom Page Name (if new page selected) --}}
+                                <div class="col-md-6 d-none" id="custom_page_wrapper">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">New Page Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="custom_page_input" class="form-control custom-input" placeholder="e.g. Careers or FAQ" style="height: 38px; font-size: 13px;">
+                                </div>
+
+                                {{-- Target Section Selection --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Section <span class="text-danger">*</span></label>
+                                    <select name="section" id="cms_section_select" class="form-select custom-input" style="height: 38px; font-size: 13px;" required>
+                                        @foreach($sectionsMeta as $sKey => $sMeta)
+                                            <option value="{{ $sKey }}">{{ $sMeta['title'] }} ({{ $sKey }})</option>
+                                        @endforeach
+                                        <option value="__new__">+ Create New Section...</option>
+                                    </select>
+                                </div>
+
+                                {{-- Custom Section Name (if new section selected) --}}
+                                <div class="col-md-6 d-none" id="custom_section_wrapper">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">New Section Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="custom_section_input" class="form-control custom-input" placeholder="e.g. Job Openings or Benefits" style="height: 38px; font-size: 13px;">
+                                </div>
+
+                                {{-- Field Label --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Field Label / Title <span class="text-danger">*</span></label>
+                                    <input type="text" id="cms_field_label" name="label" class="form-control custom-input" placeholder="e.g. Application Deadline" required style="height: 38px; font-size: 13px;">
+                                </div>
+
+                                {{-- Field Key (auto-generated identifier) --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Field Key (Identifier) <span class="text-danger">*</span></label>
+                                    <input type="text" id="cms_field_key" name="key" class="form-control custom-input" placeholder="e.g. application_deadline" required style="height: 38px; font-size: 13px;">
+                                    <div class="text-muted mt-1" style="font-size: 11px;">Code accessor: <code>get_content('page', 'section', 'key')</code></div>
+                                </div>
+
+                                {{-- Field Input Type --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Field Type <span class="text-danger">*</span></label>
+                                    <select id="cms_field_type" name="type" class="form-select custom-input" style="height: 38px; font-size: 13px;" required>
+                                        <option value="text">Text (Single Line)</option>
+                                        <option value="textarea">Textarea (Multi-line)</option>
+                                        <option value="url">URL / Link</option>
+                                        <option value="image">Image Upload</option>
+                                        <option value="number">Numeric Value</option>
+                                    </select>
+                                </div>
+
+                                {{-- Initial / Default Value --}}
+                                <div class="col-md-6">
+                                    <label class="form-label mb-1 fw-semibold text-dark" style="font-size: 13px;">Initial Default Value (Optional)</label>
+                                    <input type="text" id="cms_field_value" name="value" class="form-control custom-input" placeholder="Optional initial value" style="height: 38px; font-size: 13px;">
+                                </div>
+                            </div>
+
+                            {{-- Modal Action Buttons matching Media Upload modal theme --}}
+                            <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                                <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal"
+                                    style="height: 36px; font-weight: 600;">Cancel</button>
+                                <button type="submit" class="btn btn-primary btn-sm px-4"
+                                    style="height: 36px; font-weight: 600; background-color: #f95716; border-color: #f95716;">
+                                    <i class="ri-check-line me-1"></i> Save Content Field
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Hidden Delete Field Form --}}
+        <form id="deleteCmsFieldForm" action="" method="POST" class="d-none">
+            @csrf
+            @method('DELETE')
+        </form>
+    @endif
 @endsection
 
 @push('custom-script')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Automatically collapse main sidebar on page open
-            const mainSidebar = document.querySelector('.sidebar');
-            if (mainSidebar && mainSidebar.classList.contains('active')) {
-                mainSidebar.classList.remove('active');
-            }
+            // Dynamic Section Tab Switcher
+            const navItems = document.querySelectorAll('.cms-nav-item');
+            const panes = document.querySelectorAll('.cms-pane');
+            const headerTitle = document.getElementById('activeSectionHeaderTitle');
+            const breadcrumbSectionLabel = document.getElementById('breadcrumbSectionLabel');
 
-            const navLinks = document.querySelectorAll('.cms-nav-link');
-            const panes = document.querySelectorAll('.cms-section-pane');
-            const titleElement = document.getElementById('activeSectionTitle');
-            const breadcrumbPage = document.getElementById('breadcrumbPage');
-            const breadcrumbSection = document.getElementById('breadcrumbSection');
+            navItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    const target = this.getAttribute('data-target');
+                    const title = this.getAttribute('data-title');
 
-            navLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    // Switch active link
-                    navLinks.forEach(l => l.classList.remove('active'));
+                    navItems.forEach(i => i.classList.remove('active'));
                     this.classList.add('active');
 
-                    // Update titles & breadcrumbs
-                    const pageName = this.getAttribute('data-breadcrumb-page') || 'Homepage';
-                    const sectionName = this.getAttribute('data-breadcrumb-section') || 'Section';
+                    panes.forEach(p => p.classList.remove('active'));
+                    const targetPane = document.getElementById(`pane-${target}`);
+                    if (targetPane) {
+                        targetPane.classList.add('active');
+                    }
 
-                    if (titleElement) titleElement.textContent = sectionName;
-                    if (breadcrumbPage) breadcrumbPage.textContent = pageName;
-                    if (breadcrumbSection) breadcrumbSection.textContent = sectionName;
-
-                    // Show target pane
-                    const targetId = 'pane-' + this.getAttribute('data-target');
-                    panes.forEach(pane => {
-                        if (pane.id === targetId) {
-                            pane.classList.remove('d-none');
-                        } else {
-                            pane.classList.add('d-none');
-                        }
-                    });
+                    if (headerTitle) headerTitle.textContent = title;
+                    if (breadcrumbSectionLabel) breadcrumbSectionLabel.textContent = title;
                 });
             });
 
-            // Hero Background Image Interactive Dropzone
-            const heroInput = document.getElementById('hero_background_input');
-            const heroDropzone = document.getElementById('hero_dropzone_box');
-            const heroEmptyState = document.getElementById('hero_empty_state');
-            const heroPreviewState = document.getElementById('hero_preview_state');
-            const heroPreviewImg = document.getElementById('hero_preview_img');
-            const heroFilename = document.getElementById('hero_filename');
-            const heroRemoveBtn = document.getElementById('hero_remove_btn');
+            // Dynamic Image Dropzones
+            document.querySelectorAll('.dropzone-box').forEach(box => {
+                const input = box.querySelector('input[type="file"]');
+                if (!input) return;
 
-            if (heroDropzone && heroInput) {
-                heroDropzone.addEventListener('click', function (e) {
-                    if (e.target.closest('#hero_remove_btn')) return;
-                    heroInput.click();
+                box.addEventListener('click', () => input.click());
+
+                box.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    box.classList.add('dragover');
                 });
 
-                heroInput.addEventListener('change', function () {
-                    if (this.files && this.files[0]) {
-                        handleHeroFile(this.files[0]);
+                box.addEventListener('dragleave', () => box.classList.remove('dragover'));
+
+                box.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    box.classList.remove('dragover');
+                    if (e.dataTransfer.files.length) {
+                        input.files = e.dataTransfer.files;
                     }
                 });
+            });
 
-                heroDropzone.addEventListener('dragover', function (e) {
-                    e.preventDefault();
-                    this.classList.add('dragover');
-                });
+            // Modal Dynamic Page & Section Creation Handlers
+            const pageSelect = document.getElementById('cms_page_select');
+            const customPageWrapper = document.getElementById('custom_page_wrapper');
+            const customPageInput = document.getElementById('custom_page_input');
 
-                heroDropzone.addEventListener('dragleave', function (e) {
-                    e.preventDefault();
-                    this.classList.remove('dragover');
-                });
+            const sectionSelect = document.getElementById('cms_section_select');
+            const customSectionWrapper = document.getElementById('custom_section_wrapper');
+            const customSectionInput = document.getElementById('custom_section_input');
 
-                heroDropzone.addEventListener('drop', function (e) {
-                    e.preventDefault();
-                    this.classList.remove('dragover');
-                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                        heroInput.files = e.dataTransfer.files;
-                        handleHeroFile(e.dataTransfer.files[0]);
+            const fieldLabel = document.getElementById('cms_field_label');
+            const fieldKey = document.getElementById('cms_field_key');
+
+            if (pageSelect && customPageWrapper && customPageInput) {
+                pageSelect.addEventListener('change', function () {
+                    if (this.value === '__new__') {
+                        customPageWrapper.classList.remove('d-none');
+                        customPageInput.setAttribute('name', 'page');
+                        customPageInput.required = true;
+                        this.removeAttribute('name');
+                    } else {
+                        customPageWrapper.classList.add('d-none');
+                        customPageInput.removeAttribute('name');
+                        customPageInput.required = false;
+                        this.setAttribute('name', 'page');
                     }
                 });
+            }
 
-                function handleHeroFile(file) {
-                    if (!file.type.match('image.*')) {
-                        if (typeof toastr !== 'undefined') toastr.error('Please select an image file (PNG, JPG, WebP)');
-                        return;
+            if (sectionSelect && customSectionWrapper && customSectionInput) {
+                sectionSelect.addEventListener('change', function () {
+                    if (this.value === '__new__') {
+                        customSectionWrapper.classList.remove('d-none');
+                        customSectionInput.setAttribute('name', 'section');
+                        customSectionInput.required = true;
+                        this.removeAttribute('name');
+                    } else {
+                        customSectionWrapper.classList.add('d-none');
+                        customSectionInput.removeAttribute('name');
+                        customSectionInput.required = false;
+                        this.setAttribute('name', 'section');
                     }
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        heroPreviewImg.src = e.target.result;
-                        if (heroFilename) heroFilename.textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
-                        heroEmptyState.classList.add('d-none');
-                        heroPreviewState.classList.remove('d-none');
-                        if (typeof toastr !== 'undefined') toastr.success('Hero image selected: ' + file.name);
-                    };
-                    reader.readAsDataURL(file);
-                }
+                });
+            }
 
-                if (heroRemoveBtn) {
-                    heroRemoveBtn.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        heroInput.value = '';
-                        heroPreviewImg.src = '';
-                        heroEmptyState.classList.remove('d-none');
-                        heroPreviewState.classList.add('d-none');
-                    });
-                }
+            // Auto-slugify label into key
+            if (fieldLabel && fieldKey) {
+                fieldLabel.addEventListener('input', function () {
+                    const slug = this.value.toLowerCase().trim()
+                        .replace(/[^\w\s-]/g, '')
+                        .replace(/[\s_-]+/g, '_')
+                        .replace(/^-+|-+$/g, '');
+                    fieldKey.value = slug;
+                });
             }
         });
 
-        function handleMockSave() {
-            if (typeof toastr !== 'undefined') {
-                toastr.success('Content Management changes ready for saving.', 'Success');
-            } else {
-                alert('Content Management changes ready for saving.');
+        function confirmDeleteField(fieldId, label) {
+            if (confirm(`Are you sure you want to delete the content field "${label}"?`)) {
+                const form = document.getElementById('deleteCmsFieldForm');
+                if (form) {
+                    form.action = `/dashboard/content-management/fields/${fieldId}`;
+                    form.submit();
+                }
             }
         }
     </script>
