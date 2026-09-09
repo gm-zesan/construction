@@ -286,7 +286,7 @@ class WebsiteContent extends Model implements HasMedia
 
         $sectionLabels = [
             'about_story' => 'About & Company Story',
-            'why_choose_us' => 'Why Choose Us / Excellence Matrix',
+            'why_choose_us' => 'Why Choose Us',
             'chairman_speech' => 'Leadership Speech & Vision',
             'index_matrix' => 'Portfolio Matrix & Filters',
             'brand_bio' => 'Brand Bio & Company Info',
@@ -304,6 +304,142 @@ class WebsiteContent extends Model implements HasMedia
         }
 
         return $result;
+    }
+
+    /**
+     * Human-friendly group display name for repeating item collections in a section.
+     */
+    public static function getGroupDisplayName(string $groupType, string $section, string $page): string
+    {
+        $customTitles = [
+            'timeline' => ['item' => 'Timeline Milestones'],
+            'accreditations' => ['item' => 'Accreditations & Certifications'],
+            'values' => ['val' => 'Core Values'],
+            'features' => ['feature' => 'Feature Highlights'],
+            'why_choose_us' => ['feature' => 'Distinct Capabilities'],
+            'experience' => ['stat' => 'Performance Statistics'],
+            'faq' => ['faq' => 'Frequently Asked Questions (FAQ)'],
+            'highlights' => ['card' => 'Technical Highlight Cards'],
+            'story' => ['checklist' => 'Capability Checkpoints'],
+            'hero' => ['telemetry' => 'Telemetry Indicators'],
+        ];
+
+        if (isset($customTitles[$section][$groupType])) {
+            return $customTitles[$section][$groupType];
+        }
+
+        return ucwords(str_replace('_', ' ', $groupType)) . ' Items';
+    }
+
+    /**
+     * Human-friendly item display name for individual items in a group.
+     */
+    public static function getItemDisplayName(string $groupType, int $index, string $section): string
+    {
+        $customItemNames = [
+            'timeline' => 'Timeline Milestone',
+            'accreditations' => 'Accreditation Item',
+            'values' => 'Value Item',
+            'features' => 'Feature Item',
+            'why_choose_us' => 'Feature Item',
+            'experience' => 'Statistic Item',
+            'faq' => 'FAQ Item',
+            'highlights' => 'Highlight Card',
+            'story' => 'Checklist Item',
+            'hero' => 'Telemetry Item',
+        ];
+
+        $base = $customItemNames[$section] ?? ucwords(str_replace('_', ' ', $groupType)) . ' Item';
+        return "{$base} {$index}";
+    }
+
+    /**
+     * Categorize a collection of WebsiteContent records for a given section into standalone fields and repeating item groups.
+     */
+    public static function organizeSectionContent(iterable $records, string $section, string $page): array
+    {
+        $standalone = [];
+        $rawGroups = [];
+        $knownGroupPrefixes = ['item', 'val', 'feature', 'stat', 'faq', 'card', 'checklist', 'telemetry'];
+
+        foreach ($records as $record) {
+            $matched = false;
+            if (preg_match('/^([a-zA-Z]+)_(\d+)(?:_(.*))?$/', $record->key, $matches)) {
+                $prefix = $matches[1];
+                $index = (int) $matches[2];
+                $subKey = $matches[3] ?? '';
+
+                if (in_array($prefix, $knownGroupPrefixes)) {
+                    $groupId = "{$prefix}_{$index}";
+                    $rawGroups[$prefix][$groupId][] = $record;
+                    $matched = true;
+                }
+            }
+
+            if (!$matched) {
+                $standalone[$record->key] = $record;
+            }
+        }
+
+        $formattedGroups = [];
+        foreach ($rawGroups as $prefix => $itemsById) {
+            $groupList = [];
+            foreach ($itemsById as $groupId => $fieldRecords) {
+                preg_match('/^([a-zA-Z]+)_(\d+)$/', $groupId, $m);
+                $idx = isset($m[2]) ? (int) $m[2] : 1;
+                $itemLabel = self::getItemDisplayName($prefix, $idx, $section);
+
+                // Derive smart preview info from fields
+                $badgePreview = null;
+                $titlePreview = null;
+                $descPreview = null;
+                $tags = [];
+
+                foreach ($fieldRecords as $f) {
+                    $k = $f->key;
+                    $val = $f->value ?? '';
+                    if (empty($val))
+                        continue;
+
+                    if (str_ends_with($k, '_year') || str_ends_with($k, '_count') || str_ends_with($k, '_num') || str_ends_with($k, '_status')) {
+                        $badgePreview = $badgePreview ?: $val;
+                    } elseif (str_ends_with($k, '_title') || str_ends_with($k, '_q') || str_ends_with($k, '_label') || $k === 'checklist_' . $idx) {
+                        $titlePreview = $titlePreview ?: $val;
+                    } elseif (str_ends_with($k, '_desc') || str_ends_with($k, '_text') || str_ends_with($k, '_a') || str_ends_with($k, '_category')) {
+                        $descPreview = $descPreview ?: $val;
+                    } elseif (str_contains($k, '_tag_')) {
+                        $tags[] = $val;
+                    }
+                }
+
+                if (empty($titlePreview) && !empty($fieldRecords)) {
+                    $titlePreview = $fieldRecords[0]->value ?? $fieldRecords[0]->label ?? $itemLabel;
+                }
+
+                $groupList[$groupId] = [
+                    'group_id' => $groupId,
+                    'group_type' => $prefix,
+                    'item_index' => $idx,
+                    'item_label' => $itemLabel,
+                    'badge_preview' => $badgePreview,
+                    'title_preview' => $titlePreview,
+                    'desc_preview' => $descPreview,
+                    'tags_preview' => $tags,
+                    'records' => $fieldRecords,
+                ];
+            }
+
+            $formattedGroups[$prefix] = [
+                'group_type' => $prefix,
+                'group_title' => self::getGroupDisplayName($prefix, $section, $page),
+                'items' => $groupList,
+            ];
+        }
+
+        return [
+            'standalone' => $standalone,
+            'groups' => $formattedGroups,
+        ];
     }
 
     /**

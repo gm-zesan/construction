@@ -113,6 +113,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Website Content Management Workspace (Page Sections)
     Route::get('/dashboard/content-management', [ContentManagementController::class, 'index'])->name('content-management.index');
     Route::post('/dashboard/content-management', [ContentManagementController::class, 'update'])->name('content-management.update');
+    Route::post('/dashboard/content-management/item', [ContentManagementController::class, 'updateItem'])->name('content-management.item.update');
+    Route::post('/dashboard/content-management/item/create', [ContentManagementController::class, 'storeGroupItem'])->name('content-management.item.store');
+    Route::delete('/dashboard/content-management/item', [ContentManagementController::class, 'destroyGroup'])->name('content-management.item.destroy');
     Route::post('/dashboard/content-management/fields', [ContentManagementController::class, 'storeField'])->name('content-management.fields.store');
     Route::delete('/dashboard/content-management/fields/{id}', [ContentManagementController::class, 'destroyField'])->name('content-management.fields.destroy');
 

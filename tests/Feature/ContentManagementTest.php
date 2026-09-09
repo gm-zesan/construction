@@ -159,3 +159,85 @@ test('superadmin can delete a generic cms field', function () {
     expect(WebsiteContent::find($record->id))->toBeNull();
 });
 
+test('superadmin can update a single repeating item group only', function () {
+    $payload = [
+        'page' => 'about',
+        'section' => 'timeline',
+        'group_id' => 'item_1',
+        'item_label' => 'Timeline Milestone 1',
+        'fields' => [
+            'item_1_year' => '2010',
+            'item_1_title' => 'Inception and Groundwork',
+            'item_1_desc' => 'Commenced operations specializing in foundation engineering.',
+        ],
+    ];
+
+    $response = $this->actingAs($this->superadmin)->post('/dashboard/content-management/item', $payload);
+
+    $response->assertRedirect('/dashboard/content-management?page=about');
+    $response->assertSessionHas('success');
+
+    expect(WebsiteContent::get('about', 'timeline', 'item_1_year'))->toBe('2010')
+        ->and(WebsiteContent::get('about', 'timeline', 'item_1_title'))->toBe('Inception and Groundwork')
+        ->and(WebsiteContent::get('about', 'timeline', 'item_1_desc'))->toBe('Commenced operations specializing in foundation engineering.');
+});
+
+test('superadmin can delete an entire repeating item group and all its subfields', function () {
+    // Ensure item_4 exists first
+    WebsiteContent::set('about', 'timeline', 'item_4_year', '2024');
+    WebsiteContent::set('about', 'timeline', 'item_4_title', 'Smart Construction');
+    WebsiteContent::set('about', 'timeline', 'item_4_desc', 'Low-carbon concrete benchmark.');
+
+    $payload = [
+        'page' => 'about',
+        'section' => 'timeline',
+        'group_id' => 'item_4',
+        'item_label' => 'Timeline Milestone 4',
+    ];
+
+    $response = $this->actingAs($this->superadmin)->delete('/dashboard/content-management/item', $payload);
+
+    $response->assertRedirect('/dashboard/content-management?page=about');
+    $response->assertSessionHas('success');
+
+    expect(WebsiteContent::where('page', 'about')->where('section', 'timeline')->where('key', 'like', 'item_4%')->count())->toBe(0);
+});
+
+test('superadmin can create a new item in a repeating item group', function () {
+    $payload = [
+        'page' => 'about',
+        'section' => 'timeline',
+        'group_type' => 'item',
+        'fields' => [
+            'year' => [
+                'value' => '2027',
+                'type' => 'text',
+                'label' => 'Year',
+            ],
+            'title' => [
+                'value' => 'Global Expansion & Carbon Neutrality',
+                'type' => 'text',
+                'label' => 'Title',
+            ],
+            'desc' => [
+                'value' => 'Expanding sustainable construction operations across Southeast Asia.',
+                'type' => 'textarea',
+                'label' => 'Description',
+            ],
+        ],
+    ];
+
+    $response = $this->actingAs($this->superadmin)->post('/dashboard/content-management/item/create', $payload);
+
+    $response->assertRedirect('/dashboard/content-management?page=about');
+    $response->assertSessionHas('success');
+
+    $newItemYear = WebsiteContent::where('page', 'about')
+        ->where('section', 'timeline')
+        ->where('value', '2027')
+        ->first();
+
+    expect($newItemYear)->not->toBeNull();
+});
+
+
