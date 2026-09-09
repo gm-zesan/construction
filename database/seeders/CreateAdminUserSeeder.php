@@ -59,6 +59,7 @@ class CreateAdminUserSeeder extends Seeder
             'contact',
             'blog',
             'client-review',
+            'team-member',
         ])->pluck('name')->all();
         $managerRole->syncPermissions($managerPermissions);
 

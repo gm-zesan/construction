@@ -127,42 +127,42 @@
                 </h3>
                 <ul class="space-y-3.5 list-none p-0 m-0">
                     <li>
-                        <a href="#"
+                        <a href="{{ route('home') }}"
                             class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
                             <span>Home</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#about"
+                        <a href="{{ route('about') }}"
                             class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
                             <span>About Us</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#services"
+                        <a href="{{ route('home') }}#services"
                             class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
                             <span>Services</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#projects"
+                        <a href="{{ route('home') }}#projects"
                             class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
                             <span>Projects</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#why-choose-us"
+                        <a href="{{ route('home') }}#why-choose-us"
                             class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
                             <span>Why Choose Us</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#news"
+                        <a href="{{ route('home') }}#news"
                             class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
                             <span>Blog &amp; News</span>

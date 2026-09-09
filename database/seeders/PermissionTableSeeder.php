@@ -72,6 +72,12 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'client-review-edit', 'display_name' => 'Review edit', 'module' => 'client-review'],
             ['name' => 'client-review-delete', 'display_name' => 'Review delete', 'module' => 'client-review'],
 
+            // 11. Executive & Project Team Members
+            ['name' => 'team-member-list', 'display_name' => 'Team Member list', 'module' => 'team-member'],
+            ['name' => 'team-member-create', 'display_name' => 'Team Member create', 'module' => 'team-member'],
+            ['name' => 'team-member-edit', 'display_name' => 'Team Member edit', 'module' => 'team-member'],
+            ['name' => 'team-member-delete', 'display_name' => 'Team Member delete', 'module' => 'team-member'],
+
             // 11. Media Library
             ['name' => 'media-list', 'display_name' => 'Media list', 'module' => 'media'],
             ['name' => 'media-create', 'display_name' => 'Media upload', 'module' => 'media'],

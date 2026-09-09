@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             ClientEnquirySeeder::class,
             ClientReviewSeeder::class,
+            TeamMemberSeeder::class,
             WebsiteSettingSeeder::class,
             WebsiteContentSeeder::class,
         ]);

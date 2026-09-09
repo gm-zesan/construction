@@ -67,7 +67,7 @@
         @endcanany
 
         <!-- 3. Editorial & Communications -->
-        @canany(['contact-list', 'article-list', 'article-create', 'article-edit', 'article-delete', 'article-category-list', 'article-category-create', 'article-category-edit', 'article-category-delete', 'media-list', 'media-create', 'media-edit', 'media-delete', 'client-review-list', 'client-review-create', 'client-review-edit', 'client-review-delete'])
+        @canany(['contact-list', 'article-list', 'article-create', 'article-edit', 'article-delete', 'article-category-list', 'article-category-create', 'article-category-edit', 'article-category-delete', 'media-list', 'media-create', 'media-edit', 'media-delete', 'client-review-list', 'client-review-create', 'client-review-edit', 'client-review-delete', 'team-member-list', 'team-member-create', 'team-member-edit', 'team-member-delete'])
             <li class="category-li">
                 <span class="link_names">Editorial & Inquiries</span>
             </li>
@@ -113,6 +113,15 @@
                     class="{{ request()->routeIs('client-reviews.*') ? 'active-focus' : '' }}">
                     <i class="ri-feedback-line"></i>
                     <span class="link_names">Client Reviews</span>
+                </a>
+            </li>
+        @endcanany
+        @canany(['team-member-list', 'team-member-create', 'team-member-edit', 'team-member-delete'])
+            <li>
+                <a href="{{ route('team-members.index') }}"
+                    class="{{ request()->routeIs('team-members.*') ? 'active-focus' : '' }}">
+                    <i class="ri-team-line"></i>
+                    <span class="link_names">Team Members</span>
                 </a>
             </li>
         @endcanany

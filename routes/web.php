@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\UserController;
@@ -56,6 +58,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Client Review Routes
     Route::post('/dashboard/client-reviews/{id}/toggle-status', [\App\Http\Controllers\ClientReviewController::class, 'toggleStatus'])->name('client-reviews.toggle-status');
     Route::resource('dashboard/client-reviews', \App\Http\Controllers\ClientReviewController::class)->names('client-reviews');
+
+    // Team Member Routes
+    Route::post('/dashboard/team-members/{id}/toggle-status', [\App\Http\Controllers\TeamMemberController::class, 'toggleStatus'])->name('team-members.toggle-status');
+    Route::resource('dashboard/team-members', \App\Http\Controllers\TeamMemberController::class)->names('team-members');
 
     // Activity Log Routes
     Route::resource('dashboard/activity-logs', ActivityLogController::class)->only(['index', 'show'])->names('activity-logs');

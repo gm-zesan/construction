@@ -22,27 +22,27 @@
 
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center space-x-7 lg:space-x-8" aria-label="Main Navigation">
-                <a href="#hero"
-                    class="text-sm font-semibold tracking-wider uppercase text-white hover:text-[#f95716] transition-colors">
+                <a href="{{ route('home') }}"
+                    class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('home') ? 'text-white' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
                     Home
                 </a>
-                <a href="#about"
-                    class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
+                <a href="{{ route('about') }}"
+                    class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('about') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
                     About
                 </a>
-                <a href="#services"
+                <a href="{{ route('home') }}#services"
                     class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
                     Services
                 </a>
-                <a href="#projects"
+                <a href="{{ route('home') }}#projects"
                     class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
                     Projects
                 </a>
-                <a href="#why-choose-us"
+                <a href="{{ route('home') }}#why-choose-us"
                     class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
                     Why Us
                 </a>
-                <a href="#news"
+                <a href="{{ route('home') }}#news"
                     class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
                     News
                 </a>
@@ -114,27 +114,27 @@
             </div>
 
             <nav class="mt-8 flex flex-col space-y-4" aria-label="Mobile Navigation Links">
-                <a href="#hero"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-[#f95716] py-1">
+                <a href="{{ route('home') }}"
+                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('home') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
                     Home
                 </a>
-                <a href="#about"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
+                <a href="{{ route('about') }}"
+                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('about') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
                     About
                 </a>
-                <a href="#services"
+                <a href="{{ route('home') }}#services"
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
                     Services
                 </a>
-                <a href="#projects"
+                <a href="{{ route('home') }}#projects"
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
                     Projects
                 </a>
-                <a href="#why-choose-us"
+                <a href="{{ route('home') }}#why-choose-us"
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
                     Why Us
                 </a>
-                <a href="#news"
+                <a href="{{ route('home') }}#news"
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
                     News
                 </a>
