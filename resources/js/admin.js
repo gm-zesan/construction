@@ -16,6 +16,12 @@ function initAdmin() {
         };
     }
 
+    // Auto-scroll sidebar list to keep active menu item comfortably in view
+    const activeSidebarLink = document.querySelector('.sidebar .active-focus');
+    if (activeSidebarLink) {
+        activeSidebarLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
     // 2. User Profile Dropdown Toggle Handler (1 click open, 2nd click close immediately)
     const profileDropdownBtn = document.querySelector('#profileDropdownBtn');
     const profileDropdownMenu = document.querySelector('.main-header-dropdown');

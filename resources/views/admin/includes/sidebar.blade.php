@@ -58,6 +58,12 @@
         <li class="category-li">
             <span class="link_names">Inquiries & Editorial</span>
         </li>
+        <li>
+            <a href="{{ route('content-management.index') }}" class="{{ request()->routeIs('content-management.*') ? 'active-focus' : '' }}">
+                <i class="ri-layout-masonry-line"></i>
+                <span class="link_names">Content Management</span>
+            </a>
+        </li>
         @can('contact-list')
         <li>
             <a href="{{ route('enquiries.index') }}" class="{{ request()->routeIs('enquiries.*') ? 'active-focus' : '' }}">
@@ -143,16 +149,25 @@
         @endcanany
 
 
-        <!-- Site Configuration & Administration -->
+        <!-- Website Settings -->
+        @canany(['website-setting-list', 'website-setting-edit'])
         <li class="category-li">
-            <span class="link_names">Administration</span>
+            <span class="link_names">Website Settings</span>
         </li>
+        @php
+            $settingGroupMeta = \App\Models\WebsiteSetting::getGroupMeta();
+            $currentSettingGroup = request('group', 'general');
+        @endphp
+        @foreach($settingGroupMeta as $sGroupKey => $sMeta)
         <li>
-            <a href="{{ route('profile.edit') }}" class="{{ Route::is('profile.edit') ? 'active-focus' : '' }}">
-                <i class="ri-settings-3-line"></i>
-                <span class="link_names">Profile Settings</span>
+            <a href="{{ route('settings.index', ['group' => $sGroupKey]) }}"
+                class="{{ request()->routeIs('settings.*') && $currentSettingGroup === $sGroupKey ? 'active-focus' : '' }}">
+                <i class="{{ $sMeta['nav_icon'] ?? 'ri-settings-4-line' }}"></i>
+                <span class="link_names">{{ $sMeta['title'] }}</span>
             </a>
         </li>
+        @endforeach
+        @endcanany
     </ul>
 
     <div class="profile_content">

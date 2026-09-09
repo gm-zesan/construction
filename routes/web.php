@@ -77,6 +77,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/dashboard/articles/{id}/toggle-featured', [\App\Http\Controllers\ArticleController::class, 'toggleFeatured'])->name('articles.toggle-featured');
     Route::resource('dashboard/articles', \App\Http\Controllers\ArticleController::class)->names('articles');
 
+    // Website Content Management Workspace (Page Sections)
+    Route::get('/dashboard/content-management', function () {
+        return view('admin.content-management.index');
+    })->name('content-management.index');
+
+    // Global Website Settings (General, Contact, Social, Business)
+    Route::get('/dashboard/settings', [\App\Http\Controllers\WebsiteSettingController::class, 'index'])->name('settings.index');
+    Route::post('/dashboard/settings', [\App\Http\Controllers\WebsiteSettingController::class, 'update'])->name('settings.update');
+
     // CKEditor Media Upload Endpoint
     Route::post('ckeditor/upload', [\App\Http\Controllers\CkeditorController::class, 'upload'])->name('ckeditor.upload');
 });

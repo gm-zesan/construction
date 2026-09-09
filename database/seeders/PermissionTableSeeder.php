@@ -93,6 +93,10 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'client-review-create', 'display_name' => 'Review create', 'module' => 'client-review'],
             ['name' => 'client-review-edit', 'display_name' => 'Review edit', 'module' => 'client-review'],
             ['name' => 'client-review-delete', 'display_name' => 'Review delete', 'module' => 'client-review'],
+
+            // 14. Website Settings
+            ['name' => 'website-setting-list', 'display_name' => 'Website Settings list', 'module' => 'website-setting'],
+            ['name' => 'website-setting-edit', 'display_name' => 'Website Settings edit', 'module' => 'website-setting'],
         ];
 
         // Create or update all active module permissions
