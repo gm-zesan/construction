@@ -118,3 +118,25 @@ it('renders dynamic team members on the about us page', function () {
     $response->assertSee('Stive Smith');
     $response->assertSee('Project Manager');
 });
+
+it('renders public team index page with all active members', function () {
+    $this->seed(\Database\Seeders\TeamMemberSeeder::class);
+
+    $response = $this->get(route('team'));
+    $response->assertStatus(200);
+    $response->assertSee('The Minds Behind');
+    $response->assertSee('Harry Son');
+    $response->assertSee('Design Vision');
+    $response->assertSee('John Doe');
+});
+
+it('renders public team detail page for a specific leader', function () {
+    $this->seed(\Database\Seeders\TeamMemberSeeder::class);
+    $member = TeamMember::first();
+
+    $response = $this->get(route('team.show', $member->id));
+    $response->assertStatus(200);
+    $response->assertSee($member->name);
+    $response->assertSee($member->designation);
+});
+

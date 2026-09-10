@@ -5,9 +5,11 @@
         <div class="flex items-center justify-between">
 
             <!-- Company Logo / Placeholder -->
-            <a href="/" class="flex items-center gap-3 focus:outline-none" aria-label="{{ get_setting('company_name', 'COMPANY NAME') }} Home">
+            <a href="/" class="flex items-center gap-3 focus:outline-none"
+                aria-label="{{ get_setting('company_name', 'COMPANY NAME') }} Home">
                 @if(get_setting('site_logo'))
-                    <img src="{{ asset(get_setting('site_logo')) }}" alt="{{ get_setting('company_name', 'COMPANY NAME') }}" class="h-8 w-auto object-contain">
+                    <img src="{{ asset(get_setting('site_logo')) }}" alt="{{ get_setting('company_name', 'COMPANY NAME') }}"
+                        class="h-8 w-auto object-contain">
                 @else
                     <span class="w-2.5 h-6 bg-[#f95716]"></span>
                     @php
@@ -15,7 +17,8 @@
                         $nameParts = explode(' ', $companyName, 2);
                     @endphp
                     <span class="font-heading text-2xl sm:text-3xl font-bold tracking-wider text-white uppercase">
-                        {{ $nameParts[0] }} @if(isset($nameParts[1]))<span class="text-slate-400 font-normal">{{ $nameParts[1] }}</span>@endif
+                        {{ $nameParts[0] }} @if(isset($nameParts[1]))<span
+                        class="text-slate-400 font-normal">{{ $nameParts[1] }}</span>@endif
                     </span>
                 @endif
             </a>
@@ -38,9 +41,9 @@
                     class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.projects.*') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
                     Projects
                 </a>
-                <a href="{{ route('home') }}#why-choose-us"
-                    class="text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] transition-colors">
-                    Why Us
+                <a href="{{ route('team') }}"
+                    class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('team*') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
+                    Team
                 </a>
                 <a href="{{ route('public.articles.index') }}"
                     class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.articles.*') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
@@ -98,10 +101,12 @@
         <div>
             <div class="flex items-center justify-between pb-6 border-b border-white/10">
                 @if(get_setting('site_logo'))
-                    <img src="{{ asset(get_setting('site_logo')) }}" alt="{{ get_setting('company_name', 'COMPANY NAME') }}" class="h-7 w-auto object-contain">
+                    <img src="{{ asset(get_setting('site_logo')) }}" alt="{{ get_setting('company_name', 'COMPANY NAME') }}"
+                        class="h-7 w-auto object-contain">
                 @else
                     <span class="font-heading text-xl font-bold tracking-wider text-white uppercase">
-                        {{ $nameParts[0] }} @if(isset($nameParts[1]))<span class="text-[#f95716]">{{ $nameParts[1] }}</span>@endif
+                        {{ $nameParts[0] }} @if(isset($nameParts[1]))<span
+                        class="text-[#f95716]">{{ $nameParts[1] }}</span>@endif
                     </span>
                 @endif
                 <button id="mobile-menu-close" type="button" class="p-1.5 text-slate-400 hover:text-white"
@@ -129,6 +134,10 @@
                 <a href="{{ route('public.projects.index') }}"
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.projects.*') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
                     Projects
+                </a>
+                <a href="{{ route('team') }}"
+                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('team*') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
+                    Team
                 </a>
                 <a href="{{ route('home') }}#why-choose-us"
                     class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">

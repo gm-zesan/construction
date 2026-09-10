@@ -808,32 +808,39 @@
                                 <div class="swiper-slide">
                                     <div class="group flex flex-col justify-between">
                                         <!-- Portrait Photo Box with Rounded Corners & Subtle Ring -->
-                                        <div
-                                            class="relative w-full aspect-[4/4.5] rounded-2xl overflow-hidden bg-slate-100 shadow-sm ring-1 ring-slate-900/5 transition-all duration-300">
+                                        <a href="{{ route('team.show', $leader['id']) }}"
+                                            class="relative w-full aspect-[4/4.5] rounded-2xl overflow-hidden bg-slate-100 shadow-sm ring-1 ring-slate-900/5 transition-all duration-300 block">
                                             <img src="{{ $leader['image'] }}" alt="{{ $leader['name'] }}"
                                                 class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                                                 loading="lazy" />
-                                        </div>
+                                        </a>
 
                                         <!-- Name, Role & LinkedIn Pill Button -->
                                         <div class="pt-4 sm:pt-5">
                                             <h3
                                                 class="font-heading font-black text-xl sm:text-2xl text-slate-950 group-hover:text-[#f95716] tracking-tight leading-snug m-0 transition-colors duration-200">
-                                                {{ $leader['name'] }}
+                                                <a href="{{ route('team.show', $leader['id']) }}">
+                                                    {{ $leader['name'] }}
+                                                </a>
                                             </h3>
                                             <p class="text-slate-600 text-xs sm:text-sm font-normal mt-1 m-0">
                                                 {{ $leader['role'] }}
                                             </p>
 
-                                            <!-- LinkedIn Pill Button -->
-                                            <div class="mt-3.5">
+                                            <!-- Profile & LinkedIn Pill Buttons -->
+                                            <div class="mt-3.5 flex items-center gap-2">
+                                                <a href="{{ route('team.show', $leader['id']) }}"
+                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-[#f95716] text-slate-800 hover:text-white text-[11px] font-bold uppercase tracking-wider transition-all duration-200">
+                                                    <span>Profile</span>
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                                </a>
                                                 <a href="{{ $leader['linkedin'] }}" target="_blank" rel="noopener noreferrer"
-                                                    class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 hover:border-slate-900 text-slate-800 hover:text-slate-950 text-[11px] font-bold uppercase tracking-wider transition-all duration-200 group/link">
+                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-300 hover:border-slate-900 text-slate-800 hover:text-slate-950 text-[11px] font-bold uppercase tracking-wider transition-all duration-200 group/link">
                                                     <span
-                                                        class="w-4 h-4 rounded-full bg-slate-900 group-hover/link:bg-[#f95716] text-white flex items-center justify-center text-[8.5px] font-black transition-colors">
+                                                        class="w-3.5 h-3.5 rounded-full bg-slate-900 group-hover/link:bg-[#f95716] text-white flex items-center justify-center text-[7.5px] font-black transition-colors">
                                                         in
                                                     </span>
-                                                    <span>LINKEDIN</span>
+                                                    <span>LinkedIn</span>
                                                 </a>
                                             </div>
                                         </div>

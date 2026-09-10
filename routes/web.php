@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\ArticleController as PublicArticleController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProjectController as PublicProjectController;
+use App\Http\Controllers\Frontend\TeamController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/team', [TeamController::class, 'index'])->name('team');
+Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
 Route::get('/projects', [PublicProjectController::class, 'index'])->name('public.projects.index');
 Route::get('/projects/{slug}', [PublicProjectController::class, 'show'])->name('public.projects.show');
 Route::get('/articles', [PublicArticleController::class, 'index'])->name('public.articles.index');

@@ -338,172 +338,135 @@
 
             </div>
 
-        </div>
-
     </section>
 
     <!-- 3. Flagship Project Spotlight -->
     @if($flagshipProject)
         <section id="featured-project-spotlight"
-            class="flagship-spotlight-section relative py-20 sm:py-24 lg:py-32 bg-[#090d16] text-white overflow-hidden border-t border-white/10">
+            class="flagship-spotlight-section relative py-20 sm:py-28 lg:py-32 bg-[#080c14] text-white overflow-hidden border-t border-white/10">
 
-            <!-- Subtle Ambient Background Light -->
-            <div class="absolute top-1/3 -left-32 w-80 h-80 rounded-full bg-[#f95716]/10 blur-3xl pointer-events-none"></div>
-            <div class="absolute bottom-1/3 -right-32 w-80 h-80 rounded-full bg-blue-500/5 blur-3xl pointer-events-none"></div>
+            <!-- Soft Architectural Ambient Glow -->
+            <div class="absolute top-1/3 -left-32 w-[550px] h-[550px] rounded-full bg-[#f95716]/10 blur-[150px] pointer-events-none"></div>
 
-            <div class="container-fluid relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <div class="container-fluid relative z-10 max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-start">
-
-                    <!-- Left Column: Project Overview & Specs (5 Cols) -->
-                    <div class="spotlight-left-col lg:col-span-5 xl:col-span-5">
-                        <div id="spotlight-pinned-box" class="relative will-change-transform space-y-6">
-
-                            <!-- Eyebrow Badge -->
-                            <div class="flex items-center gap-3">
-                                <span class="w-8 h-[2px] bg-[#f95716] rounded-full"></span>
-                                <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                                    {{ get_content('projects', 'spotlight', 'badge', 'Featured Case Study') }}
-                                </span>
-                            </div>
-
-                            <!-- Title -->
-                            <h2
-                                class="font-heading font-black uppercase text-white tracking-tight leading-[1.06] text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] m-0">
-                                {{ $flagshipProject->title }}
-                            </h2>
-
-                            <!-- Project Overview -->
-                            <p class="text-slate-300 text-sm sm:text-base font-normal leading-relaxed m-0">
-                                {{ $flagshipProject->short_description ?? 'A definitive showcase of heavy engineering precision, structural integrity, and architectural excellence delivered on schedule.' }}
-                            </p>
-
-                            <!-- Clean Minimal Stats Grid (No Heavy Nested Boxes) -->
-                            <div class="grid grid-cols-2 gap-4 pt-2 pb-2 border-y border-white/10">
-                                <div class="space-y-1">
-                                    <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sector</div>
-                                    <div class="text-sm font-semibold text-white">
-                                        {{ $flagshipProject->category ?? 'Commercial' }}
-                                    </div>
-                                </div>
-
-                                <div class="space-y-1">
-                                    <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Location</div>
-                                    <div class="text-sm font-semibold text-white truncate">
-                                        {{ $flagshipProject->location ?? 'Metropolitan Area' }}
-                                    </div>
-                                </div>
-
-                                <div class="space-y-1">
-                                    <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Client</div>
-                                    <div class="text-sm font-semibold text-white truncate">
-                                        {{ $flagshipProject->client_name ?? 'Confidential Corporate Client' }}
-                                    </div>
-                                </div>
-
-                                <div class="space-y-1">
-                                    <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Status</div>
-                                    <div class="text-sm font-semibold text-[#f95716] flex items-center gap-1.5">
-                                        {{ $flagshipProject->status ? $flagshipProject->status->label() : 'Completed Build' }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- CTA Button -->
-                            <div class="pt-2">
-                                <a href="{{ route('public.projects.show', $flagshipProject->slug) }}"
-                                    class="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-[#f95716] hover:bg-[#ea4907] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-lg shadow-[#f95716]/25 hover:shadow-xl hover:shadow-[#f95716]/40 group">
-                                    <span>Explore Full Case Study</span>
-                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                    </svg>
-                                </a>
-                            </div>
-
-                        </div>
+                <!-- Clean Section Header -->
+                <div class="relative mb-12 sm:mb-16">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 sm:w-10 h-[2px] bg-[#f95716] rounded-full flex-shrink-0"></span>
+                        <span class="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-[#f95716]">
+                            {{ get_content('projects', 'spotlight', 'badge', 'FLAGSHIP CASE STUDY') }}
+                        </span>
                     </div>
 
-                    <!-- Right Column: Visual Showcase & Timeline (7 Cols) -->
-                    <div id="spotlight-content-col" class="lg:col-span-7 xl:col-span-7 space-y-8">
+                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                        <h2 class="font-heading font-black uppercase text-white tracking-tight leading-[1.08] text-3xl sm:text-4xl lg:text-[44px] m-0 max-w-2xl">
+                            {!! get_content('projects', 'spotlight', 'title', 'Engineering Benchmark & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.1em] tracking-normal inline-block transform -rotate-1">Architectural</span> Milestone') !!}
+                        </h2>
+                        <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-lg m-0">
+                            {{ get_content('projects', 'spotlight', 'subtitle', 'An in-depth look at our highest-complexity engineering commission, showcasing advanced construction technologies and zero-tolerance structural execution.') }}
+                        </p>
+                    </div>
+                </div>
 
-                        <!-- Main Architectural Hero Visual Plate -->
-                        <div
-                            class="spotlight-block relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border border-white/10 group">
-                            <img src="{{ $flagshipProject->main_image_url }}" alt="{{ $flagshipProject->title }}"
-                                class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                                loading="lazy" />
+                <!-- Showcase Canvas -->
+                <div class="rounded-2xl sm:rounded-3xl bg-[#0e1422] border border-white/10 p-6 sm:p-8 lg:p-12 shadow-2xl">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
 
-                            <!-- Bottom Clean Gradient Overlay -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none">
-                            </div>
+                        <!-- Left: Cinematic Architectural Visual Plate (7 Cols) -->
+                        <div class="lg:col-span-7">
+                            <div class="relative w-full aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-slate-900 border border-white/10 shadow-lg group">
+                                <img src="{{ $flagshipProject->main_image_url }}" alt="{{ $flagshipProject->title }}"
+                                    class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                                    loading="lazy" />
 
-                            <!-- Top Clean Tag -->
-                            <div class="absolute top-5 left-5 z-10 pointer-events-none">
-                                <span
-                                    class="inline-flex items-center px-3.5 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20">
-                                    Primary Site View
-                                </span>
-                            </div>
+                                <!-- Subtle Gradient -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none"></div>
 
-                            <!-- Bottom Project Details -->
-                            <div
-                                class="absolute bottom-5 left-5 right-5 flex items-end justify-between z-10 pointer-events-none">
-                                <div>
-                                    <div class="text-[11px] font-bold uppercase tracking-widest text-[#f95716]">Key Landmark
-                                    </div>
-                                    <div class="text-white text-lg sm:text-xl font-heading font-black uppercase">
-                                        {{ $flagshipProject->title }}
-                                    </div>
+                                <!-- Status Tag -->
+                                <div class="absolute top-4 left-4 sm:top-5 sm:left-5 z-10">
+                                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/15 shadow-sm">
+                                        <span class="w-2 h-2 rounded-full {{ $flagshipProject->status && $flagshipProject->status->value === 'completed' ? 'bg-emerald-400' : 'bg-[#f95716]' }} animate-pulse"></span>
+                                        {{ $flagshipProject->status ? $flagshipProject->status->label() : 'Completed Build' }}
+                                    </span>
                                 </div>
-                                @if($flagshipProject->completion_date)
-                                    <div
-                                        class="text-xs font-mono text-slate-300 bg-black/50 backdrop-blur-md px-3 py-1 rounded-md border border-white/10">
-                                        Delivered {{ $flagshipProject->completion_date->format('Y') }}
+
+                                <!-- Location Tag -->
+                                @if($flagshipProject->location)
+                                    <div class="absolute bottom-4 left-4 sm:bottom-5 sm:left-5 z-10">
+                                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium text-white/90 bg-black/60 backdrop-blur-md border border-white/10">
+                                            <svg class="w-3.5 h-3.5 text-[#f95716]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            {{ $flagshipProject->location }}
+                                        </span>
                                     </div>
                                 @endif
                             </div>
                         </div>
 
-                        <!-- Phased Milestones Progression (Streamlined & Clean) -->
-                        @if($flagshipProject->milestones && $flagshipProject->milestones->count() > 0)
-                            <div class="spotlight-block space-y-3 pt-2">
-                                <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                                    Project Execution Timeline
-                                </div>
+                        <!-- Right: Clean Editorial Info & Specs (5 Cols) -->
+                        <div class="lg:col-span-5 flex flex-col justify-between">
+                            <div>
+                                @if($flagshipProject->category)
+                                    <span class="inline-block text-xs font-bold uppercase tracking-[0.2em] text-[#f95716] mb-2.5">
+                                        {{ $flagshipProject->category }}
+                                    </span>
+                                @endif
 
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                    @foreach($flagshipProject->milestones->take(3) as $mIdx => $milestone)
-                                        <div
-                                            class="p-4 rounded-xl bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all duration-300">
-                                            <div class="flex items-center justify-between mb-2">
-                                                <span class="text-xs font-mono font-bold text-[#f95716]">
-                                                    Phase 0{{ $mIdx + 1 }}
-                                                </span>
-                                                <span
-                                                    class="text-[11px] font-mono font-bold uppercase {{ $milestone->completed_at ? 'text-emerald-400' : 'text-amber-400' }}">
-                                                    {{ $milestone->completed_at ? 'Completed' : 'Active' }}
-                                                </span>
-                                            </div>
-                                            <h4
-                                                class="font-heading font-black uppercase text-white text-sm sm:text-base m-0 line-clamp-1">
-                                                {{ $milestone->title }}
-                                            </h4>
-                                            @if($milestone->description)
-                                                <p class="text-slate-400 text-xs font-normal mt-1 m-0 line-clamp-2">
-                                                    {{ $milestone->description }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                    @endforeach
+                                <h3 class="font-heading font-black uppercase text-white text-2xl sm:text-3xl lg:text-4xl tracking-tight leading-tight mb-4">
+                                    {{ $flagshipProject->title }}
+                                </h3>
+
+                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed m-0 mb-6">
+                                    {{ $flagshipProject->short_description ?? 'A definitive benchmark in modern structural engineering and precision civil execution, delivered with zero safety compromises.' }}
+                                </p>
+                            </div>
+
+                            <!-- Minimal Specifications Strip -->
+                            <div class="grid grid-cols-2 gap-y-4 gap-x-6 py-5 border-y border-white/10 mb-6">
+                                <div>
+                                    <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Client</span>
+                                    <span class="block text-sm font-medium text-white mt-0.5 truncate">
+                                        {{ $flagshipProject->client_name ?? 'Confidential' }}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Delivery Year</span>
+                                    <span class="block text-sm font-medium text-white mt-0.5 font-mono">
+                                        {{ $flagshipProject->completion_date ? $flagshipProject->completion_date->format('Y') : '2024' }}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Sector</span>
+                                    <span class="block text-sm font-medium text-white mt-0.5 truncate">
+                                        {{ $flagshipProject->category ?? 'Commercial' }}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Status</span>
+                                    <span class="block text-sm font-medium text-white mt-0.5 truncate">
+                                        {{ $flagshipProject->status ? $flagshipProject->status->label() : 'Completed' }}
+                                    </span>
                                 </div>
                             </div>
-                        @endif
+
+                            <!-- CTA Button -->
+                            <div>
+                                <a href="{{ route('public.projects.show', $flagshipProject->slug) }}"
+                                    class="inline-flex items-center justify-center gap-3 px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all duration-200 rounded-full shadow-lg shadow-[#f95716]/20 hover:shadow-xl hover:shadow-[#f95716]/30 group w-full sm:w-auto">
+                                    <span>Explore Full Case Study</span>
+                                    <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
 
                     </div>
-
                 </div>
 
             </div>
