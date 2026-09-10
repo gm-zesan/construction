@@ -49,29 +49,14 @@
                     class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.articles.*') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
                     News & Articles
                 </a>
-                <a href="{{ route('contact') }}"
-                    class="text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('contact') ? 'text-[#f95716]' : 'text-slate-300' }} hover:text-[#f95716] transition-colors">
-                    Contact
-                </a>
             </nav>
 
             <!-- Desktop CTA -->
-            <div class="hidden md:flex items-center gap-3">
-                @auth
-                    <a href="{{ route('dashboard') }}"
-                        class="inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all rounded-xs shadow-sm shadow-[#f95716]/20">
-                        Dashboard
-                    </a>
-                @else
-                    <a href="{{ route('login') }}"
-                        class="inline-flex items-center justify-center px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition-colors">
-                        Sign In
-                    </a>
-                    <a href="{{ route('contact') }}"
-                        class="inline-flex items-center justify-center px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all rounded-xs shadow-sm shadow-[#f95716]/20">
-                        Get a Quote
-                    </a>
-                @endauth
+            <div class="hidden md:flex">
+                <a href="{{ route('contact') }}"
+                    class="inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all rounded-xs shadow-sm shadow-[#f95716]/20">
+                    Contact
+                </a>
             </div>
 
             <!-- Mobile Hamburger Button -->
@@ -92,73 +77,79 @@
 
     <!-- Mobile Menu Backdrop -->
     <div id="mobile-backdrop"
-        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-300 opacity-0 pointer-events-none md:hidden"
+        class="fixed inset-0 transition-opacity duration-300 opacity-0 pointer-events-none md:hidden"
+        style="background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 9998;"
         aria-hidden="true"></div>
 
     <!-- Mobile Drawer -->
     <div id="mobile-drawer"
-        class="fixed top-0 right-0 bottom-0 w-72 bg-[#0b0f17] border-l border-white/10 z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-6">
+        class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] border-l border-white/10 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-6 overflow-y-auto"
+        style="background: linear-gradient(180deg, #0e141f 0%, #070a10 100%); background-color: #0b0f17; box-shadow: -12px 0 40px rgba(0, 0, 0, 0.85); z-index: 9999;">
         <div>
-            <div class="flex items-center justify-between pb-6 border-b border-white/10">
-                @if(get_setting('site_logo'))
-                    <img src="{{ asset(get_setting('site_logo')) }}" alt="{{ get_setting('company_name', 'COMPANY NAME') }}"
-                        class="h-7 w-auto object-contain">
-                @else
-                    <span class="font-heading text-xl font-bold tracking-wider text-white uppercase">
-                        {{ $nameParts[0] }} @if(isset($nameParts[1]))<span
-                        class="text-[#f95716]">{{ $nameParts[1] }}</span>@endif
-                    </span>
-                @endif
-                <button id="mobile-menu-close" type="button" class="p-1.5 text-slate-400 hover:text-white"
+            <div class="flex items-center justify-between pb-5 border-b border-white/10">
+                <a href="/" class="flex items-center gap-2 focus:outline-none"
+                    aria-label="{{ get_setting('company_name', 'COMPANY NAME') }} Home">
+                    @if(get_setting('site_logo'))
+                        <img src="{{ asset(get_setting('site_logo')) }}"
+                            alt="{{ get_setting('company_name', 'COMPANY NAME') }}" class="h-7 w-auto object-contain">
+                    @else
+                        <span class="w-2 h-5 bg-[#f95716]"></span>
+                        <span class="font-heading text-lg font-bold tracking-wider text-white uppercase">
+                            {{ $nameParts[0] }} @if(isset($nameParts[1]))<span
+                            class="text-[#f95716]">{{ $nameParts[1] }}</span>@endif
+                        </span>
+                    @endif
+                </a>
+                <button id="mobile-menu-close" type="button"
+                    class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-all cursor-pointer"
                     aria-label="Close navigation">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
 
-            <nav class="mt-8 flex flex-col space-y-4" aria-label="Mobile Navigation Links">
-                <a href="{{ route('home') }}"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('home') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
-                    Home
+            <nav class="mt-6 flex flex-col space-y-1.5" aria-label="Mobile Navigation Links">
+                <a href="{{ route('home') }}" class="mobile-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+                    <span>Home</span>
                 </a>
                 <a href="{{ route('about') }}"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('about') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
-                    About
+                    class="mobile-nav-link {{ request()->routeIs('about') ? 'active' : '' }}">
+                    <span>About</span>
                 </a>
-                <a href="{{ route('home') }}#services"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
-                    Services
+                <a href="{{ route('home') }}#services" class="mobile-nav-link">
+                    <span>Services</span>
                 </a>
                 <a href="{{ route('public.projects.index') }}"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.projects.*') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
-                    Projects
+                    class="mobile-nav-link {{ request()->routeIs('public.projects.*') ? 'active' : '' }}">
+                    <span>Projects</span>
                 </a>
-                <a href="{{ route('team') }}"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('team*') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
-                    Team
-                </a>
-                <a href="{{ route('home') }}#why-choose-us"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase text-slate-300 hover:text-[#f95716] py-1">
-                    Why Us
+                <a href="{{ route('team') }}" class="mobile-nav-link {{ request()->routeIs('team*') ? 'active' : '' }}">
+                    <span>Team</span>
                 </a>
                 <a href="{{ route('public.articles.index') }}"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('public.articles.*') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
-                    News & Articles
-                </a>
-                <a href="{{ route('contact') }}"
-                    class="mobile-nav-link text-sm font-semibold tracking-wider uppercase {{ request()->routeIs('contact') ? 'text-[#f95716]' : 'text-slate-300 hover:text-[#f95716]' }} py-1">
-                    Contact
+                    class="mobile-nav-link {{ request()->routeIs('public.articles.*') ? 'active' : '' }}">
+                    <span>News &amp; Articles</span>
                 </a>
             </nav>
         </div>
 
-        <div class="pt-6 border-t border-white/10">
+        <div class="pt-6 border-t border-white/10 space-y-3">
             <a href="{{ route('contact') }}"
-                class="mobile-nav-link block w-full py-3 text-center text-xs font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all rounded-xs shadow-sm shadow-[#f95716]/20">
-                Get a Quote
+                class="inline-flex items-center justify-center w-full py-3.5 px-4 text-xs font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all rounded-md shadow-lg shadow-[#f95716]/25 hover:shadow-[#f95716]/40 cursor-pointer">
+                <span>Contact</span>
+                <svg class="w-4 h-4 ms-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
             </a>
+            @if(get_setting('primary_phone'))
+                <div class="text-center text-xs text-slate-400">
+                    Call Us: <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('primary_phone')) }}"
+                        class="text-slate-200 hover:text-[#f95716] font-semibold transition-colors">{{ get_setting('primary_phone') }}</a>
+                </div>
+            @endif
         </div>
     </div>
 </header>
