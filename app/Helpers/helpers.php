@@ -23,6 +23,46 @@ if (!function_exists('get_content')) {
     }
 }
 
+if (!function_exists('get_content_html')) {
+    /**
+     * Retrieve a website content value as safely sanitized HTML for rich text fields.
+     */
+    function get_content_html(string $page, string $section, string $key, mixed $default = null): string
+    {
+        $raw = WebsiteContent::get($page, $section, $key, $default);
+        return clean_html($raw);
+    }
+}
+
+if (!function_exists('clean_html')) {
+    /**
+     * Safely sanitize HTML string for frontend rendering.
+     * Preserves safe formatting tags (span, br, strong, em, p, a, etc.) and styling classes
+     * while stripping dangerous scripts, iframes, and inline event handlers.
+     */
+    function clean_html(mixed $content): string
+    {
+        if (empty($content)) {
+            return '';
+        }
+
+        $html = (string) $content;
+
+        // Strip dangerous tags completely along with their inner content
+        $html = preg_replace('/<(script|style|iframe|object|embed|applet|form|input|button)[\s>][\s\S]*?<\/\1>/i', '', $html);
+        $html = preg_replace('/<(script|style|iframe|object|embed|applet|meta|link|form|input|button)[^>]*?>/i', '', $html);
+
+        // Strip inline on* javascript event handlers (e.g. onclick, onerror, onload, onmouseover)
+        $html = preg_replace('/\s*on[a-zA-Z]+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html);
+
+        // Strip javascript: and vbscript: URIs
+        $html = preg_replace('/(?:\bhref|\bsrc)\s*=\s*("javascript:[^"]*"|\'javascript:[^\']*\'|javascript:[^\s>]+)/i', '', $html);
+        $html = preg_replace('/(?:\bhref|\bsrc)\s*=\s*("vbscript:[^"]*"|\'vbscript:[^\']*\'|vbscript:[^\s>]+)/i', '', $html);
+
+        return $html;
+    }
+}
+
 if (!function_exists('get_content_section')) {
     /**
      * Retrieve all key-value content items for a specific page section.

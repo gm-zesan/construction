@@ -41,7 +41,7 @@
                 <!-- Main Hero Headline -->
                 <h1
                     class="about-hero-fade parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.03] text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[76px] m-0 mb-6 relative z-10">
-                    {!! get_content('about', 'hero', 'title', 'Engineering Structures With <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Uncompromising</span> Precision.') !!}
+                    {!! get_content_html('about', 'hero', 'title', 'Engineering Structures With <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Uncompromising</span> Precision.') !!}
                 </h1>
 
                 <!-- Hero Description -->
@@ -108,7 +108,7 @@
                         <!-- Section Title -->
                         <h2
                             class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] m-0 relative z-10">
-                            {!! get_content('about', 'story', 'title', 'Pioneering Heavy Civil & <br>Commercial <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Execution</span>') !!}
+                            {!! get_content_html('about', 'story', 'title', 'Pioneering Heavy Civil & <br>Commercial <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Execution</span>') !!}
                         </h2>
                     </div>
 
@@ -301,7 +301,7 @@
                         <!-- Main Speech Heading -->
                         <h2
                             class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] m-0 relative z-10">
-                            {!! get_content('about', 'chairman_speech', 'title', 'Building With Purpose, <br>Delivering With <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Integrity</span>') !!}
+                            {!! get_content_html('about', 'chairman_speech', 'title', 'Building With Purpose, <br>Delivering With <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Integrity</span>') !!}
                         </h2>
                     </div>
 
@@ -488,7 +488,7 @@
                         <!-- Main Section Title -->
                         <h2
                             class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] m-0 mb-6 relative z-10">
-                            {!! get_content('about', 'timeline', 'title', 'Milestones of Proven <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Growth</span> & Capability') !!}
+                            {!! get_content_html('about', 'timeline', 'title', 'Milestones of Proven <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Growth</span> & Capability') !!}
                         </h2>
 
                         <!-- Descriptive Intro -->
@@ -540,7 +540,7 @@
                         <!-- Main Section Title -->
                         <h2
                             class="parallax-text-mid mid section-title font-heading font-black uppercase text-white tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] m-0 mb-6 relative z-10">
-                            {!! get_content('about', 'values', 'title', 'Engineering Benchmarks That <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Define</span> Every Build') !!}
+                            {!! get_content_html('about', 'values', 'title', 'Engineering Benchmarks That <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Define</span> Every Build') !!}
                         </h2>
 
                         <!-- Narrative Subtitle -->
@@ -776,7 +776,7 @@
                             </div>
                             <h2
                                 class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] tracking-tight leading-[1.05] m-0">
-                                {!! get_content('about', 'leadership', 'title', 'Leaders Driving Future <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Building Excellence</span>') !!}
+                                {!! get_content_html('about', 'leadership', 'title', 'Leaders Driving Future <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Building Excellence</span>') !!}
                             </h2>
                         </div>
 
@@ -885,7 +885,7 @@
                     <div>
                         <h2
                             class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] m-0">
-                            {!! get_content('about', 'accreditations', 'title', 'Recognized Standards of <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Certified</span> Excellence') !!}
+                            {!! get_content_html('about', 'accreditations', 'title', 'Recognized Standards of <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Certified</span> Excellence') !!}
                         </h2>
                     </div>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl m-0">

@@ -483,7 +483,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'testimonials',
                 'key' => 'title',
                 'value' => 'Direct Feedback From <br> Project <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Owners</span> &amp; Developers',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Testimonials Headline',
             ],
             [
@@ -639,7 +639,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'news',
                 'key' => 'title',
                 'value' => 'Jobsite Notes, Methods &amp; <br> <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Field</span> Updates',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'News Section Title',
             ],
             [
@@ -685,7 +685,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'hero',
                 'key' => 'title',
                 'value' => 'Engineering Structures With <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Uncompromising</span> Precision.',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Hero Main Title',
             ],
             [
@@ -751,7 +751,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'story',
                 'key' => 'title',
                 'value' => 'Pioneering Heavy Civil & <br>Commercial <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Execution</span>',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Story Main Title',
             ],
             [
@@ -857,7 +857,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'chairman_speech',
                 'key' => 'title',
                 'value' => 'Building With Purpose, <br>Delivering With <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Integrity</span>',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Chairman Speech Heading',
             ],
             [
@@ -963,7 +963,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'values',
                 'key' => 'title',
                 'value' => 'Engineering Benchmarks That <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Define</span> Every Build',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Values Main Title',
             ],
             [
@@ -1157,7 +1157,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'timeline',
                 'key' => 'title',
                 'value' => 'Milestones of Proven <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Growth</span> & Capability',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Timeline Main Title',
             ],
             [
@@ -1287,7 +1287,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'leadership',
                 'key' => 'title',
                 'value' => 'Leaders Driving Future <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Building Excellence</span>',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Leadership Main Title',
             ],
             [
@@ -1321,7 +1321,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'accreditations',
                 'key' => 'title',
                 'value' => 'Recognized Standards of <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Certified</span> Excellence',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Accreditations Main Title',
             ],
             [
@@ -1551,7 +1551,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'hero',
                 'key' => 'title',
                 'value' => 'Engineering Skylines, Infrastructure & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.15em] tracking-normal inline-block transform -rotate-1">Sustainable</span> Landmarks.',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Projects Hero Title',
             ],
             [
@@ -1585,7 +1585,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'showcase',
                 'key' => 'title',
                 'value' => 'Disciplined Execution Across <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Diverse</span> Sectors',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Showcase Section Title',
             ],
             [
@@ -1627,7 +1627,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'index_matrix',
                 'key' => 'title',
                 'value' => 'Enterprise Project <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Directory</span> & Delivery Log',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Index Matrix Title',
             ],
             [
@@ -1891,7 +1891,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'hero',
                 'key' => 'title',
                 'value' => 'Featured <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.1em] tracking-normal inline-block transform -rotate-1">Dispatches</span> &amp; Insights',
-                'type' => 'text',
+                'type' => 'richtext',
                 'label' => 'Hero Main Headline',
             ],
 
@@ -2763,7 +2763,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'hero',
                 'key' => 'title',
                 'value' => 'The Minds Behind <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Precision</span> Builds.',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Hero Main Title (HTML / Sketch allowed)',
             ],
             [
@@ -2829,7 +2829,7 @@ class WebsiteContentSeeder extends Seeder
                 'section' => 'roster',
                 'key' => 'title',
                 'value' => 'Engineering & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Technical</span> Roster',
-                'type' => 'textarea',
+                'type' => 'richtext',
                 'label' => 'Roster Section Title',
             ],
             [

@@ -447,7 +447,12 @@
 
                                                         <div class="{{ $colClass }}">
                                                             <div class="d-flex align-items-center justify-content-between mb-1">
-                                                                <label class="form-label custom-label mb-0">{{ $fieldLabel }}</label>
+                                                                <div class="d-flex align-items-center gap-2">
+                                                                    <label class="form-label custom-label mb-0">{{ $fieldLabel }}</label>
+                                                                    @if($record->type === 'richtext')
+                                                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle" style="font-size: 10px; font-weight: 700; padding: 2px 6px;">HTML / Rich</span>
+                                                                    @endif
+                                                                </div>
                                                                 @if($canDelete)
                                                                     <button type="button" class="delete-field-btn" title="Delete this field"
                                                                         onclick="confirmDeleteField({{ $record->id }}, '{{ addslashes($fieldLabel) }}')">
@@ -456,7 +461,11 @@
                                                                 @endif
                                                             </div>
 
-                                                            @if($record->type === 'textarea' || $isLongText)
+                                                            @if($record->type === 'richtext')
+                                                                <textarea name="content[{{ $secKey }}][{{ $fieldKey }}]"
+                                                                    class="form-control custom-input font-monospace" rows="3" style="font-size: 13px;"
+                                                                    placeholder="Enter {{ strtolower($fieldLabel) }} (HTML allowed)...">{{ $fieldVal }}</textarea>
+                                                            @elseif($record->type === 'textarea' || $isLongText)
                                                                 <textarea name="content[{{ $secKey }}][{{ $fieldKey }}]"
                                                                     class="form-control custom-input" rows="3"
                                                                     placeholder="Enter {{ strtolower($fieldLabel) }}...">{{ $fieldVal }}</textarea>
@@ -787,7 +796,8 @@
                                     <select id="cms_field_type" name="type" class="form-select custom-input"
                                         style="height: 38px; font-size: 13px;" required>
                                         <option value="text">Text (Single Line)</option>
-                                        <option value="textarea">Textarea (Multi-line)</option>
+                                        <option value="textarea">Textarea (Multi-line Plain)</option>
+                                        <option value="richtext">Rich Text / HTML / Headings</option>
                                         <option value="url">URL / Link</option>
                                         <option value="image">Image Upload</option>
                                         <option value="number">Numeric Value</option>

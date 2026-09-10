@@ -1116,7 +1116,7 @@
                 <!-- Section Title -->
                 <h2
                     class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] relative z-10">
-                    {!! get_content('home', 'testimonials', 'title', 'Direct Feedback From <br> Project <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Owners</span> &amp; Developers') !!}
+                    {!! get_content_html('home', 'testimonials', 'title', 'Direct Feedback From <br> Project <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Owners</span> &amp; Developers') !!}
                 </h2>
             </div>
 
@@ -1303,7 +1303,7 @@
                     <!-- Section Title -->
                     <h2
                         class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] m-0 relative z-10">
-                        {!! get_content('home', 'news', 'title', 'Jobsite Notes, Methods &amp; <br> <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Field</span> Updates') !!}
+                        {!! get_content_html('home', 'news', 'title', 'Jobsite Notes, Methods &amp; <br> <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Field</span> Updates') !!}
                     </h2>
                 </div>
 

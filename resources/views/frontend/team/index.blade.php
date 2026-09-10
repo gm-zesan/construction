@@ -44,7 +44,7 @@
 
                     <!-- Main Hero Headline -->
                     <h1 class="parallax-text-mid mid section-title font-heading font-extrabold uppercase text-white tracking-tight leading-[0.98] text-4xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] mb-6 sm:mb-8 relative z-10">
-                        {!! get_content('team', 'hero', 'title', 'The Minds Behind <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Precision</span> Builds.') !!}
+                        {!! get_content_html('team', 'hero', 'title', 'The Minds Behind <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Precision</span> Builds.') !!}
                     </h1>
 
                     <!-- Hero Description -->
@@ -102,7 +102,7 @@
 
                     <!-- Title -->
                     <h2 class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[48px] xl:text-[54px] m-0 relative z-10">
-                        {!! get_content('team', 'roster', 'title', 'Engineering & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Technical</span> Roster') !!}
+                        {!! get_content_html('team', 'roster', 'title', 'Engineering & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Technical</span> Roster') !!}
                     </h2>
                 </div>
 

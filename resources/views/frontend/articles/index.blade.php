@@ -25,7 +25,7 @@
                         </span>
                     </div>
                     <h1 class="blog-hero-fade font-heading font-black uppercase text-white tracking-tight leading-tight text-3xl sm:text-4xl lg:text-5xl m-0">
-                        {!! get_content('articles', 'hero', 'title', 'Featured <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.1em] tracking-normal inline-block transform -rotate-1">Dispatches</span> &amp; Insights') !!}
+                        {!! get_content_html('articles', 'hero', 'title', 'Featured <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.1em] tracking-normal inline-block transform -rotate-1">Dispatches</span> &amp; Insights') !!}
                     </h1>
                 </div>
 

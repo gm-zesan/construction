@@ -47,7 +47,7 @@
                     <!-- Main Hero Headline -->
                     <h1 id="projects-hero-heading"
                         class="projects-hero-fade parallax-text-mid mid section-title font-heading font-extrabold uppercase text-white tracking-tight leading-[0.98] text-4xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] mb-6 sm:mb-8 relative z-10">
-                        {!! get_content('projects', 'hero', 'title', 'Engineering Skylines, Infrastructure & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Sustainable</span> Landmarks.') !!}
+                        {!! get_content_html('projects', 'hero', 'title', 'Engineering Skylines, Infrastructure & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Sustainable</span> Landmarks.') !!}
                     </h1>
 
                     <!-- Quick Jump Action Links -->
@@ -189,7 +189,7 @@
                     <!-- Title -->
                     <h2
                         class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[48px] xl:text-[54px] m-0 relative z-10">
-                        {!! get_content('projects', 'showcase', 'title', 'Disciplined Execution Across <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Diverse</span> Sectors') !!}
+                        {!! get_content_html('projects', 'showcase', 'title', 'Disciplined Execution Across <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Diverse</span> Sectors') !!}
                     </h2>
                 </div>
 
@@ -361,7 +361,7 @@
 
                     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                         <h2 class="font-heading font-black uppercase text-white tracking-tight leading-[1.08] text-3xl sm:text-4xl lg:text-[44px] m-0 max-w-2xl">
-                            {!! get_content('projects', 'spotlight', 'title', 'Engineering Benchmark & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.1em] tracking-normal inline-block transform -rotate-1">Architectural</span> Milestone') !!}
+                            {!! get_content_html('projects', 'spotlight', 'title', 'Engineering Benchmark & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.1em] tracking-normal inline-block transform -rotate-1">Architectural</span> Milestone') !!}
                         </h2>
                         <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-lg m-0">
                             {{ get_content('projects', 'spotlight', 'subtitle', 'An in-depth look at our highest-complexity engineering commission, showcasing advanced construction technologies and zero-tolerance structural execution.') }}
@@ -499,7 +499,7 @@
                     <div>
                         <h2
                             class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] m-0">
-                            {!! get_content('projects', 'index_matrix', 'title', 'Enterprise Project <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Directory</span> & Delivery Log') !!}
+                            {!! get_content_html('projects', 'index_matrix', 'title', 'Enterprise Project <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Directory</span> & Delivery Log') !!}
                         </h2>
                     </div>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl m-0">
