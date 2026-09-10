@@ -141,24 +141,10 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home') }}#services"
-                            class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
-                            <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
-                            <span>Services</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ route('public.projects.index') }}"
                             class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
                             <span>Projects</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('home') }}#why-choose-us"
-                            class="text-slate-400 hover:text-[#f95716] text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group">
-                            <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#f95716] transition-colors"></span>
-                            <span>Why Choose Us</span>
                         </a>
                     </li>
                     <li>

@@ -306,7 +306,7 @@
                     <div class="col-12">
                         <div class="card table-card border-danger border-opacity-25">
                             <div class="card-header table-header bg-danger bg-opacity-10">
-                                <div class="table-title text-danger">Danger Zone</div>
+                                <div class="table-title text-danger text-light">Danger Zone</div>
                             </div>
                             <div class="card-body custom-form">
                                 <p class="text-muted mb-3" style="font-size: 12px;">

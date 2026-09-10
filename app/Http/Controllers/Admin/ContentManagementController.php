@@ -232,7 +232,7 @@ class ContentManagementController extends Controller implements HasMiddleware
         }
         $nextIndex = $maxIndex + 1;
         $groupId = "{$groupType}_{$nextIndex}";
-        $itemLabel = WebsiteContent::getItemDisplayName($groupType, $nextIndex, $section);
+        $itemLabel = WebsiteContent::buildItemTitle($groupType, $nextIndex);
 
         $createdValues = [];
         foreach ($fields as $subKey => $data) {

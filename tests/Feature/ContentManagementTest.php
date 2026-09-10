@@ -240,4 +240,88 @@ test('superadmin can create a new item in a repeating item group', function () {
     expect($newItemYear)->not->toBeNull();
 });
 
+test('arbitrary unknown group (e.g. innovation_1..3) works 100% dynamically without code changes', function () {
+    WebsiteContent::create([
+        'page' => 'about',
+        'section' => 'story',
+        'key' => 'innovation_1',
+        'value' => 'Direct Geothermal Piling',
+        'type' => 'text',
+        'label' => 'Geothermal Piling',
+    ]);
+    WebsiteContent::create([
+        'page' => 'about',
+        'section' => 'story',
+        'key' => 'innovation_2',
+        'value' => 'Carbon-Cured Concrete',
+        'type' => 'text',
+        'label' => 'Carbon-Cured Tech',
+    ]);
+    WebsiteContent::create([
+        'page' => 'about',
+        'section' => 'story',
+        'key' => 'innovation_3',
+        'value' => 'Autonomous Drone Surveying',
+        'type' => 'text',
+        'label' => 'Autonomous Drones',
+    ]);
+
+    // Request CMS Workspace
+    $response = $this->actingAs($this->superadmin)->get('/dashboard/content-management?page=about');
+    $response->assertStatus(200);
+
+    // Verify dynamic group title and items in HTML
+    $response->assertSee('Innovation Items');
+    $response->assertSee('Geothermal Piling');
+    $response->assertSee('Carbon-Cured Tech');
+    $response->assertSee('Autonomous Drones');
+});
+
+test('arbitrary unknown multi-field group (e.g. technology_1..2 with subfields) works 100% dynamically', function () {
+    WebsiteContent::create([
+        'page' => 'about',
+        'section' => 'story',
+        'key' => 'technology_1_name',
+        'value' => '5D BIM Digital Twin',
+        'type' => 'text',
+        'label' => 'Tech Name',
+    ]);
+    WebsiteContent::create([
+        'page' => 'about',
+        'section' => 'story',
+        'key' => 'technology_1_description',
+        'value' => 'Real-time telemetry and clash detection before concrete pours.',
+        'type' => 'textarea',
+        'label' => 'Tech Description',
+    ]);
+    WebsiteContent::create([
+        'page' => 'about',
+        'section' => 'story',
+        'key' => 'technology_2_name',
+        'value' => 'Robotic Rebar Tying',
+        'type' => 'text',
+        'label' => 'Tech Name',
+    ]);
+    WebsiteContent::create([
+        'page' => 'about',
+        'section' => 'story',
+        'key' => 'technology_2_description',
+        'value' => 'Precision automation on critical bridge deck reinforcement grids.',
+        'type' => 'textarea',
+        'label' => 'Tech Description',
+    ]);
+
+    // Request CMS Workspace
+    $response = $this->actingAs($this->superadmin)->get('/dashboard/content-management?page=about');
+    $response->assertStatus(200);
+
+    // Verify dynamic group title and multi-fields in HTML
+    $response->assertSee('Technology Items');
+    $response->assertSee('Technology Item 1');
+    $response->assertSee('Technology Item 2');
+    $response->assertSee('5D BIM Digital Twin');
+    $response->assertSee('Robotic Rebar Tying');
+});
+
+
 

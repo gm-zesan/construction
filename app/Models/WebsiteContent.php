@@ -313,107 +313,196 @@ class WebsiteContent extends Model implements HasMedia
     }
 
     /**
-     * Human-friendly group display name for repeating item collections in a section.
+     * Generic content key parser.
+     * Deconstructs database keys into normalized schema components:
+     * 
+     * - Standalone field: "{field}" (e.g. "title", "description", "badge")
+     *   => ['is_group' => false, 'group' => null, 'index' => null, 'field' => null]
+     * 
+     * - Simple repeating item: "{group}_{index}" (e.g. "checklist_1", "innovation_2")
+     *   => ['is_group' => true, 'group' => 'checklist', 'index' => 1, 'field' => null]
+     * 
+     * - Repeating item with subfields: "{group}_{index}_{field}" (e.g. "feature_1_title", "technology_2_name")
+     *   => ['is_group' => true, 'group' => 'feature', 'index' => 1, 'field' => 'title']
+     *
+     * @param string|null $key
+     * @return array{is_group: bool, group: string|null, index: int|null, field: string|null}
      */
-    public static function getGroupDisplayName(string $groupType, string $section, string $page): string
+    public static function parseContentKey(?string $key): array
     {
-        $customTitles = [
-            'timeline' => ['item' => 'Timeline Milestones'],
-            'accreditations' => ['item' => 'Accreditations & Certifications'],
-            'values' => ['val' => 'Core Values'],
-            'features' => ['feature' => 'Feature Highlights'],
-            'why_choose_us' => ['feature' => 'Distinct Capabilities'],
-            'experience' => ['stat' => 'Performance Statistics'],
-            'faq' => ['faq' => 'Frequently Asked Questions (FAQ)'],
-            'highlights' => ['card' => 'Technical Highlight Cards'],
-            'story' => ['checklist' => 'Capability Checkpoints'],
-            'hero' => ['telemetry' => 'Telemetry Indicators'],
+        $default = [
+            'is_group' => false,
+            'group' => null,
+            'index' => null,
+            'field' => null,
         ];
 
-        if (isset($customTitles[$section][$groupType])) {
-            return $customTitles[$section][$groupType];
+        if (empty($key)) {
+            return $default;
         }
 
-        return ucwords(str_replace('_', ' ', $groupType)) . ' Items';
+        if (preg_match('/^([a-zA-Z][a-zA-Z0-9_]*?)_(\d+)(?:_(.+))?$/', $key, $matches)) {
+            $field = isset($matches[3]) && $matches[3] !== '' ? $matches[3] : null;
+
+            return [
+                'is_group' => true,
+                'group' => $matches[1],
+                'index' => (int) $matches[2],
+                'field' => $field,
+            ];
+        }
+
+        return $default;
     }
 
     /**
-     * Human-friendly item display name for individual items in a group.
+     * Generate human-friendly display title dynamically from any group key.
      */
-    public static function getItemDisplayName(string $groupType, int $index, string $section): string
+    public static function buildGroupTitle(string $group): string
     {
-        $customItemNames = [
-            'timeline' => 'Timeline Milestone',
-            'accreditations' => 'Accreditation Item',
-            'values' => 'Value Item',
-            'features' => 'Feature Item',
-            'why_choose_us' => 'Feature Item',
-            'experience' => 'Statistic Item',
-            'faq' => 'FAQ Item',
-            'highlights' => 'Highlight Card',
-            'story' => 'Checklist Item',
-            'hero' => 'Telemetry Item',
-        ];
+        $headline = \Illuminate\Support\Str::headline(\Illuminate\Support\Str::singular($group));
+        if (strcasecmp($headline, 'Item') === 0 || \Illuminate\Support\Str::endsWith(strtolower($headline), ' item')) {
+            return \Illuminate\Support\Str::plural($headline);
+        }
 
-        $base = $customItemNames[$section] ?? ucwords(str_replace('_', ' ', $groupType)) . ' Item';
-        return "{$base} {$index}";
+        return $headline . ' Items';
+    }
+
+    /**
+     * Generate human-friendly item title dynamically with label-first priority.
+     */
+    public static function buildItemTitle(string $group, int $index, ?string $label = null): string
+    {
+        if (!empty(trim((string) $label))) {
+            return trim((string) $label);
+        }
+
+        $groupSingular = \Illuminate\Support\Str::headline(\Illuminate\Support\Str::singular($group));
+        if (strcasecmp($groupSingular, 'Item') === 0) {
+            return "Item {$index}";
+        }
+
+        return "{$groupSingular} Item {$index}";
+    }
+
+    /**
+     * Backward-compatible alias for buildGroupTitle.
+     */
+    public static function getGroupDisplayName(string $groupType, string $section = '', string $page = ''): string
+    {
+        return self::buildGroupTitle($groupType);
+    }
+
+    /**
+     * Backward-compatible alias for buildItemTitle.
+     */
+    public static function getItemDisplayName(string $groupType, int $index, string $section = '', ?string $label = null): string
+    {
+        return self::buildItemTitle($groupType, $index, $label);
     }
 
     /**
      * Categorize a collection of WebsiteContent records for a given section into standalone fields and repeating item groups.
+     * 100% dynamic grouping derived solely from database keys.
      */
-    public static function organizeSectionContent(iterable $records, string $section, string $page): array
+    public static function organizeSectionContent(iterable $records, string $section = '', string $page = ''): array
     {
         $standalone = [];
         $rawGroups = [];
-        $knownGroupPrefixes = ['item', 'val', 'feature', 'stat', 'faq', 'card', 'checklist', 'telemetry'];
 
         foreach ($records as $record) {
-            $matched = false;
-            if (preg_match('/^([a-zA-Z]+)_(\d+)(?:_(.*))?$/', $record->key, $matches)) {
-                $prefix = $matches[1];
-                $index = (int) $matches[2];
-                $subKey = $matches[3] ?? '';
+            $parsed = self::parseContentKey($record->key);
 
-                if (in_array($prefix, $knownGroupPrefixes)) {
-                    $groupId = "{$prefix}_{$index}";
-                    $rawGroups[$prefix][$groupId][] = $record;
-                    $matched = true;
-                }
-            }
-
-            if (!$matched) {
+            if ($parsed['is_group']) {
+                $groupKey = $parsed['group'];
+                $index = $parsed['index'];
+                $rawGroups[$groupKey][$index][] = [
+                    'parsed' => $parsed,
+                    'record' => $record,
+                ];
+            } else {
                 $standalone[$record->key] = $record;
             }
         }
 
         $formattedGroups = [];
-        foreach ($rawGroups as $prefix => $itemsById) {
-            $groupList = [];
-            foreach ($itemsById as $groupId => $fieldRecords) {
-                preg_match('/^([a-zA-Z]+)_(\d+)$/', $groupId, $m);
-                $idx = isset($m[2]) ? (int) $m[2] : 1;
-                $itemLabel = self::getItemDisplayName($prefix, $idx, $section);
 
-                // Derive smart preview info from fields
+        foreach ($rawGroups as $groupKey => $itemsByIndex) {
+            // Numeric sorting for items by index (1, 2, 10...)
+            ksort($itemsByIndex, SORT_NUMERIC);
+
+            $groupItems = [];
+
+            foreach ($itemsByIndex as $index => $fieldEntries) {
+                $groupId = "{$groupKey}_{$index}";
+
+                // Find primary label if a root record or dedicated label exists
+                $itemLabel = null;
+                $fieldRecords = [];
+
+                foreach ($fieldEntries as $entry) {
+                    $rec = $entry['record'];
+                    $fieldRecords[] = $rec;
+
+                    // Priority for item label: if key is exact {group}_{index} and has non-empty label
+                    if ($rec->key === $groupId && !empty($rec->label)) {
+                        $itemLabel = $rec->label;
+                    }
+                }
+
+                // Fallback to first non-empty label if single-field item without exact match
+                if (empty($itemLabel) && count($fieldRecords) === 1 && !empty($fieldRecords[0]->label)) {
+                    $itemLabel = $fieldRecords[0]->label;
+                }
+
+                $itemLabel = self::buildItemTitle($groupKey, $index, $itemLabel);
+
+                // Generic preview derivation
                 $badgePreview = null;
                 $titlePreview = null;
                 $descPreview = null;
                 $tags = [];
 
                 foreach ($fieldRecords as $f) {
-                    $k = $f->key;
+                    $k = strtolower($f->key);
                     $val = $f->value ?? '';
-                    if (empty($val))
+                    if ($val === '') {
                         continue;
+                    }
 
-                    if (str_ends_with($k, '_year') || str_ends_with($k, '_count') || str_ends_with($k, '_num') || str_ends_with($k, '_status')) {
+                    if (
+                        $f->type === 'number' ||
+                        str_ends_with($k, '_year') ||
+                        str_ends_with($k, '_count') ||
+                        str_ends_with($k, '_num') ||
+                        str_ends_with($k, '_status') ||
+                        str_ends_with($k, '_badge') ||
+                        str_ends_with($k, '_date') ||
+                        str_ends_with($k, '_code')
+                    ) {
                         $badgePreview = $badgePreview ?: $val;
-                    } elseif (str_ends_with($k, '_title') || str_ends_with($k, '_q') || str_ends_with($k, '_label') || $k === 'checklist_' . $idx) {
+                    } elseif (
+                        str_ends_with($k, '_title') ||
+                        str_ends_with($k, '_name') ||
+                        str_ends_with($k, '_heading') ||
+                        str_ends_with($k, '_headline') ||
+                        str_ends_with($k, '_q') ||
+                        str_ends_with($k, '_question') ||
+                        $k === $groupId
+                    ) {
                         $titlePreview = $titlePreview ?: $val;
-                    } elseif (str_ends_with($k, '_desc') || str_ends_with($k, '_text') || str_ends_with($k, '_a') || str_ends_with($k, '_category')) {
+                    } elseif (
+                        str_ends_with($k, '_desc') ||
+                        str_ends_with($k, '_description') ||
+                        str_ends_with($k, '_text') ||
+                        str_ends_with($k, '_subtitle') ||
+                        str_ends_with($k, '_bio') ||
+                        str_ends_with($k, '_summary') ||
+                        str_ends_with($k, '_a') ||
+                        str_ends_with($k, '_answer')
+                    ) {
                         $descPreview = $descPreview ?: $val;
-                    } elseif (str_contains($k, '_tag_')) {
+                    } elseif (str_contains($k, '_tag') || str_ends_with($k, '_category')) {
                         $tags[] = $val;
                     }
                 }
@@ -422,11 +511,14 @@ class WebsiteContent extends Model implements HasMedia
                     $titlePreview = $fieldRecords[0]->value ?? $fieldRecords[0]->label ?? $itemLabel;
                 }
 
-                $groupList[$groupId] = [
+                $groupItems[$groupId] = [
                     'group_id' => $groupId,
-                    'group_type' => $prefix,
-                    'item_index' => $idx,
+                    'group_type' => $groupKey,
+                    'item_key' => $groupId,
+                    'item_index' => $index,
+                    'index' => $index,
                     'item_label' => $itemLabel,
+                    'item_title' => $itemLabel,
                     'badge_preview' => $badgePreview,
                     'title_preview' => $titlePreview,
                     'desc_preview' => $descPreview,
@@ -435,10 +527,11 @@ class WebsiteContent extends Model implements HasMedia
                 ];
             }
 
-            $formattedGroups[$prefix] = [
-                'group_type' => $prefix,
-                'group_title' => self::getGroupDisplayName($prefix, $section, $page),
-                'items' => $groupList,
+            $formattedGroups[$groupKey] = [
+                'group_key' => $groupKey,
+                'group_type' => $groupKey,
+                'group_title' => self::buildGroupTitle($groupKey),
+                'items' => $groupItems,
             ];
         }
 

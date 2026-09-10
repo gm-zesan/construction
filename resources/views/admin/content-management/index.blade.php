@@ -178,6 +178,81 @@
             background-color: #fee2e2;
             color: #b91c1c;
         }
+
+        .btn-add-group-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            height: 32px;
+            padding: 0 14px;
+            border-radius: 6px;
+            color: #ea580c;
+            background-color: #fff7ed;
+            border: 1px solid #ffedd5;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(234, 88, 12, 0.05);
+        }
+
+        .btn-add-group-item i {
+            font-size: 14px;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-add-group-item:hover {
+            color: #ffffff;
+            background: linear-gradient(135deg, #f95716 0%, #ea580c 100%);
+            border-color: #f95716;
+            box-shadow: 0 4px 10px rgba(249, 87, 22, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .btn-add-group-item:hover i {
+            transform: rotate(90deg);
+        }
+
+        .btn-add-group-item:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(249, 87, 22, 0.2);
+        }
+
+        .btn-save-section {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            height: 38px;
+            padding: 0 22px;
+            border-radius: 7px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #f95716 0%, #ea580c 100%);
+            border: 1px solid #ea580c;
+            box-shadow: 0 2px 6px rgba(249, 87, 22, 0.25);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .btn-save-section i {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .btn-save-section:hover {
+            color: #ffffff;
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            border-color: #c2410c;
+            box-shadow: 0 4px 14px rgba(249, 87, 22, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-save-section:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(249, 87, 22, 0.2);
+        }
     </style>
 @endpush
 
@@ -275,19 +350,18 @@
                                                         $templateKeys = [];
                                                         if ($firstItem && !empty($firstItem['records'])) {
                                                             foreach ($firstItem['records'] as $fr) {
-                                                                $cleanSub = preg_replace('/^' . preg_quote($gType, '/') . '_\d+_?/', '', $fr->key);
-                                                                $cleanSub = $cleanSub ?: '__self__';
+                                                                $parsedKey = \App\Models\WebsiteContent::parseContentKey($fr->key);
+                                                                $cleanSub = $parsedKey['field'] ?: '__self__';
                                                                 $templateKeys[] = [
                                                                     'sub_key' => $cleanSub,
-                                                                    'label' => ucwords(str_replace('_', ' ', $cleanSub !== '__self__' ? $cleanSub : $gType)),
+                                                                    'label' => $fr->label ?: ucwords(str_replace('_', ' ', $cleanSub !== '__self__' ? $cleanSub : $gType)),
                                                                     'type' => $fr->type,
                                                                 ];
                                                             }
                                                         }
                                                     @endphp
                                                     <button type="button"
-                                                        class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1"
-                                                        style="font-size: 12px; height: 32px; border-color: #f95716; color: #f95716; font-weight: 600;"
+                                                        class="btn-add-group-item"
                                                         onclick="openAddGroupItemModal('{{ $activePage }}', '{{ $secKey }}', '{{ $gType }}', '{{ addslashes($gData['group_title']) }}', {{ json_encode($templateKeys) }})">
                                                         <i class="ri-add-line"></i> Add {{ Str::singular($gData['group_title']) }}
                                                     </button>
@@ -504,9 +578,8 @@
                                                 </div>
 
                                                 <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
-                                                    <button type="submit" class="btn submit-button"
-                                                        style="width: auto; height: 38px; padding: 0 24px;">
-                                                        <i class="ri-check-line me-1"></i> Save
+                                                    <button type="submit" class="btn-save-section">
+                                                        <i class="ri-check-line"></i> Save
                                                         {{ $hasGroups ? 'Section Details' : $currentPageMeta['badge'] }}
                                                     </button>
                                                 </div>
