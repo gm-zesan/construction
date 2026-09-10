@@ -51,7 +51,7 @@ class WebsiteContent extends Model implements HasMedia
         if ($page) {
             Cache::forget(self::getCacheKey($page));
         } else {
-            $pages = ['home', 'about', 'contact', 'footer', 'seo'];
+            $pages = ['home', 'about', 'team', 'team_detail', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
             foreach ($pages as $p) {
                 Cache::forget(self::getCacheKey($p));
             }
@@ -155,10 +155,10 @@ class WebsiteContent extends Model implements HasMedia
             ->toArray();
 
         if (empty($pages)) {
-            $pages = ['home', 'about', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
+            $pages = ['home', 'about', 'team', 'team_detail', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
         }
 
-        $defaultOrder = ['home', 'about', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
+        $defaultOrder = ['home', 'about', 'team', 'team_detail', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
         usort($pages, function ($a, $b) use ($defaultOrder) {
             $posA = array_search($a, $defaultOrder);
             $posB = array_search($b, $defaultOrder);
@@ -170,6 +170,8 @@ class WebsiteContent extends Model implements HasMedia
         $pageIcons = [
             'home' => 'ri-home-4-line',
             'about' => 'ri-building-line',
+            'team' => 'ri-team-line',
+            'team_detail' => 'ri-user-settings-line',
             'projects' => 'ri-community-line',
             'project_detail' => 'ri-layout-grid-line',
             'articles' => 'ri-newspaper-line',
@@ -182,6 +184,8 @@ class WebsiteContent extends Model implements HasMedia
         $pageBadges = [
             'home' => 'Home',
             'about' => 'About Us',
+            'team' => 'Team Directory',
+            'team_detail' => 'Team Member Detail',
             'projects' => 'Projects',
             'project_detail' => 'Project Detail',
             'articles' => 'Articles & News',
@@ -222,6 +226,8 @@ class WebsiteContent extends Model implements HasMedia
         $defaultSectionOrders = [
             'home' => ['hero', 'about_story', 'features', 'experience', 'services', 'projects', 'testimonials', 'why_choose_us', 'news'],
             'about' => ['hero', 'story', 'chairman_speech', 'values', 'timeline', 'leadership', 'accreditations'],
+            'team' => ['hero', 'roster', 'cta'],
+            'team_detail' => ['hero', 'bio', 'cta', 'related'],
             'projects' => ['hero', 'showcase', 'spotlight', 'index_matrix'],
             'project_detail' => ['narrative', 'highlights', 'sidebar', 'gallery', 'milestones', 'cta', 'related'],
             'articles' => ['hero', 'featured', 'archive', 'sidebar'],

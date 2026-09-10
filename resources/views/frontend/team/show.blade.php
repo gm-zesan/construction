@@ -5,13 +5,13 @@
 @section('content')
 <main id="team-show-page" class="bg-[#fbfbf9] text-slate-900 min-h-screen">
 
-    <!-- 1. Hero Section (Consistent Cinematic Dark Theme with other pages) -->
+    <!-- 1. Hero Section (Fully Dynamic Website Content) -->
     <section id="team-member-hero"
         class="relative min-h-[60vh] lg:min-h-[68vh] flex items-center overflow-hidden pt-28 pb-16 lg:pt-36 lg:pb-20 bg-[#080c14] text-white border-b border-white/10">
 
         <!-- Background Cinematic Photography with Multilayer Architectural Gradient -->
         <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            <img src="{{ asset('images/hero-project-detail.jpg') }}"
+            <img src="{{ get_content_image('team_detail', 'hero', 'bg_image', asset('images/hero-project-detail.jpg')) }}"
                 alt="{{ $member->name }}"
                 class="absolute -top-[10%] left-0 w-full h-[125%] object-cover object-center opacity-30 will-change-transform scale-105"
                 loading="eager" fetchpriority="high" />
@@ -38,20 +38,20 @@
 
                 <a href="{{ route('team') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-white transition-colors backdrop-blur-sm">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                    <span>Back to Directory</span>
+                    <span>{{ get_content('team_detail', 'hero', 'back_btn_text', 'Back to Directory') }}</span>
                 </a>
             </div>
 
             <!-- Profile Header Intro -->
             <div class="parallax-text-layers parallax-layers flex flex-col items-start text-left relative will-change-transform max-w-4xl">
                 <!-- Watermark -->
-                <span class="parallax-text-back back text-white">PROFILE</span>
+                <span class="parallax-text-back back text-white">{{ get_content('team_detail', 'hero', 'watermark', 'PROFILE') }}</span>
 
                 <!-- Sub Heading / Eyebrow -->
                 <div class="parallax-text-front front sub-heading inline-flex items-center gap-3 mb-4 relative z-10">
                     <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                     <span class="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-[#f95716]">
-                        {{ $member->department ?: 'ENGINEERING LEADERSHIP' }}
+                        {{ $member->department ?: get_content('team_detail', 'hero', 'badge', 'ENGINEERING LEADERSHIP') }}
                     </span>
                 </div>
 
@@ -67,7 +67,7 @@
         </div>
     </section>
 
-    <!-- 2. Profile Details Section (Matching the site's Light Theme design) -->
+    <!-- 2. Profile Details Section (Fully Dynamic Content) -->
     <section class="relative py-16 sm:py-20 lg:py-24 bg-[#fbfbf9] text-slate-900 overflow-hidden border-t border-slate-200/80">
 
         <!-- Blueprint Grid Pattern -->
@@ -167,17 +167,17 @@
                         <div class="flex items-center gap-2.5 mb-4">
                             <span class="blueprint-line inline-block w-8 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                             <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                                PROFESSIONAL BIOGRAPHY
+                                {{ get_content('team_detail', 'bio', 'badge', 'PROFESSIONAL BIOGRAPHY') }}
                             </span>
                         </div>
                         <h2 class="font-heading font-black uppercase text-slate-950 text-2xl sm:text-3xl tracking-tight mb-6">
-                            About {{ $member->name }}
+                            {{ get_content('team_detail', 'bio', 'heading_prefix', 'About') }} {{ $member->name }}
                         </h2>
                         <div class="text-slate-700 text-base sm:text-lg leading-relaxed space-y-4">
                             @if($member->bio)
                                 <p class="m-0">{{ $member->bio }}</p>
                             @else
-                                <p class="m-0">Dedicated construction and engineering specialist managing complex multidisciplinary builds, technical compliance, and high-performance structural delivery.</p>
+                                <p class="m-0">{{ get_content('team_detail', 'bio', 'default_bio', 'Dedicated construction and engineering specialist managing complex multidisciplinary builds, technical compliance, and high-performance structural delivery.') }}</p>
                             @endif
                         </div>
                     </div>
@@ -187,16 +187,18 @@
                         <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-[#f95716]/10 blur-[80px] rounded-full pointer-events-none"></div>
 
                         <div class="relative z-10">
-                            <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716] block mb-1">Direct Consultation</span>
+                            <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716] block mb-1">
+                                {{ get_content('team_detail', 'cta', 'badge', 'DIRECT CONSULTATION') }}
+                            </span>
                             <h3 class="font-heading font-black uppercase text-white text-xl sm:text-2xl tracking-tight m-0">
-                                Have a project for {{ explode(' ', $member->name)[0] }}?
+                                {{ get_content('team_detail', 'cta', 'heading_prefix', 'Have a project for') }} {{ explode(' ', $member->name)[0] }}?
                             </h3>
                             <p class="text-slate-300 text-xs sm:text-sm mt-1.5 m-0 max-w-md">
-                                Reach out directly or contact our team to discuss blueprints, engineering specs, or site plans.
+                                {{ get_content('team_detail', 'cta', 'subtitle', 'Reach out directly or contact our team to discuss blueprints, engineering specs, or site plans.') }}
                             </p>
                         </div>
-                        <a href="{{ route('contact') }}" class="px-7 py-3.5 rounded-full bg-[#f95716] hover:bg-[#ea4907] text-white text-xs font-bold uppercase tracking-wider transition-all duration-300 flex-shrink-0 shadow-lg shadow-[#f95716]/20 hover:scale-105 relative z-10">
-                            Contact Us
+                        <a href="{{ get_content('team_detail', 'cta', 'btn_url', route('contact')) }}" class="px-7 py-3.5 rounded-full bg-[#f95716] hover:bg-[#ea4907] text-white text-xs font-bold uppercase tracking-wider transition-all duration-300 flex-shrink-0 shadow-lg shadow-[#f95716]/20 hover:scale-105 relative z-10">
+                            {{ get_content('team_detail', 'cta', 'btn_text', 'Contact Us') }}
                         </a>
                     </div>
 
@@ -207,7 +209,7 @@
         </div>
     </section>
 
-    <!-- 3. Related Team Members Section (Matching the site's Light Theme design) -->
+    <!-- 3. Related Team Members Section (Fully Dynamic Content) -->
     @if($relatedMembers->isNotEmpty())
     <section class="relative py-16 sm:py-20 lg:py-24 bg-[#fbfbf9] border-t border-slate-200/80">
 
@@ -222,20 +224,20 @@
             
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 pb-6 border-b border-slate-200/80">
                 <div class="parallax-text-layers parallax-layers relative will-change-transform">
-                    <span class="parallax-text-back back text-slate-950">PEERS</span>
+                    <span class="parallax-text-back back text-slate-950">{{ get_content('team_detail', 'related', 'watermark', 'PEERS') }}</span>
                     <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-2 relative z-10">
                         <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                            DEPARTMENT PEERS
+                            {{ get_content('team_detail', 'related', 'badge', 'DEPARTMENT PEERS') }}
                         </span>
                     </div>
                     <h2 class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-2xl sm:text-3xl lg:text-4xl m-0 relative z-10">
-                        Fellow Engineers &amp; Directors
+                        {{ get_content('team_detail', 'related', 'title', 'Fellow Engineers & Directors') }}
                     </h2>
                 </div>
 
                 <a href="{{ route('team') }}" class="text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-[#f95716] transition-colors flex items-center gap-1.5 flex-shrink-0">
-                    <span>Full Directory</span>
+                    <span>{{ get_content('team_detail', 'related', 'link_text', 'Full Directory') }}</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>

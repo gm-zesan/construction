@@ -5,14 +5,14 @@
 @section('content')
 <main id="team-index-page" class="bg-[#fbfbf9] text-slate-900 min-h-screen">
 
-    <!-- 1. Hero Section (Consistent Cinematic Dark Theme with other pages) -->
+    <!-- 1. Hero Section (Fully Dynamic Website Content) -->
     <section id="team-hero"
         class="relative min-h-[80vh] lg:min-h-[88vh] flex items-center overflow-hidden pt-28 pb-16 lg:pt-36 lg:pb-24 bg-[#080c14] text-white border-b border-white/10">
 
         <!-- Background Cinematic Photography with Multilayer Architectural Gradient -->
         <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
             <img id="team-hero-bg-img"
-                src="{{ asset('images/experience-team.jpg') }}"
+                src="{{ get_content_image('team', 'hero', 'bg_image', asset('images/experience-team.jpg')) }}"
                 alt="Engineering Leadership and Construction Team"
                 class="absolute -top-[10%] left-0 w-full h-[125%] object-cover object-center opacity-40 will-change-transform scale-105"
                 loading="eager" fetchpriority="high" />
@@ -32,41 +32,38 @@
                 <!-- Left Column: Main Heading, Eyebrow & Jump Actions (8 Cols) -->
                 <div class="lg:col-span-8 parallax-text-layers parallax-layers flex flex-col items-start text-left relative will-change-transform">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-white">LEADERSHIP</span>
+                    <span class="parallax-text-back back text-white">{{ get_content('team', 'hero', 'watermark', 'LEADERSHIP') }}</span>
 
                     <!-- Sub Heading / Eyebrow -->
                     <div class="parallax-text-front front sub-heading inline-flex items-center gap-3 mb-6 relative z-10">
                         <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-[#f95716]">
-                            OUR LEADERSHIP &amp; ENGINEERS
+                            {{ get_content('team', 'hero', 'badge', 'OUR LEADERSHIP & ENGINEERS') }}
                         </span>
                     </div>
 
                     <!-- Main Hero Headline -->
                     <h1 class="parallax-text-mid mid section-title font-heading font-extrabold uppercase text-white tracking-tight leading-[0.98] text-4xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] mb-6 sm:mb-8 relative z-10">
-                        The Minds Behind <br>
-                        <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">
-                            Precision
-                        </span> Builds.
+                        {!! get_content('team', 'hero', 'title', 'The Minds Behind <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Precision</span> Builds.') !!}
                     </h1>
 
                     <!-- Hero Description -->
                     <p class="text-slate-300 text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-2xl m-0 mb-8 sm:mb-10 relative z-10">
-                        A dedicated team of architects, chartered structural engineers, and project managers committed to delivering safe, resilient, and landmark infrastructure.
+                        {{ get_content('team', 'hero', 'description', 'A dedicated team of architects, chartered structural engineers, and project managers committed to delivering safe, resilient, and landmark infrastructure.') }}
                     </p>
 
                     <!-- Quick Jump Action Links -->
                     <div class="w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-4 relative z-10">
-                        <a href="#directory"
+                        <a href="{{ get_content('team', 'hero', 'btn_1_url', '#directory') }}"
                             class="inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-[#f95716] hover:bg-[#ea4907] transition-all duration-300 rounded-sm shadow-xl shadow-[#f95716]/25 hover:shadow-2xl hover:shadow-[#f95716]/40 hover:scale-[1.02] cursor-pointer">
-                            <span>Explore Team Roster</span>
+                            <span>{{ get_content('team', 'hero', 'btn_1_text', 'Explore Team Roster') }}</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                             </svg>
                         </a>
-                        <a href="{{ route('contact') }}"
+                        <a href="{{ get_content('team', 'hero', 'btn_2_url', route('contact')) }}"
                             class="inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white border border-white/25 hover:border-[#f95716] hover:bg-[#f95716]/10 transition-all duration-300 rounded-sm backdrop-blur-sm">
-                            <span>Consult With Us</span>
+                            <span>{{ get_content('team', 'hero', 'btn_2_text', 'Consult With Us') }}</span>
                         </a>
                     </div>
                 </div>
@@ -75,7 +72,7 @@
         </div>
     </section>
 
-    <!-- 2. Team Directory Section (Matching the site's Light Theme design) -->
+    <!-- 2. Team Directory Section (Fully Dynamic Content) -->
     <section id="directory" class="relative py-16 sm:py-20 lg:py-24 bg-[#fbfbf9] text-slate-900 overflow-hidden border-t border-slate-200/80">
 
         <!-- Blueprint Grid Pattern -->
@@ -93,29 +90,26 @@
                 <!-- Left: Title with Watermark -->
                 <div class="parallax-text-layers parallax-layers relative will-change-transform">
                     <!-- Watermark -->
-                    <span class="parallax-text-back back text-slate-950">DIRECTORY</span>
+                    <span class="parallax-text-back back text-slate-950">{{ get_content('team', 'roster', 'watermark', 'DIRECTORY') }}</span>
 
                     <!-- Eyebrow -->
                     <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
                         <span class="blueprint-line inline-block w-8 sm:w-10 h-[2.5px] bg-[#f95716] rounded-full origin-left flex-shrink-0"></span>
                         <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716]">
-                            STAFF DIRECTORY
+                            {{ get_content('team', 'roster', 'badge', 'STAFF DIRECTORY') }}
                         </span>
                     </div>
 
                     <!-- Title -->
                     <h2 class="parallax-text-mid mid section-title font-heading font-black uppercase text-slate-950 tracking-tight leading-[1.04] text-3xl sm:text-4xl lg:text-[48px] xl:text-[54px] m-0 relative z-10">
-                        Engineering &amp; <br>
-                        <span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">
-                            Technical
-                        </span> Roster
+                        {!! get_content('team', 'roster', 'title', 'Engineering & <br><span class="font-sketch font-bold text-[#f95716] normal-case text-[1.12em] tracking-normal inline-block transform -rotate-1">Technical</span> Roster') !!}
                     </h2>
                 </div>
 
                 <!-- Right: Search & Department Filter Tabs -->
                 <div class="flex flex-col sm:items-start lg:items-end space-y-4 max-w-xl">
                     <p class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed lg:text-right m-0">
-                        Filter our engineers and project managers by operational discipline or search by name.
+                        {{ get_content('team', 'roster', 'subtitle', 'Filter our engineers and project managers by operational discipline or search by name.') }}
                     </p>
 
                     <!-- Filter Pill Bar & Search Form -->
@@ -246,25 +240,27 @@
         </div>
     </section>
 
-    <!-- 3. Consultation CTA Banner (Matching Project/Article CTA format) -->
+    <!-- 3. Consultation CTA Banner (Fully Dynamic Content) -->
     <section class="py-16 sm:py-20 lg:py-24 bg-[#fbfbf9] border-t border-slate-200/80">
         <div class="container-fluid max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
             <div class="bg-gradient-to-r from-[#0f1728] to-[#162035] border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 flex flex-col lg:flex-row lg:items-center justify-between gap-8 text-white relative overflow-hidden shadow-2xl">
                 <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-[#f95716]/10 blur-[100px] rounded-full pointer-events-none"></div>
                 
                 <div class="max-w-2xl relative z-10">
-                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716] block mb-2">Connect With Us</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#f95716] block mb-2">
+                        {{ get_content('team', 'cta', 'badge', 'CONNECT WITH US') }}
+                    </span>
                     <h2 class="font-heading font-black uppercase text-white text-2xl sm:text-3xl lg:text-4xl xl:text-5xl tracking-tight leading-tight m-0 mb-4">
-                        Have a Project in Mind? <br>Let’s Build Together.
+                        {!! nl2br(e(get_content('team', 'cta', 'title', "Have a Project in Mind?\nLet’s Build Together."))) !!}
                     </h2>
                     <p class="text-slate-300 text-sm sm:text-base leading-relaxed m-0">
-                        Our structural engineers, architects, and project superintendents are ready to discuss your plans and guide your project with precision.
+                        {{ get_content('team', 'cta', 'description', 'Our structural engineers, architects, and project superintendents are ready to discuss your plans and guide your project with precision.') }}
                     </p>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-4 relative z-10 flex-shrink-0">
-                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#f95716] hover:bg-[#ea4907] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-xl shadow-[#f95716]/25 hover:scale-105">
-                        <span>Get In Touch</span>
+                    <a href="{{ get_content('team', 'cta', 'btn_url', route('contact')) }}" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#f95716] hover:bg-[#ea4907] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-xl shadow-[#f95716]/25 hover:scale-105">
+                        <span>{{ get_content('team', 'cta', 'btn_text', 'Get In Touch') }}</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                     </a>
                 </div>
