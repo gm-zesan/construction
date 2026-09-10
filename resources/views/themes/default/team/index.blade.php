@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('themes.default.layouts.app')
 
 @section('title', $title ?? 'Our Engineering & Construction Leadership')
 

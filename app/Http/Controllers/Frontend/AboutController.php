@@ -82,6 +82,6 @@ class AboutController extends Controller
         $companyName = WebsiteSetting::get('company_name', 'COMPANY NAME');
         $title = "About Us | {$companyName} — Engineering & Construction Heritage";
 
-        return view('frontend.about', compact('leadership', 'accreditations', 'title'));
+        return theme_view('about', compact('leadership', 'accreditations', 'title'));
     }
 }

@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Register theme view namespace with standard fallbacks
+        // Active theme directories are resolved dynamically by theme_view() helper
+        \Illuminate\Support\Facades\View::addNamespace('theme', [
+            resource_path('views/themes/default'),
+            resource_path('views/frontend'),
+        ]);
     }
 }

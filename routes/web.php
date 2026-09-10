@@ -128,6 +128,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/dashboard/settings/fields', [WebsiteSettingController::class, 'storeField'])->name('settings.fields.store');
     Route::delete('/dashboard/settings/fields/{id}', [WebsiteSettingController::class, 'destroyField'])->name('settings.fields.destroy');
 
+    // Dynamic Multi-Theme System Management
+    Route::get('/dashboard/themes', [\App\Http\Controllers\Admin\ThemeController::class, 'index'])->name('themes.index');
+    Route::post('/dashboard/themes/{id}/activate', [\App\Http\Controllers\Admin\ThemeController::class, 'activate'])->name('themes.activate');
+    Route::post('/dashboard/themes', [\App\Http\Controllers\Admin\ThemeController::class, 'store'])->name('themes.store');
+    Route::put('/dashboard/themes/{id}', [\App\Http\Controllers\Admin\ThemeController::class, 'update'])->name('themes.update');
+    Route::delete('/dashboard/themes/{id}', [\App\Http\Controllers\Admin\ThemeController::class, 'destroy'])->name('themes.destroy');
+    Route::post('/dashboard/themes/scan', [\App\Http\Controllers\Admin\ThemeController::class, 'scan'])->name('themes.scan');
+
     // CKEditor Media Upload Endpoint
     Route::post('ckeditor/upload', [CkeditorController::class, 'upload'])->name('ckeditor.upload');
 });

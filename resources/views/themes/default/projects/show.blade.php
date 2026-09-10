@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('themes.default.layouts.app')
 
 @section('title', ($project->title ?? 'Project Case Study') . ' | ' . get_setting('company_name', 'COMPANY NAME'))
 @section('meta_description', Str::limit(strip_tags($project->short_description ?? $project->description), 160))

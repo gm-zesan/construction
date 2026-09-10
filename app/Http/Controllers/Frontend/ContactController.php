@@ -36,7 +36,7 @@ class ContactController extends Controller
         $selectedServiceId = $request->query('service_id');
         $selectedProjectId = $request->query('project_id');
 
-        return view('frontend.contact', compact(
+        return theme_view('contact', compact(
             'services',
             'projects',
             'selectedServiceId',

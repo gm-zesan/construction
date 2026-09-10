@@ -50,7 +50,7 @@ class ProjectController extends Controller
         $companyName = WebsiteSetting::get('company_name', 'COMPANY NAME');
         $title = "Projects & Engineering Portfolio | {$companyName}";
 
-        return view('frontend.projects.index', compact('projects', 'flagshipProject', 'categories', 'selectedCategory', 'title'));
+        return theme_view('projects.index', compact('projects', 'flagshipProject', 'categories', 'selectedCategory', 'title'));
     }
 
     /**
@@ -90,6 +90,6 @@ class ProjectController extends Controller
         $companyName = WebsiteSetting::get('company_name', 'COMPANY NAME');
         $title = "{$project->title} | Case Study | {$companyName}";
 
-        return view('frontend.projects.show', compact('project', 'relatedProjects', 'title'));
+        return theme_view('projects.show', compact('project', 'relatedProjects', 'title'));
     }
 }

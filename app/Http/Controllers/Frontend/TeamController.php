@@ -55,7 +55,7 @@ class TeamController extends Controller
         $companyName = WebsiteSetting::get('company_name', 'COMPANY NAME');
         $title = "Our Engineering & Construction Leadership | {$companyName}";
 
-        return view('frontend.team.index', compact(
+        return theme_view('team.index', compact(
             'teamMembers',
             'departments',
             'featuredLeaders',
@@ -100,6 +100,6 @@ class TeamController extends Controller
         $companyName = WebsiteSetting::get('company_name', 'COMPANY NAME');
         $title = "{$member->name} — {$member->designation} | {$companyName}";
 
-        return view('frontend.team.show', compact('member', 'relatedMembers', 'title'));
+        return theme_view('team.show', compact('member', 'relatedMembers', 'title'));
     }
 }

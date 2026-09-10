@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateContentManagementRequest;
+use App\Models\Theme;
 use App\Models\WebsiteContent;
 use App\Services\ActivityLogger;
 use Illuminate\Http\RedirectResponse;
@@ -26,22 +27,29 @@ class ContentManagementController extends Controller implements HasMiddleware
     }
 
     /**
-     * Display the Content Management Workspace for the selected page.
+     * Display the Content Management Workspace for the active theme.
      */
     public function index(Request $request): View
     {
-        $availablePages = WebsiteContent::getAvailablePagesWithMeta();
+        $currentTheme = get_active_theme();
+        $availableThemes = Theme::all();
+
+        $availablePages = WebsiteContent::getAvailablePagesWithMeta($currentTheme);
         $activePage = $request->query('page', array_key_first($availablePages) ?? 'home');
 
         if (!array_key_exists($activePage, $availablePages)) {
             $activePage = array_key_first($availablePages) ?? 'home';
         }
 
-        $sectionsMeta = WebsiteContent::getPageSectionsWithMeta($activePage);
+        $sectionsMeta = WebsiteContent::getPageSectionsWithMeta($activePage, $currentTheme);
+        
+        // Fetch strictly the records for the selected/active theme
         $allRecords = WebsiteContent::with('media')
+            ->where('theme', $currentTheme)
             ->where('page', $activePage)
             ->orderBy('id', 'asc')
             ->get();
+
         $contentRecords = [];
         $recordsBySection = $allRecords->groupBy('section');
         $sectionsData = [];
@@ -55,15 +63,24 @@ class ContentManagementController extends Controller implements HasMiddleware
             $sectionsData[$secKey] = WebsiteContent::organizeSectionContent($secRecords, $secKey, $activePage);
         }
 
-        return view('admin.content-management.index', compact('availablePages', 'activePage', 'sectionsMeta', 'contentRecords', 'sectionsData'));
+        return view('admin.content-management.index', compact(
+            'availablePages', 
+            'activePage', 
+            'sectionsMeta', 
+            'contentRecords', 
+            'sectionsData', 
+            'availableThemes', 
+            'currentTheme'
+        ));
     }
 
     /**
-     * Update a single grouped item and its fields only.
+     * Update a single grouped item and its fields only for a given theme.
      */
     public function updateItem(Request $request): RedirectResponse
     {
         $validated = $request->validate([
+            'theme' => ['nullable', 'string'],
             'page' => ['required', 'string'],
             'section' => ['required', 'string'],
             'group_id' => ['required', 'string'],
@@ -72,6 +89,7 @@ class ContentManagementController extends Controller implements HasMiddleware
             'remove_media' => ['nullable', 'array'],
         ]);
 
+        $theme = $validated['theme'] ?: 'default';
         $page = $validated['page'];
         $section = $validated['section'];
         $groupId = $validated['group_id'];
@@ -83,6 +101,7 @@ class ContentManagementController extends Controller implements HasMiddleware
         // 1. Process Text / Value fields
         foreach ($fields as $key => $value) {
             $record = WebsiteContent::firstOrNew([
+                'theme' => $theme,
                 'page' => $page,
                 'section' => $section,
                 'key' => $key,
@@ -104,7 +123,8 @@ class ContentManagementController extends Controller implements HasMiddleware
         if (is_array($removeMedia)) {
             foreach ($removeMedia as $key => $shouldRemove) {
                 if ($shouldRemove === '1' || $shouldRemove === 1 || $shouldRemove === true) {
-                    $record = WebsiteContent::where('page', $page)
+                    $record = WebsiteContent::where('theme', $theme)
+                        ->where('page', $page)
                         ->where('section', $section)
                         ->where('key', $key)
                         ->first();
@@ -126,6 +146,7 @@ class ContentManagementController extends Controller implements HasMiddleware
                 if ($file && $file->isValid()) {
                     $record = WebsiteContent::updateOrCreate(
                         [
+                            'theme' => $theme,
                             'page' => $page,
                             'section' => $section,
                             'key' => $key,
@@ -144,12 +165,12 @@ class ContentManagementController extends Controller implements HasMiddleware
             }
         }
 
-        WebsiteContent::clearPageCache($page);
+        WebsiteContent::clearPageCache($page, $theme);
 
         ActivityLogger::log(
             action: 'update',
             module: 'website-content',
-            description: "Updated {$itemLabel} in {$section} on page: {$page}",
+            description: "Updated {$itemLabel} in {$section} on page: {$page} (Theme: {$theme})",
             subject: null,
             newValues: $updatedValues
         );
@@ -159,23 +180,26 @@ class ContentManagementController extends Controller implements HasMiddleware
     }
 
     /**
-     * Delete an entire repeating item group and all its sub-fields.
+     * Delete an entire repeating item group and all its sub-fields for a given theme.
      */
     public function destroyGroup(Request $request): RedirectResponse
     {
         $validated = $request->validate([
+            'theme' => ['nullable', 'string'],
             'page' => ['required', 'string'],
             'section' => ['required', 'string'],
             'group_id' => ['required', 'string'],
             'item_label' => ['nullable', 'string'],
         ]);
 
+        $theme = $validated['theme'] ?: 'default';
         $page = $validated['page'];
         $section = $validated['section'];
         $groupId = $validated['group_id'];
         $itemLabel = $validated['item_label'] ?: ucwords(str_replace('_', ' ', $groupId));
 
-        $records = WebsiteContent::where('page', $page)
+        $records = WebsiteContent::where('theme', $theme)
+            ->where('page', $page)
             ->where('section', $section)
             ->where(function ($query) use ($groupId) {
                 $query->where('key', $groupId)
@@ -189,12 +213,12 @@ class ContentManagementController extends Controller implements HasMiddleware
             $record->delete();
         }
 
-        WebsiteContent::clearPageCache($page);
+        WebsiteContent::clearPageCache($page, $theme);
 
         ActivityLogger::log(
             action: 'delete',
             module: 'website-content',
-            description: "Deleted {$itemLabel} ({$groupId}) from {$section} on page: {$page}",
+            description: "Deleted {$itemLabel} ({$groupId}) from {$section} on page: {$page} (Theme: {$theme})",
             subject: null
         );
 
@@ -203,24 +227,27 @@ class ContentManagementController extends Controller implements HasMiddleware
     }
 
     /**
-     * Dynamically add a new repeating item to a section.
+     * Dynamically add a new repeating item to a section for a given theme.
      */
     public function storeGroupItem(Request $request): RedirectResponse
     {
         $validated = $request->validate([
+            'theme' => ['nullable', 'string'],
             'page' => ['required', 'string'],
             'section' => ['required', 'string'],
             'group_type' => ['required', 'string'],
             'fields' => ['required', 'array'],
         ]);
 
+        $theme = $validated['theme'] ?: 'default';
         $page = $validated['page'];
         $section = $validated['section'];
         $groupType = $validated['group_type'];
         $fields = $validated['fields'];
 
         // Determine the next index in a database-agnostic manner
-        $existingKeys = WebsiteContent::where('page', $page)
+        $existingKeys = WebsiteContent::where('theme', $theme)
+            ->where('page', $page)
             ->where('section', $section)
             ->pluck('key');
 
@@ -245,6 +272,7 @@ class ContentManagementController extends Controller implements HasMiddleware
 
             $record = WebsiteContent::updateOrCreate(
                 [
+                    'theme' => $theme,
                     'page' => $page,
                     'section' => $section,
                     'key' => $fullKey,
@@ -259,12 +287,12 @@ class ContentManagementController extends Controller implements HasMiddleware
             $createdValues[$fullKey] = $value;
         }
 
-        WebsiteContent::clearPageCache($page);
+        WebsiteContent::clearPageCache($page, $theme);
 
         ActivityLogger::log(
             action: 'create',
             module: 'website-content',
-            description: "Created new {$itemLabel} in {$section} on page: {$page}",
+            description: "Created new {$itemLabel} in {$section} on page: {$page} (Theme: {$theme})",
             subject: null,
             newValues: $createdValues
         );
@@ -274,14 +302,15 @@ class ContentManagementController extends Controller implements HasMiddleware
     }
 
     /**
-     * Update content and media for the selected page.
+     * Update content and media for the selected page and theme.
      */
     public function update(UpdateContentManagementRequest $request): RedirectResponse
     {
+        $theme = $request->input('theme', 'default');
         $activePage = $request->input('active_page', 'home');
         $contentData = $request->input('content', []);
         $removeMedia = $request->input('remove_media', []);
-        $oldContent = WebsiteContent::getPage($activePage);
+        $oldContent = WebsiteContent::getPage($activePage, $theme);
         $updatedValues = [];
 
         // 1. Process Text / Value Inputs
@@ -290,6 +319,7 @@ class ContentManagementController extends Controller implements HasMiddleware
 
             foreach ($keys as $key => $value) {
                 $record = WebsiteContent::firstOrNew([
+                    'theme' => $theme,
                     'page' => $activePage,
                     'section' => $section,
                     'key' => $key,
@@ -315,7 +345,8 @@ class ContentManagementController extends Controller implements HasMiddleware
 
                 foreach ($keys as $key => $shouldRemove) {
                     if ($shouldRemove === '1' || $shouldRemove === 1 || $shouldRemove === true) {
-                        $record = WebsiteContent::where('page', $activePage)
+                        $record = WebsiteContent::where('theme', $theme)
+                            ->where('page', $activePage)
                             ->where('section', $section)
                             ->where('key', $key)
                             ->first();
@@ -341,6 +372,7 @@ class ContentManagementController extends Controller implements HasMiddleware
                     if ($file && $file->isValid()) {
                         $record = WebsiteContent::updateOrCreate(
                             [
+                                'theme' => $theme,
                                 'page' => $activePage,
                                 'section' => $section,
                                 'key' => $key,
@@ -362,29 +394,30 @@ class ContentManagementController extends Controller implements HasMiddleware
             }
         }
 
-        // 4. Invalidate Cache for this page
-        WebsiteContent::clearPageCache($activePage);
+        // 4. Invalidate Cache for this page & theme
+        WebsiteContent::clearPageCache($activePage, $theme);
 
         // 5. Activity Log
         ActivityLogger::log(
             action: 'update',
             module: 'website-content',
-            description: "Updated content for page: {$activePage}",
+            description: "Updated content for page: {$activePage} (Theme: {$theme})",
             subject: null,
             oldValues: $oldContent,
             newValues: $updatedValues
         );
 
         return redirect()->route('content-management.index', ['page' => $activePage])
-            ->with('success', ucfirst($activePage) . ' page content updated successfully.');
+            ->with('success', ucfirst($activePage) . " page content updated successfully.");
     }
 
     /**
-     * Create a new generic CMS Page, Section, or Field dynamically.
+     * Create a new generic CMS Page, Section, or Field dynamically for a given theme.
      */
     public function storeField(Request $request): RedirectResponse
     {
         $validated = $request->validate([
+            'theme' => ['nullable', 'string'],
             'page' => ['required', 'string', 'max:60'],
             'section' => ['required', 'string', 'max:60'],
             'label' => ['required', 'string', 'max:100'],
@@ -393,20 +426,23 @@ class ContentManagementController extends Controller implements HasMiddleware
             'value' => ['nullable'],
         ]);
 
+        $theme = $validated['theme'] ?: 'default';
         $page = Str::slug($validated['page'], '_');
         $section = Str::slug($validated['section'], '_');
         $key = !empty($validated['key']) ? Str::slug($validated['key'], '_') : Str::slug($validated['label'], '_');
 
-        $exists = WebsiteContent::where('page', $page)
+        $exists = WebsiteContent::where('theme', $theme)
+            ->where('page', $page)
             ->where('section', $section)
             ->where('key', $key)
             ->exists();
 
         if ($exists) {
-            return redirect()->back()->with('error', "Field with key '{$key}' already exists in section '{$section}' on page '{$page}'.");
+            return redirect()->back()->with('error', "Field with key '{$key}' already exists in section '{$section}' on page '{$page}' for theme '{$theme}'.");
         }
 
         $record = WebsiteContent::create([
+            'theme' => $theme,
             'page' => $page,
             'section' => $section,
             'key' => $key,
@@ -415,12 +451,12 @@ class ContentManagementController extends Controller implements HasMiddleware
             'value' => $validated['value'] ?? null,
         ]);
 
-        WebsiteContent::clearPageCache($page);
+        WebsiteContent::clearPageCache($page, $theme);
 
         ActivityLogger::log(
             action: 'create',
             module: 'website-content',
-            description: "Created new content field '{$key}' in section '{$section}' on page '{$page}'",
+            description: "Created new content field '{$key}' in section '{$section}' on page '{$page}' (Theme: {$theme})",
             subject: $record,
             newValues: $record->toArray()
         );
@@ -436,17 +472,18 @@ class ContentManagementController extends Controller implements HasMiddleware
     {
         $record = WebsiteContent::findOrFail($id);
         $page = $record->page;
+        $theme = $record->theme ?? 'default';
         $label = $record->label ?: $record->key;
 
         $record->clearMediaCollection('image');
         $record->delete();
 
-        WebsiteContent::clearPageCache($page);
+        WebsiteContent::clearPageCache($page, $theme);
 
         ActivityLogger::log(
             action: 'delete',
             module: 'website-content',
-            description: "Deleted content field '{$record->key}' from page '{$page}'",
+            description: "Deleted content field '{$record->key}' from page '{$page}' (Theme: {$theme})",
             subject: null
         );
 

@@ -303,6 +303,14 @@
                             </nav>
                         </div>
                         <div class="d-flex align-items-center gap-2">
+                            {{-- Active Theme Indicator Badge --}}
+                            <a href="{{ route('themes.index') }}" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 text-decoration-none"
+                                style="height: 38px; font-weight: 600; font-size: 13px; border-radius: 6px; background-color: #ffffff;"
+                                title="Manage Themes in Theme Settings">
+                                <i class="ri-palette-line text-primary me-1" style="color: #f95716 !important;"></i>
+                                Active Theme: <strong>{{ optional($availableThemes->firstWhere('directory', $currentTheme))->name ?? ucfirst($currentTheme) }}</strong>
+                            </a>
+
                             @if($canCreate)
                                 <button type="button" class="add-new" data-bs-toggle="modal"
                                     data-bs-target="#createCmsFieldModal">
@@ -496,6 +504,7 @@
                                     <form action="{{ route('content-management.update') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
+                                        <input type="hidden" name="theme" value="{{ $currentTheme }}">
                                         <input type="hidden" name="active_page" value="{{ $activePage }}">
 
                                         <div class="settings-section-card">
@@ -638,6 +647,7 @@
                     <form id="editGroupItemForm" action="{{ route('content-management.item.update') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="theme" value="{{ $currentTheme }}">
                         <input type="hidden" name="page" id="edit_modal_page" value="{{ $activePage }}">
                         <input type="hidden" name="section" id="edit_modal_section" value="">
                         <input type="hidden" name="group_id" id="edit_modal_group_id" value="">
@@ -688,6 +698,7 @@
                     <form id="deleteGroupItemForm" action="{{ route('content-management.item.destroy') }}" method="POST">
                         @csrf
                         @method('DELETE')
+                        <input type="hidden" name="theme" value="{{ $currentTheme }}">
                         <input type="hidden" name="page" id="delete_modal_page" value="{{ $activePage }}">
                         <input type="hidden" name="section" id="delete_modal_section" value="">
                         <input type="hidden" name="group_id" id="delete_modal_group_id" value="">
@@ -746,6 +757,7 @@
 
                     <form id="addGroupItemForm" action="{{ route('content-management.item.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="theme" value="{{ $currentTheme }}">
                         <input type="hidden" name="page" id="add_modal_page" value="{{ $activePage }}">
                         <input type="hidden" name="section" id="add_modal_section" value="">
                         <input type="hidden" name="group_type" id="add_modal_group_type" value="">
@@ -799,6 +811,7 @@
                     <div class="modal-body p-4">
                         <form action="{{ route('content-management.fields.store') }}" method="POST">
                             @csrf
+                            <input type="hidden" name="theme" value="{{ $currentTheme }}">
                             <div class="row g-3 mb-3">
                                 {{-- Target Page Selection --}}
                                 <div class="col-md-6">

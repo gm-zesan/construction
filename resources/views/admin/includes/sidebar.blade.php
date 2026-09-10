@@ -170,7 +170,21 @@
             </li>
         @endcanany
 
-        <!-- 5. Website Settings -->
+        <!-- 5. Appearance & Themes -->
+        @if(Auth::check() && (Auth::user()->hasRole('superadmin') || Auth::user()->can('theme-list') || Auth::user()->can('theme-edit') || Auth::user()->can('theme-active')))
+            <li class="category-li">
+                <span class="link_names">Appearance</span>
+            </li>
+            <li>
+                <a href="{{ route('themes.index') }}"
+                    class="{{ request()->routeIs('themes.*') ? 'active-focus' : '' }}">
+                    <i class="ri-palette-line"></i>
+                    <span class="link_names">Themes &amp; Styling</span>
+                </a>
+            </li>
+        @endif
+
+        <!-- 6. Website Settings -->
         @canany(['website-setting-list', 'website-setting-edit'])
             <li class="category-li">
                 <span class="link_names">Website Settings</span>
@@ -208,7 +222,7 @@
                 <span class="link_names">Content Management</span>
             </li>
             @php
-                $cmsPages = \App\Models\WebsiteContent::getAvailablePagesWithMeta();
+                $cmsPages = \App\Models\WebsiteContent::getAvailablePagesWithMeta(get_active_theme());
                 $currentCmsPage = request('page', array_key_first($cmsPages) ?? 'home');
             @endphp
             @foreach($cmsPages as $pKey => $pMeta)

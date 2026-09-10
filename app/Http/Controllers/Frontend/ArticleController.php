@@ -77,7 +77,7 @@ class ArticleController extends Controller
         $companyName = WebsiteSetting::get('company_name', 'COMPANY NAME');
         $title = "News, Field Reports & Engineering Articles | {$companyName}";
 
-        return view('frontend.articles.index', compact(
+        return theme_view('articles.index', compact(
             'articles',
             'featuredArticles',
             'categories',
@@ -130,6 +130,6 @@ class ArticleController extends Controller
         $companyName = WebsiteSetting::get('company_name', 'COMPANY NAME');
         $title = "{$article->title} | Insights | {$companyName}";
 
-        return view('frontend.articles.show', compact('article', 'relatedArticles', 'title'));
+        return theme_view('articles.show', compact('article', 'relatedArticles', 'title'));
     }
 }

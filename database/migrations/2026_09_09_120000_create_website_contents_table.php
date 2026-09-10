@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('website_contents', function (Blueprint $table) {
             $table->id();
-            $table->string('page');
-            $table->string('section');
-            $table->string('key');
+            $table->string('theme', 50)->default('default');
+            $table->string('page', 50);
+            $table->string('section', 100);
+            $table->string('key', 100);
             $table->longText('value')->nullable();
             $table->string('type')->default('text');
             $table->string('label')->nullable();
             $table->timestamps();
 
-            $table->unique(['page', 'section', 'key']);
+            $table->unique(['theme', 'page', 'section', 'key'], 'wc_theme_page_sec_key_unique');
+            $table->index(['theme', 'page'], 'wc_theme_page_index');
             $table->index('page');
             $table->index('section');
         });

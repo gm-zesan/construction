@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('themes.default.layouts.app')
 
 @section('content')
     <!-- Hero Section -->
@@ -26,7 +26,8 @@
                 <div id="hero-content-col"
                     class="parallax-text-layers parallax-layers lg:col-span-7 flex flex-col items-start text-left relative">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-white">{{ get_content('home', 'hero', 'watermark', 'CONSTRUCT') }}</span>
+                    <span
+                        class="parallax-text-back back text-white">{{ get_content('home', 'hero', 'watermark', 'CONSTRUCT') }}</span>
 
                     <!-- Eyebrow -->
                     <div
@@ -160,7 +161,8 @@
                     <div>
                         <div class="parallax-text-layers parallax-layers relative">
                             <!-- Back Watermark Parallax Text -->
-                            <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'about_story', 'watermark', 'PRECISION') }}</span>
+                            <span
+                                class="parallax-text-back back text-slate-950">{{ get_content('home', 'about_story', 'watermark', 'PRECISION') }}</span>
 
                             <!-- Eyebrow -->
                             <div
@@ -207,7 +209,8 @@
                         <div class="flex items-baseline">
                             <span id="experience-stat-number"
                                 class="font-heading text-6xl sm:text-7xl font-extrabold text-white leading-none tracking-tight">{{ get_content('home', 'about_story', 'exp_years', '12') }}</span>
-                            <span class="text-[#f95716] text-3xl sm:text-4xl font-black leading-none ml-1.5">{{ get_content('home', 'about_story', 'exp_suffix', '+') }}</span>
+                            <span
+                                class="text-[#f95716] text-3xl sm:text-4xl font-black leading-none ml-1.5">{{ get_content('home', 'about_story', 'exp_suffix', '+') }}</span>
                         </div>
                         <div class="border-l border-white/15 pl-4 sm:pl-5">
                             <span
@@ -276,7 +279,8 @@
                 class="flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8 mb-14 sm:mb-16 lg:mb-20">
                 <div class="parallax-text-layers parallax-layers relative">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-white">{{ get_content('home', 'services', 'watermark', 'SERVICES') }}</span>
+                    <span
+                        class="parallax-text-back back text-white">{{ get_content('home', 'services', 'watermark', 'SERVICES') }}</span>
 
                     <!-- Eyebrow -->
                     <div class="parallax-text-front front flex items-center gap-3 mb-4 sm:mb-5 relative z-10">
@@ -358,18 +362,30 @@
                         class="service-row group block py-8 sm:py-10 lg:py-12 transition-all duration-300 hover:bg-white/[0.02]">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
                             <div class="lg:col-span-2 flex items-center gap-4">
-                                <span class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-500 group-hover:text-[#f95716] transition-colors tracking-tight">01</span>
-                                <span class="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-[#f95716] transition-all duration-300 hidden sm:block"></span>
+                                <span
+                                    class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-500 group-hover:text-[#f95716] transition-colors tracking-tight">01</span>
+                                <span
+                                    class="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-[#f95716] transition-all duration-300 hidden sm:block"></span>
                             </div>
                             <div class="lg:col-span-4">
-                                <h3 class="font-heading font-black uppercase text-2xl sm:text-3xl lg:text-[32px] text-white group-hover:text-[#f95716] transition-colors tracking-tight leading-snug">Design & Planning</h3>
+                                <h3
+                                    class="font-heading font-black uppercase text-2xl sm:text-3xl lg:text-[32px] text-white group-hover:text-[#f95716] transition-colors tracking-tight leading-snug">
+                                    Design & Planning</h3>
                             </div>
                             <div class="lg:col-span-5">
-                                <p class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed group-hover:text-slate-300 transition-colors">Project planning, architectural drafting, structural calculations, and technical site preparation.</p>
+                                <p
+                                    class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed group-hover:text-slate-300 transition-colors">
+                                    Project planning, architectural drafting, structural calculations, and technical site
+                                    preparation.</p>
                             </div>
                             <div class="lg:col-span-1 flex justify-start lg:justify-end mt-2 lg:mt-0">
-                                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/15 flex items-center justify-center text-slate-400 group-hover:border-[#f95716] group-hover:bg-[#f95716] group-hover:text-white transition-all duration-300">
-                                    <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                <div
+                                    class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/15 flex items-center justify-center text-slate-400 group-hover:border-[#f95716] group-hover:bg-[#f95716] group-hover:text-white transition-all duration-300">
+                                    <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
                                 </div>
                             </div>
                         </div>
@@ -392,7 +408,8 @@
                 class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 sm:mb-16 lg:mb-20">
                 <div class="parallax-text-layers parallax-layers relative">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'projects', 'watermark', 'PROJECTS') }}</span>
+                    <span
+                        class="parallax-text-back back text-slate-950">{{ get_content('home', 'projects', 'watermark', 'PROJECTS') }}</span>
 
                     <!-- Eyebrow -->
                     <div class="parallax-text-front front flex items-center gap-3 mb-4 sm:mb-5 relative z-10">
@@ -462,8 +479,8 @@
                         $catSlug = \Illuminate\Support\Str::slug($project->category ?? 'commercial');
                         $cardImg = $project->main_image_url;
                         $projectIndex = str_pad($index + 1, 2, '0', STR_PAD_LEFT);
-                        $statusText = $project->completion_date 
-                            ? 'Completed ' . $project->completion_date->format('Y') 
+                        $statusText = $project->completion_date
+                            ? 'Completed ' . $project->completion_date->format('Y')
                             : ($project->status ? $project->status->label() : 'Active');
                     @endphp
                     <!-- Project {{ $projectIndex }}: {{ $project->title }} -->
@@ -474,8 +491,7 @@
                             <div>
                                 <!-- Photo Container with Smooth Hover Zoom -->
                                 <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
-                                    <img src="{{ $cardImg }}"
-                                        alt="{{ $project->title }}"
+                                    <img src="{{ $cardImg }}" alt="{{ $project->title }}"
                                         class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
 
                                     <!-- Top Gradient Overlay & Badges -->
@@ -494,7 +510,8 @@
                                     <!-- Scale / Location Tag (Bottom Left) -->
                                     @if($project->location)
                                         <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
-                                            <span class="text-[#f95716] font-bold">{{ $project->client_name ?? 'Featured' }}</span> • {{ $project->location }}
+                                            <span class="text-[#f95716] font-bold">{{ $project->client_name ?? 'Featured' }}</span>
+                                            • {{ $project->location }}
                                         </div>
                                     @endif
                                 </div>
@@ -502,9 +519,11 @@
                                 <!-- Project Content -->
                                 <div class="p-6 sm:p-8">
                                     <div class="flex items-baseline gap-2 mb-2">
-                                        <span class="text-xs font-black text-[#f95716] tracking-widest uppercase">{{ $projectIndex }}</span>
+                                        <span
+                                            class="text-xs font-black text-[#f95716] tracking-widest uppercase">{{ $projectIndex }}</span>
                                         <span class="w-4 h-[1px] bg-slate-300"></span>
-                                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ $statusText }}</span>
+                                        <span
+                                            class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ $statusText }}</span>
                                     </div>
 
                                     <h3
@@ -535,22 +554,45 @@
                 @empty
                     <!-- Fallback Project 01 -->
                     <div class="project-grid-item cat-commercial w-full md:w-1/2 px-3 sm:px-4 lg:px-5 pb-8 lg:pb-10">
-                        <article class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between h-full" data-category="commercial">
+                        <article
+                            class="project-card group bg-slate-50 rounded-xl overflow-hidden border border-slate-200/80 hover:shadow-lg duration-300 flex flex-col justify-between h-full"
+                            data-category="commercial">
                             <div>
                                 <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-900">
-                                    <img src="{{ asset('images/project-commercial-tower.jpg') }}" alt="Commercial Tower" class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
-                                    <div class="absolute top-5 left-5 z-10"><span class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">Commercial High-Rise</span></div>
-                                    <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide"><span class="text-[#f95716] font-bold">38 Storeys</span> • Downtown Central Core</div>
+                                    <img src="{{ asset('images/project-commercial-tower.jpg') }}" alt="Commercial Tower"
+                                        class="project-card-img w-full h-full object-cover object-center" loading="lazy" />
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none">
+                                    </div>
+                                    <div class="absolute top-5 left-5 z-10"><span
+                                            class="inline-flex items-center px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20 rounded-full">Commercial
+                                            High-Rise</span></div>
+                                    <div class="absolute bottom-4 left-5 z-10 text-white text-xs font-semibold tracking-wide">
+                                        <span class="text-[#f95716] font-bold">38 Storeys</span> • Downtown Central Core</div>
                                 </div>
                                 <div class="p-6 sm:p-8">
-                                    <div class="flex items-baseline gap-2 mb-2"><span class="text-xs font-black text-[#f95716] tracking-widest uppercase">01</span><span class="w-4 h-[1px] bg-slate-300"></span><span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed 2025</span></div>
-                                    <h3 class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">Metropolitan Skyway & Commercial Tower</h3>
-                                    <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">38-Storey reinforced concrete core, post-tensioned floor slabs, structural steel crown, and unitized curtain wall glazing.</p>
+                                    <div class="flex items-baseline gap-2 mb-2"><span
+                                            class="text-xs font-black text-[#f95716] tracking-widest uppercase">01</span><span
+                                            class="w-4 h-[1px] bg-slate-300"></span><span
+                                            class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed
+                                            2025</span></div>
+                                    <h3
+                                        class="font-heading font-black uppercase text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug mb-3 group-hover:text-[#f95716] transition-colors">
+                                        Metropolitan Skyway & Commercial Tower</h3>
+                                    <p class="text-slate-600 text-sm sm:text-[15px] font-normal leading-relaxed">38-Storey
+                                        reinforced concrete core, post-tensioned floor slabs, structural steel crown, and
+                                        unitized curtain wall glazing.</p>
                                 </div>
                             </div>
                             <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2 mt-auto">
-                                <a href="/projects" class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors"><span>VIEW CASE STUDY</span><svg class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17" /></svg></a>
+                                <a href="/projects"
+                                    class="inline-flex items-center justify-between w-full pt-4 border-t border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-950 group-hover:text-[#f95716] transition-colors"><span>VIEW
+                                        CASE STUDY</span><svg
+                                        class="w-4 h-4 text-[#f95716] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                            d="M7 17L17 7M17 7H7M17 7V17" />
+                                    </svg></a>
                             </div>
                         </article>
                     </div>
@@ -558,7 +600,7 @@
 
             </div>
 
-            </div>
+        </div>
 
         </div>
     </section>
@@ -586,7 +628,8 @@
                         <!-- Section Heading -->
                         <div class="parallax-text-layers parallax-layers section-heading white-content relative">
                             <!-- Back Watermark Parallax Text -->
-                            <span class="parallax-text-back back text-white">{{ get_content('home', 'features', 'watermark', 'INTERIOR') }}</span>
+                            <span
+                                class="parallax-text-back back text-white">{{ get_content('home', 'features', 'watermark', 'INTERIOR') }}</span>
 
                             <!-- Sub Heading / Eyebrow -->
                             <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 relative z-10">
@@ -638,7 +681,8 @@
                                         class="name font-heading font-bold uppercase text-slate-950 text-sm sm:text-[15px] leading-tight tracking-tight m-0">
                                         {{ get_content('home', 'features', 'author_name', 'Alexander Joseph Reed') }}
                                     </h3>
-                                    <span class="text-xs font-semibold text-slate-500 tracking-wide block mt-0.5">{{ get_content('home', 'features', 'author_title', 'Founder & CEO') }}</span>
+                                    <span
+                                        class="text-xs font-semibold text-slate-500 tracking-wide block mt-0.5">{{ get_content('home', 'features', 'author_title', 'Founder & CEO') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -754,7 +798,8 @@
                 <div id="why-choose-left-col" class="lg:col-span-5 flex flex-col justify-between space-y-6">
                     <div class="parallax-text-layers parallax-layers relative">
                         <!-- Back Watermark Parallax Text -->
-                        <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'why_choose_us', 'watermark', 'EXPERTISE') }}</span>
+                        <span
+                            class="parallax-text-back back text-slate-950">{{ get_content('home', 'why_choose_us', 'watermark', 'EXPERTISE') }}</span>
 
                         <!-- Sub Heading / Eyebrow -->
                         <div
@@ -796,8 +841,10 @@
                         <div>
                             <div
                                 class="flex items-baseline font-heading font-black text-4xl sm:text-5xl text-slate-950 tracking-tight leading-none">
-                                <span id="why-choose-counter" data-target="{{ get_content('home', 'why_choose_us', 'stat_count', '22') }}">0</span>
-                                <span class="text-[#f95716]">{{ get_content('home', 'why_choose_us', 'stat_suffix', '+') }}</span>
+                                <span id="why-choose-counter"
+                                    data-target="{{ get_content('home', 'why_choose_us', 'stat_count', '22') }}">0</span>
+                                <span
+                                    class="text-[#f95716]">{{ get_content('home', 'why_choose_us', 'stat_suffix', '+') }}</span>
                             </div>
                             <p
                                 class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-slate-500 mt-1 sm:mt-1.5 m-0">
@@ -919,7 +966,8 @@
                 <div id="experience-right-col" class="lg:col-span-6 flex flex-col justify-center space-y-6">
                     <div class="parallax-text-layers parallax-layers relative">
                         <!-- Back Watermark Parallax Text -->
-                        <span class="parallax-text-back back text-white">{{ get_content('home', 'experience', 'watermark', 'DELIVERY') }}</span>
+                        <span
+                            class="parallax-text-back back text-white">{{ get_content('home', 'experience', 'watermark', 'DELIVERY') }}</span>
 
                         <!-- Sub Heading / Eyebrow -->
                         <div
@@ -979,7 +1027,9 @@
                     <!-- Big Numeric Counter -->
                     <div
                         class="font-heading font-black text-4xl sm:text-5xl text-slate-950 tracking-tight leading-none mb-3">
-                        <span class="exp-counter" data-target="{{ get_content('home', 'experience', 'stat_1_count', '240') }}">0</span><span class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_1_suffix', '+') }}</span>
+                        <span class="exp-counter"
+                            data-target="{{ get_content('home', 'experience', 'stat_1_count', '240') }}">0</span><span
+                            class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_1_suffix', '+') }}</span>
                     </div>
 
                     <!-- Title & Context -->
@@ -1007,7 +1057,9 @@
 
                     <!-- Big Numeric Counter -->
                     <div class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight leading-none mb-3">
-                        <span class="exp-counter" data-target="{{ get_content('home', 'experience', 'stat_2_count', '99') }}">0</span><span class="text-white">{{ get_content('home', 'experience', 'stat_2_suffix', '%') }}</span>
+                        <span class="exp-counter"
+                            data-target="{{ get_content('home', 'experience', 'stat_2_count', '99') }}">0</span><span
+                            class="text-white">{{ get_content('home', 'experience', 'stat_2_suffix', '%') }}</span>
                     </div>
 
                     <!-- Title & Context -->
@@ -1035,7 +1087,9 @@
 
                     <!-- Big Numeric Counter -->
                     <div class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight leading-none mb-3">
-                        <span class="exp-counter" data-target="{{ get_content('home', 'experience', 'stat_3_count', '12') }}">0</span><span class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_3_suffix', '+') }}</span>
+                        <span class="exp-counter"
+                            data-target="{{ get_content('home', 'experience', 'stat_3_count', '12') }}">0</span><span
+                            class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_3_suffix', '+') }}</span>
                     </div>
 
                     <!-- Title & Context -->
@@ -1064,7 +1118,9 @@
                     <!-- Big Numeric Counter -->
                     <div
                         class="font-heading font-black text-4xl sm:text-5xl text-slate-950 tracking-tight leading-none mb-3">
-                        <span class="exp-counter" data-target="{{ get_content('home', 'experience', 'stat_4_count', '180') }}">0</span><span class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_4_suffix', '+') }}</span>
+                        <span class="exp-counter"
+                            data-target="{{ get_content('home', 'experience', 'stat_4_count', '180') }}">0</span><span
+                            class="text-[#f95716]">{{ get_content('home', 'experience', 'stat_4_suffix', '+') }}</span>
                     </div>
 
                     <!-- Title & Context -->
@@ -1102,7 +1158,8 @@
             <div id="testimonials-header"
                 class="parallax-text-layers parallax-layers mb-10 sm:mb-14 will-change-transform relative">
                 <!-- Back Watermark Parallax Text -->
-                <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'testimonials', 'watermark', 'FEEDBACK') }}</span>
+                <span
+                    class="parallax-text-back back text-slate-950">{{ get_content('home', 'testimonials', 'watermark', 'FEEDBACK') }}</span>
 
                 <!-- Sub Heading / Eyebrow -->
                 <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
@@ -1167,7 +1224,8 @@
                                         <div class="md:col-span-5 flex flex-col h-full">
                                             <div
                                                 class="relative w-full h-full min-h-[260px] md:min-h-0 rounded-xl overflow-hidden ring-1 ring-slate-900/10 bg-slate-100">
-                                                <img src="{{ $testimonial->client_photo_url ?: asset('images/testimonial-' . (($loop->index % 3) + 1) . '.jpg') }}" alt="{{ $testimonial->client_name }}"
+                                                <img src="{{ $testimonial->client_photo_url ?: asset('images/testimonial-' . (($loop->index % 3) + 1) . '.jpg') }}"
+                                                    alt="{{ $testimonial->client_name }}"
                                                     class="w-full h-full object-cover object-center block" loading="lazy" />
                                                 <div
                                                     class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none">
@@ -1194,7 +1252,8 @@
                                                     <p
                                                         class="text-slate-800 text-sm sm:text-base lg:text-lg font-normal leading-relaxed m-0">
                                                         From site preparation through structural topping-out, their
-                                                        superintendent team maintained rigid milestone control, direct subcontractor
+                                                        superintendent team maintained rigid milestone control, direct
+                                                        subcontractor
                                                         management, and clear weekly lookahead schedules.
                                                     </p>
                                                 </div>
@@ -1235,7 +1294,9 @@
                     <div>
                         <div
                             class="font-heading font-black text-5xl sm:text-7xl lg:text-8xl text-slate-950 tracking-tight leading-none mb-3">
-                            <span id="testimonial-counter" data-target="{{ get_content('home', 'testimonials', 'stat_count', '12') }}">0</span><span class="text-[#f95716]">{{ get_content('home', 'testimonials', 'stat_suffix', '+') }}</span>
+                            <span id="testimonial-counter"
+                                data-target="{{ get_content('home', 'testimonials', 'stat_count', '12') }}">0</span><span
+                                class="text-[#f95716]">{{ get_content('home', 'testimonials', 'stat_suffix', '+') }}</span>
                         </div>
                         <p class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed m-0 max-w-xs">
                             {{ get_content('home', 'testimonials', 'stat_desc', 'Years of repeat commercial developer partnerships and general contracting delivery.') }}
@@ -1289,7 +1350,8 @@
                 <!-- Left: Eyebrow + Headline -->
                 <div class="parallax-text-layers parallax-layers max-w-2xl relative">
                     <!-- Back Watermark Parallax Text -->
-                    <span class="parallax-text-back back text-slate-950">{{ get_content('home', 'news', 'watermark', 'UPDATES') }}</span>
+                    <span
+                        class="parallax-text-back back text-slate-950">{{ get_content('home', 'news', 'watermark', 'UPDATES') }}</span>
 
                     <!-- Sub Heading / Eyebrow -->
                     <div class="parallax-text-front front sub-heading flex items-center gap-2.5 mb-3 sm:mb-4 relative z-10">
@@ -1329,8 +1391,7 @@
                         <div>
                             <!-- Card Image Wrapper -->
                             <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-slate-200">
-                                <img src="{{ $article->image_url }}"
-                                    alt="{{ $article->title }}"
+                                <img src="{{ $article->image_url }}" alt="{{ $article->title }}"
                                     class="news-card-img w-full h-full object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
                                     loading="lazy" />
                                 <div
@@ -1378,25 +1439,39 @@
                     </article>
                 @empty
                     <!-- Fallback if no articles found -->
-                    <article class="news-card group bg-[#f4f3ef] rounded-2xl p-5 sm:p-6 border border-slate-200/80 flex flex-col justify-between transition-all duration-300 hover:border-slate-300/80 will-change-transform">
+                    <article
+                        class="news-card group bg-[#f4f3ef] rounded-2xl p-5 sm:p-6 border border-slate-200/80 flex flex-col justify-between transition-all duration-300 hover:border-slate-300/80 will-change-transform">
                         <div>
                             <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-slate-200">
-                                <img src="{{ asset('images/blog-1.jpg') }}" alt="Site Progress Update" class="news-card-img w-full h-full object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform" loading="lazy" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
+                                <img src="{{ asset('images/blog-1.jpg') }}" alt="Site Progress Update"
+                                    class="news-card-img w-full h-full object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                                    loading="lazy" />
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none">
+                                </div>
                             </div>
                             <div class="flex items-center gap-3 mb-4">
-                                <span class="inline-block px-3 py-1 rounded-md bg-white text-slate-800 text-xs font-bold uppercase tracking-wider ring-1 ring-slate-900/5 shadow-sm">{{ now()->format('M d, Y') }}</span>
-                                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Site Progress • 3 min</span>
+                                <span
+                                    class="inline-block px-3 py-1 rounded-md bg-white text-slate-800 text-xs font-bold uppercase tracking-wider ring-1 ring-slate-900/5 shadow-sm">{{ now()->format('M d, Y') }}</span>
+                                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Site Progress • 3
+                                    min</span>
                             </div>
-                            <h3 class="font-heading font-bold uppercase text-slate-950 text-xl sm:text-2xl tracking-tight leading-tight mb-3 transition-colors duration-200 group-hover:text-[#f95716]">
+                            <h3
+                                class="font-heading font-bold uppercase text-slate-950 text-xl sm:text-2xl tracking-tight leading-tight mb-3 transition-colors duration-200 group-hover:text-[#f95716]">
                                 <a href="#news" class="focus:outline-none">Metropolitan Commercial Tower Progress</a>
                             </h3>
-                            <p class="text-slate-600 text-sm font-normal leading-relaxed m-0 mb-6 line-clamp-2">Core shear wall concrete pours reach level 24 with perimeter curtain wall installation actively progressing.</p>
+                            <p class="text-slate-600 text-sm font-normal leading-relaxed m-0 mb-6 line-clamp-2">Core shear wall
+                                concrete pours reach level 24 with perimeter curtain wall installation actively progressing.</p>
                         </div>
                         <div class="pt-4 border-t border-slate-200/70">
-                            <a href="#news" class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 group-hover:text-[#f95716] transition-colors duration-200">
+                            <a href="#news"
+                                class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 group-hover:text-[#f95716] transition-colors duration-200">
                                 <span>Read Update</span>
-                                <svg class="w-4 h-4 text-[#f95716] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17" /></svg>
+                                <svg class="w-4 h-4 text-[#f95716] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M7 17L17 7M17 7H7M17 7V17" />
+                                </svg>
                             </a>
                         </div>
                     </article>

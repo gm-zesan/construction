@@ -15,6 +15,7 @@ class WebsiteContent extends Model implements HasMedia
     protected $table = 'website_contents';
 
     protected $fillable = [
+        'theme',
         'page',
         'section',
         'key',
@@ -36,24 +37,30 @@ class WebsiteContent extends Model implements HasMedia
     }
 
     /**
-     * Cache key generator for a given page.
+     * Cache key generator for a given page and theme.
      */
-    public static function getCacheKey(string $page): string
+    public static function getCacheKey(string $page, ?string $theme = null): string
     {
-        return "website_content.{$page}";
+        $theme = $theme ?: get_active_theme();
+        return "website_content.{$theme}.{$page}";
     }
 
     /**
-     * Clear cache for a specific page or all pages.
+     * Clear cache for a specific page or all pages across themes.
      */
-    public static function clearPageCache(?string $page = null): void
+    public static function clearPageCache(?string $page = null, ?string $theme = null): void
     {
-        if ($page) {
-            Cache::forget(self::getCacheKey($page));
-        } else {
-            $pages = ['home', 'about', 'team', 'team_detail', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
+        $pages = $page ? [$page] : ['home', 'about', 'team', 'team_detail', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
+        
+        try {
+            $themes = $theme ? [$theme] : Theme::pluck('directory')->push('default')->unique()->all();
+        } catch (\Throwable $e) {
+            $themes = ['default', 'apex-dark'];
+        }
+
+        foreach ($themes as $t) {
             foreach ($pages as $p) {
-                Cache::forget(self::getCacheKey($p));
+                Cache::forget("website_content.{$t}.{$p}");
             }
         }
     }
@@ -61,22 +68,28 @@ class WebsiteContent extends Model implements HasMedia
     protected static function booted(): void
     {
         static::saved(function (self $model) {
-            self::clearPageCache($model->page);
+            self::clearPageCache($model->page, $model->theme);
         });
 
         static::deleted(function (self $model) {
-            self::clearPageCache($model->page);
+            self::clearPageCache($model->page, $model->theme);
         });
     }
 
     /**
-     * Get all content for a specific page as a nested array [section][key] => value.
+     * Get all content for a specific page and theme as a nested array [section][key] => value.
      */
-    public static function getPage(string $page): array
+    public static function getPage(string $page, ?string $theme = null): array
     {
-        return Cache::rememberForever(self::getCacheKey($page), function () use ($page) {
-            $records = self::with('media')->where('page', $page)->get();
+        $activeTheme = $theme ?: get_active_theme();
+
+        return Cache::rememberForever(self::getCacheKey($page, $activeTheme), function () use ($page, $activeTheme) {
             $data = [];
+
+            $records = self::with('media')
+                ->where('theme', $activeTheme)
+                ->where('page', $page)
+                ->get();
 
             foreach ($records as $item) {
                 if ($item->type === 'image') {
@@ -94,37 +107,38 @@ class WebsiteContent extends Model implements HasMedia
     /**
      * Get all content for a specific section on a page.
      */
-    public static function getSection(string $page, string $section): array
+    public static function getSection(string $page, string $section, ?string $theme = null): array
     {
-        $pageData = self::getPage($page);
+        $pageData = self::getPage($page, $theme);
         return $pageData[$section] ?? [];
     }
 
     /**
      * Retrieve a specific content value by page, section, and key.
      */
-    public static function get(string $page, string $section, string $key, mixed $default = null): mixed
+    public static function get(string $page, string $section, string $key, mixed $default = null, ?string $theme = null): mixed
     {
-        $pageData = self::getPage($page);
+        $pageData = self::getPage($page, $theme);
         return $pageData[$section][$key] ?? $default;
     }
 
     /**
      * Retrieve image URL for a specific image content item.
      */
-    public static function getImageUrl(string $page, string $section, string $key, ?string $fallback = null): ?string
+    public static function getImageUrl(string $page, string $section, string $key, ?string $fallback = null, ?string $theme = null): ?string
     {
-        $val = self::get($page, $section, $key, $fallback);
+        $val = self::get($page, $section, $key, $fallback, $theme);
         return !empty($val) ? $val : $fallback;
     }
 
     /**
-     * Set or update a content record.
+     * Set or update a content record with theme scoping.
      */
-    public static function set(string $page, string $section, string $key, mixed $value, string $type = 'text', ?string $label = null): self
+    public static function set(string $page, string $section, string $key, mixed $value, string $type = 'text', ?string $label = null, string $theme = 'default'): self
     {
         $record = self::updateOrCreate(
             [
+                'theme' => $theme,
                 'page' => $page,
                 'section' => $section,
                 'key' => $key,
@@ -136,17 +150,20 @@ class WebsiteContent extends Model implements HasMedia
             ]
         );
 
-        self::clearPageCache($page);
+        self::clearPageCache($page, $theme);
 
         return $record;
     }
 
     /**
-     * Get list of all distinct pages with metadata dynamically from the database ordered by page sequence.
+     * Get list of all distinct pages with metadata dynamically from the database for a specific theme.
      */
-    public static function getAvailablePagesWithMeta(): array
+    public static function getAvailablePagesWithMeta(?string $theme = null): array
     {
+        $theme = $theme ?: get_active_theme();
+        
         $pages = self::query()
+            ->where('theme', $theme)
             ->select('page')
             ->selectRaw('MIN(id) as min_id')
             ->groupBy('page')
@@ -155,7 +172,7 @@ class WebsiteContent extends Model implements HasMedia
             ->toArray();
 
         if (empty($pages)) {
-            $pages = ['home', 'about', 'team', 'team_detail', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
+            $pages = ['home'];
         }
 
         $defaultOrder = ['home', 'about', 'team', 'team_detail', 'projects', 'project_detail', 'articles', 'article_detail', 'contact', 'footer', 'seo'];
@@ -210,11 +227,14 @@ class WebsiteContent extends Model implements HasMedia
     }
 
     /**
-     * Get list of all distinct sections with metadata dynamically from the database for a page ordered by logical flow.
+     * Get list of all distinct sections with metadata dynamically from the database for a page and specific theme.
      */
-    public static function getPageSectionsWithMeta(string $page): array
+    public static function getPageSectionsWithMeta(string $page, ?string $theme = null): array
     {
+        $theme = $theme ?: get_active_theme();
+        
         $sections = self::query()
+            ->where('theme', $theme)
             ->where('page', $page)
             ->select('section')
             ->selectRaw('MIN(id) as min_id')

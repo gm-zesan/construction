@@ -364,7 +364,8 @@
                                         autocomplete="current-password" placeholder="••••••••">
                                     @if($errors->updatePassword->has('current_password'))
                                         <div class="text-danger mt-1" style="font-size: 12px;">
-                                            {{ $errors->updatePassword->first('current_password') }}</div>
+                                            {{ $errors->updatePassword->first('current_password') }}
+                                        </div>
                                     @endif
                                 </div>
 
@@ -375,7 +376,8 @@
                                         autocomplete="new-password" placeholder="••••••••">
                                     @if($errors->updatePassword->has('password'))
                                         <div class="text-danger mt-1" style="font-size: 12px;">
-                                            {{ $errors->updatePassword->first('password') }}</div>
+                                            {{ $errors->updatePassword->first('password') }}
+                                        </div>
                                     @endif
                                 </div>
 
@@ -387,7 +389,8 @@
                                         autocomplete="new-password" placeholder="••••••••">
                                     @if($errors->updatePassword->has('password_confirmation'))
                                         <div class="text-danger mt-1" style="font-size: 12px;">
-                                            {{ $errors->updatePassword->first('password_confirmation') }}</div>
+                                            {{ $errors->updatePassword->first('password_confirmation') }}
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -503,11 +506,6 @@
                                 <span
                                     class="text-muted">{{ $user->updated_at ? $user->updated_at->diffForHumans() : 'Just now' }}</span>
                             </li>
-                            <li class="d-flex justify-content-between py-2">
-                                <span class="text-muted">Password Encryption</span>
-                                <span class="text-success fw-semibold"><i class="ri-shield-check-fill me-1"></i> Bcrypt
-                                    (256-bit)</span>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -583,7 +581,7 @@
                 @else
                     $('#avatar_img_preview').attr('src', "{{ asset($user->image) }}");
                 @endif
-            });
+                });
         });
     </script>
 @endpush

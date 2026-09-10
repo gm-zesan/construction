@@ -40,6 +40,6 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        return view('frontend.home', compact('services', 'projects', 'articles', 'testimonials'));
+        return theme_view('home', compact('services', 'projects', 'articles', 'testimonials'));
     }
 }
