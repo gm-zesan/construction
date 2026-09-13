@@ -18,6 +18,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        :root {
+            /* ==========================================================================
+               DEFAULT THEME COLOR PALETTE (EDIT HERE FOR DEFAULT THEME ONLY)
+               ========================================================================== */
+            --theme-primary: #f95716;             /* Primary Brand Accent (Construction Orange) */
+            --theme-primary-hover: #ea4907;       /* Primary Hover State */
+            --theme-primary-light: #fff3ee;       /* Soft Light Tint */
+            --theme-primary-rgb: 249, 87, 22;     /* RGB Values for rgba() transparency */
+
+            --theme-dark-bg: #0b0f17;             /* Main Background */
+            --theme-dark-surface: #101622;        /* Surface Background */
+            --theme-dark-card: #151d2c;           /* Card Background */
+            --theme-heading: #ffffff;             /* Primary Headings */
+            --theme-text: #cbd5e1;                /* Body Text */
+            --theme-text-muted: #94a3b8;          /* Muted Text */
+        }
+
+        /* Direct Theme Bindings */
+        .bg-theme-primary { background-color: var(--theme-primary) !important; }
+        .text-theme-primary { color: var(--theme-primary) !important; }
+        .border-theme-primary { border-color: var(--theme-primary) !important; }
+    </style>
 </head>
 <body class="bg-[#0b0f17] text-slate-100 font-sans antialiased selection:bg-[#f95716] selection:text-white min-h-screen flex flex-col">
     <!-- Accessibility Skip Link -->

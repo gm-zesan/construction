@@ -8,11 +8,11 @@ export function initNavigation(lenis) {
         if (!header) return;
         const currentY = typeof scroll === 'number' ? scroll : window.scrollY;
         if (currentY > 30) {
-            header.classList.add('bg-[#0b0f17]/95', 'backdrop-blur-md', 'shadow-lg', 'py-4');
-            header.classList.remove('bg-transparent', 'py-6');
+            header.classList.add('bg-[#0b0f17]/95', 'backdrop-blur-md', 'shadow-lg');
+            header.classList.remove('bg-transparent');
         } else {
-            header.classList.remove('bg-[#0b0f17]/95', 'backdrop-blur-md', 'shadow-lg', 'py-4');
-            header.classList.add('bg-transparent', 'py-6');
+            header.classList.remove('bg-[#0b0f17]/95', 'backdrop-blur-md', 'shadow-lg');
+            header.classList.add('bg-transparent');
         }
     };
 

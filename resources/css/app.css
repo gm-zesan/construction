@@ -4,19 +4,43 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+:root {
+    /* ==========================================================================
+       GLOBAL THEME COLORS (EDIT HERE TO CHANGE COLORS GLOBALLY FOR ALL THEMES)
+       ========================================================================== */
+    --theme-primary: #DFFE40;             /* Main Brand / Accent Color (Electric Lime / Cyber Yellow) */
+    --theme-primary-hover: #cbe838;       /* Hover state for primary buttons & links */
+    --theme-primary-light: #f6ffd1;       /* Soft light tint for badges/highlights */
+    --theme-primary-rgb: 223, 254, 64;    /* RGB representation for rgba() opacity styling */
+
+    /* Dark Mode Architectural Palette */
+    --theme-dark-900: #080c14;            /* Ultra dark background */
+    --theme-dark-850: #0b0f17;            /* Default dark surface */
+    --theme-dark-800: #101622;            /* Card surface */
+    --theme-navy-dark: #080e1a;           /* Deep architectural midnight navy */
+    --theme-navy-surface: #0e172a;        /* Architectural section & container surface */
+    --theme-navy-card: #131f38;           /* Elevated navy card */
+    --theme-heading-navy: #0b163f;        /* Wilmer dark navy heading color */
+}
+
 @theme {
     --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-heading: 'Barlow Condensed', 'Plus Jakarta Sans', ui-sans-serif, sans-serif;
     --font-sketch: 'Caveat', cursive;
     --font-accent: 'Caveat', cursive;
 
-    --color-brand-primary: #f95716;
-    --color-brand-hover: #ea4907;
-    --color-brand-light: #fff3ee;
+    --color-brand-primary: var(--theme-primary);
+    --color-brand-hover: var(--theme-primary-hover);
+    --color-brand-light: var(--theme-primary-light);
+    --color-primary: var(--theme-primary);
+    --color-primary-hover: var(--theme-primary-hover);
 
-    --color-dark-900: #080c14;
-    --color-dark-850: #0b0f17;
-    --color-dark-800: #101622;
+    --color-dark-900: var(--theme-dark-900);
+    --color-dark-850: var(--theme-dark-850);
+    --color-dark-800: var(--theme-dark-800);
+    --color-navy-dark: var(--theme-navy-dark);
+    --color-navy-surface: var(--theme-navy-surface);
+    --color-navy-card: var(--theme-navy-card);
 }
 
 @layer utilities {
@@ -30,6 +54,13 @@
     .font-heading {
         font-family: var(--font-heading);
     }
+
+    /* Helpful Theme Color Utilities */
+    .bg-theme-primary { background-color: var(--theme-primary); }
+    .bg-theme-primary-hover:hover { background-color: var(--theme-primary-hover); }
+    .text-theme-primary { color: var(--theme-primary); }
+    .text-theme-primary-hover:hover { color: var(--theme-primary-hover); }
+    .border-theme-primary { border-color: var(--theme-primary); }
 
     /* Subtle slow architectural zoom */
     @keyframes heroSlowZoom {
@@ -117,8 +148,6 @@
         will-change: transform;
     }
 
-
-
     /* Parallax Watermark Text Layer */
     .parallax-text-back,
     .parallax-layers .back,
@@ -177,13 +206,13 @@
 
     .mobile-nav-link:hover {
         background: rgba(255, 255, 255, 0.06);
-        color: #f95716;
+        color: var(--theme-primary);
         padding-left: 18px;
     }
 
     .mobile-nav-link.active {
-        background: rgba(249, 87, 22, 0.12);
-        color: #f95716;
+        background: rgba(var(--theme-primary-rgb), 0.12);
+        color: var(--theme-primary);
         font-weight: 700;
     }
 }
